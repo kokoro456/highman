@@ -60,7 +60,13 @@ model Shop {
   businessHours    Json             @default("{}")
   closedDays       String[]         @default([])
   subscriptionTier SubscriptionTier @default(FREE)
-  naverPlaceId     String?
+  // External integrations
+  naverBookingUrl    String?
+  naverPlaceId       String?
+  kakaoChannelUrl    String?
+  kakaoChannelId     String?
+  instagramUrl       String?
+
   isActive         Boolean          @default(true)
   createdAt        DateTime         @default(now())
   updatedAt        DateTime         @updatedAt

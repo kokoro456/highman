@@ -3,6 +3,8 @@
 import Link from 'next/link';
 import { useDashboardOverview, useUpcomingBookings } from '@/hooks/use-dashboard';
 import { usePayments } from '@/hooks/use-payments';
+import { useShop } from '@/hooks/use-shop';
+import { useAuthStore } from '@/lib/auth-store';
 import { formatCurrency } from '@/lib/utils';
 import {
   CalendarDots,
@@ -11,11 +13,15 @@ import {
   WarningCircle,
   ArrowRight,
   Receipt,
+  Link as LinkIcon,
+  CheckCircle,
 } from '@phosphor-icons/react';
 
 export default function DashboardPage() {
+  const { shopId } = useAuthStore();
   const { data: overview, isLoading: overviewLoading, error: overviewError, refetch: refetchOverview } = useDashboardOverview();
   const { data: upcomingBookings, isLoading: bookingsLoading, error: bookingsError, refetch: refetchBookings } = useUpcomingBookings(5);
+  const { data: shopData } = useShop(shopId ?? '');
 
   const todayISO = new Date().toISOString().split('T')[0];
   const { data: recentPaymentsData, isLoading: paymentsLoading } = usePayments({ page: 1, startDate: todayISO, endDate: todayISO });
@@ -275,6 +281,57 @@ export default function DashboardPage() {
             })}
           </div>
         )}
+      </div>
+
+      {/* External integration status */}
+      <div className="rounded-2xl bg-white p-4 md:p-6 ring-1 ring-zinc-200/50 shadow-soft">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-zinc-100">
+              <LinkIcon size={14} className="text-zinc-600" />
+            </div>
+            <h2 className="text-sm font-medium text-zinc-700">외부 연동</h2>
+          </div>
+          <Link
+            href="/settings"
+            className="flex items-center gap-1 text-xs font-medium text-zinc-500 hover:text-zinc-700 transition-colors duration-200"
+          >
+            설정에서 연동하기
+            <ArrowRight size={12} />
+          </Link>
+        </div>
+        <div className="flex flex-wrap gap-3">
+          {shopData?.naverBookingUrl ? (
+            <div className="flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1.5 ring-1 ring-emerald-200/60">
+              <CheckCircle size={14} weight="fill" className="text-emerald-500" />
+              <span className="text-xs font-medium text-emerald-700">네이버 예약</span>
+            </div>
+          ) : (
+            <div className="flex items-center gap-1.5 rounded-full bg-zinc-50 px-3 py-1.5 ring-1 ring-zinc-200/60">
+              <span className="text-xs text-zinc-400">네이버 예약 - 미연동</span>
+            </div>
+          )}
+          {shopData?.kakaoChannelUrl ? (
+            <div className="flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1.5 ring-1 ring-emerald-200/60">
+              <CheckCircle size={14} weight="fill" className="text-emerald-500" />
+              <span className="text-xs font-medium text-emerald-700">카카오톡</span>
+            </div>
+          ) : (
+            <div className="flex items-center gap-1.5 rounded-full bg-zinc-50 px-3 py-1.5 ring-1 ring-zinc-200/60">
+              <span className="text-xs text-zinc-400">카카오톡 - 미연동</span>
+            </div>
+          )}
+          {shopData?.instagramUrl ? (
+            <div className="flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1.5 ring-1 ring-emerald-200/60">
+              <CheckCircle size={14} weight="fill" className="text-emerald-500" />
+              <span className="text-xs font-medium text-emerald-700">인스타그램</span>
+            </div>
+          ) : (
+            <div className="flex items-center gap-1.5 rounded-full bg-zinc-50 px-3 py-1.5 ring-1 ring-zinc-200/60">
+              <span className="text-xs text-zinc-400">인스타그램 - 미연동</span>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

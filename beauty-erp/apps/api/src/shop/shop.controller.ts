@@ -24,6 +24,9 @@ export class ShopController {
         coverImageUrl: shop.coverImageUrl,
         businessHours: shop.businessHours,
         closedDays: shop.closedDays,
+        naverBookingUrl: shop.naverBookingUrl,
+        kakaoChannelUrl: shop.kakaoChannelUrl,
+        instagramUrl: shop.instagramUrl,
       },
       message: 'ok',
     };

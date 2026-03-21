@@ -16,6 +16,9 @@ interface Shop {
   coverImageUrl: string | null;
   businessHours: Record<string, any>;
   closedDays: string[];
+  naverBookingUrl: string | null;
+  kakaoChannelUrl: string | null;
+  instagramUrl: string | null;
 }
 
 interface ServiceCategory {
@@ -359,6 +362,45 @@ export function PublicBookingForm({ shopId }: { shopId: string }) {
           {stepIndex + 1}/{STEP_ORDER.length} · {STEP_LABELS[step]}
         </p>
       </div>
+
+      {/* External booking buttons */}
+      {(shop?.naverBookingUrl || shop?.kakaoChannelUrl) && (
+        <div className="max-w-lg mx-auto px-4 pt-4">
+          <div className="space-y-3">
+            {shop.naverBookingUrl && (
+              <a
+                href={shop.naverBookingUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-[#03C75A] text-white font-medium text-sm hover:bg-[#02b351] transition-colors shadow-sm"
+              >
+                <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M13.5 10.8L6.2 3H3v14h3.5V9.2L13.8 17H17V3h-3.5v7.8z"/>
+                </svg>
+                네이버 예약
+              </a>
+            )}
+            {shop.kakaoChannelUrl && (
+              <a
+                href={shop.kakaoChannelUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-[#FEE500] text-[#191919] font-medium text-sm hover:bg-[#FDD800] transition-colors shadow-sm"
+              >
+                <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M10 2C5.03 2 1 5.13 1 8.97c0 2.48 1.64 4.66 4.1 5.89l-.6 2.92c-.04.2.17.36.35.26L8.4 15.9c.52.08 1.06.12 1.6.12 4.97 0 9-3.13 9-6.97S14.97 2 10 2z"/>
+                </svg>
+                카카오톡 상담
+              </a>
+            )}
+            <div className="flex items-center gap-3 py-2">
+              <div className="flex-1 h-px bg-zinc-200" />
+              <span className="text-xs text-zinc-400">또는 아래에서 직접 예약하세요</span>
+              <div className="flex-1 h-px bg-zinc-200" />
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Content */}
       <div className="max-w-lg mx-auto px-4 py-6">

@@ -8,6 +8,10 @@ import {
   Trash,
   Clock,
   Storefront,
+  Link as LinkIcon,
+  CaretRight,
+  CheckCircle,
+  Info,
 } from '@phosphor-icons/react';
 import { cn, formatCurrency } from '@/lib/utils';
 import { useShop, useUpdateShop } from '@/hooks/use-shop';
@@ -67,10 +71,15 @@ export function ShopSettings() {
     phone: '',
     address: '',
     businessHours: defaultBusinessHours,
+    naverBookingUrl: '',
+    naverPlaceId: '',
+    kakaoChannelUrl: '',
+    instagramUrl: '',
   });
   const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
   const [initialized, setInitialized] = useState(false);
   const [saveError, setSaveError] = useState('');
+  const [guideOpen, setGuideOpen] = useState(false);
   const updateShop = useUpdateShop();
 
   useEffect(() => {
@@ -82,6 +91,10 @@ export function ShopSettings() {
         phone: shopData.phone ?? '',
         address: shopData.address ?? '',
         businessHours: typeof bh === 'object' ? bh : defaultBusinessHours,
+        naverBookingUrl: shopData.naverBookingUrl ?? '',
+        naverPlaceId: shopData.naverPlaceId ?? '',
+        kakaoChannelUrl: shopData.kakaoChannelUrl ?? '',
+        instagramUrl: shopData.instagramUrl ?? '',
       });
       setInitialized(true);
     }
@@ -336,7 +349,148 @@ export function ShopSettings() {
         </div>
       </section>
 
-      {/* Section 3: Service menu */}
+      {/* Section 3: External integrations */}
+      <section className="space-y-4">
+        <div className="flex items-center gap-2">
+          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-zinc-100">
+            <LinkIcon size={14} className="text-zinc-600" />
+          </div>
+          <h2 className="text-sm font-semibold text-zinc-800">외부 서비스 연동</h2>
+        </div>
+
+        <div className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft p-6 space-y-5">
+          {/* Naver Booking URL */}
+          <div className="space-y-2">
+            <label className="text-xs font-medium text-zinc-600 pl-1">
+              네이버 예약 URL
+            </label>
+            <div className="rounded-xl bg-zinc-50/80 p-0.5 ring-1 ring-zinc-200/60 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] focus-within:ring-brand-400 focus-within:ring-2 focus-within:bg-white">
+              <input
+                type="url"
+                value={shop.naverBookingUrl}
+                onChange={(e) =>
+                  setShop((prev) => ({ ...prev, naverBookingUrl: e.target.value }))
+                }
+                placeholder="https://booking.naver.com/booking/..."
+                className="w-full rounded-[calc(0.75rem-2px)] bg-transparent px-4 py-3 text-sm text-zinc-900 placeholder:text-zinc-400 outline-none"
+              />
+            </div>
+            <p className="text-[11px] text-zinc-400 pl-1">
+              네이버 스마트플레이스에서 예약 URL을 복사해 붙여넣으세요
+            </p>
+          </div>
+
+          {/* Naver Place ID */}
+          <div className="space-y-2">
+            <label className="text-xs font-medium text-zinc-600 pl-1">
+              네이버 플레이스 ID
+            </label>
+            <div className="rounded-xl bg-zinc-50/80 p-0.5 ring-1 ring-zinc-200/60 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] focus-within:ring-brand-400 focus-within:ring-2 focus-within:bg-white">
+              <input
+                type="text"
+                value={shop.naverPlaceId}
+                onChange={(e) =>
+                  setShop((prev) => ({ ...prev, naverPlaceId: e.target.value }))
+                }
+                placeholder="12345678"
+                className="w-full rounded-[calc(0.75rem-2px)] bg-transparent px-4 py-3 text-sm text-zinc-900 placeholder:text-zinc-400 outline-none font-mono"
+              />
+            </div>
+            <p className="text-[11px] text-zinc-400 pl-1">
+              네이버 지도에서 매장 검색 후 URL의 숫자 부분
+            </p>
+          </div>
+
+          {/* Kakao Channel URL */}
+          <div className="space-y-2">
+            <label className="text-xs font-medium text-zinc-600 pl-1">
+              카카오톡 채널 URL
+            </label>
+            <div className="rounded-xl bg-zinc-50/80 p-0.5 ring-1 ring-zinc-200/60 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] focus-within:ring-brand-400 focus-within:ring-2 focus-within:bg-white">
+              <input
+                type="url"
+                value={shop.kakaoChannelUrl}
+                onChange={(e) =>
+                  setShop((prev) => ({ ...prev, kakaoChannelUrl: e.target.value }))
+                }
+                placeholder="https://pf.kakao.com/..."
+                className="w-full rounded-[calc(0.75rem-2px)] bg-transparent px-4 py-3 text-sm text-zinc-900 placeholder:text-zinc-400 outline-none"
+              />
+            </div>
+          </div>
+
+          {/* Instagram */}
+          <div className="space-y-2">
+            <label className="text-xs font-medium text-zinc-600 pl-1">
+              인스타그램
+            </label>
+            <div className="rounded-xl bg-zinc-50/80 p-0.5 ring-1 ring-zinc-200/60 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] focus-within:ring-brand-400 focus-within:ring-2 focus-within:bg-white">
+              <input
+                type="text"
+                value={shop.instagramUrl}
+                onChange={(e) =>
+                  setShop((prev) => ({ ...prev, instagramUrl: e.target.value }))
+                }
+                placeholder="@beautynailstudio"
+                className="w-full rounded-[calc(0.75rem-2px)] bg-transparent px-4 py-3 text-sm text-zinc-900 placeholder:text-zinc-400 outline-none"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Naver SmartPlace Guide */}
+        <div className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft overflow-hidden">
+          <button
+            onClick={() => setGuideOpen((prev) => !prev)}
+            className="flex items-center justify-between w-full px-6 py-4 transition-colors duration-200 hover:bg-zinc-50/60"
+          >
+            <div className="flex items-center gap-2">
+              <Info size={16} className="text-brand-500" />
+              <span className="text-sm font-medium text-zinc-700">네이버 스마트플레이스 예약 설정 가이드</span>
+            </div>
+            <CaretRight
+              size={14}
+              className={cn(
+                'text-zinc-400 transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)]',
+                guideOpen && 'rotate-90',
+              )}
+            />
+          </button>
+
+          {guideOpen && (
+            <div className="border-t border-zinc-100 px-6 py-5">
+              <div className="rounded-xl bg-brand-50/50 ring-1 ring-brand-100 p-5">
+                <ol className="space-y-3 text-sm text-zinc-700">
+                  <li className="flex gap-3">
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-100 text-xs font-semibold text-brand-600 flex-shrink-0">1</span>
+                    <span>
+                      <a href="https://smartplace.naver.com" target="_blank" rel="noopener noreferrer" className="text-brand-600 underline underline-offset-2">네이버 스마트플레이스</a> 접속
+                    </span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-100 text-xs font-semibold text-brand-600 flex-shrink-0">2</span>
+                    <span>사업자등록번호로 매장 등록</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-100 text-xs font-semibold text-brand-600 flex-shrink-0">3</span>
+                    <span>예약 관리 &gt; 예약 설정 활성화</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-100 text-xs font-semibold text-brand-600 flex-shrink-0">4</span>
+                    <span>예약 URL 복사 → 위 입력란에 붙여넣기</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-100 text-xs font-semibold text-brand-600 flex-shrink-0">5</span>
+                    <span>완료! B2C 예약 페이지에 네이버 예약 버튼이 자동 표시됩니다</span>
+                  </li>
+                </ol>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Section 4: Service menu */}
       <section className="space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -448,6 +602,10 @@ export function ShopSettings() {
                   phone: shop.phone,
                   address: shop.address,
                   businessHours: shop.businessHours,
+                  naverBookingUrl: shop.naverBookingUrl || null,
+                  naverPlaceId: shop.naverPlaceId || null,
+                  kakaoChannelUrl: shop.kakaoChannelUrl || null,
+                  instagramUrl: shop.instagramUrl || null,
                 },
               });
               toast('success', '매장 정보가 저장되었습니다');
