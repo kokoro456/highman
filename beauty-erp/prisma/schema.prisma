@@ -88,6 +88,7 @@ model Shop {
   inventoryItems      InventoryItem[]
   inAppNotifications  InAppNotification[]
   coupons             Coupon[]
+  onlinePayments      OnlinePayment[]
 
   @@map("shops")
 }
@@ -668,4 +669,38 @@ model CouponUsage {
 enum CouponType {
   FIXED
   PERCENTAGE
+}
+
+// ==================== ONLINE PAYMENT (PG) ====================
+
+model OnlinePayment {
+  id            String              @id @default(uuid())
+  shopId        String
+  paymentId     String?
+  orderId       String              @unique
+  paymentKey    String?
+  amount        Decimal             @db.Decimal(12, 2)
+  status        OnlinePaymentStatus @default(PENDING)
+  method        String?
+  customerName  String?
+  customerPhone String?
+  productName   String
+  failReason    String?
+  approvedAt    DateTime?
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
+
+  shop Shop @relation(fields: [shopId], references: [id])
+
+  @@index([shopId])
+  @@index([orderId])
+  @@map("online_payments")
+}
+
+enum OnlinePaymentStatus {
+  PENDING
+  APPROVED
+  FAILED
+  CANCELLED
+  REFUNDED
 }

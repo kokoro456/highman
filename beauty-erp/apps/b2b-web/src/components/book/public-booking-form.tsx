@@ -132,6 +132,8 @@ export function PublicBookingForm({ shopId }: { shopId: string }) {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [pgClientKey, setPgClientKey] = useState<string>('');
+  const [creatingOrder, setCreatingOrder] = useState(false);
 
   // ── Load shop + categories + staff ─────────────────────────────────────────
 
@@ -146,6 +148,17 @@ export function PublicBookingForm({ shopId }: { shopId: string }) {
         setShop(shopRes.data);
         setCategories(catRes.data);
         setStaffList(staffRes.data);
+
+        // Check if PG is configured
+        try {
+          const keyRes = await publicFetch<{ data: { clientKey: string } }>('/pg/client-key');
+          const key = keyRes.data.clientKey;
+          if (key && key !== '' && !key.startsWith('test_ck_XXXX')) {
+            setPgClientKey(key);
+          }
+        } catch {
+          // PG not configured, ignore
+        }
       } catch (e: any) {
         setError(e.message || '매장 정보를 불러올 수 없습니다');
       } finally {
@@ -253,6 +266,44 @@ export function PublicBookingForm({ shopId }: { shopId: string }) {
     }
   }
 
+  // ── Online payment ───────────────────────────────────────────────────────
+
+  async function handleOnlinePayment() {
+    if (!selectedService || creatingOrder) return;
+    setCreatingOrder(true);
+    setError(null);
+
+    try {
+      const price = Number(selectedService.b2cPrice ?? selectedService.price);
+      const res = await fetch(`${API_BASE}/api/pg/orders`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-shop-id': shopId,
+        },
+        body: JSON.stringify({
+          amount: price,
+          productName: selectedService.name,
+          customerName: customerName.trim() || undefined,
+          customerPhone: customerPhone.trim() || undefined,
+        }),
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ message: '주문 생성에 실패했습니다' }));
+        throw new Error(err.message || '주문 생성에 실패했습니다');
+      }
+
+      const data = await res.json();
+      // Redirect to checkout page
+      window.location.href = `/checkout/${data.data.orderId}`;
+    } catch (e: any) {
+      setError(e.message || '결제 요청에 실패했습니다');
+    } finally {
+      setCreatingOrder(false);
+    }
+  }
+
   // ── Render helpers ─────────────────────────────────────────────────────────
 
   if (loading) {
@@ -279,8 +330,11 @@ export function PublicBookingForm({ shopId }: { shopId: string }) {
   }
 
   if (step === 'done') {
+    const servicePrice = selectedService ? Number(selectedService.b2cPrice ?? selectedService.price) : 0;
+    const showOnlinePayment = pgClientKey && servicePrice > 0;
+
     return (
-      <div className="min-h-[100dvh] flex items-center justify-center bg-zinc-50 px-4">
+      <div className="min-h-[100dvh] flex items-center justify-center bg-zinc-50 px-4 py-8">
         <div className="w-full max-w-md bg-white rounded-2xl shadow-sm border border-zinc-200 p-8 text-center">
           <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-6">
             <svg className="w-8 h-8 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -315,6 +369,39 @@ export function PublicBookingForm({ shopId }: { shopId: string }) {
               <span className="font-medium text-zinc-800">{customerName}</span>
             </div>
           </div>
+
+          {/* Online payment option */}
+          {showOnlinePayment && (
+            <div className="mt-6 space-y-3">
+              <div className="flex items-center gap-3 py-2">
+                <div className="flex-1 h-px bg-zinc-200" />
+                <span className="text-xs text-zinc-400">결제 방법 선택</span>
+                <div className="flex-1 h-px bg-zinc-200" />
+              </div>
+
+              {error && (
+                <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-sm text-red-600 text-left">
+                  {error}
+                </div>
+              )}
+
+              <button
+                onClick={handleOnlinePayment}
+                disabled={creatingOrder}
+                className="w-full py-3.5 rounded-xl bg-[#0064FF] text-white font-medium text-sm hover:bg-[#0052D4] transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {creatingOrder
+                  ? '처리 중...'
+                  : `예약금 결제하기 (${formatPrice(servicePrice)})`}
+              </button>
+              <button
+                onClick={() => setError(null)}
+                className="w-full py-3.5 rounded-xl bg-zinc-100 text-zinc-600 font-medium text-sm hover:bg-zinc-200 transition-colors"
+              >
+                매장에서 결제
+              </button>
+            </div>
+          )}
         </div>
       </div>
     );

@@ -1,7 +1,9 @@
 import {
   Controller,
+  Get,
   Post,
   Body,
+  Query,
   UseGuards,
   Request,
   HttpCode,
@@ -39,5 +41,48 @@ export class AuthController {
   async refresh(@Body() body: { refreshToken: string }) {
     const tokens = await this.authService.refreshTokens(body.refreshToken);
     return { data: tokens, message: 'ok' };
+  }
+
+  // ── Social Login: Kakao ──────────────────────────────────────────
+
+  @Public()
+  @Get('kakao')
+  getKakaoAuthUrl() {
+    const result = this.authService.getKakaoAuthUrl();
+    return { data: result, message: 'ok' };
+  }
+
+  @Public()
+  @Post('kakao/callback')
+  @HttpCode(HttpStatus.OK)
+  async kakaoCallback(@Body() body: { code: string }) {
+    const tokens = await this.authService.kakaoLogin(body.code);
+    return { data: tokens, message: 'ok' };
+  }
+
+  // ── Social Login: Naver ──────────────────────────────────────────
+
+  @Public()
+  @Get('naver')
+  getNaverAuthUrl() {
+    const result = this.authService.getNaverAuthUrl();
+    return { data: result, message: 'ok' };
+  }
+
+  @Public()
+  @Post('naver/callback')
+  @HttpCode(HttpStatus.OK)
+  async naverCallback(@Body() body: { code: string; state: string }) {
+    const tokens = await this.authService.naverLogin(body.code, body.state);
+    return { data: tokens, message: 'ok' };
+  }
+
+  // ── Social Login Status ──────────────────────────────────────────
+
+  @Public()
+  @Get('social/status')
+  getSocialLoginStatus() {
+    const status = this.authService.getSocialLoginStatus();
+    return { data: status, message: 'ok' };
   }
 }

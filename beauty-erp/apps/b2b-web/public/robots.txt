@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /book/
+Disallow: /dashboard
+Disallow: /bookings
+Disallow: /customers
+Disallow: /payments
+Disallow: /staff
+Disallow: /settings
+Disallow: /settlement
+Disallow: /inventory
+Disallow: /reports
+Disallow: /coupons
+
+Sitemap: https://highman.vercel.app/sitemap.xml

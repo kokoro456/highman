@@ -23,6 +23,7 @@ import {
   Plus,
   Wallet,
   Ticket,
+  ShieldCheck,
 } from '@phosphor-icons/react';
 import { cn } from '@/lib/utils';
 import { useAuthStore } from '@/lib/auth-store';
@@ -42,6 +43,8 @@ const navItems = [
   { href: '/settings', label: '매장 설정', icon: GearSix },
 ];
 
+const adminNavItem = { href: '/admin', label: '관리자', icon: ShieldCheck };
+
 export function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
@@ -49,7 +52,7 @@ export function Sidebar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [shopSwitcherOpen, setShopSwitcherOpen] = useState(false);
   const shopSwitcherRef = useRef<HTMLDivElement>(null);
-  const { shopId, setShopId, logout } = useAuthStore();
+  const { shopId, setShopId, logout, user } = useAuthStore();
   const { data: shop } = useShop(shopId || '');
   const { data: myShops } = useMyShops();
 
@@ -130,7 +133,7 @@ export function Sidebar() {
 
         {/* Navigation */}
         <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
-          {navItems.map((item) => {
+          {[...navItems, ...(user?.role === 'ADMIN' ? [adminNavItem] : [])].map((item) => {
             const isActive = item.href === '/dashboard'
               ? pathname === '/dashboard'
               : pathname.startsWith(item.href);

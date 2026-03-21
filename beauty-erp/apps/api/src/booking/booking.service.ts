@@ -1,9 +1,15 @@
-import { Injectable, NotFoundException, ConflictException, BadRequestException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException, ConflictException, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { AlimtalkService } from '../alimtalk/alimtalk.service';
 
 @Injectable()
 export class BookingService {
-  constructor(private prisma: PrismaService) {}
+  private readonly logger = new Logger(BookingService.name);
+
+  constructor(
+    private prisma: PrismaService,
+    private alimtalkService: AlimtalkService,
+  ) {}
 
   async create(shopId: string, data: {
     customerId: string; staffId: string; serviceId: string;
@@ -38,7 +44,7 @@ export class BookingService {
     });
     if (conflict) throw new ConflictException('해당 시간에 이미 예약이 있습니다');
 
-    return this.prisma.booking.create({
+    const booking = await this.prisma.booking.create({
       data: {
         shopId, customerId: data.customerId, staffId: data.staffId,
         serviceId: data.serviceId, startTime, endTime,
@@ -46,6 +52,24 @@ export class BookingService {
       },
       include: { customer: true, staff: true, service: true },
     });
+
+    // Send Alimtalk confirmation (non-blocking)
+    try {
+      const shop = await this.prisma.shop.findUnique({ where: { id: shopId } });
+      if (customer.phone) {
+        await this.alimtalkService.sendBookingConfirmation(customer.phone, {
+          customerName: customer.name,
+          shopName: shop?.name || '',
+          serviceName: service.name,
+          dateTime: startTime.toLocaleString('ko-KR'),
+          staffName: staff.name,
+        });
+      }
+    } catch (error: any) {
+      this.logger.warn(`Alimtalk booking confirmation failed: ${error.message}`);
+    }
+
+    return booking;
   }
 
   async findByDate(shopId: string, date: string) {
@@ -76,11 +100,32 @@ export class BookingService {
   async updateStatus(id: string, shopId: string, status: string) {
     const booking = await this.prisma.booking.findFirst({ where: { id, shopId } });
     if (!booking) throw new NotFoundException('예약을 찾을 수 없습니다');
-    return this.prisma.booking.update({
+    const updated = await this.prisma.booking.update({
       where: { id },
       data: { status: status as any },
       include: { customer: true, staff: true, service: true },
     });
+
+    // Send Alimtalk cancellation notification (non-blocking)
+    if (status === 'CANCELLED') {
+      try {
+        const shop = await this.prisma.shop.findUnique({ where: { id: shopId } });
+        const customer = updated.customer as any;
+        const service = updated.service as any;
+        if (customer?.phone) {
+          await this.alimtalkService.sendBookingCancellation(customer.phone, {
+            customerName: customer.name,
+            shopName: shop?.name || '',
+            serviceName: service?.name || '',
+            dateTime: updated.startTime.toLocaleString('ko-KR'),
+          });
+        }
+      } catch (error: any) {
+        this.logger.warn(`Alimtalk booking cancellation failed: ${error.message}`);
+      }
+    }
+
+    return updated;
   }
 
   async update(id: string, shopId: string, data: any) {

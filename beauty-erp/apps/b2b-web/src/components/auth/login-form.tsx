@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ArrowRight, Eye, EyeSlash, Sparkle, WarningCircle } from '@phosphor-icons/react';
@@ -13,8 +13,32 @@ export function LoginForm() {
   const [error, setError] = useState<string | null>(null);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [socialStatus, setSocialStatus] = useState<{ kakao: boolean; naver: boolean }>({ kakao: false, naver: false });
   const { setTokens, setShopId, setUser } = useAuthStore();
   const router = useRouter();
+
+  useEffect(() => {
+    const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+    fetch(`${API_BASE}/api/auth/social/status`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.data) setSocialStatus(data.data);
+      })
+      .catch(() => {});
+  }, []);
+
+  const handleSocialLogin = async (provider: 'kakao' | 'naver') => {
+    try {
+      const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+      const res = await fetch(`${API_BASE}/api/auth/${provider}`);
+      const data = await res.json();
+      if (data.data?.url) {
+        window.location.href = data.data.url;
+      }
+    } catch {
+      setError(`${provider === 'kakao' ? '카카오' : '네이버'} 로그인을 시작할 수 없습니다`);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -163,17 +187,37 @@ export function LoginForm() {
 
           {/* Social Login Buttons */}
           <div className="space-y-3">
-            <button className="group flex w-full items-center justify-center gap-2.5 rounded-full bg-[#FEE500] px-6 py-3 text-sm font-medium text-zinc-900 ring-1 ring-[#FEE500] transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:brightness-95 active:scale-[0.98]">
+            <button
+              type="button"
+              onClick={() => handleSocialLogin('kakao')}
+              disabled={!socialStatus.kakao}
+              title={!socialStatus.kakao ? '준비 중' : undefined}
+              className={cn(
+                'group flex w-full items-center justify-center gap-2.5 rounded-full bg-[#FEE500] px-6 py-3 text-sm font-medium text-zinc-900 ring-1 ring-[#FEE500] transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:brightness-95 active:scale-[0.98]',
+                !socialStatus.kakao && 'opacity-50 cursor-not-allowed hover:brightness-100',
+              )}
+            >
               <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor">
                 <path d="M12 3C6.48 3 2 6.48 2 10.8c0 2.82 1.86 5.28 4.68 6.66-.18.66-.66 2.4-.72 2.76-.12.48.18.48.36.36.18-.06 2.52-1.68 3.54-2.4.66.12 1.38.18 2.14.18 5.52 0 10-3.48 10-7.56S17.52 3 12 3z"/>
               </svg>
               카카오로 시작하기
+              {!socialStatus.kakao && <span className="text-[10px] text-zinc-500 ml-1">(준비 중)</span>}
             </button>
-            <button className="group flex w-full items-center justify-center gap-2.5 rounded-full bg-[#03C75A] px-6 py-3 text-sm font-medium text-white ring-1 ring-[#03C75A] transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:brightness-95 active:scale-[0.98]">
+            <button
+              type="button"
+              onClick={() => handleSocialLogin('naver')}
+              disabled={!socialStatus.naver}
+              title={!socialStatus.naver ? '준비 중' : undefined}
+              className={cn(
+                'group flex w-full items-center justify-center gap-2.5 rounded-full bg-[#03C75A] px-6 py-3 text-sm font-medium text-white ring-1 ring-[#03C75A] transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:brightness-95 active:scale-[0.98]',
+                !socialStatus.naver && 'opacity-50 cursor-not-allowed hover:brightness-100',
+              )}
+            >
               <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor">
                 <path d="M16.27 10.55L7.72 4.69C7.31 4.41 6.76 4.56 6.55 5L3.08 11.92c-.2.43.04.94.5 1.06l3.2.84.84 3.2c.12.46.63.7 1.06.5L15.6 14.05c.43-.21.58-.76.3-1.17l-3.17-4.84"/>
               </svg>
               네이버로 시작하기
+              {!socialStatus.naver && <span className="text-[10px] text-white/60 ml-1">(준비 중)</span>}
             </button>
           </div>
 
