@@ -10,10 +10,10 @@
 | 항목 | 상태 |
 |------|------|
 | **현재 Phase** | Phase 1a: MVP Core |
-| **현재 Task** | Task 5-10 완료 — 모든 도메인 모듈 구현됨 |
-| **진행률** | Phase 1a 코드 구현 완료 (DB 연결/테스트 필요) |
+| **현재 Task** | Phase 1a 코드 구현 100% 완료 |
+| **진행률** | DB 설치 → 마이그레이션 → 개발 서버 실행만 남음 |
 | **마지막 업데이트** | 2026-03-21 |
-| **마지막 커밋** | `4d4a4c7` feat(erp): implement all domain modules |
+| **마지막 커밋** | `a55ce1f` feat(erp): add seed data, API integration layer |
 
 ---
 
