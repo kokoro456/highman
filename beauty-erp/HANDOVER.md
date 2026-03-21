@@ -10,10 +10,12 @@
 | 항목 | 상태 |
 |------|------|
 | **현재 Phase** | Phase 1a: MVP Core |
-| **현재 Task** | Phase 1a 코드 구현 100% 완료 |
-| **진행률** | DB 설치 → 마이그레이션 → 개발 서버 실행만 남음 |
+| **현재 Task** | Phase 1a 배포 완료 |
+| **진행률** | Vercel + Railway + Supabase 라이브 |
 | **마지막 업데이트** | 2026-03-21 |
-| **마지막 커밋** | `a55ce1f` feat(erp): add seed data, API integration layer |
+| **프론트엔드** | https://highman.vercel.app |
+| **API 서버** | https://highman-production.up.railway.app |
+| **DB** | Supabase PostgreSQL (Seoul) |
 
 ---
 
