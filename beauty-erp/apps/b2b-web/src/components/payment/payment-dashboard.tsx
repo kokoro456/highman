@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useMemo } from 'react';
 import {
   CreditCard,
   Money,
@@ -11,63 +12,7 @@ import {
   Receipt,
 } from '@phosphor-icons/react';
 import { cn, formatCurrency } from '@/lib/utils';
-
-const mockPayments = [
-  {
-    id: '1',
-    customer: '정민서',
-    service: '속눈썹 연장',
-    staff: '박서연',
-    amount: 89000,
-    method: 'CARD' as const,
-    time: '10:30',
-  },
-  {
-    id: '2',
-    customer: '최유진',
-    service: '젤네일 풀세트',
-    staff: '이하은',
-    amount: 75000,
-    method: 'CASH' as const,
-    time: '11:00',
-  },
-  {
-    id: '3',
-    customer: '한소희',
-    service: '브라질리언 왁싱',
-    staff: '박서연',
-    amount: 65000,
-    method: 'CARD' as const,
-    time: '13:00',
-  },
-  {
-    id: '4',
-    customer: '오서윤',
-    service: '속눈썹 리터치',
-    staff: '김도윤',
-    amount: 45000,
-    method: 'TRANSFER' as const,
-    time: '14:00',
-  },
-  {
-    id: '5',
-    customer: '윤채원',
-    service: '아트네일',
-    staff: '이하은',
-    amount: 95000,
-    method: 'PASS' as const,
-    time: '15:30',
-  },
-  {
-    id: '6',
-    customer: '김나연',
-    service: '자연 속눈썹',
-    staff: '박서연',
-    amount: 79000,
-    method: 'CARD' as const,
-    time: '16:00',
-  },
-];
+import { usePayments, usePaymentSummary } from '@/hooks/use-payments';
 
 type PaymentMethod = 'CARD' | 'CASH' | 'TRANSFER' | 'PASS';
 
@@ -81,53 +26,117 @@ const methodConfig: Record<
   PASS: { label: '정기권', bg: 'bg-violet-50', text: 'text-violet-700', icon: Ticket },
 };
 
-const totalRevenue = mockPayments.reduce((sum, p) => sum + p.amount, 0);
-const cardTotal = mockPayments
-  .filter((p) => p.method === 'CARD')
-  .reduce((sum, p) => sum + p.amount, 0);
-const cashTotal = mockPayments
-  .filter((p) => p.method === 'CASH')
-  .reduce((sum, p) => sum + p.amount, 0);
-const transferTotal = mockPayments
-  .filter((p) => p.method === 'TRANSFER')
-  .reduce((sum, p) => sum + p.amount, 0);
+function formatDateDisplay(date: Date): string {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}.${m}.${d}`;
+}
 
-const summaryCards = [
-  {
-    label: '총 매출',
-    value: totalRevenue,
-    icon: Receipt,
-    accent: 'from-zinc-800 to-zinc-900',
-    iconBg: 'bg-zinc-100',
-    iconColor: 'text-zinc-600',
-  },
-  {
-    label: '카드',
-    value: cardTotal,
-    icon: CreditCard,
-    accent: 'from-blue-500 to-blue-600',
-    iconBg: 'bg-blue-50',
-    iconColor: 'text-blue-600',
-  },
-  {
-    label: '현금',
-    value: cashTotal,
-    icon: Money,
-    accent: 'from-brand-500 to-brand-600',
-    iconBg: 'bg-brand-50',
-    iconColor: 'text-brand-600',
-  },
-  {
-    label: '이체',
-    value: transferTotal,
-    icon: Bank,
-    accent: 'from-amber-500 to-amber-600',
-    iconBg: 'bg-amber-50',
-    iconColor: 'text-amber-600',
-  },
-];
+function formatDateISO(date: Date): string {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+
+function formatTime(dateStr: string): string {
+  const d = new Date(dateStr);
+  return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+}
 
 export function PaymentDashboard() {
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const dateString = formatDateISO(selectedDate);
+
+  const { data: summaryData, isLoading: summaryLoading, error: summaryError, refetch: refetchSummary } = usePaymentSummary(dateString);
+  const { data: paymentsData, isLoading: paymentsLoading, error: paymentsError, refetch: refetchPayments } = usePayments({ page: 1, startDate: dateString, endDate: dateString });
+
+  const isLoading = summaryLoading || paymentsLoading;
+  const error = summaryError || paymentsError;
+  const payments = paymentsData?.data ?? [];
+
+  const summaryCards = useMemo(() => [
+    {
+      label: '총 매출',
+      value: Number(summaryData?.totalRevenue ?? 0),
+      icon: Receipt,
+      accent: 'from-zinc-800 to-zinc-900',
+      iconBg: 'bg-zinc-100',
+      iconColor: 'text-zinc-600',
+    },
+    {
+      label: '카드',
+      value: Number(summaryData?.cardRevenue ?? 0),
+      icon: CreditCard,
+      accent: 'from-blue-500 to-blue-600',
+      iconBg: 'bg-blue-50',
+      iconColor: 'text-blue-600',
+    },
+    {
+      label: '현금',
+      value: Number(summaryData?.cashRevenue ?? 0),
+      icon: Money,
+      accent: 'from-brand-500 to-brand-600',
+      iconBg: 'bg-brand-50',
+      iconColor: 'text-brand-600',
+    },
+    {
+      label: '이체',
+      value: Number(summaryData?.transferRevenue ?? 0),
+      icon: Bank,
+      accent: 'from-amber-500 to-amber-600',
+      iconBg: 'bg-amber-50',
+      iconColor: 'text-amber-600',
+    },
+  ], [summaryData]);
+
+  const goPrev = () => {
+    const d = new Date(selectedDate);
+    d.setDate(d.getDate() - 1);
+    setSelectedDate(d);
+  };
+  const goNext = () => {
+    const d = new Date(selectedDate);
+    d.setDate(d.getDate() + 1);
+    setSelectedDate(d);
+  };
+
+  if (isLoading) {
+    return (
+      <div className="space-y-6 animate-fade-in">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">매출/결제</h1>
+          <p className="mt-1 text-sm text-zinc-500">오늘의 매출 현황을 확인하세요</p>
+        </div>
+        <div className="animate-fade-in space-y-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="h-24 rounded-2xl bg-zinc-100 animate-pulse" />
+            ))}
+          </div>
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="h-16 rounded-2xl bg-zinc-100 animate-pulse" />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="space-y-6 animate-fade-in">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">매출/결제</h1>
+        </div>
+        <div className="rounded-2xl bg-red-50 p-6 ring-1 ring-red-200/50 text-center">
+          <p className="text-sm text-red-600">데이터를 불러오는데 실패했습니다</p>
+          <button onClick={() => { refetchSummary(); refetchPayments(); }} className="mt-2 text-xs text-red-500 underline">다시 시도</button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6 animate-fade-in">
       {/* Header */}
@@ -144,13 +153,13 @@ export function PaymentDashboard() {
         <div className="flex items-center gap-3">
           {/* Date picker */}
           <div className="flex items-center gap-2">
-            <button className="flex h-9 w-9 items-center justify-center rounded-xl bg-white ring-1 ring-zinc-200/50 shadow-soft transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98]">
+            <button onClick={goPrev} className="flex h-9 w-9 items-center justify-center rounded-xl bg-white ring-1 ring-zinc-200/50 shadow-soft transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98]">
               <CaretLeft size={14} className="text-zinc-600" />
             </button>
             <span className="rounded-xl bg-white px-4 py-2 text-sm font-medium text-zinc-700 ring-1 ring-zinc-200/50 shadow-soft font-mono tabular-nums">
-              2026.03.21
+              {formatDateDisplay(selectedDate)}
             </span>
-            <button className="flex h-9 w-9 items-center justify-center rounded-xl bg-white ring-1 ring-zinc-200/50 shadow-soft transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98]">
+            <button onClick={goNext} className="flex h-9 w-9 items-center justify-center rounded-xl bg-white ring-1 ring-zinc-200/50 shadow-soft transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98]">
               <CaretRight size={14} className="text-zinc-600" />
             </button>
           </div>
@@ -218,8 +227,13 @@ export function PaymentDashboard() {
         </div>
 
         {/* Rows */}
-        {mockPayments.map((payment) => {
-          const method = methodConfig[payment.method];
+        {payments.map((payment: any) => {
+          const method = methodConfig[(payment.method as PaymentMethod)] ?? methodConfig.CARD;
+          const customerName = payment.customer?.name ?? '고객';
+          const serviceName = payment.booking?.service?.name ?? payment.serviceName ?? '직접 결제';
+          const staffName = payment.staff?.name ?? '-';
+          const amount = Number(payment.finalAmount ?? payment.amount ?? 0);
+          const time = payment.paidAt ? formatTime(payment.paidAt) : '-';
           return (
             <div
               key={payment.id}
@@ -228,26 +242,26 @@ export function PaymentDashboard() {
               {/* Customer */}
               <div className="flex items-center gap-3 min-w-0">
                 <div className="h-8 w-8 rounded-xl bg-gradient-to-br from-zinc-100 to-zinc-200 flex items-center justify-center text-xs font-semibold text-zinc-600 flex-shrink-0">
-                  {payment.customer[0]}
+                  {customerName[0]}
                 </div>
                 <span className="text-sm font-medium text-zinc-800 truncate">
-                  {payment.customer}
+                  {customerName}
                 </span>
               </div>
 
               {/* Service */}
               <span className="text-sm text-zinc-600 truncate">
-                {payment.service}
+                {serviceName}
               </span>
 
               {/* Staff */}
               <span className="text-sm text-zinc-600">
-                {payment.staff}
+                {staffName}
               </span>
 
               {/* Amount */}
               <span className="text-sm font-mono font-medium text-zinc-900 tabular-nums text-right">
-                {formatCurrency(payment.amount)}
+                {formatCurrency(amount)}
               </span>
 
               {/* Method badge */}
@@ -265,7 +279,7 @@ export function PaymentDashboard() {
 
               {/* Time */}
               <span className="text-sm font-mono text-zinc-500 tabular-nums text-right">
-                {payment.time}
+                {time}
               </span>
             </div>
           );

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   FloppyDisk,
   CaretDown,
@@ -10,6 +10,9 @@ import {
   Storefront,
 } from '@phosphor-icons/react';
 import { cn, formatCurrency } from '@/lib/utils';
+import { useShop } from '@/hooks/use-shop';
+import { useServiceCategories } from '@/hooks/use-services';
+import { useAuthStore } from '@/lib/auth-store';
 
 type DayKey = 'MON' | 'TUE' | 'WED' | 'THU' | 'FRI' | 'SAT' | 'SUN';
 
@@ -38,56 +41,57 @@ interface BusinessHours {
   isOpen: boolean;
 }
 
-const initialShop = {
-  name: 'Beauty Nail Studio',
-  businessType: 'NAIL',
-  phone: '02-1234-5678',
-  address: '서울 강남구 역삼동 123-45',
-  businessHours: {
-    MON: { open: '10:00', close: '20:00', isOpen: true },
-    TUE: { open: '10:00', close: '20:00', isOpen: true },
-    WED: { open: '10:00', close: '20:00', isOpen: true },
-    THU: { open: '10:00', close: '20:00', isOpen: true },
-    FRI: { open: '10:00', close: '21:00', isOpen: true },
-    SAT: { open: '11:00', close: '18:00', isOpen: true },
-    SUN: { open: '00:00', close: '00:00', isOpen: false },
-  } as Record<DayKey, BusinessHours>,
+const defaultBusinessHours: Record<DayKey, BusinessHours> = {
+  MON: { open: '10:00', close: '20:00', isOpen: true },
+  TUE: { open: '10:00', close: '20:00', isOpen: true },
+  WED: { open: '10:00', close: '20:00', isOpen: true },
+  THU: { open: '10:00', close: '20:00', isOpen: true },
+  FRI: { open: '10:00', close: '21:00', isOpen: true },
+  SAT: { open: '11:00', close: '18:00', isOpen: true },
+  SUN: { open: '00:00', close: '00:00', isOpen: false },
 };
 
-const mockServices = [
-  {
-    category: '속눈썹',
-    items: [
-      { name: '속눈썹 연장 (자연)', duration: 90, price: 89000 },
-      { name: '속눈썹 연장 (볼륨)', duration: 120, price: 110000 },
-      { name: '속눈썹 리터치', duration: 45, price: 45000 },
-      { name: '속눈썹 제거 + 케어', duration: 30, price: 35000 },
-    ],
-  },
-  {
-    category: '네일',
-    items: [
-      { name: '젤네일 풀세트', duration: 120, price: 75000 },
-      { name: '아트네일', duration: 90, price: 95000 },
-      { name: '젤 제거', duration: 30, price: 20000 },
-      { name: '네일 케어', duration: 45, price: 35000 },
-    ],
-  },
-  {
-    category: '왁싱',
-    items: [
-      { name: '브라질리언 왁싱', duration: 60, price: 65000 },
-      { name: '언더암 왁싱', duration: 20, price: 25000 },
-      { name: '다리 왁싱', duration: 45, price: 55000 },
-    ],
-  },
-];
-
 export function ShopSettings() {
-  const [shop, setShop] = useState(initialShop);
-  const [expandedCategories, setExpandedCategories] = useState<string[]>([
-    '속눈썹',
-  ]);
+  const { shopId } = useAuthStore();
+  const { data: shopData, isLoading: shopLoading, error: shopError, refetch: refetchShop } = useShop(shopId ?? '');
+  const { data: serviceCategories, isLoading: servicesLoading, error: servicesError, refetch: refetchServices } = useServiceCategories();
+
+  const isLoading = shopLoading || servicesLoading;
+  const error = shopError || servicesError;
+
+  const [shop, setShop] = useState({
+    name: '',
+    businessType: 'NAIL',
+    phone: '',
+    address: '',
+    businessHours: defaultBusinessHours,
+  });
+  const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
+  const [initialized, setInitialized] = useState(false);
+
+  useEffect(() => {
+    if (shopData && !initialized) {
+      const bh = shopData.businessHours ?? defaultBusinessHours;
+      setShop({
+        name: shopData.name ?? '',
+        businessType: shopData.businessType ?? 'NAIL',
+        phone: shopData.phone ?? '',
+        address: shopData.address ?? '',
+        businessHours: typeof bh === 'object' ? bh : defaultBusinessHours,
+      });
+      setInitialized(true);
+    }
+  }, [shopData, initialized]);
+
+  // Build service categories from API
+  const services = (serviceCategories ?? []).map((cat: any) => ({
+    category: cat.name ?? cat.category ?? '카테고리',
+    items: (cat.services ?? cat.items ?? []).map((s: any) => ({
+      name: s.name,
+      duration: s.duration ?? 0,
+      price: Number(s.price ?? 0),
+    })),
+  }));
 
   const toggleCategory = (cat: string) => {
     setExpandedCategories((prev) =>
@@ -107,6 +111,36 @@ export function ShopSettings() {
       },
     }));
   };
+
+  if (isLoading) {
+    return (
+      <div className="space-y-8 animate-fade-in max-w-3xl">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">매장 설정</h1>
+          <p className="mt-1 text-sm text-zinc-500">매장 정보와 서비스를 관리하세요</p>
+        </div>
+        <div className="animate-fade-in space-y-4">
+          {[...Array(3)].map((_, i) => (
+            <div key={i} className="h-16 rounded-2xl bg-zinc-100 animate-pulse" />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="space-y-8 animate-fade-in max-w-3xl">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">매장 설정</h1>
+        </div>
+        <div className="rounded-2xl bg-red-50 p-6 ring-1 ring-red-200/50 text-center">
+          <p className="text-sm text-red-600">데이터를 불러오는데 실패했습니다</p>
+          <button onClick={() => { refetchShop(); refetchServices(); }} className="mt-2 text-xs text-red-500 underline">다시 시도</button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8 animate-fade-in max-w-3xl">
@@ -309,7 +343,7 @@ export function ShopSettings() {
         </div>
 
         <div className="space-y-3">
-          {mockServices.map((category) => {
+          {services.map((category: any) => {
             const isExpanded = expandedCategories.includes(category.category);
             return (
               <div

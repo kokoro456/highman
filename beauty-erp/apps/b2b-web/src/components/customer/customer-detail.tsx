@@ -12,69 +12,7 @@ import {
   Clock,
 } from '@phosphor-icons/react';
 import { cn, formatCurrency } from '@/lib/utils';
-
-const mockCustomerData: Record<
-  string,
-  {
-    id: string;
-    name: string;
-    phone: string;
-    email: string;
-    visitCount: number;
-    totalSpent: number;
-    tags: string[];
-    tier: 'NORMAL' | 'VIP' | 'VVIP';
-    memo: string;
-    registeredAt: string;
-    visits: {
-      id: string;
-      date: string;
-      service: string;
-      staff: string;
-      price: number;
-      status: string;
-    }[];
-  }
-> = {
-  '1': {
-    id: '1',
-    name: '정민서',
-    phone: '010-4821-7293',
-    email: 'jungms@email.com',
-    visitCount: 12,
-    totalSpent: 847000,
-    tags: ['VIP', '속눈썹'],
-    tier: 'VIP',
-    memo: '민감성 피부, 글루 알러지 주의. 저자극 글루 사용 필수.',
-    registeredAt: '2025-06-15',
-    visits: [
-      { id: 'v1', date: '2026-03-19', service: '속눈썹 연장 (자연)', staff: '박서연', price: 89000, status: '완료' },
-      { id: 'v2', date: '2026-03-05', service: '속눈썹 리터치', staff: '박서연', price: 45000, status: '완료' },
-      { id: 'v3', date: '2026-02-20', service: '속눈썹 연장 (볼륨)', staff: '박서연', price: 110000, status: '완료' },
-      { id: 'v4', date: '2026-02-06', service: '속눈썹 리터치', staff: '김도윤', price: 45000, status: '완료' },
-      { id: 'v5', date: '2026-01-22', service: '속눈썹 연장 (자연)', staff: '박서연', price: 89000, status: '완료' },
-      { id: 'v6', date: '2026-01-08', service: '속눈썹 제거 + 케어', staff: '박서연', price: 35000, status: '완료' },
-    ],
-  },
-  '3': {
-    id: '3',
-    name: '한소희',
-    phone: '010-9182-4637',
-    email: 'hansohee@email.com',
-    visitCount: 23,
-    totalSpent: 1834000,
-    tags: ['VVIP', '왁싱', '속눈썹'],
-    tier: 'VVIP',
-    memo: '왁싱 후 진정 케어 필수. 선호 왁스: 하드왁스.',
-    registeredAt: '2024-11-20',
-    visits: [
-      { id: 'v1', date: '2026-03-18', service: '브라질리언 왁싱', staff: '박서연', price: 65000, status: '완료' },
-      { id: 'v2', date: '2026-03-04', service: '속눈썹 연장 (자연)', staff: '박서연', price: 89000, status: '완료' },
-      { id: 'v3', date: '2026-02-18', service: '브라질리언 왁싱', staff: '박서연', price: 65000, status: '완료' },
-      { id: 'v4', date: '2026-02-04', service: '언더암 왁싱', staff: '박서연', price: 25000, status: '완료' },
-    ],
-  },
-};
+import { useCustomer } from '@/hooks/use-customers';
 
 const tierConfig = {
   NORMAL: { label: '일반', bg: 'bg-zinc-100', text: 'text-zinc-600' },
@@ -94,9 +32,50 @@ function formatDateKr(dateStr: string): string {
 }
 
 export function CustomerDetail({ customerId }: { customerId: string }) {
-  // Fallback to customer '1' if not found
-  const customer = mockCustomerData[customerId] || mockCustomerData['1'];
-  const tier = tierConfig[customer.tier];
+  const { data: customer, isLoading, error, refetch } = useCustomer(customerId);
+
+  if (isLoading) {
+    return (
+      <div className="space-y-6 animate-fade-in">
+        <div className="flex items-center gap-4">
+          <Link
+            href="/customers"
+            className="flex h-9 w-9 items-center justify-center rounded-xl bg-white ring-1 ring-zinc-200/50 shadow-soft"
+          >
+            <ArrowLeft size={16} className="text-zinc-600" />
+          </Link>
+          <div className="h-8 w-32 rounded-xl bg-zinc-100 animate-pulse" />
+        </div>
+        <div className="animate-fade-in space-y-4">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="h-16 rounded-2xl bg-zinc-100 animate-pulse" />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !customer) {
+    return (
+      <div className="space-y-6 animate-fade-in">
+        <div className="flex items-center gap-4">
+          <Link
+            href="/customers"
+            className="flex h-9 w-9 items-center justify-center rounded-xl bg-white ring-1 ring-zinc-200/50 shadow-soft"
+          >
+            <ArrowLeft size={16} className="text-zinc-600" />
+          </Link>
+        </div>
+        <div className="rounded-2xl bg-red-50 p-6 ring-1 ring-red-200/50 text-center">
+          <p className="text-sm text-red-600">데이터를 불러오는데 실패했습니다</p>
+          <button onClick={() => refetch()} className="mt-2 text-xs text-red-500 underline">다시 시도</button>
+        </div>
+      </div>
+    );
+  }
+
+  const tier = tierConfig[(customer.tier as keyof typeof tierConfig) ?? 'NORMAL'] ?? tierConfig.NORMAL;
+  const visits = customer.treatmentHistories ?? [];
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -128,7 +107,7 @@ export function CustomerDetail({ customerId }: { customerId: string }) {
               </span>
             </div>
             <p className="text-sm text-zinc-500">
-              {formatDateKr(customer.registeredAt)} 등록
+              {customer.createdAt ? formatDateKr(customer.createdAt) : ''} 등록
             </p>
           </div>
         </div>
@@ -143,23 +122,23 @@ export function CustomerDetail({ customerId }: { customerId: string }) {
               시술 내역
             </h2>
             <span className="text-xs font-mono text-zinc-400 tabular-nums">
-              총 {customer.visits.length}건
+              총 {visits.length}건
             </span>
           </div>
 
           <div className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft overflow-hidden">
-            {customer.visits.map((visit, idx) => (
+            {visits.map((visit: any, idx: number) => (
               <div
                 key={visit.id}
                 className={cn(
                   'flex items-center gap-4 px-6 py-4 transition-colors duration-200 hover:bg-zinc-50/60',
-                  idx < customer.visits.length - 1 && 'border-b border-zinc-50',
+                  idx < visits.length - 1 && 'border-b border-zinc-50',
                 )}
               >
                 {/* Timeline dot */}
                 <div className="flex flex-col items-center self-stretch">
                   <div className="h-2.5 w-2.5 rounded-full bg-brand-400 ring-4 ring-brand-50 flex-shrink-0" />
-                  {idx < customer.visits.length - 1 && (
+                  {idx < visits.length - 1 && (
                     <div className="w-px flex-1 bg-zinc-200/60 mt-1" />
                   )}
                 </div>
@@ -169,18 +148,18 @@ export function CustomerDetail({ customerId }: { customerId: string }) {
                   <div className="flex items-center justify-between gap-4">
                     <div>
                       <p className="text-sm font-medium text-zinc-800">
-                        {visit.service}
+                        {visit.service?.name ?? visit.serviceName ?? '서비스'}
                       </p>
                       <p className="mt-0.5 text-xs text-zinc-500">
-                        담당: {visit.staff}
+                        담당: {visit.staff?.name ?? visit.staffName ?? '-'}
                       </p>
                     </div>
                     <div className="text-right flex-shrink-0">
                       <p className="text-sm font-mono font-medium text-zinc-800 tabular-nums">
-                        {formatCurrency(visit.price)}
+                        {formatCurrency(Number(visit.price ?? visit.amount ?? 0))}
                       </p>
                       <p className="mt-0.5 text-xs font-mono text-zinc-400 tabular-nums">
-                        {formatDateKr(visit.date)}
+                        {formatDateKr(visit.treatmentDate ?? visit.date ?? visit.createdAt)}
                       </p>
                     </div>
                   </div>
@@ -204,7 +183,7 @@ export function CustomerDetail({ customerId }: { customerId: string }) {
                   <Phone size={14} className="text-zinc-500" />
                 </div>
                 <span className="text-sm font-mono text-zinc-700 tabular-nums">
-                  {customer.phone}
+                  {customer.phone ?? '-'}
                 </span>
               </div>
               <div className="flex items-center gap-3">
@@ -212,7 +191,7 @@ export function CustomerDetail({ customerId }: { customerId: string }) {
                   <Envelope size={14} className="text-zinc-500" />
                 </div>
                 <span className="text-sm text-zinc-700">
-                  {customer.email}
+                  {customer.email ?? '-'}
                 </span>
               </div>
             </div>
@@ -229,7 +208,7 @@ export function CustomerDetail({ customerId }: { customerId: string }) {
                   </span>
                 </div>
                 <p className="text-lg font-semibold font-mono text-zinc-900 tabular-nums">
-                  {customer.visitCount}
+                  {customer.visitCount ?? 0}
                   <span className="text-xs font-sans text-zinc-400 ml-0.5">
                     회
                   </span>
@@ -243,7 +222,7 @@ export function CustomerDetail({ customerId }: { customerId: string }) {
                   </span>
                 </div>
                 <p className="text-lg font-semibold font-mono text-zinc-900 tabular-nums">
-                  {formatCurrency(customer.totalSpent)}
+                  {formatCurrency(Number(customer.totalSpent ?? 0))}
                 </p>
               </div>
             </div>
@@ -256,7 +235,7 @@ export function CustomerDetail({ customerId }: { customerId: string }) {
                 태그
               </span>
               <div className="mt-2 flex flex-wrap gap-1.5">
-                {customer.tags.map((tag) => (
+                {(customer.tags ?? []).map((tag: string) => (
                   <span
                     key={tag}
                     className={cn(
@@ -283,7 +262,7 @@ export function CustomerDetail({ customerId }: { customerId: string }) {
                 </button>
               </div>
               <p className="text-sm text-zinc-600 leading-relaxed">
-                {customer.memo}
+                {customer.memo ?? '메모가 없습니다'}
               </p>
             </div>
           </div>

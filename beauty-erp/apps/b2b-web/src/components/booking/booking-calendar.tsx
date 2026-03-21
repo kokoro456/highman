@@ -9,60 +9,8 @@ import {
   Clock,
 } from '@phosphor-icons/react';
 import { cn } from '@/lib/utils';
-
-const mockStaff = [
-  { id: '1', name: '박서연', color: '#10B981', role: 'DESIGNER' },
-  { id: '2', name: '이하은', color: '#6366F1', role: 'DESIGNER' },
-  { id: '3', name: '김도윤', color: '#F59E0B', role: 'ASSISTANT' },
-];
-
-const mockBookings = [
-  {
-    id: '1',
-    customer: '정민서',
-    service: '속눈썹 연장 (자연)',
-    staff: '1',
-    startHour: 10,
-    duration: 90,
-    status: 'CONFIRMED' as const,
-  },
-  {
-    id: '2',
-    customer: '최유진',
-    service: '젤네일 풀세트',
-    staff: '2',
-    startHour: 11,
-    duration: 120,
-    status: 'IN_PROGRESS' as const,
-  },
-  {
-    id: '3',
-    customer: '한소희',
-    service: '브라질리언 왁싱',
-    staff: '1',
-    startHour: 13,
-    duration: 60,
-    status: 'CONFIRMED' as const,
-  },
-  {
-    id: '4',
-    customer: '오서윤',
-    service: '속눈썹 리터치',
-    staff: '3',
-    startHour: 14,
-    duration: 45,
-    status: 'READY' as const,
-  },
-  {
-    id: '5',
-    customer: '윤채원',
-    service: '아트네일',
-    staff: '2',
-    startHour: 15,
-    duration: 90,
-    status: 'COMPLETED' as const,
-  },
-];
+import { useStaff } from '@/hooks/use-staff';
+import { useBookings } from '@/hooks/use-bookings';
 
 type BookingStatus = 'CONFIRMED' | 'IN_PROGRESS' | 'READY' | 'COMPLETED';
 
@@ -114,6 +62,12 @@ export function BookingCalendar() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [currentMinute, setCurrentMinute] = useState(0);
 
+  const { data: staffList, isLoading: staffLoading, error: staffError, refetch: refetchStaff } = useStaff();
+  const { data: bookings, isLoading: bookingsLoading, error: bookingsError, refetch: refetchBookings } = useBookings(currentDate.toISOString());
+
+  const isLoading = staffLoading || bookingsLoading;
+  const error = staffError || bookingsError;
+
   useEffect(() => {
     const update = () => {
       const now = new Date();
@@ -142,7 +96,45 @@ export function BookingCalendar() {
     return (minutesSinceStart / 60) * HOUR_HEIGHT;
   }, [currentMinute]);
 
-  const hasBookings = mockBookings.length > 0;
+  const staffData = staffList ?? [];
+  const bookingData = bookings ?? [];
+  const hasBookings = bookingData.length > 0;
+
+  if (isLoading) {
+    return (
+      <div className="space-y-6 animate-fade-in">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">
+            예약 관리
+          </h1>
+          <p className="mt-1 text-sm text-zinc-500">
+            일정을 확인하고 예약을 관리하세요
+          </p>
+        </div>
+        <div className="animate-fade-in space-y-4">
+          {[...Array(3)].map((_, i) => (
+            <div key={i} className="h-16 rounded-2xl bg-zinc-100 animate-pulse" />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="space-y-6 animate-fade-in">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">
+            예약 관리
+          </h1>
+        </div>
+        <div className="rounded-2xl bg-red-50 p-6 ring-1 ring-red-200/50 text-center">
+          <p className="text-sm text-red-600">데이터를 불러오는데 실패했습니다</p>
+          <button onClick={() => { refetchStaff(); refetchBookings(); }} className="mt-2 text-xs text-red-500 underline">다시 시도</button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -183,7 +175,7 @@ export function BookingCalendar() {
         </div>
       </div>
 
-      {!hasBookings ? (
+      {!hasBookings || staffData.length === 0 ? (
         /* Empty state */
         <div className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft p-16 flex flex-col items-center justify-center text-center">
           <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-zinc-100 mb-6">
@@ -204,11 +196,11 @@ export function BookingCalendar() {
         /* Calendar grid */
         <div className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft overflow-hidden">
           {/* Staff header */}
-          <div className="grid border-b border-zinc-100" style={{ gridTemplateColumns: '72px repeat(3, 1fr)' }}>
+          <div className="grid border-b border-zinc-100" style={{ gridTemplateColumns: `72px repeat(${staffData.length}, 1fr)` }}>
             <div className="p-3 border-r border-zinc-100">
               <Clock size={16} className="text-zinc-400 mx-auto" />
             </div>
-            {mockStaff.map((staff) => (
+            {staffData.map((staff: any) => (
               <div
                 key={staff.id}
                 className="p-3 text-center border-r border-zinc-100 last:border-r-0"
@@ -233,7 +225,7 @@ export function BookingCalendar() {
           <div className="relative overflow-y-auto max-h-[calc(100vh-280px)]">
             <div
               className="grid"
-              style={{ gridTemplateColumns: '72px repeat(3, 1fr)' }}
+              style={{ gridTemplateColumns: `72px repeat(${staffData.length}, 1fr)` }}
             >
               {/* Time labels */}
               <div className="border-r border-zinc-100">
@@ -251,9 +243,9 @@ export function BookingCalendar() {
               </div>
 
               {/* Staff columns */}
-              {mockStaff.map((staff) => {
-                const staffBookings = mockBookings.filter(
-                  (b) => b.staff === staff.id,
+              {staffData.map((staff: any) => {
+                const staffBookings = bookingData.filter(
+                  (b: any) => b.staffId === staff.id,
                 );
                 return (
                   <div
@@ -270,11 +262,21 @@ export function BookingCalendar() {
                     ))}
 
                     {/* Booking blocks */}
-                    {staffBookings.map((booking) => {
+                    {staffBookings.map((booking: any) => {
+                      const startTime = new Date(booking.startTime);
+                      const endTime = new Date(booking.endTime);
+                      const startHour = startTime.getHours();
+                      const startMinute = startTime.getMinutes();
+                      const durationMinutes = (endTime.getTime() - startTime.getTime()) / 60000;
                       const top =
-                        (booking.startHour - START_HOUR) * HOUR_HEIGHT;
-                      const height = (booking.duration / 60) * HOUR_HEIGHT;
-                      const status = statusConfig[booking.status];
+                        (startHour - START_HOUR) * HOUR_HEIGHT + (startMinute / 60) * HOUR_HEIGHT;
+                      const height = (durationMinutes / 60) * HOUR_HEIGHT;
+                      const status = statusConfig[booking.status as BookingStatus];
+                      const bookingStaffColor = booking.staff?.color || staff.color;
+                      const endHour = endTime.getHours();
+                      const endMin = endTime.getMinutes();
+
+                      if (!status) return null;
 
                       return (
                         <div
@@ -283,12 +285,12 @@ export function BookingCalendar() {
                           style={{
                             top: top + 2,
                             height: height - 4,
-                            borderLeft: `4px solid ${staff.color}`,
+                            borderLeft: `4px solid ${bookingStaffColor}`,
                           }}
                         >
                           <div className="flex items-start justify-between gap-1">
                             <p className="text-xs font-semibold text-zinc-800 truncate leading-tight">
-                              {booking.customer}
+                              {booking.customer?.name ?? '고객'}
                             </p>
                             <span
                               className={cn(
@@ -307,15 +309,12 @@ export function BookingCalendar() {
                             </span>
                           </div>
                           <p className="mt-0.5 text-[11px] text-zinc-500 truncate">
-                            {booking.service}
+                            {booking.service?.name ?? '서비스'}
                           </p>
                           <p className="mt-1 text-[10px] font-mono text-zinc-400 tabular-nums">
-                            {String(booking.startHour).padStart(2, '0')}:00 ~{' '}
-                            {String(
-                              booking.startHour +
-                                Math.floor(booking.duration / 60),
-                            ).padStart(2, '0')}
-                            :{String(booking.duration % 60).padStart(2, '0')}
+                            {String(startHour).padStart(2, '0')}:{String(startMinute).padStart(2, '0')} ~{' '}
+                            {String(endHour).padStart(2, '0')}
+                            :{String(endMin).padStart(2, '0')}
                           </p>
                         </div>
                       );

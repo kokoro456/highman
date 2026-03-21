@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import {
   MagnifyingGlass,
@@ -11,81 +11,7 @@ import {
   UserPlus,
 } from '@phosphor-icons/react';
 import { cn, formatCurrency } from '@/lib/utils';
-
-const mockCustomers = [
-  {
-    id: '1',
-    name: '정민서',
-    phone: '010-4821-7293',
-    lastVisit: '2026-03-19',
-    visitCount: 12,
-    totalSpent: 847000,
-    tags: ['VIP', '속눈썹'],
-  },
-  {
-    id: '2',
-    name: '최유진',
-    phone: '010-3847-1926',
-    lastVisit: '2026-03-20',
-    visitCount: 8,
-    totalSpent: 562000,
-    tags: ['네일'],
-  },
-  {
-    id: '3',
-    name: '한소희',
-    phone: '010-9182-4637',
-    lastVisit: '2026-03-18',
-    visitCount: 23,
-    totalSpent: 1834000,
-    tags: ['VVIP', '왁싱', '속눈썹'],
-  },
-  {
-    id: '4',
-    name: '오서윤',
-    phone: '010-2738-8461',
-    lastVisit: '2026-03-15',
-    visitCount: 3,
-    totalSpent: 189000,
-    tags: ['신규'],
-  },
-  {
-    id: '5',
-    name: '윤채원',
-    phone: '010-6194-3728',
-    lastVisit: '2026-03-21',
-    visitCount: 15,
-    totalSpent: 1247000,
-    tags: ['VIP', '네일', '피부'],
-  },
-  {
-    id: '6',
-    name: '김나연',
-    phone: '010-5283-9174',
-    lastVisit: '2026-03-10',
-    visitCount: 6,
-    totalSpent: 423000,
-    tags: ['속눈썹'],
-  },
-  {
-    id: '7',
-    name: '박지우',
-    phone: '010-7392-4815',
-    lastVisit: '2026-03-17',
-    visitCount: 31,
-    totalSpent: 2891000,
-    tags: ['VVIP', '왁싱'],
-  },
-  {
-    id: '8',
-    name: '이수빈',
-    phone: '010-8461-2739',
-    lastVisit: '2026-03-12',
-    visitCount: 1,
-    totalSpent: 65000,
-    tags: ['신규'],
-  },
-];
+import { useCustomers } from '@/hooks/use-customers';
 
 const tagStyles: Record<string, string> = {
   VVIP: 'bg-amber-50 text-amber-700 ring-1 ring-amber-200/50',
@@ -95,7 +21,7 @@ const tagStyles: Record<string, string> = {
 
 function formatDateRelative(dateStr: string): string {
   const date = new Date(dateStr);
-  const now = new Date('2026-03-21');
+  const now = new Date();
   const diffDays = Math.floor(
     (now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24),
   );
@@ -110,19 +36,42 @@ export function CustomerList() {
   const [page, setPage] = useState(1);
   const perPage = 6;
 
-  const filtered = useMemo(() => {
-    if (!search) return mockCustomers;
-    const q = search.toLowerCase();
-    return mockCustomers.filter(
-      (c) =>
-        c.name.includes(q) ||
-        c.phone.includes(q) ||
-        c.tags.some((t) => t.toLowerCase().includes(q)),
-    );
-  }, [search]);
+  const { data: customerData, isLoading, error, refetch } = useCustomers({ page, limit: perPage, search: search || undefined });
 
-  const totalPages = Math.ceil(filtered.length / perPage);
-  const paginated = filtered.slice((page - 1) * perPage, page * perPage);
+  const customers = customerData?.data ?? [];
+  const meta = customerData?.meta;
+  const totalPages = meta?.totalPages ?? 1;
+  const totalCount = meta?.total ?? 0;
+
+  if (isLoading) {
+    return (
+      <div className="space-y-6 animate-fade-in">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">고객 관리</h1>
+          <p className="mt-1 text-sm text-zinc-500">고객 정보를 검색하고 관리하세요</p>
+        </div>
+        <div className="animate-fade-in space-y-4">
+          {[...Array(6)].map((_, i) => (
+            <div key={i} className="h-16 rounded-2xl bg-zinc-100 animate-pulse" />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="space-y-6 animate-fade-in">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">고객 관리</h1>
+        </div>
+        <div className="rounded-2xl bg-red-50 p-6 ring-1 ring-red-200/50 text-center">
+          <p className="text-sm text-red-600">데이터를 불러오는데 실패했습니다</p>
+          <button onClick={() => refetch()} className="mt-2 text-xs text-red-500 underline">다시 시도</button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -138,7 +87,7 @@ export function CustomerList() {
             </p>
           </div>
           <span className="rounded-full bg-zinc-100 px-3 py-1 text-xs font-mono font-medium text-zinc-600 tabular-nums">
-            {mockCustomers.length}명
+            {totalCount}명
           </span>
         </div>
 
@@ -167,7 +116,7 @@ export function CustomerList() {
       </div>
 
       {/* Customer table */}
-      {paginated.length === 0 ? (
+      {customers.length === 0 ? (
         <div className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft p-16 flex flex-col items-center justify-center text-center">
           <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-zinc-100 mb-6">
             <Users size={32} weight="regular" className="text-zinc-400" />
@@ -204,7 +153,7 @@ export function CustomerList() {
           </div>
 
           {/* Table rows */}
-          {paginated.map((customer) => (
+          {customers.map((customer: any) => (
             <Link
               key={customer.id}
               href={`/customers/${customer.id}`}
@@ -213,7 +162,7 @@ export function CustomerList() {
               {/* Name */}
               <div className="flex items-center gap-3 min-w-0">
                 <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-zinc-100 to-zinc-200 flex items-center justify-center text-sm font-semibold text-zinc-600 flex-shrink-0 transition-all duration-300 group-hover:from-brand-50 group-hover:to-brand-100 group-hover:text-brand-700">
-                  {customer.name[0]}
+                  {customer.name?.[0] ?? '?'}
                 </div>
                 <span className="text-sm font-medium text-zinc-800 truncate">
                   {customer.name}
@@ -227,24 +176,24 @@ export function CustomerList() {
 
               {/* Last visit */}
               <span className="text-sm text-zinc-500">
-                {formatDateRelative(customer.lastVisit)}
+                {customer.lastVisitDate ? formatDateRelative(customer.lastVisitDate) : '-'}
               </span>
 
               {/* Visit count */}
               <div className="flex justify-center">
                 <span className="inline-flex items-center justify-center rounded-full bg-zinc-100 px-2.5 py-0.5 text-xs font-mono font-medium text-zinc-700 tabular-nums">
-                  {customer.visitCount}
+                  {customer.visitCount ?? 0}
                 </span>
               </div>
 
               {/* Total spent */}
               <span className="text-sm font-mono font-medium text-zinc-800 tabular-nums text-right">
-                {formatCurrency(customer.totalSpent)}
+                {formatCurrency(Number(customer.totalSpent ?? 0))}
               </span>
 
               {/* Tags */}
               <div className="flex items-center gap-1.5 flex-wrap">
-                {customer.tags.map((tag) => (
+                {(customer.tags ?? []).map((tag: string) => (
                   <span
                     key={tag}
                     className={cn(
