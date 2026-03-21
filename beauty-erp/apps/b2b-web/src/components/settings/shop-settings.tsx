@@ -379,7 +379,7 @@ export function ShopSettings() {
                 {/* Items */}
                 {isExpanded && (
                   <div className="border-t border-zinc-100">
-                    {category.items.map((item, idx) => (
+                    {category.items.map((item: any, idx: number) => (
                       <div
                         key={item.name}
                         className={cn(
