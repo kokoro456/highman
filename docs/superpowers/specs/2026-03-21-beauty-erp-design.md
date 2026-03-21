@@ -2,7 +2,7 @@
 
 **Date:** 2026-03-21
 **Status:** Draft
-**Version:** 1.0
+**Version:** 1.1 (reviewed)
 
 ---
 
@@ -153,7 +153,8 @@ beauty-erp/
 - 노쇼/중복예약 방지 (시간 슬롯 잠금)
 - 네이버 예약 양방향 동기화
 - B2C 온라인 예약 페이지
-- 예약 상태 관리 (READY → BOOKING → COMPLETED / CANCELLED / NO_SHOW)
+- 예약 상태 관리 (READY → CONFIRMED → IN_PROGRESS → COMPLETED / CANCELLED / NO_SHOW)
+- 워크인(예약 없는 방문) 결제 지원
 
 **Data Model:**
 ```
@@ -183,6 +184,7 @@ Schedule {
   breakStartTime  Time?
   breakEndTime    Time?
   isActive        Boolean
+  // UNIQUE constraint: (shopId, staffId, dayOfWeek)
 }
 ```
 
@@ -227,8 +229,9 @@ Customer {
 
 TreatmentHistory {
   id              UUID PK
+  shopId          UUID FK → Shop
   customerId      UUID FK → Customer
-  bookingId       UUID FK → Booking
+  bookingId       UUID FK → Booking?
   staffId         UUID FK → Staff
   serviceId       UUID FK → Service
   serviceName     String   // 시점의 서비스명 보존
@@ -269,6 +272,7 @@ CustomerPhoto {
 - 일별/월별 매출 통계
 - 직원별 매출 추적
 - 환불 처리
+- 워크인(예약 없는 방문) 결제 지원 (bookingId nullable)
 
 **Data Model:**
 ```
@@ -309,6 +313,21 @@ Pass {
   createdAt       DateTime
   updatedAt       DateTime
 }
+
+PassUsage {
+  id              UUID PK
+  passId          UUID FK → Pass
+  paymentId       UUID FK → Payment
+  shopId          UUID FK → Shop
+  type            Enum(USE, REFUND)
+  countUsed       Int?     // TICKET: 사용 횟수
+  amountUsed      Decimal? // MEMBERSHIP: 사용 금액
+  remainingCount  Int?     // 사용 후 잔여 횟수
+  remainingAmount Decimal? // 사용 후 잔여 금액
+  memo            String?
+  usedAt          DateTime
+  createdAt       DateTime
+}
 ```
 
 ### 3.4 Staff Module (직원/인사)
@@ -335,6 +354,8 @@ Staff {
   phone           String
   email           String?
   role            Enum(OWNER, MANAGER, DESIGNER, ASSISTANT, INTERN)
+  // Staff.role은 매장 내 직급. User.role(SHOP_OWNER/SHOP_STAFF)은 플랫폼 인증 역할.
+  // 권한 판단 시: User.role로 1차 인증, Staff.role로 매장 내 세부 권한 결정.
   specialties     String[]   // 전문 시술 목록
   profileImageUrl String?
   color           String     // 캘린더 표시 색상
@@ -381,8 +402,8 @@ Shop {
   description     String?
   profileImageUrl String?
   coverImageUrl   String?
-  businessHours   Json     // {mon: {open: "09:00", close: "21:00"}, ...}
-  closedDays      String[] // ["SUN", "HOLIDAY"]
+  businessHours   Json     // BusinessHours type: {[day: 'MON'|'TUE'|...|'SUN']: {open: string, close: string, isOpen: boolean}}
+  closedDays      String[] // 요일: ["SUN"], 공휴일은 별도 시스템 설정으로 처리
   subscriptionTier Enum(FREE, BASIC, PROFESSIONAL, ENTERPRISE)
   naverPlaceId    String?  // 네이버 예약 연동
   isActive        Boolean default(true)
@@ -420,11 +441,88 @@ Service {
 
 **Purpose:** 푸시 알림, 카카오 알림톡, 예약 리마인더
 
+**Core Entities:**
+- `Notification` — 발송 알림 기록
+- `NotificationTemplate` — 알림톡 템플릿
+
 **Key Features (MVP):**
 - 예약 확정 알림 (카카오 알림톡)
 - 예약 리마인드 (1일 전, 1시간 전)
 - 예약 취소 알림
 - 앱 푸시 알림 (FCM)
+
+**Data Model:**
+```
+Notification {
+  id              UUID PK
+  shopId          UUID FK → Shop
+  recipientId     UUID     // Customer or Staff ID
+  recipientType   Enum(CUSTOMER, STAFF)
+  type            Enum(BOOKING_CONFIRMED, BOOKING_REMINDER, BOOKING_CANCELLED, BOOKING_CHANGED, MARKETING, SYSTEM)
+  channel         Enum(KAKAO_ALIMTALK, FCM_PUSH, SMS)
+  templateId      UUID FK → NotificationTemplate?
+  title           String?
+  content         String
+  status          Enum(PENDING, SENT, FAILED, DELIVERED)
+  externalId      String?   // 카카오/FCM 발송 ID
+  errorMessage    String?
+  scheduledAt     DateTime?
+  sentAt          DateTime?
+  createdAt       DateTime
+}
+
+NotificationTemplate {
+  id              UUID PK
+  type            Enum(BOOKING_CONFIRMED, BOOKING_REMINDER, BOOKING_CANCELLED, BOOKING_CHANGED)
+  channel         Enum(KAKAO_ALIMTALK, SMS)
+  name            String
+  templateCode    String?   // 카카오 알림톡 템플릿 코드
+  content         String    // 변수 포함 템플릿 (e.g., #{customerName}님 예약 확정)
+  isActive        Boolean default(true)
+  createdAt       DateTime
+}
+```
+
+### 3.7 Dashboard Module (대시보드)
+
+**Purpose:** 매출/예약/고객 데이터 집계 및 시각화
+
+**Core Entities:**
+- `DailySales` — 일별 매출 집계 (매일 배치 또는 이벤트 기반 업데이트)
+
+**Key Features (MVP):**
+- 오늘/이번주/이번달 매출 요약
+- 예약 현황 (대기/진행/완료 건수)
+- 직원별 매출/예약 비교
+- 신규/재방문 고객 비율
+
+**Data Model:**
+```
+DailySales {
+  id              UUID PK
+  shopId          UUID FK → Shop
+  date            Date
+  totalRevenue    Decimal
+  cardRevenue     Decimal
+  cashRevenue     Decimal
+  transferRevenue Decimal
+  passRevenue     Decimal
+  refundAmount    Decimal
+  bookingCount    Int
+  completedCount  Int
+  cancelledCount  Int
+  noShowCount     Int
+  newCustomerCount Int
+  returningCustomerCount Int
+  createdAt       DateTime
+  updatedAt       DateTime
+  // UNIQUE constraint: (shopId, date)
+}
+```
+
+**Denormalized Field Sync Strategy:**
+- `Customer.visitCount` / `Customer.totalSpent`: 결제 완료/환불 시 이벤트 기반 업데이트. NestJS EventEmitter 또는 DB trigger 활용. 환불 시 `totalSpent` 차감 처리.
+- `DailySales`: 결제/예약 이벤트 발생 시 실시간 업데이트. 일 1회 배치로 정합성 검증.
 
 ---
 
@@ -470,6 +568,7 @@ User {
 - 양방향 동기화: 네이버 → 시스템, 시스템 → 네이버
 - Webhook 기반 실시간 업데이트
 - 네이버 플레이스 예약 API 활용
+- 충돌 해결: 시스템 측 데이터 우선 (last-write-wins). 충돌 발생 시 로그 기록 및 관리자 알림
 
 ### 5.2 PG Payment (카드결제)
 - 토스페이먼츠 또는 NHN KCP 연동
@@ -500,19 +599,24 @@ User {
 
 ## 7. Development Phases
 
-### Phase 1: MVP (Foundation)
+### Phase 1a: MVP Core (Foundation)
 - 프로젝트 세팅 (Turborepo 모노레포)
 - 인증/인가 시스템 (JWT, RBAC)
 - 매장/서비스 설정 모듈
-- 예약 캘린더 (일/주/월 뷰)
-- 고객 CRM (기본 정보, 시술 이력, 사진)
-- POS/결제 (카드결제 자동 매출 인식, 회원권)
-- 직원 관리 (스케줄, 인센티브)
-- 기본 대시보드 (매출 요약, 예약 현황)
+- 예약 캘린더 (일/주 뷰)
+- 고객 CRM (기본 정보, 시술 이력)
+- POS/결제 기본 (수동 매출 입력, 회원권)
+- 직원 관리 (스케줄, 기본 인센티브)
+- 기본 대시보드
+- B2B 웹 (매장 관리)
+
+### Phase 1b: MVP Extended
+- 카드결제 PG 연동 (자동 매출 인식)
 - 네이버 예약 연동
 - 카카오 알림톡
-- B2B 웹 (매장 관리)
-- B2C 웹 (온라인 예약)
+- B2C 웹 (온라인 예약 페이지)
+- 월 뷰 캘린더
+- 시술 사진 관리
 
 ### Phase 2: Growth (확장)
 - React Native 모바일 앱 (원장님 + 고객)
@@ -550,10 +654,18 @@ User {
 - 동시 접속 처리: 매장당 10명 이상
 
 ### 8.2 Security
-- 고객 전화번호 암호화 저장 (AES-256)
+- PII 암호화 저장 (AES-256): phone, birthDate (한국 개인정보보호법/PIPA 준수)
 - HTTPS 전체 적용
 - SQL Injection, XSS 방지 (Prisma + Zod validation)
-- 개인정보보호법 준수
+- CSRF 보호: Next.js 웹앱에서 httpOnly cookie 사용 시 CSRF 토큰 적용
+- API Rate Limiting: 비인증 100req/min/IP, 인증 1000req/min/user
+- 개인정보보호법(PIPA) 준수
+
+### 8.5 Multi-Tenancy
+- Row-level tenancy: 모든 엔티티에 `shopId` FK로 데이터 격리
+- NestJS Guard/Interceptor에서 요청별 shopId 검증
+- Prisma middleware로 쿼리에 shopId 필터 자동 적용
+- 한 User가 다수 Shop 소유 가능 (Owner 역할)
 
 ### 8.3 Scalability
 - 수평 확장 가능한 API 서버 (stateless)
