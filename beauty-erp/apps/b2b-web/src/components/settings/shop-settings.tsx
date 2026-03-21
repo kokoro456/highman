@@ -10,9 +10,10 @@ import {
   Storefront,
 } from '@phosphor-icons/react';
 import { cn, formatCurrency } from '@/lib/utils';
-import { useShop } from '@/hooks/use-shop';
+import { useShop, useUpdateShop } from '@/hooks/use-shop';
 import { useServiceCategories } from '@/hooks/use-services';
 import { useAuthStore } from '@/lib/auth-store';
+import { SpinnerGap, CheckCircle } from '@phosphor-icons/react';
 
 type DayKey = 'MON' | 'TUE' | 'WED' | 'THU' | 'FRI' | 'SAT' | 'SUN';
 
@@ -68,6 +69,9 @@ export function ShopSettings() {
   });
   const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
   const [initialized, setInitialized] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
+  const [saveError, setSaveError] = useState('');
+  const updateShop = useUpdateShop();
 
   useEffect(() => {
     if (shopData && !initialized) {
@@ -416,10 +420,47 @@ export function ShopSettings() {
       </section>
 
       {/* Save button */}
-      <div className="flex justify-end pb-8">
-        <button className="group relative flex items-center gap-2 rounded-full bg-zinc-900 px-8 py-3.5 text-sm font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-zinc-800 active:scale-[0.98]">
-          <FloppyDisk size={16} weight="bold" />
-          저장하기
+      <div className="flex items-center justify-end gap-3 pb-8">
+        {saveSuccess && (
+          <span className="flex items-center gap-1.5 text-xs font-medium text-brand-600 animate-fade-in">
+            <CheckCircle size={14} weight="fill" />
+            저장되었습니다
+          </span>
+        )}
+        {saveError && (
+          <span className="text-xs text-red-500">{saveError}</span>
+        )}
+        <button
+          onClick={async () => {
+            if (!shopId) return;
+            setSaveError('');
+            setSaveSuccess(false);
+            try {
+              await updateShop.mutateAsync({
+                id: shopId,
+                data: {
+                  name: shop.name,
+                  businessType: shop.businessType,
+                  phone: shop.phone,
+                  address: shop.address,
+                  businessHours: shop.businessHours,
+                },
+              });
+              setSaveSuccess(true);
+              setTimeout(() => setSaveSuccess(false), 3000);
+            } catch (err: any) {
+              setSaveError(err.message || '저장에 실패했습니다');
+            }
+          }}
+          disabled={updateShop.isPending}
+          className="group relative flex items-center gap-2 rounded-full bg-zinc-900 px-8 py-3.5 text-sm font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-zinc-800 active:scale-[0.98] disabled:opacity-60"
+        >
+          {updateShop.isPending ? (
+            <SpinnerGap size={16} className="animate-spin" />
+          ) : (
+            <FloppyDisk size={16} weight="bold" />
+          )}
+          {updateShop.isPending ? '저장 중...' : '저장하기'}
         </button>
       </div>
     </div>

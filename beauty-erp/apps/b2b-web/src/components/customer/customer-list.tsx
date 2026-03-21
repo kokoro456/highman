@@ -12,6 +12,7 @@ import {
 } from '@phosphor-icons/react';
 import { cn, formatCurrency } from '@/lib/utils';
 import { useCustomers } from '@/hooks/use-customers';
+import { CustomerFormModal } from './customer-form-modal';
 
 const tagStyles: Record<string, string> = {
   VVIP: 'bg-amber-50 text-amber-700 ring-1 ring-amber-200/50',
@@ -34,6 +35,7 @@ function formatDateRelative(dateStr: string): string {
 export function CustomerList() {
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
+  const [showCreateModal, setShowCreateModal] = useState(false);
   const perPage = 6;
 
   const { data: customerData, isLoading, error, refetch } = useCustomers({ page, limit: perPage, search: search || undefined });
@@ -108,7 +110,10 @@ export function CustomerList() {
           </div>
 
           {/* Add button */}
-          <button className="flex items-center gap-2 rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-zinc-800 active:scale-[0.98] whitespace-nowrap">
+          <button
+            onClick={() => setShowCreateModal(true)}
+            className="flex items-center gap-2 rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-zinc-800 active:scale-[0.98] whitespace-nowrap"
+          >
             <UserPlus size={16} weight="bold" />
             고객 등록
           </button>
@@ -209,6 +214,9 @@ export function CustomerList() {
           ))}
         </div>
       )}
+
+      {/* Customer create modal */}
+      <CustomerFormModal open={showCreateModal} onOpenChange={setShowCreateModal} />
 
       {/* Pagination */}
       {totalPages > 1 && (

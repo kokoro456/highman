@@ -13,6 +13,7 @@ import {
 } from '@phosphor-icons/react';
 import { cn, formatCurrency } from '@/lib/utils';
 import { usePayments, usePaymentSummary } from '@/hooks/use-payments';
+import { PaymentFormModal } from './payment-form-modal';
 
 type PaymentMethod = 'CARD' | 'CASH' | 'TRANSFER' | 'PASS';
 
@@ -47,6 +48,7 @@ function formatTime(dateStr: string): string {
 
 export function PaymentDashboard() {
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [showCreateModal, setShowCreateModal] = useState(false);
   const dateString = formatDateISO(selectedDate);
 
   const { data: summaryData, isLoading: summaryLoading, error: summaryError, refetch: refetchSummary } = usePaymentSummary(dateString);
@@ -165,7 +167,10 @@ export function PaymentDashboard() {
           </div>
 
           {/* Add button */}
-          <button className="flex items-center gap-2 rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-zinc-800 active:scale-[0.98] whitespace-nowrap">
+          <button
+            onClick={() => setShowCreateModal(true)}
+            className="flex items-center gap-2 rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-zinc-800 active:scale-[0.98] whitespace-nowrap"
+          >
             <Plus size={16} weight="bold" />
             결제 등록
           </button>
@@ -285,6 +290,9 @@ export function PaymentDashboard() {
           );
         })}
       </div>
+
+      {/* Payment create modal */}
+      <PaymentFormModal open={showCreateModal} onOpenChange={setShowCreateModal} />
     </div>
   );
 }

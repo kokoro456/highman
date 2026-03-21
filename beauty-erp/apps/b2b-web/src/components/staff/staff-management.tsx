@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import {
   UserPlus,
   CalendarDots,
@@ -10,6 +11,7 @@ import {
 } from '@phosphor-icons/react';
 import { cn, formatCurrency } from '@/lib/utils';
 import { useStaff } from '@/hooks/use-staff';
+import { StaffFormModal } from './staff-form-modal';
 
 const dayLabels = ['일', '월', '화', '수', '목', '금', '토'];
 const roleLabels = {
@@ -18,6 +20,7 @@ const roleLabels = {
 };
 
 export function StaffManagement() {
+  const [showCreateModal, setShowCreateModal] = useState(false);
   const { data: staffList, isLoading, error, refetch } = useStaff();
   const staffData = staffList ?? [];
 
@@ -69,7 +72,10 @@ export function StaffManagement() {
           </span>
         </div>
 
-        <button className="flex items-center gap-2 rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-zinc-800 active:scale-[0.98] whitespace-nowrap">
+        <button
+          onClick={() => setShowCreateModal(true)}
+          className="flex items-center gap-2 rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-zinc-800 active:scale-[0.98] whitespace-nowrap"
+        >
           <UserPlus size={16} weight="bold" />
           직원 등록
         </button>
@@ -191,7 +197,10 @@ export function StaffManagement() {
         })}
 
         {/* Empty add card */}
-        <div className="rounded-2xl border-2 border-dashed border-zinc-200 p-6 flex flex-col items-center justify-center text-center min-h-[280px] transition-all duration-300 hover:border-zinc-300 hover:bg-zinc-50/50 cursor-pointer group">
+        <div
+          onClick={() => setShowCreateModal(true)}
+          className="rounded-2xl border-2 border-dashed border-zinc-200 p-6 flex flex-col items-center justify-center text-center min-h-[280px] transition-all duration-300 hover:border-zinc-300 hover:bg-zinc-50/50 cursor-pointer group"
+        >
           <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-zinc-100 mb-4 transition-all duration-300 group-hover:bg-zinc-200">
             <UserCircle size={28} weight="regular" className="text-zinc-400" />
           </div>
@@ -203,6 +212,9 @@ export function StaffManagement() {
           </p>
         </div>
       </div>
+
+      {/* Staff create modal */}
+      <StaffFormModal open={showCreateModal} onOpenChange={setShowCreateModal} />
     </div>
   );
 }
