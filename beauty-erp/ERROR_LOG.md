@@ -38,4 +38,11 @@
 
 <!-- 아래에 실제 오류 기록을 추가합니다 -->
 
-_아직 기록된 오류가 없습니다. 개발 진행 중 오류 발생 시 위 템플릿에 맞춰 기록됩니다._
+### [ENV] Geist 폰트 모듈 미설치
+- **날짜:** 2026-03-21
+- **Phase/Task:** Phase 1a - Task 4 (Next.js B2B Web)
+- **오류 메시지:** `Module not found: Can't resolve 'geist/font/sans'`
+- **원인:** `geist` 패키지가 package.json에 포함되지 않았음. Next.js 14에서 Geist 폰트 사용 시 별도 npm 패키지 필요
+- **해결:** `npm install geist --workspace=@beauty-erp/b2b-web`
+- **예방:** 커스텀 폰트 사용 시 반드시 해당 npm 패키지를 dependencies에 추가. layout.tsx에서 import 시 패키지 존재 여부 확인
+- **관련 파일:** `apps/b2b-web/src/app/layout.tsx`, `apps/b2b-web/package.json`
