@@ -6,6 +6,7 @@ import { FormInput, FormSelect, FormTextarea } from '@/components/ui/form-input'
 import { useCreateStaff, useUpdateStaff } from '@/hooks/use-staff';
 import { cn } from '@/lib/utils';
 import { SpinnerGap } from '@phosphor-icons/react';
+import { toast } from '@/components/ui/toast';
 
 interface StaffFormModalProps {
   open: boolean;
@@ -101,8 +102,10 @@ export function StaffFormModal({ open, onOpenChange, staff }: StaffFormModalProp
       }
       onOpenChange(false);
       resetForm();
+      toast('success', isEditing ? '직원 정보가 수정되었습니다' : '직원이 등록되었습니다');
     } catch (err: any) {
       setSubmitError(err.message || '저장에 실패했습니다');
+      toast('error', err.message || '저장에 실패했습니다');
     }
   }
 

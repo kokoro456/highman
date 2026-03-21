@@ -5,6 +5,7 @@ import { Modal } from '@/components/ui/modal';
 import { FormInput, FormSelect, FormTextarea } from '@/components/ui/form-input';
 import { useCreateCustomer, useUpdateCustomer } from '@/hooks/use-customers';
 import { SpinnerGap } from '@phosphor-icons/react';
+import { toast } from '@/components/ui/toast';
 
 interface CustomerFormModalProps {
   open: boolean;
@@ -89,8 +90,10 @@ export function CustomerFormModal({ open, onOpenChange, customer }: CustomerForm
       }
       onOpenChange(false);
       resetForm();
+      toast('success', isEditing ? '고객 정보가 수정되었습니다' : '고객이 등록되었습니다');
     } catch (err: any) {
       setSubmitError(err.message || '저장에 실패했습니다');
+      toast('error', err.message || '저장에 실패했습니다');
     }
   }
 

@@ -9,6 +9,7 @@ import { useServiceCategories } from '@/hooks/use-services';
 import { useCreateBooking } from '@/hooks/use-bookings';
 import { formatCurrency } from '@/lib/utils';
 import { SpinnerGap } from '@phosphor-icons/react';
+import { toast } from '@/components/ui/toast';
 
 interface BookingFormModalProps {
   open: boolean;
@@ -102,8 +103,10 @@ export function BookingFormModal({ open, onOpenChange, selectedDate }: BookingFo
       });
       onOpenChange(false);
       resetForm();
+      toast('success', '예약이 등록되었습니다');
     } catch (err: any) {
       setSubmitError(err.message || '예약 등록에 실패했습니다');
+      toast('error', err.message || '예약 등록에 실패했습니다');
     }
   }
 

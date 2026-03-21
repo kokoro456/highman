@@ -16,6 +16,8 @@ import {
   Scissors,
 } from '@phosphor-icons/react';
 import { cn } from '@/lib/utils';
+import { useAuthStore } from '@/lib/auth-store';
+import { useShop } from '@/hooks/use-shop';
 
 const navItems = [
   { href: '/dashboard', label: '대시보드', icon: ChartBar },
@@ -29,6 +31,8 @@ const navItems = [
 export function Sidebar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { shopId } = useAuthStore();
+  const { data: shop } = useShop(shopId || '');
 
   return (
     <>
@@ -78,7 +82,9 @@ export function Sidebar() {
         {/* Navigation */}
         <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
           {navItems.map((item) => {
-            const isActive = pathname === item.href;
+            const isActive = item.href === '/dashboard'
+              ? pathname === '/dashboard'
+              : pathname.startsWith(item.href);
             const Icon = item.icon;
             return (
               <Link
@@ -112,14 +118,14 @@ export function Sidebar() {
           <div className="rounded-xl bg-zinc-50/80 p-3 ring-1 ring-zinc-200/40">
             <div className="flex items-center gap-3">
               <div className="h-9 w-9 rounded-lg bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center text-white text-xs font-bold shadow-[0_2px_8px_rgba(16,185,129,0.25)]">
-                B
+                {shop?.name?.[0] ?? 'B'}
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-xs font-semibold text-zinc-800 truncate">
-                  Beauty Nail Studio
+                  {shop?.name ?? '매장명'}
                 </p>
                 <p className="text-[10px] text-zinc-400 truncate">
-                  Professional Plan
+                  {shop?.subscriptionTier ?? 'Free Plan'}
                 </p>
               </div>
             </div>

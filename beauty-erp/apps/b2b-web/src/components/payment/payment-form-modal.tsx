@@ -8,6 +8,7 @@ import { useStaff } from '@/hooks/use-staff';
 import { useCreatePayment, usePasses } from '@/hooks/use-payments';
 import { formatCurrency } from '@/lib/utils';
 import { SpinnerGap } from '@phosphor-icons/react';
+import { toast } from '@/components/ui/toast';
 
 interface PaymentFormModalProps {
   open: boolean;
@@ -94,8 +95,10 @@ export function PaymentFormModal({ open, onOpenChange }: PaymentFormModalProps) 
       });
       onOpenChange(false);
       resetForm();
+      toast('success', '결제가 완료되었습니다');
     } catch (err: any) {
       setSubmitError(err.message || '결제 등록에 실패했습니다');
+      toast('error', err.message || '결제 등록에 실패했습니다');
     }
   }
 

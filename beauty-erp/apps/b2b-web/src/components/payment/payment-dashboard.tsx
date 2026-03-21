@@ -208,6 +208,26 @@ export function PaymentDashboard() {
       </div>
 
       {/* Payment list */}
+      {payments.length === 0 ? (
+        <div className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft p-16 flex flex-col items-center justify-center text-center">
+          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-zinc-100 mb-6">
+            <CreditCard size={32} weight="regular" className="text-zinc-400" />
+          </div>
+          <h3 className="text-lg font-semibold tracking-tight text-zinc-900">
+            결제 내역이 없습니다
+          </h3>
+          <p className="mt-2 text-sm text-zinc-500 max-w-xs">
+            선택한 날짜에 결제 내역이 없습니다
+          </p>
+          <button
+            onClick={() => setShowCreateModal(true)}
+            className="mt-6 flex items-center gap-2 rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-zinc-800 active:scale-[0.98]"
+          >
+            <Plus size={16} weight="bold" />
+            결제 등록
+          </button>
+        </div>
+      ) : (
       <div className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft overflow-hidden">
         {/* Table header */}
         <div className="grid grid-cols-[1fr_1fr_100px_120px_80px_60px] gap-4 px-6 py-3.5 border-b border-zinc-100 bg-zinc-50/50">
@@ -290,6 +310,7 @@ export function PaymentDashboard() {
           );
         })}
       </div>
+      )}
 
       {/* Payment create modal */}
       <PaymentFormModal open={showCreateModal} onOpenChange={setShowCreateModal} />

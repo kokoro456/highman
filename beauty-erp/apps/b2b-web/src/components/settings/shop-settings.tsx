@@ -13,7 +13,8 @@ import { cn, formatCurrency } from '@/lib/utils';
 import { useShop, useUpdateShop } from '@/hooks/use-shop';
 import { useServiceCategories } from '@/hooks/use-services';
 import { useAuthStore } from '@/lib/auth-store';
-import { SpinnerGap, CheckCircle } from '@phosphor-icons/react';
+import { SpinnerGap } from '@phosphor-icons/react';
+import { toast } from '@/components/ui/toast';
 
 type DayKey = 'MON' | 'TUE' | 'WED' | 'THU' | 'FRI' | 'SAT' | 'SUN';
 
@@ -69,7 +70,6 @@ export function ShopSettings() {
   });
   const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
   const [initialized, setInitialized] = useState(false);
-  const [saveSuccess, setSaveSuccess] = useState(false);
   const [saveError, setSaveError] = useState('');
   const updateShop = useUpdateShop();
 
@@ -421,12 +421,6 @@ export function ShopSettings() {
 
       {/* Save button */}
       <div className="flex items-center justify-end gap-3 pb-8">
-        {saveSuccess && (
-          <span className="flex items-center gap-1.5 text-xs font-medium text-brand-600 animate-fade-in">
-            <CheckCircle size={14} weight="fill" />
-            저장되었습니다
-          </span>
-        )}
         {saveError && (
           <span className="text-xs text-red-500">{saveError}</span>
         )}
@@ -434,7 +428,6 @@ export function ShopSettings() {
           onClick={async () => {
             if (!shopId) return;
             setSaveError('');
-            setSaveSuccess(false);
             try {
               await updateShop.mutateAsync({
                 id: shopId,
@@ -446,10 +439,10 @@ export function ShopSettings() {
                   businessHours: shop.businessHours,
                 },
               });
-              setSaveSuccess(true);
-              setTimeout(() => setSaveSuccess(false), 3000);
+              toast('success', '매장 정보가 저장되었습니다');
             } catch (err: any) {
               setSaveError(err.message || '저장에 실패했습니다');
+              toast('error', err.message || '저장에 실패했습니다');
             }
           }}
           disabled={updateShop.isPending}

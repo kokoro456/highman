@@ -127,11 +127,20 @@ export function CustomerList() {
             <Users size={32} weight="regular" className="text-zinc-400" />
           </div>
           <h3 className="text-lg font-semibold tracking-tight text-zinc-900">
-            검색 결과가 없습니다
+            {search ? '검색 결과가 없습니다' : '등록된 고객이 없습니다'}
           </h3>
           <p className="mt-2 text-sm text-zinc-500 max-w-xs">
-            다른 키워드로 검색하거나, 새 고객을 등록해 주세요
+            {search ? '다른 키워드로 검색하거나, 새 고객을 등록해 주세요' : '첫 번째 고객을 등록해보세요'}
           </p>
+          {!search && (
+            <button
+              onClick={() => setShowCreateModal(true)}
+              className="mt-6 flex items-center gap-2 rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-zinc-800 active:scale-[0.98]"
+            >
+              <UserPlus size={16} weight="bold" />
+              고객 등록
+            </button>
+          )}
         </div>
       ) : (
         <div className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft overflow-hidden">

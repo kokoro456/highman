@@ -1,13 +1,26 @@
 'use client';
 
+import Link from 'next/link';
 import { useDashboardOverview, useUpcomingBookings } from '@/hooks/use-dashboard';
+import { usePayments } from '@/hooks/use-payments';
 import { formatCurrency } from '@/lib/utils';
+import {
+  CalendarDots,
+  CreditCard,
+  UserPlus,
+  WarningCircle,
+  ArrowRight,
+  Receipt,
+} from '@phosphor-icons/react';
 
 export default function DashboardPage() {
   const { data: overview, isLoading: overviewLoading, error: overviewError, refetch: refetchOverview } = useDashboardOverview();
   const { data: upcomingBookings, isLoading: bookingsLoading, error: bookingsError, refetch: refetchBookings } = useUpcomingBookings(5);
 
-  const isLoading = overviewLoading || bookingsLoading;
+  const todayISO = new Date().toISOString().split('T')[0];
+  const { data: recentPaymentsData, isLoading: paymentsLoading } = usePayments({ page: 1, startDate: todayISO, endDate: todayISO });
+
+  const isLoading = overviewLoading || bookingsLoading || paymentsLoading;
   const error = overviewError || bookingsError;
 
   if (isLoading) {
@@ -44,14 +57,52 @@ export default function DashboardPage() {
     );
   }
 
+  const todayBookings = Number(overview?.todayBookings ?? 0);
+  const todayNoShows = Number(overview?.todayNoShows ?? 0);
+  const noShowRate = todayBookings > 0 ? ((todayNoShows / todayBookings) * 100).toFixed(1) : '0.0';
+
   const stats = [
-    { label: '오늘 매출', value: formatCurrency(Number(overview?.todayRevenue ?? 0)), unit: '', change: '' },
-    { label: '예약 건수', value: String(overview?.todayBookings ?? 0), unit: '건', change: '' },
-    { label: '신규 고객', value: String(overview?.todayNewCustomers ?? 0), unit: '명', change: '' },
-    { label: '노쇼율', value: String(overview?.todayNoShows ?? 0), unit: '건', change: '' },
+    {
+      label: '오늘 매출',
+      value: formatCurrency(Number(overview?.todayRevenue ?? 0)),
+      unit: '',
+      sub: overview?.weekRevenue ? `이번 주 ${formatCurrency(Number(overview.weekRevenue))}` : '',
+      icon: Receipt,
+      iconBg: 'bg-zinc-100',
+      iconColor: 'text-zinc-600',
+    },
+    {
+      label: '예약 건수',
+      value: String(todayBookings),
+      unit: '건',
+      sub: '',
+      icon: CalendarDots,
+      iconBg: 'bg-brand-50',
+      iconColor: 'text-brand-600',
+      href: '/bookings',
+    },
+    {
+      label: '신규 고객',
+      value: String(overview?.todayNewCustomers ?? 0),
+      unit: '명',
+      sub: '',
+      icon: UserPlus,
+      iconBg: 'bg-blue-50',
+      iconColor: 'text-blue-600',
+    },
+    {
+      label: '노쇼율',
+      value: `${noShowRate}`,
+      unit: '%',
+      sub: `${todayNoShows}건 / ${todayBookings}건`,
+      icon: WarningCircle,
+      iconBg: 'bg-amber-50',
+      iconColor: 'text-amber-600',
+    },
   ];
 
   const upcoming = upcomingBookings ?? [];
+  const recentPayments = (recentPaymentsData?.data ?? []).slice(0, 5);
 
   return (
     <div className="space-y-8 animate-fade-in">
@@ -66,39 +117,87 @@ export default function DashboardPage() {
 
       {/* Stats Grid - Bento Layout */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {stats.map((stat) => (
-          <div
-            key={stat.label}
-            className="rounded-2xl bg-white p-6 ring-1 ring-zinc-200/50 shadow-soft transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5"
-          >
-            <p className="text-xs font-medium text-zinc-500 uppercase tracking-wider">
-              {stat.label}
-            </p>
-            <div className="mt-3 flex items-baseline gap-1">
-              <span className="text-2xl font-semibold tracking-tight text-zinc-900 font-mono">
-                {stat.value}
-              </span>
-              {stat.unit && <span className="text-sm text-zinc-400">{stat.unit}</span>}
-            </div>
-            {stat.change && (
-              <p className="mt-2 text-xs font-medium text-brand-600">
-                {stat.change} vs yesterday
-              </p>
-            )}
-          </div>
-        ))}
+        {stats.map((stat) => {
+          const Icon = stat.icon;
+          const Wrapper = stat.href ? Link : 'div';
+          const wrapperProps = stat.href ? { href: stat.href } : {};
+          return (
+            <Wrapper
+              key={stat.label}
+              {...(wrapperProps as any)}
+              className="rounded-2xl bg-white p-6 ring-1 ring-zinc-200/50 shadow-soft transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5"
+            >
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-xs font-medium text-zinc-500 uppercase tracking-wider">
+                  {stat.label}
+                </p>
+                <div className={`flex h-8 w-8 items-center justify-center rounded-lg ${stat.iconBg}`}>
+                  <Icon size={16} className={stat.iconColor} />
+                </div>
+              </div>
+              <div className="flex items-baseline gap-1">
+                <span className="text-2xl font-semibold tracking-tight text-zinc-900 font-mono">
+                  {stat.value}
+                </span>
+                {stat.unit && <span className="text-sm text-zinc-400">{stat.unit}</span>}
+              </div>
+              {stat.sub && (
+                <p className="mt-2 text-xs text-zinc-400">
+                  {stat.sub}
+                </p>
+              )}
+            </Wrapper>
+          );
+        })}
       </div>
 
       {/* Content */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        {/* 오늘의 예약 */}
         <div className="lg:col-span-2 rounded-2xl bg-white p-6 ring-1 ring-zinc-200/50 shadow-soft min-h-[300px]">
-          <h2 className="text-sm font-medium text-zinc-700">오늘의 예약</h2>
-          <p className="mt-4 text-sm text-zinc-400">예약 캘린더가 여기에 표시됩니다</p>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-sm font-medium text-zinc-700">오늘의 예약</h2>
+            <Link
+              href="/bookings"
+              className="flex items-center gap-1 text-xs font-medium text-zinc-500 hover:text-zinc-700 transition-colors duration-200"
+            >
+              전체 보기
+              <ArrowRight size={12} />
+            </Link>
+          </div>
+          {todayBookings === 0 ? (
+            <div className="flex flex-col items-center justify-center py-12 text-center">
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-zinc-100 mb-4">
+                <CalendarDots size={28} weight="regular" className="text-zinc-400" />
+              </div>
+              <p className="text-sm font-medium text-zinc-600">오늘 예약이 없습니다</p>
+              <p className="mt-1 text-xs text-zinc-400">예약을 등록해보세요</p>
+            </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center py-12 text-center">
+              <span className="text-4xl font-semibold font-mono text-zinc-900 tabular-nums">{todayBookings}</span>
+              <p className="mt-2 text-sm text-zinc-500">건의 예약이 있습니다</p>
+              <Link
+                href="/bookings"
+                className="mt-4 flex items-center gap-2 rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-zinc-800 active:scale-[0.98]"
+              >
+                <CalendarDots size={16} weight="bold" />
+                예약 확인하기
+              </Link>
+            </div>
+          )}
         </div>
+
+        {/* 다가오는 예약 */}
         <div className="rounded-2xl bg-white p-6 ring-1 ring-zinc-200/50 shadow-soft min-h-[300px]">
           <h2 className="text-sm font-medium text-zinc-700 mb-4">다가오는 예약</h2>
           {upcoming.length === 0 ? (
-            <p className="text-sm text-zinc-400">예정된 예약이 없습니다</p>
+            <div className="flex flex-col items-center justify-center py-8 text-center">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-zinc-100 mb-3">
+                <CalendarDots size={24} weight="regular" className="text-zinc-400" />
+              </div>
+              <p className="text-sm text-zinc-400">예정된 예약이 없습니다</p>
+            </div>
           ) : (
             <div className="space-y-3">
               {upcoming.map((booking: any) => {
@@ -123,6 +222,59 @@ export default function DashboardPage() {
             </div>
           )}
         </div>
+      </div>
+
+      {/* 최근 결제 */}
+      <div className="rounded-2xl bg-white p-6 ring-1 ring-zinc-200/50 shadow-soft">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-sm font-medium text-zinc-700">최근 결제</h2>
+          <Link
+            href="/payments"
+            className="flex items-center gap-1 text-xs font-medium text-zinc-500 hover:text-zinc-700 transition-colors duration-200"
+          >
+            전체 보기
+            <ArrowRight size={12} />
+          </Link>
+        </div>
+        {recentPayments.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-8 text-center">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-zinc-100 mb-3">
+              <CreditCard size={24} weight="regular" className="text-zinc-400" />
+            </div>
+            <p className="text-sm text-zinc-400">오늘 결제 내역이 없습니다</p>
+          </div>
+        ) : (
+          <div className="space-y-2">
+            {recentPayments.map((payment: any) => {
+              const customerName = payment.customer?.name ?? '고객';
+              const amount = Number(payment.finalAmount ?? payment.amount ?? 0);
+              const time = payment.paidAt
+                ? `${String(new Date(payment.paidAt).getHours()).padStart(2, '0')}:${String(new Date(payment.paidAt).getMinutes()).padStart(2, '0')}`
+                : '-';
+              return (
+                <div key={payment.id} className="flex items-center justify-between py-2.5 border-b border-zinc-50 last:border-b-0">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className="h-8 w-8 rounded-xl bg-gradient-to-br from-zinc-100 to-zinc-200 flex items-center justify-center text-xs font-semibold text-zinc-600 flex-shrink-0">
+                      {customerName[0]}
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-sm font-medium text-zinc-800 truncate">{customerName}</p>
+                      <p className="text-xs text-zinc-500">{payment.booking?.service?.name ?? payment.serviceName ?? '직접 결제'}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4 flex-shrink-0 ml-3">
+                    <span className="text-sm font-mono font-medium text-zinc-900 tabular-nums">
+                      {formatCurrency(amount)}
+                    </span>
+                    <span className="text-xs font-mono text-zinc-400 tabular-nums">
+                      {time}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );

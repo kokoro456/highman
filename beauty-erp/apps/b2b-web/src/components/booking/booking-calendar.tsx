@@ -10,6 +10,7 @@ import {
   X,
 } from '@phosphor-icons/react';
 import { cn } from '@/lib/utils';
+import { toast } from '@/components/ui/toast';
 import { useStaff } from '@/hooks/use-staff';
 import { useBookings, useUpdateBookingStatus } from '@/hooks/use-bookings';
 import { BookingFormModal } from './booking-form-modal';
@@ -132,8 +133,9 @@ export function BookingCalendar() {
   async function handleStatusChange(bookingId: string, status: string) {
     try {
       await updateStatus.mutateAsync({ id: bookingId, status });
-    } catch {
-      // error handled by query
+      toast('success', '예약 상태가 변경되었습니다');
+    } catch (err: any) {
+      toast('error', err.message || '상태 변경에 실패했습니다');
     }
     setStatusPopup(null);
   }

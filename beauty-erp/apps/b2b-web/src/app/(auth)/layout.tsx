@@ -1,3 +1,5 @@
+import { ToastContainer } from '@/components/ui/toast';
+
 export default function AuthLayout({
   children,
 }: {
@@ -6,6 +8,7 @@ export default function AuthLayout({
   return (
     <div className="min-h-[100dvh] flex items-center justify-center bg-zinc-50 px-4">
       {children}
+      <ToastContainer />
     </div>
   );
 }
