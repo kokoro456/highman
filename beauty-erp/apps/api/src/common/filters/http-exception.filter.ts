@@ -23,11 +23,16 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
       if (typeof exceptionResponse === 'object' && exceptionResponse !== null) {
         const resp = exceptionResponse as Record<string, unknown>;
-        message = (resp.message as string) || exception.message;
+        message = Array.isArray(resp.message)
+          ? resp.message.join(', ')
+          : (resp.message as string) || exception.message;
         code = (resp.code as string) || `HTTP_${status}`;
       } else {
         message = exception.message;
       }
+    } else if (exception instanceof Error) {
+      console.error('[UnhandledError]', exception.message, exception.stack);
+      message = exception.message;
     }
 
     response.status(status).json({

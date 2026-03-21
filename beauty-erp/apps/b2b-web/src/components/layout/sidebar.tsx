@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import {
   CalendarDots,
   Users,
@@ -14,6 +15,7 @@ import {
   List,
   X,
   Scissors,
+  SignOut,
 } from '@phosphor-icons/react';
 import { cn } from '@/lib/utils';
 import { useAuthStore } from '@/lib/auth-store';
@@ -30,9 +32,15 @@ const navItems = [
 
 export function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { shopId } = useAuthStore();
+  const { shopId, logout } = useAuthStore();
   const { data: shop } = useShop(shopId || '');
+
+  const handleLogout = () => {
+    logout();
+    router.push('/login');
+  };
 
   return (
     <>
@@ -113,8 +121,8 @@ export function Sidebar() {
           })}
         </nav>
 
-        {/* Bottom - Shop info */}
-        <div className="border-t border-zinc-100 p-4">
+        {/* Bottom - Shop info + Logout */}
+        <div className="border-t border-zinc-100 p-4 space-y-2">
           <div className="rounded-xl bg-zinc-50/80 p-3 ring-1 ring-zinc-200/40">
             <div className="flex items-center gap-3">
               <div className="h-9 w-9 rounded-lg bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center text-white text-xs font-bold shadow-[0_2px_8px_rgba(16,185,129,0.25)]">
@@ -130,6 +138,13 @@ export function Sidebar() {
               </div>
             </div>
           </div>
+          <button
+            onClick={handleLogout}
+            className="flex w-full items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-medium text-zinc-500 hover:bg-red-50 hover:text-red-600 transition-all duration-200"
+          >
+            <SignOut size={18} weight="regular" />
+            로그아웃
+          </button>
         </div>
       </aside>
     </>

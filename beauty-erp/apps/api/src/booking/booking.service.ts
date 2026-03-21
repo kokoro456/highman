@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
+import { Injectable, NotFoundException, ConflictException, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
@@ -9,10 +9,21 @@ export class BookingService {
     customerId: string; staffId: string; serviceId: string;
     startTime: string; memo?: string; source?: string;
   }) {
+    if (!data.customerId || !data.staffId || !data.serviceId || !data.startTime) {
+      throw new BadRequestException('customerId, staffId, serviceId, startTime are required');
+    }
+
     const service = await this.prisma.service.findFirst({ where: { id: data.serviceId, shopId } });
-    if (!service) throw new NotFoundException('Service not found');
+    if (!service) throw new NotFoundException(`Service not found (id: ${data.serviceId}, shopId: ${shopId})`);
+
+    const customer = await this.prisma.customer.findFirst({ where: { id: data.customerId, shopId } });
+    if (!customer) throw new NotFoundException(`Customer not found (id: ${data.customerId})`);
+
+    const staff = await this.prisma.staff.findFirst({ where: { id: data.staffId, shopId } });
+    if (!staff) throw new NotFoundException(`Staff not found (id: ${data.staffId})`);
 
     const startTime = new Date(data.startTime);
+    if (isNaN(startTime.getTime())) throw new BadRequestException('Invalid startTime format');
     const endTime = new Date(startTime.getTime() + service.duration * 60000);
 
     // Check for conflicts

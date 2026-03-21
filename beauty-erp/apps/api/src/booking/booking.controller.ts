@@ -7,6 +7,9 @@ export class BookingController {
 
   @Post()
   async create(@Headers('x-shop-id') shopId: string, @Body() body: any) {
+    if (!shopId) {
+      throw new (require('@nestjs/common').BadRequestException)('x-shop-id header is required');
+    }
     const booking = await this.bookingService.create(shopId, body);
     return { data: booking, message: 'ok' };
   }
