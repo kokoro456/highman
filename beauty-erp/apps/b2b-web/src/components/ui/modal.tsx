@@ -22,7 +22,7 @@ export function Modal({ open, onOpenChange, title, description, children, size =
           className={cn(
             'fixed left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2',
             'rounded-[2rem] bg-white p-1.5 ring-1 ring-zinc-200/50 shadow-soft-xl',
-            'data-[state=open]:animate-slide-up',
+            'data-[state=open]:animate-fade-in',
             'max-h-[85vh] overflow-hidden',
             size === 'sm' && 'w-full max-w-[400px]',
             size === 'md' && 'w-full max-w-[520px]',

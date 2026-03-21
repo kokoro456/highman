@@ -18,7 +18,7 @@ import {
 import { cn } from '@/lib/utils';
 
 const navItems = [
-  { href: '/', label: '대시보드', icon: ChartBar },
+  { href: '/dashboard', label: '대시보드', icon: ChartBar },
   { href: '/bookings', label: '예약 관리', icon: CalendarDots },
   { href: '/customers', label: '고객 관리', icon: Users },
   { href: '/payments', label: '매출/결제', icon: CreditCard },
