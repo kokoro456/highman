@@ -98,4 +98,64 @@ export class CustomerService {
 
     return history;
   }
+
+  // ==================== Tier System ====================
+
+  private static readonly TIER_THRESHOLDS = [
+    { tier: 'VVIP', min: 3_000_001, discount: 10 },
+    { tier: 'VIP', min: 1_000_001, discount: 8 },
+    { tier: 'GOLD', min: 500_001, discount: 5 },
+    { tier: 'SILVER', min: 100_001, discount: 3 },
+    { tier: 'NORMAL', min: 0, discount: 0 },
+  ] as const;
+
+  calculateTier(totalSpent: number): { tier: string; discount: number; nextTier: string | null; amountToNext: number } {
+    const thresholds = CustomerService.TIER_THRESHOLDS;
+    let currentIdx = thresholds.findIndex((t) => totalSpent >= t.min);
+    if (currentIdx === -1) currentIdx = thresholds.length - 1;
+
+    const current = thresholds[currentIdx];
+    const nextTierEntry = currentIdx > 0 ? thresholds[currentIdx - 1] : null;
+
+    return {
+      tier: current.tier,
+      discount: current.discount,
+      nextTier: nextTierEntry?.tier ?? null,
+      amountToNext: nextTierEntry ? nextTierEntry.min - totalSpent : 0,
+    };
+  }
+
+  getTierBenefits(tier: string): { discount: number; label: string } {
+    const entry = CustomerService.TIER_THRESHOLDS.find((t) => t.tier === tier);
+    return {
+      discount: entry?.discount ?? 0,
+      label: `${entry?.discount ?? 0}% 할인`,
+    };
+  }
+
+  async getCustomerTier(customerId: string, shopId: string) {
+    const customer = await this.prisma.customer.findFirst({
+      where: { id: customerId, shopId },
+      select: { id: true, name: true, totalSpent: true, tier: true },
+    });
+    if (!customer) throw new NotFoundException('고객을 찾을 수 없습니다');
+
+    const totalSpent = Number(customer.totalSpent);
+    const tierInfo = this.calculateTier(totalSpent);
+
+    // Auto-update tier if changed
+    if (tierInfo.tier !== customer.tier) {
+      await this.prisma.customer.update({
+        where: { id: customerId },
+        data: { tier: tierInfo.tier as any },
+      });
+    }
+
+    return {
+      customerId: customer.id,
+      customerName: customer.name,
+      totalSpent,
+      ...tierInfo,
+    };
+  }
 }

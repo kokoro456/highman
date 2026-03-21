@@ -10,6 +10,9 @@ import { CustomerModule } from './customer/customer.module';
 import { PaymentModule } from './payment/payment.module';
 import { StaffModule } from './staff/staff.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { PhotoModule } from './photo/photo.module';
+import { InventoryModule } from './inventory/inventory.module';
+import { NotificationModule } from './notification/notification.module';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
 
 @Module({
@@ -24,6 +27,9 @@ import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
     PaymentModule,
     StaffModule,
     DashboardModule,
+    PhotoModule,
+    InventoryModule,
+    NotificationModule,
   ],
   providers: [
     { provide: APP_GUARD, useClass: JwtAuthGuard },

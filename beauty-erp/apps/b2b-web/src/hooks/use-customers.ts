@@ -52,6 +52,15 @@ export function useUpdateCustomer() {
   });
 }
 
+export function useCustomerTier(id: string) {
+  return useQuery({
+    queryKey: ['customer-tier', id],
+    queryFn: () => api.get<any>(`/customers/${id}/tier`),
+    select: (data) => data.data,
+    enabled: !!id,
+  });
+}
+
 export function useDeleteCustomer() {
   const queryClient = useQueryClient();
   return useMutation({

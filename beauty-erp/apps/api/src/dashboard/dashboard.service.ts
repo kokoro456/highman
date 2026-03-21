@@ -115,4 +115,225 @@ export class DashboardService {
 
     return results;
   }
+
+  // ==================== REPORTS ====================
+
+  async getRevenueReport(shopId: string, period: string, year: number, month: number) {
+    const startDate = new Date(year, month - 1, 1);
+    const endDate = new Date(year, month, 0, 23, 59, 59, 999);
+    const daysInMonth = endDate.getDate();
+
+    const results = [];
+    for (let day = 1; day <= daysInMonth; day++) {
+      const dayStart = new Date(year, month - 1, day);
+      const dayEnd = new Date(year, month - 1, day, 23, 59, 59, 999);
+
+      const [payments, bookingCount] = await Promise.all([
+        this.prisma.payment.aggregate({
+          where: {
+            shopId,
+            paidAt: { gte: dayStart, lte: dayEnd },
+            status: 'COMPLETED',
+          },
+          _sum: { finalAmount: true },
+        }),
+        this.prisma.booking.count({
+          where: {
+            shopId,
+            startTime: { gte: dayStart, lte: dayEnd },
+            status: { in: ['COMPLETED', 'CONFIRMED', 'READY', 'IN_PROGRESS'] },
+          },
+        }),
+      ]);
+
+      results.push({
+        date: dayStart.toISOString().split('T')[0],
+        revenue: Number(payments._sum.finalAmount) || 0,
+        bookingCount,
+      });
+    }
+
+    return results;
+  }
+
+  async getServiceReport(shopId: string, startDate: string, endDate: string) {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    end.setHours(23, 59, 59, 999);
+
+    const bookings = await this.prisma.booking.findMany({
+      where: {
+        shopId,
+        startTime: { gte: start, lte: end },
+        status: { in: ['COMPLETED', 'CONFIRMED', 'READY', 'IN_PROGRESS'] },
+      },
+      include: {
+        service: { include: { category: true } },
+        payments: { where: { status: 'COMPLETED' } },
+      },
+    });
+
+    const serviceMap = new Map<string, {
+      serviceId: string;
+      serviceName: string;
+      categoryName: string;
+      bookingCount: number;
+      revenue: number;
+    }>();
+
+    for (const booking of bookings) {
+      const existing = serviceMap.get(booking.serviceId);
+      const bookingRevenue = booking.payments.reduce(
+        (sum, p) => sum + Number(p.finalAmount),
+        0,
+      );
+
+      if (existing) {
+        existing.bookingCount += 1;
+        existing.revenue += bookingRevenue;
+      } else {
+        serviceMap.set(booking.serviceId, {
+          serviceId: booking.serviceId,
+          serviceName: booking.service.name,
+          categoryName: booking.service.category.name,
+          bookingCount: 1,
+          revenue: bookingRevenue,
+        });
+      }
+    }
+
+    const services = Array.from(serviceMap.values()).sort(
+      (a, b) => b.bookingCount - a.bookingCount,
+    );
+
+    const totalBookings = services.reduce((sum, s) => sum + s.bookingCount, 0);
+    return services.map((s) => ({
+      ...s,
+      percentage: totalBookings > 0
+        ? Math.round((s.bookingCount / totalBookings) * 100)
+        : 0,
+    }));
+  }
+
+  async getCustomerReport(shopId: string, startDate: string, endDate: string) {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    end.setHours(23, 59, 59, 999);
+
+    const [newCustomers, totalCustomersInPeriod, payments, topCustomersRaw] =
+      await Promise.all([
+        this.prisma.customer.count({
+          where: {
+            shopId,
+            firstVisitDate: { gte: start, lte: end },
+          },
+        }),
+        this.prisma.customer.count({
+          where: {
+            shopId,
+            bookings: {
+              some: {
+                startTime: { gte: start, lte: end },
+              },
+            },
+          },
+        }),
+        this.prisma.payment.aggregate({
+          where: {
+            shopId,
+            paidAt: { gte: start, lte: end },
+            status: 'COMPLETED',
+          },
+          _sum: { finalAmount: true },
+          _count: true,
+        }),
+        this.prisma.customer.findMany({
+          where: {
+            shopId,
+            payments: {
+              some: {
+                paidAt: { gte: start, lte: end },
+                status: 'COMPLETED',
+              },
+            },
+          },
+          include: {
+            payments: {
+              where: {
+                paidAt: { gte: start, lte: end },
+                status: 'COMPLETED',
+              },
+              select: { finalAmount: true },
+            },
+            _count: {
+              select: {
+                bookings: {
+                  where: {
+                    startTime: { gte: start, lte: end },
+                  },
+                },
+              },
+            },
+          },
+        }),
+      ]);
+
+    const returningCustomers = totalCustomersInPeriod - newCustomers;
+    const totalRevenue = Number(payments._sum.finalAmount) || 0;
+    const averageSpend =
+      payments._count > 0 ? Math.round(totalRevenue / payments._count) : 0;
+    const retentionRate =
+      totalCustomersInPeriod > 0
+        ? Math.round((returningCustomers / totalCustomersInPeriod) * 100)
+        : 0;
+
+    const topCustomers = topCustomersRaw
+      .map((c) => ({
+        customerId: c.id,
+        customerName: c.name,
+        phone: c.phone,
+        visitCount: c._count.bookings,
+        totalSpent: c.payments.reduce(
+          (sum, p) => sum + Number(p.finalAmount),
+          0,
+        ),
+      }))
+      .sort((a, b) => b.totalSpent - a.totalSpent)
+      .slice(0, 10);
+
+    return {
+      newCustomers,
+      returningCustomers: Math.max(returningCustomers, 0),
+      retentionRate,
+      averageSpend,
+      topCustomers,
+    };
+  }
+
+  async getHourlyReport(shopId: string, startDate: string, endDate: string) {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    end.setHours(23, 59, 59, 999);
+
+    const bookings = await this.prisma.booking.findMany({
+      where: {
+        shopId,
+        startTime: { gte: start, lte: end },
+        status: { in: ['COMPLETED', 'CONFIRMED', 'READY', 'IN_PROGRESS'] },
+      },
+      select: { startTime: true },
+    });
+
+    const hourlyData = Array.from({ length: 24 }, (_, hour) => ({
+      hour,
+      bookingCount: 0,
+    }));
+
+    for (const booking of bookings) {
+      const hour = booking.startTime.getHours();
+      hourlyData[hour].bookingCount += 1;
+    }
+
+    return hourlyData;
+  }
 }

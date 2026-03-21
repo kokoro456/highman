@@ -78,6 +78,9 @@ model Shop {
   dailySales        DailySales[]
   notifications     Notification[]
   staffIncentives   StaffIncentive[]
+  customerPhotos    CustomerPhoto[]
+  inventoryItems      InventoryItem[]
+  inAppNotifications  InAppNotification[]
 
   @@map("shops")
 }
@@ -247,6 +250,8 @@ enum Gender {
 
 enum CustomerTier {
   NORMAL
+  SILVER
+  GOLD
   VIP
   VVIP
 }
@@ -275,23 +280,26 @@ model TreatmentHistory {
 
 model CustomerPhoto {
   id          String    @id @default(uuid())
+  shopId      String
   customerId  String
   treatmentId String?
-  type        PhotoType
-  imageUrl    String
+  type        PhotoType @default(AFTER)
+  imageUrl    String    @db.Text
   caption     String?
   createdAt   DateTime  @default(now())
 
+  shop      Shop              @relation(fields: [shopId], references: [id], onDelete: Cascade)
   customer  Customer          @relation(fields: [customerId], references: [id])
   treatment TreatmentHistory? @relation(fields: [treatmentId], references: [id])
 
+  @@index([customerId])
   @@map("customer_photos")
 }
 
 enum PhotoType {
   BEFORE
   AFTER
-  REFERENCE
+  PROGRESS
 }
 
 // ==================== PAYMENT ====================
@@ -490,6 +498,42 @@ model DailySales {
   @@map("daily_sales")
 }
 
+// ==================== INVENTORY ====================
+
+model InventoryItem {
+  id          String   @id @default(uuid())
+  shopId      String
+  name        String
+  category    String?
+  unit        String   @default("개")
+  quantity    Int      @default(0)
+  minQuantity Int      @default(5)
+  price       Decimal  @default(0) @db.Decimal(12, 2)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  shop Shop           @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  logs InventoryLog[]
+
+  @@index([shopId])
+  @@map("inventory_items")
+}
+
+model InventoryLog {
+  id        String   @id @default(uuid())
+  itemId    String
+  type      String   // IN, OUT, ADJUST
+  quantity  Int
+  memo      String?
+  createdAt DateTime @default(now())
+
+  item InventoryItem @relation(fields: [itemId], references: [id], onDelete: Cascade)
+
+  @@index([itemId])
+  @@map("inventory_logs")
+}
+
 // ==================== NOTIFICATION ====================
 
 model Notification {
@@ -540,6 +584,23 @@ enum NotificationStatus {
   SENT
   FAILED
   DELIVERED
+}
+
+model InAppNotification {
+  id        String   @id @default(uuid())
+  shopId    String
+  userId    String?
+  type      String   // BOOKING_NEW, BOOKING_CANCEL, NO_SHOW, LOW_STOCK, PAYMENT
+  title     String
+  message   String
+  isRead    Boolean  @default(false)
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  shop Shop @relation(fields: [shopId], references: [id], onDelete: Cascade)
+
+  @@index([shopId, isRead])
+  @@map("in_app_notifications")
 }
 
 model NotificationTemplate {

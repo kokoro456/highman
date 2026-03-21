@@ -38,4 +38,52 @@ export class DashboardController {
     const performance = await this.dashboardService.getStaffPerformance(shopId, startDate, endDate);
     return { data: performance, message: 'ok' };
   }
+
+  // ==================== REPORTS ====================
+
+  @Get('reports/revenue')
+  async getRevenueReport(
+    @Headers('x-shop-id') shopId: string,
+    @Query('period') period: string,
+    @Query('year') year: string,
+    @Query('month') month: string,
+  ) {
+    const data = await this.dashboardService.getRevenueReport(
+      shopId,
+      period || 'monthly',
+      parseInt(year) || new Date().getFullYear(),
+      parseInt(month) || new Date().getMonth() + 1,
+    );
+    return { data, message: 'ok' };
+  }
+
+  @Get('reports/services')
+  async getServiceReport(
+    @Headers('x-shop-id') shopId: string,
+    @Query('startDate') startDate: string,
+    @Query('endDate') endDate: string,
+  ) {
+    const data = await this.dashboardService.getServiceReport(shopId, startDate, endDate);
+    return { data, message: 'ok' };
+  }
+
+  @Get('reports/customers')
+  async getCustomerReport(
+    @Headers('x-shop-id') shopId: string,
+    @Query('startDate') startDate: string,
+    @Query('endDate') endDate: string,
+  ) {
+    const data = await this.dashboardService.getCustomerReport(shopId, startDate, endDate);
+    return { data, message: 'ok' };
+  }
+
+  @Get('reports/hourly')
+  async getHourlyReport(
+    @Headers('x-shop-id') shopId: string,
+    @Query('startDate') startDate: string,
+    @Query('endDate') endDate: string,
+  ) {
+    const data = await this.dashboardService.getHourlyReport(shopId, startDate, endDate);
+    return { data, message: 'ok' };
+  }
 }

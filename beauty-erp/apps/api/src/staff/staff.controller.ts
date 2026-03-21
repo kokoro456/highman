@@ -56,6 +56,29 @@ export class StaffController {
     return { data: incentive, message: 'ok' };
   }
 
+  @Get('settlement')
+  async getMonthlySettlement(
+    @Headers('x-shop-id') shopId: string,
+    @Query('month') month: string,
+  ) {
+    if (!shopId) throw new BadRequestException('shopId is required');
+    if (!month) throw new BadRequestException('month is required (format: YYYY-MM)');
+    const data = await this.staffService.getMonthlySettlement(shopId, month);
+    return { data, message: 'ok' };
+  }
+
+  @Get(':id/settlement')
+  async getStaffSettlementDetail(
+    @Param('id') id: string,
+    @Headers('x-shop-id') shopId: string,
+    @Query('month') month: string,
+  ) {
+    if (!shopId) throw new BadRequestException('shopId is required');
+    if (!month) throw new BadRequestException('month is required (format: YYYY-MM)');
+    const data = await this.staffService.getStaffSettlementDetail(shopId, id, month);
+    return { data, message: 'ok' };
+  }
+
   @Get(':id/stats')
   async getStats(
     @Param('id') id: string,

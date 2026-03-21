@@ -26,6 +26,12 @@ export class CustomerController {
     return { ...result, message: 'ok' };
   }
 
+  @Get(':id/tier')
+  async getCustomerTier(@Param('id') id: string, @Headers('x-shop-id') shopId: string) {
+    const tier = await this.customerService.getCustomerTier(id, shopId);
+    return { data: tier, message: 'ok' };
+  }
+
   @Get(':id')
   async findById(@Param('id') id: string, @Headers('x-shop-id') shopId: string) {
     const customer = await this.customerService.findById(id, shopId);
