@@ -10,12 +10,13 @@
 | 항목 | 상태 |
 |------|------|
 | **현재 Phase** | Phase 1a: MVP Core |
-| **현재 Task** | Phase 1a 배포 완료 |
-| **진행률** | Vercel + Railway + Supabase 라이브 |
+| **현재 Task** | Phase 1a 완료 + UI/UX 개선 완료 |
+| **진행률** | 배포 완료, CRUD 동작, 토스트/로그아웃 추가됨 |
 | **마지막 업데이트** | 2026-03-21 |
 | **프론트엔드** | https://highman.vercel.app |
 | **API 서버** | https://highman-production.up.railway.app |
 | **DB** | Supabase PostgreSQL (Seoul) |
+| **마지막 커밋** | `7fc8684` feat(erp): UI/UX improvements |
 
 ---
 
