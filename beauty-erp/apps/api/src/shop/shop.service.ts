@@ -6,9 +6,10 @@ import { Prisma } from '@prisma/client';
 export class ShopService {
   constructor(private prisma: PrismaService) {}
 
-  async create(ownerId: string, data: Prisma.ShopCreateInput & { ownerId?: string }) {
+  async create(ownerId: string, data: Record<string, any>) {
+    const { ownerId: _, ...shopData } = data;
     return this.prisma.shop.create({
-      data: { ...data, owner: { connect: { id: ownerId } } },
+      data: { ...shopData, ownerId } as any,
     });
   }
 

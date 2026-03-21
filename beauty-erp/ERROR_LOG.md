@@ -46,3 +46,12 @@
 - **해결:** `npm install geist --workspace=@beauty-erp/b2b-web`
 - **예방:** 커스텀 폰트 사용 시 반드시 해당 npm 패키지를 dependencies에 추가. layout.tsx에서 import 시 패키지 존재 여부 확인
 - **관련 파일:** `apps/b2b-web/src/app/layout.tsx`, `apps/b2b-web/package.json`
+
+### [TYPE] Prisma ShopCreateInput 타입 충돌
+- **날짜:** 2026-03-21
+- **Phase/Task:** Phase 1a - Task 5 (Shop Module)
+- **오류 메시지:** `Type '{ owner: { connect: { id: string } }; ownerId?: string }' is not assignable to type 'XOR<ShopCreateInput, ShopUncheckedCreateInput>'`
+- **원인:** Prisma의 `ShopCreateInput`은 `owner: { connect: { id } }` 관계 방식과 `ownerId` 직접 방식을 동시에 사용할 수 없음 (XOR 타입). spread 연산자로 data를 전달할 때 ownerId가 포함되어 충돌 발생
+- **해결:** `data` 파라미터 타입을 `Record<string, any>`로 변경하고, `ownerId`를 destructuring으로 분리 후 `as any` 캐스팅으로 직접 할당
+- **예방:** Prisma 관계 필드 사용 시 connect/create 방식과 unchecked(직접 FK) 방식 중 하나만 선택. spread로 전달할 때는 충돌 필드를 반드시 제거
+- **관련 파일:** `apps/api/src/shop/shop.service.ts`
