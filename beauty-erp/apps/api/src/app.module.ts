@@ -13,6 +13,8 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { PhotoModule } from './photo/photo.module';
 import { InventoryModule } from './inventory/inventory.module';
 import { NotificationModule } from './notification/notification.module';
+import { ExportModule } from './export/export.module';
+import { CouponModule } from './coupon/coupon.module';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
 
 @Module({
@@ -30,6 +32,8 @@ import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
     PhotoModule,
     InventoryModule,
     NotificationModule,
+    ExportModule,
+    CouponModule,
   ],
   providers: [
     { provide: APP_GUARD, useClass: JwtAuthGuard },

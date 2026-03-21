@@ -10,8 +10,10 @@ import {
   CaretRight,
   Plus,
   Receipt,
+  DownloadSimple,
 } from '@phosphor-icons/react';
 import { cn, formatCurrency } from '@/lib/utils';
+import { useAuthStore } from '@/lib/auth-store';
 import { usePayments, usePaymentSummary } from '@/hooks/use-payments';
 import { PaymentFormModal } from './payment-form-modal';
 
@@ -53,6 +55,22 @@ export function PaymentDashboard() {
 
   const { data: summaryData, isLoading: summaryLoading, error: summaryError, refetch: refetchSummary } = usePaymentSummary(dateString);
   const { data: paymentsData, isLoading: paymentsLoading, error: paymentsError, refetch: refetchPayments } = usePayments({ page: 1, startDate: dateString, endDate: dateString });
+
+  const handleExport = async () => {
+    const token = useAuthStore.getState().accessToken;
+    const shopId = useAuthStore.getState().shopId;
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+    const res = await fetch(`${apiUrl}/api/export/payments?format=csv&startDate=${dateString}&endDate=${dateString}`, {
+      headers: { Authorization: `Bearer ${token}`, 'x-shop-id': shopId || '' },
+    });
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `payments-${dateString}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
 
   const isLoading = summaryLoading || paymentsLoading;
   const error = summaryError || paymentsError;
@@ -165,6 +183,15 @@ export function PaymentDashboard() {
               <CaretRight size={14} className="text-zinc-600" />
             </button>
           </div>
+
+          {/* Export button */}
+          <button
+            onClick={handleExport}
+            className="flex items-center gap-2 rounded-full bg-white px-4 py-2.5 text-sm font-medium text-zinc-700 ring-1 ring-zinc-200/50 shadow-soft transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98] whitespace-nowrap"
+          >
+            <DownloadSimple size={16} weight="bold" />
+            내보내기
+          </button>
 
           {/* Add button */}
           <button

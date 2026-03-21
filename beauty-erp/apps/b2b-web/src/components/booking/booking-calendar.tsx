@@ -10,8 +10,10 @@ import {
   X,
   List,
   GridFour,
+  DownloadSimple,
 } from '@phosphor-icons/react';
 import { cn } from '@/lib/utils';
+import { useAuthStore } from '@/lib/auth-store';
 import { toast } from '@/components/ui/toast';
 import { useStaff } from '@/hooks/use-staff';
 import { useBookings, useUpdateBookingStatus } from '@/hooks/use-bookings';
@@ -81,6 +83,26 @@ export function BookingCalendar() {
   const [statusPopup, setStatusPopup] = useState<{ bookingId: string; x: number; y: number } | null>(null);
   const statusPopupRef = useRef<HTMLDivElement>(null);
   const updateStatus = useUpdateBookingStatus();
+
+  const handleExport = async () => {
+    const token = useAuthStore.getState().accessToken;
+    const shopId = useAuthStore.getState().shopId;
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+    const y = currentDate.getFullYear();
+    const m = String(currentDate.getMonth() + 1).padStart(2, '0');
+    const d = String(currentDate.getDate()).padStart(2, '0');
+    const dateStr = `${y}-${m}-${d}`;
+    const res = await fetch(`${apiUrl}/api/export/bookings?format=csv&startDate=${dateStr}&endDate=${dateStr}`, {
+      headers: { Authorization: `Bearer ${token}`, 'x-shop-id': shopId || '' },
+    });
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `bookings-${dateStr}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
 
   const { data: staffList, isLoading: staffLoading, error: staffError, refetch: refetchStaff } = useStaff();
   const { data: bookings, isLoading: bookingsLoading, error: bookingsError, refetch: refetchBookings } = useBookings(currentDate.toISOString());
@@ -225,6 +247,15 @@ export function BookingCalendar() {
           <span className="ml-2 text-sm font-medium text-zinc-700">
             {formatDate(currentDate)}
           </span>
+
+          {/* Export button */}
+          <button
+            onClick={handleExport}
+            className="ml-2 flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-medium text-zinc-700 ring-1 ring-zinc-200/50 shadow-soft transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98] whitespace-nowrap"
+          >
+            <DownloadSimple size={14} weight="bold" />
+            내보내기
+          </button>
         </div>
       </div>
 

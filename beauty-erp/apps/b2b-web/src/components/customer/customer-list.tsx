@@ -9,8 +9,10 @@ import {
   CaretRight,
   Users,
   UserPlus,
+  DownloadSimple,
 } from '@phosphor-icons/react';
 import { cn, formatCurrency } from '@/lib/utils';
+import { useAuthStore } from '@/lib/auth-store';
 import { useCustomers } from '@/hooks/use-customers';
 import { CustomerFormModal } from './customer-form-modal';
 
@@ -39,6 +41,22 @@ export function CustomerList() {
   const perPage = 6;
 
   const { data: customerData, isLoading, error, refetch } = useCustomers({ page, limit: perPage, search: search || undefined });
+
+  const handleExport = async () => {
+    const token = useAuthStore.getState().accessToken;
+    const shopId = useAuthStore.getState().shopId;
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+    const res = await fetch(`${apiUrl}/api/export/customers?format=csv`, {
+      headers: { Authorization: `Bearer ${token}`, 'x-shop-id': shopId || '' },
+    });
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `customers-${new Date().toISOString().split('T')[0]}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
 
   const customers = customerData?.data ?? [];
   const meta = customerData?.meta;
@@ -108,6 +126,15 @@ export function CustomerList() {
               className="w-full bg-transparent text-sm text-zinc-900 placeholder:text-zinc-400 outline-none"
             />
           </div>
+
+          {/* Export button */}
+          <button
+            onClick={handleExport}
+            className="flex items-center gap-2 rounded-full bg-white px-4 py-2.5 text-sm font-medium text-zinc-700 ring-1 ring-zinc-200/50 shadow-soft transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98] whitespace-nowrap"
+          >
+            <DownloadSimple size={16} weight="bold" />
+            내보내기
+          </button>
 
           {/* Add button */}
           <button
