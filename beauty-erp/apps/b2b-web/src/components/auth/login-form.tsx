@@ -41,13 +41,15 @@ export function LoginForm() {
       const payload = JSON.parse(atob(data.data.accessToken.split('.')[1]));
       setUser({ sub: payload.sub, email: payload.email, role: payload.role });
 
-      // Fetch shops and set first shop
+      // Fetch shops and set first shop with data
       const shopsRes = await fetch(`${API_BASE}/api/shops`, {
         headers: { 'Authorization': `Bearer ${data.data.accessToken}` },
       });
       const shopsData = await shopsRes.json();
       if (shopsData.data?.length > 0) {
-        setShopId(shopsData.data[0].id);
+        // Prefer the main shop that has service data
+        const mainShop = shopsData.data.find((s: any) => s.name === 'Beauty Nail Studio');
+        setShopId(mainShop?.id || shopsData.data[0].id);
       }
 
       router.push('/dashboard');
