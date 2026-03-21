@@ -143,7 +143,53 @@ export function CustomerList() {
           )}
         </div>
       ) : (
-        <div className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft overflow-hidden">
+        <>
+        {/* Mobile card layout */}
+        <div className="md:hidden space-y-3">
+          {customers.map((customer: any) => (
+            <Link
+              key={customer.id}
+              href={`/customers/${customer.id}`}
+              className="block rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft p-4 transition-all duration-200 hover:shadow-soft-lg active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-3">
+                <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-zinc-100 to-zinc-200 flex items-center justify-center text-sm font-semibold text-zinc-600 flex-shrink-0">
+                  {customer.name?.[0] ?? '?'}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-semibold text-zinc-800 truncate">
+                      {customer.name}
+                    </span>
+                    {(customer.tags ?? []).map((tag: string) => (
+                      <span
+                        key={tag}
+                        className={cn(
+                          'rounded-full px-2 py-0.5 text-[10px] font-medium flex-shrink-0',
+                          tagStyles[tag] || 'bg-zinc-100 text-zinc-600',
+                        )}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                  <p className="text-xs font-mono text-zinc-500 tabular-nums mt-0.5">
+                    {customer.phone}
+                  </p>
+                </div>
+              </div>
+              <div className="mt-3 flex items-center justify-between text-xs text-zinc-500">
+                <span>방문 {customer.visitCount ?? 0}회</span>
+                <span className="font-mono font-medium text-zinc-700 tabular-nums">
+                  {formatCurrency(Number(customer.totalSpent ?? 0))}
+                </span>
+              </div>
+            </Link>
+          ))}
+        </div>
+
+        {/* Desktop table layout */}
+        <div className="hidden md:block rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft overflow-hidden">
           {/* Table header */}
           <div className="grid grid-cols-[1fr_140px_100px_80px_120px_160px] gap-4 px-6 py-3.5 border-b border-zinc-100 bg-zinc-50/50">
             <span className="text-[11px] font-medium text-zinc-500 uppercase tracking-wider">
@@ -222,6 +268,7 @@ export function CustomerList() {
             </Link>
           ))}
         </div>
+        </>
       )}
 
       {/* Customer create modal */}

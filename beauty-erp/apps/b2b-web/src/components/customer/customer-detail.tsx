@@ -1,6 +1,8 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import {
   ArrowLeft,
   Phone,
@@ -10,9 +12,16 @@ import {
   Star,
   NotePencil,
   Clock,
+  PencilSimple,
+  TrashSimple,
+  WarningCircle,
+  SpinnerGap,
 } from '@phosphor-icons/react';
 import { cn, formatCurrency } from '@/lib/utils';
-import { useCustomer } from '@/hooks/use-customers';
+import { useCustomer, useDeleteCustomer } from '@/hooks/use-customers';
+import { CustomerFormModal } from '../customer/customer-form-modal';
+import { Modal } from '@/components/ui/modal';
+import { toast } from '@/components/ui/toast';
 
 const tierConfig = {
   NORMAL: { label: '일반', bg: 'bg-zinc-100', text: 'text-zinc-600' },
@@ -33,6 +42,20 @@ function formatDateKr(dateStr: string): string {
 
 export function CustomerDetail({ customerId }: { customerId: string }) {
   const { data: customer, isLoading, error, refetch } = useCustomer(customerId);
+  const deleteCustomer = useDeleteCustomer();
+  const router = useRouter();
+  const [editOpen, setEditOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+
+  async function handleDelete() {
+    try {
+      await deleteCustomer.mutateAsync(customerId);
+      toast('success', '고객이 삭제되었습니다');
+      router.push('/customers');
+    } catch (err: any) {
+      toast('error', err.message || '삭제에 실패했습니다');
+    }
+  }
 
   if (isLoading) {
     return (
@@ -80,36 +103,56 @@ export function CustomerDetail({ customerId }: { customerId: string }) {
   return (
     <div className="space-y-6 animate-fade-in">
       {/* Back + header */}
-      <div className="flex items-center gap-4">
-        <Link
-          href="/customers"
-          className="flex h-9 w-9 items-center justify-center rounded-xl bg-white ring-1 ring-zinc-200/50 shadow-soft transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98]"
-        >
-          <ArrowLeft size={16} className="text-zinc-600" />
-        </Link>
-        <div className="flex items-center gap-3">
-          <div className="h-11 w-11 rounded-2xl bg-gradient-to-br from-zinc-100 to-zinc-200 flex items-center justify-center text-base font-semibold text-zinc-700">
-            {customer.name[0]}
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">
-                {customer.name}
-              </h1>
-              <span
-                className={cn(
-                  'rounded-full px-2.5 py-0.5 text-[10px] uppercase tracking-[0.15em] font-semibold',
-                  tier.bg,
-                  tier.text,
-                )}
-              >
-                {tier.label}
-              </span>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <Link
+            href="/customers"
+            className="flex h-9 w-9 items-center justify-center rounded-xl bg-white ring-1 ring-zinc-200/50 shadow-soft transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98]"
+          >
+            <ArrowLeft size={16} className="text-zinc-600" />
+          </Link>
+          <div className="flex items-center gap-3">
+            <div className="h-11 w-11 rounded-2xl bg-gradient-to-br from-zinc-100 to-zinc-200 flex items-center justify-center text-base font-semibold text-zinc-700">
+              {customer.name[0]}
             </div>
-            <p className="text-sm text-zinc-500">
-              {customer.createdAt ? formatDateKr(customer.createdAt) : ''} 등록
-            </p>
+            <div>
+              <div className="flex items-center gap-2">
+                <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">
+                  {customer.name}
+                </h1>
+                <span
+                  className={cn(
+                    'rounded-full px-2.5 py-0.5 text-[10px] uppercase tracking-[0.15em] font-semibold',
+                    tier.bg,
+                    tier.text,
+                  )}
+                >
+                  {tier.label}
+                </span>
+              </div>
+              <p className="text-sm text-zinc-500">
+                {customer.createdAt ? formatDateKr(customer.createdAt) : ''} 등록
+              </p>
+            </div>
           </div>
+        </div>
+
+        {/* Edit / Delete buttons */}
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setEditOpen(true)}
+            className="flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-xs font-medium text-zinc-700 ring-1 ring-zinc-200/60 shadow-soft transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98]"
+          >
+            <PencilSimple size={14} />
+            편집
+          </button>
+          <button
+            onClick={() => setDeleteOpen(true)}
+            className="flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-xs font-medium text-red-600 ring-1 ring-red-200/60 shadow-soft transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-red-50 hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98]"
+          >
+            <TrashSimple size={14} />
+            삭제
+          </button>
         </div>
       </div>
 
@@ -127,45 +170,51 @@ export function CustomerDetail({ customerId }: { customerId: string }) {
           </div>
 
           <div className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft overflow-hidden">
-            {visits.map((visit: any, idx: number) => (
-              <div
-                key={visit.id}
-                className={cn(
-                  'flex items-center gap-4 px-6 py-4 transition-colors duration-200 hover:bg-zinc-50/60',
-                  idx < visits.length - 1 && 'border-b border-zinc-50',
-                )}
-              >
-                {/* Timeline dot */}
-                <div className="flex flex-col items-center self-stretch">
-                  <div className="h-2.5 w-2.5 rounded-full bg-brand-400 ring-4 ring-brand-50 flex-shrink-0" />
-                  {idx < visits.length - 1 && (
-                    <div className="w-px flex-1 bg-zinc-200/60 mt-1" />
+            {visits.length === 0 ? (
+              <div className="px-6 py-10 text-center">
+                <p className="text-sm text-zinc-400">시술 내역이 없습니다</p>
+              </div>
+            ) : (
+              visits.map((visit: any, idx: number) => (
+                <div
+                  key={visit.id}
+                  className={cn(
+                    'flex items-center gap-4 px-6 py-4 transition-colors duration-200 hover:bg-zinc-50/60',
+                    idx < visits.length - 1 && 'border-b border-zinc-50',
                   )}
-                </div>
+                >
+                  {/* Timeline dot */}
+                  <div className="flex flex-col items-center self-stretch">
+                    <div className="h-2.5 w-2.5 rounded-full bg-brand-400 ring-4 ring-brand-50 flex-shrink-0" />
+                    {idx < visits.length - 1 && (
+                      <div className="w-px flex-1 bg-zinc-200/60 mt-1" />
+                    )}
+                  </div>
 
-                {/* Content */}
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between gap-4">
-                    <div>
-                      <p className="text-sm font-medium text-zinc-800">
-                        {visit.service?.name ?? visit.serviceName ?? '서비스'}
-                      </p>
-                      <p className="mt-0.5 text-xs text-zinc-500">
-                        담당: {visit.staff?.name ?? visit.staffName ?? '-'}
-                      </p>
-                    </div>
-                    <div className="text-right flex-shrink-0">
-                      <p className="text-sm font-mono font-medium text-zinc-800 tabular-nums">
-                        {formatCurrency(Number(visit.price ?? visit.amount ?? 0))}
-                      </p>
-                      <p className="mt-0.5 text-xs font-mono text-zinc-400 tabular-nums">
-                        {formatDateKr(visit.treatmentDate ?? visit.date ?? visit.createdAt)}
-                      </p>
+                  {/* Content */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between gap-4">
+                      <div>
+                        <p className="text-sm font-medium text-zinc-800">
+                          {visit.service?.name ?? visit.serviceName ?? '서비스'}
+                        </p>
+                        <p className="mt-0.5 text-xs text-zinc-500">
+                          담당: {visit.staff?.name ?? visit.staffName ?? '-'}
+                        </p>
+                      </div>
+                      <div className="text-right flex-shrink-0">
+                        <p className="text-sm font-mono font-medium text-zinc-800 tabular-nums">
+                          {formatCurrency(Number(visit.price ?? visit.amount ?? 0))}
+                        </p>
+                        <p className="mt-0.5 text-xs font-mono text-zinc-400 tabular-nums">
+                          {formatDateKr(visit.treatmentDate ?? visit.date ?? visit.createdAt)}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
 
@@ -257,7 +306,10 @@ export function CustomerDetail({ customerId }: { customerId: string }) {
                 <span className="text-[10px] font-medium text-zinc-500 uppercase tracking-wider">
                   메모
                 </span>
-                <button className="flex h-6 w-6 items-center justify-center rounded-lg hover:bg-zinc-100 transition-colors duration-200">
+                <button
+                  onClick={() => setEditOpen(true)}
+                  className="flex h-6 w-6 items-center justify-center rounded-lg hover:bg-zinc-100 transition-colors duration-200"
+                >
                   <NotePencil size={12} className="text-zinc-400" />
                 </button>
               </div>
@@ -268,6 +320,54 @@ export function CustomerDetail({ customerId }: { customerId: string }) {
           </div>
         </div>
       </div>
+
+      {/* Edit Modal */}
+      <CustomerFormModal
+        open={editOpen}
+        onOpenChange={(open) => {
+          setEditOpen(open);
+          if (!open) refetch();
+        }}
+        customer={customer}
+      />
+
+      {/* Delete Confirmation Modal */}
+      <Modal
+        open={deleteOpen}
+        onOpenChange={setDeleteOpen}
+        title="고객 삭제"
+        description="이 작업은 되돌릴 수 없습니다"
+        size="sm"
+      >
+        <div className="space-y-4">
+          <div className="flex items-start gap-3 rounded-xl bg-red-50 px-4 py-3 ring-1 ring-red-200/50">
+            <WarningCircle size={18} weight="fill" className="text-red-500 shrink-0 mt-0.5" />
+            <p className="text-sm text-red-700">
+              <span className="font-semibold">{customer.name}</span> 고객을 삭제하시겠습니까?
+              삭제된 고객의 데이터는 복구할 수 없습니다.
+            </p>
+          </div>
+
+          <div className="flex items-center justify-end gap-3 pt-2">
+            <button
+              type="button"
+              onClick={() => setDeleteOpen(false)}
+              className="rounded-full bg-zinc-100 px-5 py-2.5 text-sm font-medium text-zinc-700 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-zinc-200 active:scale-[0.98]"
+            >
+              취소
+            </button>
+            <button
+              type="button"
+              onClick={handleDelete}
+              disabled={deleteCustomer.isPending}
+              className="flex items-center gap-2 rounded-full bg-red-600 px-6 py-2.5 text-sm font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-red-700 active:scale-[0.98] disabled:opacity-60"
+            >
+              {deleteCustomer.isPending && <SpinnerGap size={16} className="animate-spin" />}
+              삭제
+            </button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }

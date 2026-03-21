@@ -34,20 +34,20 @@ export class StaffService {
         incentives: { where: { isActive: true }, include: { service: true } },
       },
     });
-    if (!staff) throw new NotFoundException('Staff not found');
+    if (!staff) throw new NotFoundException('직원을 찾을 수 없습니다');
     return staff;
   }
 
   async update(id: string, shopId: string, data: any) {
     const staff = await this.prisma.staff.findFirst({ where: { id, shopId } });
-    if (!staff) throw new NotFoundException('Staff not found');
+    if (!staff) throw new NotFoundException('직원을 찾을 수 없습니다');
     if (data.hiredAt) data.hiredAt = new Date(data.hiredAt);
     return this.prisma.staff.update({ where: { id }, data });
   }
 
   async delete(id: string, shopId: string) {
     const staff = await this.prisma.staff.findFirst({ where: { id, shopId } });
-    if (!staff) throw new NotFoundException('Staff not found');
+    if (!staff) throw new NotFoundException('직원을 찾을 수 없습니다');
     return this.prisma.staff.update({ where: { id }, data: { isActive: false } });
   }
 

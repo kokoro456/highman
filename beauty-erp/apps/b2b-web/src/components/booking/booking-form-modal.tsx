@@ -147,30 +147,48 @@ export function BookingFormModal({ open, onOpenChange, selectedDate }: BookingFo
               className="w-full rounded-[calc(0.75rem-2px)] bg-transparent px-4 py-2.5 text-sm text-zinc-900 placeholder:text-zinc-400 outline-none"
             />
           </div>
-          <FormSelect
-            label=""
-            value={form.customerId}
-            onChange={(e) => setForm((p) => ({ ...p, customerId: e.target.value }))}
-            options={customerOptions}
-            error={errors.customerId}
-          />
+          {customers.length === 0 ? (
+            <p className="text-xs text-zinc-400 pl-1">등록된 고객이 없습니다. 먼저 고객을 등록해주세요.</p>
+          ) : (
+            <FormSelect
+              label=""
+              value={form.customerId}
+              onChange={(e) => setForm((p) => ({ ...p, customerId: e.target.value }))}
+              options={customerOptions}
+              error={errors.customerId}
+            />
+          )}
         </div>
 
-        <FormSelect
-          label="담당자"
-          value={form.staffId}
-          onChange={(e) => setForm((p) => ({ ...p, staffId: e.target.value }))}
-          options={staffOptions}
-          error={errors.staffId}
-        />
+        {staff.length === 0 ? (
+          <div className="space-y-2">
+            <label className="text-xs font-medium text-zinc-600 pl-1">담당자</label>
+            <p className="text-xs text-zinc-400 pl-1">등록된 직원이 없습니다. 먼저 직원을 등록해주세요.</p>
+          </div>
+        ) : (
+          <FormSelect
+            label="담당자"
+            value={form.staffId}
+            onChange={(e) => setForm((p) => ({ ...p, staffId: e.target.value }))}
+            options={staffOptions}
+            error={errors.staffId}
+          />
+        )}
 
-        <FormSelect
-          label="서비스"
-          value={form.serviceId}
-          onChange={(e) => setForm((p) => ({ ...p, serviceId: e.target.value }))}
-          options={serviceOptions}
-          error={errors.serviceId}
-        />
+        {serviceOptions.length === 0 ? (
+          <div className="space-y-2">
+            <label className="text-xs font-medium text-zinc-600 pl-1">서비스</label>
+            <p className="text-xs text-zinc-400 pl-1">등록된 서비스가 없습니다. 먼저 서비스를 등록해주세요.</p>
+          </div>
+        ) : (
+          <FormSelect
+            label="서비스"
+            value={form.serviceId}
+            onChange={(e) => setForm((p) => ({ ...p, serviceId: e.target.value }))}
+            options={serviceOptions}
+            error={errors.serviceId}
+          />
+        )}
 
         {/* Show duration and price when service selected */}
         {selectedService && (

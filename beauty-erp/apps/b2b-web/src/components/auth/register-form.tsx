@@ -2,17 +2,108 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Eye, EyeSlash, Sparkle } from '@phosphor-icons/react';
+import { useRouter } from 'next/navigation';
+import { ArrowRight, Eye, EyeSlash, Sparkle, WarningCircle } from '@phosphor-icons/react';
 import { cn } from '@/lib/utils';
+import { useAuthStore } from '@/lib/auth-store';
+
+interface FormErrors {
+  name?: string;
+  email?: string;
+  password?: string;
+}
 
 export function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
+  const [fieldErrors, setFieldErrors] = useState<FormErrors>({});
+  const { setTokens, setUser, setShopId } = useAuthStore();
+  const router = useRouter();
+
+  function validate(): boolean {
+    const errors: FormErrors = {};
+
+    if (!name.trim()) {
+      errors.name = '이름을 입력하세요';
+    }
+
+    if (!email.trim()) {
+      errors.email = '이메일을 입력하세요';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errors.email = '올바른 이메일 형식이 아닙니다';
+    }
+
+    if (!password) {
+      errors.password = '비밀번호를 입력하세요';
+    } else if (password.length < 8) {
+      errors.password = '비밀번호는 8자 이상이어야 합니다';
+    }
+
+    setFieldErrors(errors);
+    return Object.keys(errors).length === 0;
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError(null);
+
+    if (!validate()) return;
+
     setIsLoading(true);
-    setTimeout(() => setIsLoading(false), 1500);
+
+    try {
+      const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+      const res = await fetch(`${API_BASE}/api/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email,
+          password,
+          name,
+          phone: phone || undefined,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        // Handle conflict (duplicate email)
+        if (res.status === 409) {
+          throw new Error('이미 등록된 이메일입니다');
+        }
+        throw new Error(data.error?.message || data.message || '회원가입에 실패했습니다');
+      }
+
+      // Auto-login: set tokens from response
+      setTokens(data.data.accessToken, data.data.refreshToken);
+
+      // Decode JWT to get user info
+      const payload = JSON.parse(atob(data.data.accessToken.split('.')[1]));
+      setUser({ sub: payload.sub, email: payload.email, role: payload.role });
+
+      // Check if user has shops - new user won't have any
+      const shopsRes = await fetch(`${API_BASE}/api/shops`, {
+        headers: { 'Authorization': `Bearer ${data.data.accessToken}` },
+      });
+      const shopsData = await shopsRes.json();
+
+      if (shopsData.data?.length > 0) {
+        setShopId(shopsData.data[0].id);
+        router.push('/dashboard');
+      } else {
+        // New user needs to create a shop - redirect to settings
+        router.push('/settings?onboarding=true');
+      }
+    } catch (err: any) {
+      setError(err.message || '회원가입에 실패했습니다');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -34,38 +125,102 @@ export function RegisterForm() {
             </p>
           </div>
 
+          {error && (
+            <div className="flex items-center gap-2 rounded-xl bg-red-50 px-4 py-3 ring-1 ring-red-200/50 mb-4">
+              <WarningCircle size={16} className="text-red-500 shrink-0" />
+              <p className="text-xs text-red-600">{error}</p>
+            </div>
+          )}
+
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <label className="text-xs font-medium text-zinc-600 pl-1">이름</label>
-              <div className="rounded-xl bg-zinc-50/80 p-0.5 ring-1 ring-zinc-200/60 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] focus-within:ring-brand-400 focus-within:ring-2 focus-within:bg-white">
-                <input type="text" placeholder="홍길동" className="w-full rounded-[calc(0.75rem-2px)] bg-transparent px-4 py-3 text-sm text-zinc-900 placeholder:text-zinc-400 outline-none" required />
+              <div className={cn(
+                'rounded-xl bg-zinc-50/80 p-0.5 ring-1 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] focus-within:ring-2 focus-within:bg-white',
+                fieldErrors.name
+                  ? 'ring-red-300 focus-within:ring-red-400'
+                  : 'ring-zinc-200/60 focus-within:ring-brand-400',
+              )}>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                    if (fieldErrors.name) setFieldErrors((p) => ({ ...p, name: undefined }));
+                  }}
+                  placeholder="홍길동"
+                  className="w-full rounded-[calc(0.75rem-2px)] bg-transparent px-4 py-3 text-sm text-zinc-900 placeholder:text-zinc-400 outline-none"
+                />
               </div>
+              {fieldErrors.name && (
+                <p className="text-[11px] text-red-500 pl-1">{fieldErrors.name}</p>
+              )}
             </div>
 
             <div className="space-y-2">
               <label className="text-xs font-medium text-zinc-600 pl-1">이메일</label>
-              <div className="rounded-xl bg-zinc-50/80 p-0.5 ring-1 ring-zinc-200/60 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] focus-within:ring-brand-400 focus-within:ring-2 focus-within:bg-white">
-                <input type="email" placeholder="name@example.com" className="w-full rounded-[calc(0.75rem-2px)] bg-transparent px-4 py-3 text-sm text-zinc-900 placeholder:text-zinc-400 outline-none" required />
+              <div className={cn(
+                'rounded-xl bg-zinc-50/80 p-0.5 ring-1 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] focus-within:ring-2 focus-within:bg-white',
+                fieldErrors.email
+                  ? 'ring-red-300 focus-within:ring-red-400'
+                  : 'ring-zinc-200/60 focus-within:ring-brand-400',
+              )}>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (fieldErrors.email) setFieldErrors((p) => ({ ...p, email: undefined }));
+                  }}
+                  placeholder="name@example.com"
+                  className="w-full rounded-[calc(0.75rem-2px)] bg-transparent px-4 py-3 text-sm text-zinc-900 placeholder:text-zinc-400 outline-none"
+                />
               </div>
+              {fieldErrors.email && (
+                <p className="text-[11px] text-red-500 pl-1">{fieldErrors.email}</p>
+              )}
             </div>
 
             <div className="space-y-2">
               <label className="text-xs font-medium text-zinc-600 pl-1">전화번호</label>
               <div className="rounded-xl bg-zinc-50/80 p-0.5 ring-1 ring-zinc-200/60 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] focus-within:ring-brand-400 focus-within:ring-2 focus-within:bg-white">
-                <input type="tel" placeholder="010-1234-5678" className="w-full rounded-[calc(0.75rem-2px)] bg-transparent px-4 py-3 text-sm text-zinc-900 placeholder:text-zinc-400 outline-none" />
+                <input
+                  type="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="010-1234-5678 (선택)"
+                  className="w-full rounded-[calc(0.75rem-2px)] bg-transparent px-4 py-3 text-sm text-zinc-900 placeholder:text-zinc-400 outline-none"
+                />
               </div>
             </div>
 
             <div className="space-y-2">
               <label className="text-xs font-medium text-zinc-600 pl-1">비밀번호</label>
-              <div className="rounded-xl bg-zinc-50/80 p-0.5 ring-1 ring-zinc-200/60 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] focus-within:ring-brand-400 focus-within:ring-2 focus-within:bg-white">
+              <div className={cn(
+                'rounded-xl bg-zinc-50/80 p-0.5 ring-1 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] focus-within:ring-2 focus-within:bg-white',
+                fieldErrors.password
+                  ? 'ring-red-300 focus-within:ring-red-400'
+                  : 'ring-zinc-200/60 focus-within:ring-brand-400',
+              )}>
                 <div className="flex items-center">
-                  <input type={showPassword ? 'text' : 'password'} placeholder="영문 + 숫자, 8자 이상" className="w-full rounded-[calc(0.75rem-2px)] bg-transparent px-4 py-3 text-sm text-zinc-900 placeholder:text-zinc-400 outline-none" required />
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                      if (fieldErrors.password) setFieldErrors((p) => ({ ...p, password: undefined }));
+                    }}
+                    placeholder="영문 + 숫자, 8자 이상"
+                    className="w-full rounded-[calc(0.75rem-2px)] bg-transparent px-4 py-3 text-sm text-zinc-900 placeholder:text-zinc-400 outline-none"
+                  />
                   <button type="button" onClick={() => setShowPassword(!showPassword)} className="mr-3 text-zinc-400 hover:text-zinc-600 transition-colors duration-200">
                     {showPassword ? <EyeSlash size={18} /> : <Eye size={18} />}
                   </button>
                 </div>
               </div>
+              {fieldErrors.password && (
+                <p className="text-[11px] text-red-500 pl-1">{fieldErrors.password}</p>
+              )}
             </div>
 
             <button

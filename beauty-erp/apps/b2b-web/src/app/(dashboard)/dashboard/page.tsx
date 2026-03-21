@@ -154,7 +154,7 @@ export default function DashboardPage() {
       {/* Content */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* 오늘의 예약 */}
-        <div className="lg:col-span-2 rounded-2xl bg-white p-6 ring-1 ring-zinc-200/50 shadow-soft min-h-[300px]">
+        <div className="lg:col-span-2 rounded-2xl bg-white p-4 md:p-6 ring-1 ring-zinc-200/50 shadow-soft min-h-[200px] md:min-h-[300px]">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-sm font-medium text-zinc-700">오늘의 예약</h2>
             <Link
@@ -189,7 +189,7 @@ export default function DashboardPage() {
         </div>
 
         {/* 다가오는 예약 */}
-        <div className="rounded-2xl bg-white p-6 ring-1 ring-zinc-200/50 shadow-soft min-h-[300px]">
+        <div className="rounded-2xl bg-white p-4 md:p-6 ring-1 ring-zinc-200/50 shadow-soft min-h-[200px] md:min-h-[300px]">
           <h2 className="text-sm font-medium text-zinc-700 mb-4">다가오는 예약</h2>
           {upcoming.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-8 text-center">
@@ -199,7 +199,7 @@ export default function DashboardPage() {
               <p className="text-sm text-zinc-400">예정된 예약이 없습니다</p>
             </div>
           ) : (
-            <div className="space-y-3">
+            <div className="space-y-3 max-h-[280px] overflow-y-auto">
               {upcoming.map((booking: any) => {
                 const startTime = new Date(booking.startTime);
                 const timeStr = `${String(startTime.getHours()).padStart(2, '0')}:${String(startTime.getMinutes()).padStart(2, '0')}`;
@@ -225,7 +225,7 @@ export default function DashboardPage() {
       </div>
 
       {/* 최근 결제 */}
-      <div className="rounded-2xl bg-white p-6 ring-1 ring-zinc-200/50 shadow-soft">
+      <div className="rounded-2xl bg-white p-4 md:p-6 ring-1 ring-zinc-200/50 shadow-soft">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-sm font-medium text-zinc-700">최근 결제</h2>
           <Link

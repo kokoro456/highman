@@ -1,3 +1,8 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAuthStore } from '@/lib/auth-store';
 import { Sidebar } from '@/components/layout/sidebar';
 import { Header } from '@/components/layout/header';
 import { ToastContainer } from '@/components/ui/toast';
@@ -7,6 +12,35 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const router = useRouter();
+  const accessToken = useAuthStore((s) => s.accessToken);
+  const [isReady, setIsReady] = useState(false);
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    if (!accessToken) {
+      router.replace('/login');
+    } else {
+      setIsReady(true);
+    }
+  }, [hydrated, accessToken, router]);
+
+  if (!isReady) {
+    return (
+      <div className="flex min-h-[100dvh] items-center justify-center bg-zinc-50">
+        <div className="flex flex-col items-center gap-3">
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-emerald-200 border-t-emerald-500" />
+          <p className="text-sm text-zinc-400">로딩 중...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex min-h-[100dvh] bg-zinc-50">
       <Sidebar />

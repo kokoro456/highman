@@ -21,7 +21,7 @@ export class ShopService {
 
   async findById(id: string) {
     const shop = await this.prisma.shop.findUnique({ where: { id } });
-    if (!shop) throw new NotFoundException('Shop not found');
+    if (!shop) throw new NotFoundException('매장을 찾을 수 없습니다');
     return shop;
   }
 

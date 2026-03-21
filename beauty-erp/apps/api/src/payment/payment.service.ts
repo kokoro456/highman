@@ -18,13 +18,13 @@ export class PaymentService {
       const pass = await this.prisma.pass.findFirst({
         where: { id: data.passId, shopId, status: 'ACTIVE' },
       });
-      if (!pass) throw new NotFoundException('Pass not found or inactive');
+      if (!pass) throw new NotFoundException('이용권을 찾을 수 없거나 비활성 상태입니다');
 
       if (pass.type === 'TICKET' && (pass.remainingCount ?? 0) < 1) {
-        throw new BadRequestException('No remaining count on pass');
+        throw new BadRequestException('이용권의 남은 횟수가 없습니다');
       }
       if (pass.type === 'MEMBERSHIP' && (Number(pass.remainingAmount) ?? 0) < data.passAmount) {
-        throw new BadRequestException('Insufficient pass balance');
+        throw new BadRequestException('이용권 잔액이 부족합니다');
       }
     }
 

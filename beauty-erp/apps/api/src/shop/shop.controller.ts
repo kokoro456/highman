@@ -1,10 +1,33 @@
-import { Controller, Get, Post, Put, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Put, Body, Param, BadRequestException } from '@nestjs/common';
 import { ShopService } from './shop.service';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
+import { Public } from '../common/decorators/public.decorator';
 
 @Controller('shops')
 export class ShopController {
   constructor(private readonly shopService: ShopService) {}
+
+  @Public()
+  @Get('public/:id')
+  async publicFindOne(@Param('id') id: string) {
+    if (!id) throw new BadRequestException('shopId is required');
+    const shop = await this.shopService.findById(id);
+    // Return only public-safe fields
+    return {
+      data: {
+        id: shop.id,
+        name: shop.name,
+        phone: shop.phone,
+        address: shop.address,
+        description: shop.description,
+        profileImageUrl: shop.profileImageUrl,
+        coverImageUrl: shop.coverImageUrl,
+        businessHours: shop.businessHours,
+        closedDays: shop.closedDays,
+      },
+      message: 'ok',
+    };
+  }
 
   @Post()
   async create(

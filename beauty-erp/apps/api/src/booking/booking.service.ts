@@ -10,20 +10,20 @@ export class BookingService {
     startTime: string; memo?: string; source?: string;
   }) {
     if (!data.customerId || !data.staffId || !data.serviceId || !data.startTime) {
-      throw new BadRequestException('customerId, staffId, serviceId, startTime are required');
+      throw new BadRequestException('고객, 담당자, 서비스, 시작 시간은 필수 항목입니다');
     }
 
     const service = await this.prisma.service.findFirst({ where: { id: data.serviceId, shopId } });
-    if (!service) throw new NotFoundException(`Service not found (id: ${data.serviceId}, shopId: ${shopId})`);
+    if (!service) throw new NotFoundException(`서비스를 찾을 수 없습니다 (id: ${data.serviceId})`);
 
     const customer = await this.prisma.customer.findFirst({ where: { id: data.customerId, shopId } });
-    if (!customer) throw new NotFoundException(`Customer not found (id: ${data.customerId})`);
+    if (!customer) throw new NotFoundException(`고객을 찾을 수 없습니다 (id: ${data.customerId})`);
 
     const staff = await this.prisma.staff.findFirst({ where: { id: data.staffId, shopId } });
-    if (!staff) throw new NotFoundException(`Staff not found (id: ${data.staffId})`);
+    if (!staff) throw new NotFoundException(`담당 직원을 찾을 수 없습니다 (id: ${data.staffId})`);
 
     const startTime = new Date(data.startTime);
-    if (isNaN(startTime.getTime())) throw new BadRequestException('Invalid startTime format');
+    if (isNaN(startTime.getTime())) throw new BadRequestException('시작 시간 형식이 올바르지 않습니다');
     const endTime = new Date(startTime.getTime() + service.duration * 60000);
 
     // Check for conflicts
@@ -36,7 +36,7 @@ export class BookingService {
         ],
       },
     });
-    if (conflict) throw new ConflictException('Time slot is already booked');
+    if (conflict) throw new ConflictException('해당 시간에 이미 예약이 있습니다');
 
     return this.prisma.booking.create({
       data: {
@@ -75,7 +75,7 @@ export class BookingService {
 
   async updateStatus(id: string, shopId: string, status: string) {
     const booking = await this.prisma.booking.findFirst({ where: { id, shopId } });
-    if (!booking) throw new NotFoundException('Booking not found');
+    if (!booking) throw new NotFoundException('예약을 찾을 수 없습니다');
     return this.prisma.booking.update({
       where: { id },
       data: { status: status as any },
@@ -85,7 +85,7 @@ export class BookingService {
 
   async update(id: string, shopId: string, data: any) {
     const booking = await this.prisma.booking.findFirst({ where: { id, shopId } });
-    if (!booking) throw new NotFoundException('Booking not found');
+    if (!booking) throw new NotFoundException('예약을 찾을 수 없습니다');
 
     if (data.startTime && data.serviceId) {
       const service = await this.prisma.service.findUnique({ where: { id: data.serviceId } });

@@ -39,13 +39,13 @@ export class ServiceService {
 
   async updateService(id: string, shopId: string, data: any) {
     const service = await this.prisma.service.findFirst({ where: { id, shopId } });
-    if (!service) throw new NotFoundException('Service not found');
+    if (!service) throw new NotFoundException('서비스를 찾을 수 없습니다');
     return this.prisma.service.update({ where: { id }, data });
   }
 
   async deleteService(id: string, shopId: string) {
     const service = await this.prisma.service.findFirst({ where: { id, shopId } });
-    if (!service) throw new NotFoundException('Service not found');
+    if (!service) throw new NotFoundException('서비스를 찾을 수 없습니다');
     return this.prisma.service.update({ where: { id }, data: { isActive: false } });
   }
 }

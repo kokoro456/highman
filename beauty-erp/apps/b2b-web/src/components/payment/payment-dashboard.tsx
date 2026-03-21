@@ -228,7 +228,53 @@ export function PaymentDashboard() {
           </button>
         </div>
       ) : (
-      <div className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft overflow-hidden">
+      <>
+      {/* Mobile card layout */}
+      <div className="md:hidden space-y-3">
+        {payments.map((payment: any) => {
+          const method = methodConfig[(payment.method as PaymentMethod)] ?? methodConfig.CARD;
+          const customerName = payment.customer?.name ?? '고객';
+          const serviceName = payment.booking?.service?.name ?? payment.serviceName ?? '직접 결제';
+          const amount = Number(payment.finalAmount ?? payment.amount ?? 0);
+          const time = payment.paidAt ? formatTime(payment.paidAt) : '-';
+          return (
+            <div
+              key={payment.id}
+              className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft p-4"
+            >
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-zinc-100 to-zinc-200 flex items-center justify-center text-xs font-semibold text-zinc-600 flex-shrink-0">
+                    {customerName[0]}
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-sm font-medium text-zinc-800 truncate">{customerName}</p>
+                    <p className="text-xs text-zinc-500 truncate">{serviceName}</p>
+                  </div>
+                </div>
+                <span
+                  className={cn(
+                    'rounded-full px-2.5 py-0.5 text-[10px] font-medium flex-shrink-0',
+                    method.bg,
+                    method.text,
+                  )}
+                >
+                  {method.label}
+                </span>
+              </div>
+              <div className="mt-3 flex items-center justify-between">
+                <span className="text-xs font-mono text-zinc-400 tabular-nums">{time}</span>
+                <span className="text-sm font-mono font-semibold text-zinc-900 tabular-nums">
+                  {formatCurrency(amount)}
+                </span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Desktop table layout */}
+      <div className="hidden md:block rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft overflow-hidden">
         {/* Table header */}
         <div className="grid grid-cols-[1fr_1fr_100px_120px_80px_60px] gap-4 px-6 py-3.5 border-b border-zinc-100 bg-zinc-50/50">
           <span className="text-[11px] font-medium text-zinc-500 uppercase tracking-wider">
@@ -310,6 +356,7 @@ export function PaymentDashboard() {
           );
         })}
       </div>
+      </>
       )}
 
       {/* Payment create modal */}

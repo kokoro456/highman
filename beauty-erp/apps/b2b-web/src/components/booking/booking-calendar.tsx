@@ -8,6 +8,8 @@ import {
   CalendarBlank,
   Clock,
   X,
+  List,
+  GridFour,
 } from '@phosphor-icons/react';
 import { cn } from '@/lib/utils';
 import { toast } from '@/components/ui/toast';
@@ -75,6 +77,7 @@ export function BookingCalendar() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [currentMinute, setCurrentMinute] = useState(0);
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [mobileView, setMobileView] = useState<'list' | 'calendar'>('list');
   const [statusPopup, setStatusPopup] = useState<{ bookingId: string; x: number; y: number } | null>(null);
   const statusPopupRef = useRef<HTMLDivElement>(null);
   const updateStatus = useUpdateBookingStatus();
@@ -227,7 +230,7 @@ export function BookingCalendar() {
 
       {!hasBookings || staffData.length === 0 ? (
         /* Empty state */
-        <div className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft p-16 flex flex-col items-center justify-center text-center">
+        <div className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft p-8 md:p-16 flex flex-col items-center justify-center text-center">
           <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-zinc-100 mb-6">
             <CalendarBlank size={32} weight="regular" className="text-zinc-400" />
           </div>
@@ -246,158 +249,257 @@ export function BookingCalendar() {
           </button>
         </div>
       ) : (
-        /* Calendar grid */
-        <div className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft overflow-hidden">
-          {/* Staff header */}
-          <div className="grid border-b border-zinc-100" style={{ gridTemplateColumns: `72px repeat(${staffData.length}, 1fr)` }}>
-            <div className="p-3 border-r border-zinc-100">
-              <Clock size={16} className="text-zinc-400 mx-auto" />
-            </div>
-            {staffData.map((staff: any) => (
-              <div
-                key={staff.id}
-                className="p-3 text-center border-r border-zinc-100 last:border-r-0"
-              >
-                <div className="flex items-center justify-center gap-2">
-                  <span
-                    className="h-2.5 w-2.5 rounded-full flex-shrink-0"
-                    style={{ backgroundColor: staff.color }}
-                  />
-                  <span className="text-sm font-medium text-zinc-800">
-                    {staff.name}
-                  </span>
-                  <span className="rounded-full bg-zinc-100 px-2 py-0.5 text-[10px] uppercase tracking-[0.1em] font-medium text-zinc-500">
-                    {staff.role === 'DESIGNER' ? '디자이너' : '어시스턴트'}
-                  </span>
-                </div>
-              </div>
-            ))}
+        <>
+          {/* Mobile view toggle */}
+          <div className="flex md:hidden items-center gap-2">
+            <button
+              onClick={() => setMobileView('list')}
+              className={cn(
+                'flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-all duration-200',
+                mobileView === 'list'
+                  ? 'bg-zinc-900 text-white'
+                  : 'bg-white text-zinc-600 ring-1 ring-zinc-200/50',
+              )}
+            >
+              <List size={14} />
+              리스트
+            </button>
+            <button
+              onClick={() => setMobileView('calendar')}
+              className={cn(
+                'flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-all duration-200',
+                mobileView === 'calendar'
+                  ? 'bg-zinc-900 text-white'
+                  : 'bg-white text-zinc-600 ring-1 ring-zinc-200/50',
+              )}
+            >
+              <GridFour size={14} />
+              캘린더
+            </button>
           </div>
 
-          {/* Timeline */}
-          <div className="relative overflow-y-auto max-h-[calc(100vh-280px)]">
-            <div
-              className="grid"
-              style={{ gridTemplateColumns: `72px repeat(${staffData.length}, 1fr)` }}
-            >
-              {/* Time labels */}
-              <div className="border-r border-zinc-100">
-                {hours.map((hour) => (
-                  <div
-                    key={hour}
-                    className="relative border-b border-zinc-50"
-                    style={{ height: HOUR_HEIGHT }}
-                  >
-                    <span className="absolute -top-2.5 right-3 text-[11px] font-mono text-zinc-400 tabular-nums">
-                      {String(hour).padStart(2, '0')}:00
-                    </span>
-                  </div>
-                ))}
-              </div>
+          {/* Mobile list view */}
+          <div className={cn('md:hidden', mobileView !== 'list' && 'hidden')}>
+            <div className="space-y-3">
+              {bookingData
+                .slice()
+                .sort((a: any, b: any) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime())
+                .map((booking: any) => {
+                  const startTime = new Date(booking.startTime);
+                  const endTime = new Date(booking.endTime);
+                  const startHour = startTime.getHours();
+                  const startMinute = startTime.getMinutes();
+                  const endHour = endTime.getHours();
+                  const endMin = endTime.getMinutes();
+                  const status = statusConfig[booking.status as BookingStatus];
+                  const bookingStaff = staffData.find((s: any) => s.id === booking.staffId);
+                  const bookingStaffColor = booking.staff?.color || bookingStaff?.color || '#9CA3AF';
 
-              {/* Staff columns */}
-              {staffData.map((staff: any) => {
-                const staffBookings = bookingData.filter(
-                  (b: any) => b.staffId === staff.id,
-                );
-                return (
-                  <div
-                    key={staff.id}
-                    className="relative border-r border-zinc-100 last:border-r-0"
-                  >
-                    {/* Hour grid lines */}
-                    {hours.map((hour) => (
-                      <div
-                        key={hour}
-                        className="border-b border-zinc-50"
-                        style={{ height: HOUR_HEIGHT }}
-                      />
-                    ))}
+                  if (!status) return null;
 
-                    {/* Booking blocks */}
-                    {staffBookings.map((booking: any) => {
-                      const startTime = new Date(booking.startTime);
-                      const endTime = new Date(booking.endTime);
-                      const startHour = startTime.getHours();
-                      const startMinute = startTime.getMinutes();
-                      const durationMinutes = (endTime.getTime() - startTime.getTime()) / 60000;
-                      const top =
-                        (startHour - START_HOUR) * HOUR_HEIGHT + (startMinute / 60) * HOUR_HEIGHT;
-                      const height = (durationMinutes / 60) * HOUR_HEIGHT;
-                      const status = statusConfig[booking.status as BookingStatus];
-                      const bookingStaffColor = booking.staff?.color || staff.color;
-                      const endHour = endTime.getHours();
-                      const endMin = endTime.getMinutes();
-
-                      if (!status) return null;
-
-                      return (
-                        <div
-                          key={booking.id}
-                          onClick={(e) => handleBookingClick(booking.id, e)}
-                          className="absolute left-1.5 right-1.5 rounded-xl bg-white shadow-soft ring-1 ring-zinc-200/50 px-3 py-2 cursor-pointer transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.99] overflow-hidden"
-                          style={{
-                            top: top + 2,
-                            height: height - 4,
-                            borderLeft: `4px solid ${bookingStaffColor}`,
-                          }}
-                        >
-                          <div className="flex items-start justify-between gap-1">
-                            <p className="text-xs font-semibold text-zinc-800 truncate leading-tight">
-                              {booking.customer?.name ?? '고객'}
-                            </p>
-                            <span
-                              className={cn(
-                                'flex-shrink-0 inline-flex items-center gap-1 rounded-full px-1.5 py-0.5 text-[9px] font-medium',
-                                status.bg,
-                                status.text,
-                              )}
-                            >
-                              <span
-                                className={cn(
-                                  'h-1 w-1 rounded-full',
-                                  status.dot,
-                                )}
-                              />
-                              {status.label}
-                            </span>
-                          </div>
-                          <p className="mt-0.5 text-[11px] text-zinc-500 truncate">
+                  return (
+                    <div
+                      key={booking.id}
+                      onClick={(e) => handleBookingClick(booking.id, e)}
+                      className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft p-4 cursor-pointer transition-all duration-300 hover:shadow-soft-lg active:scale-[0.99]"
+                      style={{ borderLeft: `4px solid ${bookingStaffColor}` }}
+                    >
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="min-w-0 flex-1">
+                          <p className="text-sm font-semibold text-zinc-800 truncate">
+                            {booking.customer?.name ?? '고객'}
+                          </p>
+                          <p className="mt-0.5 text-xs text-zinc-500 truncate">
                             {booking.service?.name ?? '서비스'}
                           </p>
-                          <p className="mt-1 text-[10px] font-mono text-zinc-400 tabular-nums">
-                            {String(startHour).padStart(2, '0')}:{String(startMinute).padStart(2, '0')} ~{' '}
-                            {String(endHour).padStart(2, '0')}
-                            :{String(endMin).padStart(2, '0')}
-                          </p>
                         </div>
-                      );
-                    })}
+                        <span
+                          className={cn(
+                            'flex-shrink-0 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium',
+                            status.bg,
+                            status.text,
+                          )}
+                        >
+                          <span className={cn('h-1.5 w-1.5 rounded-full', status.dot)} />
+                          {status.label}
+                        </span>
+                      </div>
+                      <div className="mt-3 flex items-center justify-between">
+                        <span className="text-xs font-mono text-zinc-400 tabular-nums">
+                          {String(startHour).padStart(2, '0')}:{String(startMinute).padStart(2, '0')} ~ {String(endHour).padStart(2, '0')}:{String(endMin).padStart(2, '0')}
+                        </span>
+                        <div className="flex items-center gap-1.5">
+                          <span
+                            className="h-2 w-2 rounded-full flex-shrink-0"
+                            style={{ backgroundColor: bookingStaffColor }}
+                          />
+                          <span className="text-xs text-zinc-500">
+                            {booking.staff?.name || bookingStaff?.name || '-'}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
+
+          {/* Calendar grid - hidden on mobile unless calendar view selected */}
+          <div className={cn(
+            'rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft overflow-hidden',
+            mobileView !== 'calendar' ? 'hidden md:block' : 'block',
+          )}>
+            {/* Staff header */}
+            <div className="grid border-b border-zinc-100 overflow-x-auto" style={{ gridTemplateColumns: `72px repeat(${staffData.length}, minmax(120px, 1fr))` }}>
+              <div className="p-3 border-r border-zinc-100">
+                <Clock size={16} className="text-zinc-400 mx-auto" />
+              </div>
+              {staffData.map((staff: any) => (
+                <div
+                  key={staff.id}
+                  className="p-3 text-center border-r border-zinc-100 last:border-r-0"
+                >
+                  <div className="flex items-center justify-center gap-2">
+                    <span
+                      className="h-2.5 w-2.5 rounded-full flex-shrink-0"
+                      style={{ backgroundColor: staff.color }}
+                    />
+                    <span className="text-sm font-medium text-zinc-800 truncate">
+                      {staff.name}
+                    </span>
+                    <span className="hidden sm:inline rounded-full bg-zinc-100 px-2 py-0.5 text-[10px] uppercase tracking-[0.1em] font-medium text-zinc-500">
+                      {staff.role === 'DESIGNER' ? '디자이너' : '어시스턴트'}
+                    </span>
                   </div>
-                );
-              })}
+                </div>
+              ))}
             </div>
 
-            {/* Current time indicator */}
-            {currentTimeTop !== null && (
+            {/* Timeline */}
+            <div className="relative overflow-y-auto overflow-x-auto max-h-[calc(100vh-280px)]">
               <div
-                className="absolute left-0 right-0 z-10 pointer-events-none"
-                style={{ top: currentTimeTop }}
+                className="grid"
+                style={{ gridTemplateColumns: `72px repeat(${staffData.length}, minmax(120px, 1fr))` }}
               >
-                <div className="flex items-center">
-                  <div className="h-2.5 w-2.5 rounded-full bg-red-500 -ml-1 shadow-[0_0_6px_rgba(239,68,68,0.4)]" />
-                  <div className="flex-1 h-px bg-red-500/60" />
+                {/* Time labels */}
+                <div className="border-r border-zinc-100">
+                  {hours.map((hour) => (
+                    <div
+                      key={hour}
+                      className="relative border-b border-zinc-50"
+                      style={{ height: HOUR_HEIGHT }}
+                    >
+                      <span className="absolute -top-2.5 right-3 text-[11px] font-mono text-zinc-400 tabular-nums">
+                        {String(hour).padStart(2, '0')}:00
+                      </span>
+                    </div>
+                  ))}
                 </div>
+
+                {/* Staff columns */}
+                {staffData.map((staff: any) => {
+                  const staffBookings = bookingData.filter(
+                    (b: any) => b.staffId === staff.id,
+                  );
+                  return (
+                    <div
+                      key={staff.id}
+                      className="relative border-r border-zinc-100 last:border-r-0"
+                    >
+                      {/* Hour grid lines */}
+                      {hours.map((hour) => (
+                        <div
+                          key={hour}
+                          className="border-b border-zinc-50"
+                          style={{ height: HOUR_HEIGHT }}
+                        />
+                      ))}
+
+                      {/* Booking blocks */}
+                      {staffBookings.map((booking: any) => {
+                        const startTime = new Date(booking.startTime);
+                        const endTime = new Date(booking.endTime);
+                        const startHour = startTime.getHours();
+                        const startMinute = startTime.getMinutes();
+                        const durationMinutes = (endTime.getTime() - startTime.getTime()) / 60000;
+                        const top =
+                          (startHour - START_HOUR) * HOUR_HEIGHT + (startMinute / 60) * HOUR_HEIGHT;
+                        const height = (durationMinutes / 60) * HOUR_HEIGHT;
+                        const status = statusConfig[booking.status as BookingStatus];
+                        const bookingStaffColor = booking.staff?.color || staff.color;
+                        const endHour = endTime.getHours();
+                        const endMin = endTime.getMinutes();
+
+                        if (!status) return null;
+
+                        return (
+                          <div
+                            key={booking.id}
+                            onClick={(e) => handleBookingClick(booking.id, e)}
+                            className="absolute left-1.5 right-1.5 rounded-xl bg-white shadow-soft ring-1 ring-zinc-200/50 px-3 py-2 cursor-pointer transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.99] overflow-hidden"
+                            style={{
+                              top: top + 2,
+                              height: height - 4,
+                              borderLeft: `4px solid ${bookingStaffColor}`,
+                            }}
+                          >
+                            <div className="flex items-start justify-between gap-1">
+                              <p className="text-xs font-semibold text-zinc-800 truncate leading-tight">
+                                {booking.customer?.name ?? '고객'}
+                              </p>
+                              <span
+                                className={cn(
+                                  'flex-shrink-0 inline-flex items-center gap-1 rounded-full px-1.5 py-0.5 text-[9px] font-medium',
+                                  status.bg,
+                                  status.text,
+                                )}
+                              >
+                                <span
+                                  className={cn(
+                                    'h-1 w-1 rounded-full',
+                                    status.dot,
+                                  )}
+                                />
+                                {status.label}
+                              </span>
+                            </div>
+                            <p className="mt-0.5 text-[11px] text-zinc-500 truncate">
+                              {booking.service?.name ?? '서비스'}
+                            </p>
+                            <p className="mt-1 text-[10px] font-mono text-zinc-400 tabular-nums">
+                              {String(startHour).padStart(2, '0')}:{String(startMinute).padStart(2, '0')} ~{' '}
+                              {String(endHour).padStart(2, '0')}
+                              :{String(endMin).padStart(2, '0')}
+                            </p>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                })}
               </div>
-            )}
+
+              {/* Current time indicator */}
+              {currentTimeTop !== null && (
+                <div
+                  className="absolute left-0 right-0 z-10 pointer-events-none"
+                  style={{ top: currentTimeTop }}
+                >
+                  <div className="flex items-center">
+                    <div className="h-2.5 w-2.5 rounded-full bg-red-500 -ml-1 shadow-[0_0_6px_rgba(239,68,68,0.4)]" />
+                    <div className="flex-1 h-px bg-red-500/60" />
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+        </>
       )}
 
       {/* FAB */}
       <button
         onClick={() => setShowCreateModal(true)}
-        className="fixed bottom-8 right-8 z-20 flex h-14 w-14 items-center justify-center rounded-full bg-zinc-900 text-white shadow-soft-xl transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-zinc-800 hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.25)] hover:-translate-y-1 active:scale-[0.95]"
+        className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-20 flex h-14 w-14 items-center justify-center rounded-full bg-zinc-900 text-white shadow-soft-xl transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-zinc-800 hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.25)] hover:-translate-y-1 active:scale-[0.95]"
       >
         <Plus size={24} weight="bold" />
       </button>

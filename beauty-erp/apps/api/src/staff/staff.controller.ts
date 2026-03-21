@@ -1,9 +1,18 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, Query, Headers } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param, Query, Headers, BadRequestException } from '@nestjs/common';
 import { StaffService } from './staff.service';
+import { Public } from '../common/decorators/public.decorator';
 
 @Controller('staff')
 export class StaffController {
   constructor(private readonly staffService: StaffService) {}
+
+  @Public()
+  @Get('public')
+  async publicStaff(@Query('shopId') shopId: string) {
+    if (!shopId) throw new BadRequestException('shopId is required');
+    const staffList = await this.staffService.findAll(shopId);
+    return { data: staffList, message: 'ok' };
+  }
 
   @Post()
   async create(@Headers('x-shop-id') shopId: string, @Body() body: any) {

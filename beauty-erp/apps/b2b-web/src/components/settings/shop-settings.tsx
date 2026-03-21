@@ -265,39 +265,46 @@ export function ShopSettings() {
               <div
                 key={day}
                 className={cn(
-                  'flex items-center gap-4 px-6 py-4',
+                  'flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 px-4 sm:px-6 py-3 sm:py-4',
                   idx < 6 && 'border-b border-zinc-50',
                 )}
               >
-                {/* Day label */}
-                <span
-                  className={cn(
-                    'text-sm font-medium w-16 flex-shrink-0',
-                    hours.isOpen ? 'text-zinc-800' : 'text-zinc-400',
-                  )}
-                >
-                  {dayLabels[day]}
-                </span>
-
-                {/* Toggle */}
-                <button
-                  onClick={() => updateHours(day, 'isOpen', !hours.isOpen)}
-                  className={cn(
-                    'relative h-6 w-11 rounded-full transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] flex-shrink-0',
-                    hours.isOpen ? 'bg-brand-500' : 'bg-zinc-300',
-                  )}
-                >
+                {/* Day label + Toggle row */}
+                <div className="flex items-center gap-3 sm:gap-4">
                   <span
                     className={cn(
-                      'absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white shadow-sm transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)]',
-                      hours.isOpen && 'translate-x-5',
+                      'text-sm font-medium w-16 flex-shrink-0',
+                      hours.isOpen ? 'text-zinc-800' : 'text-zinc-400',
                     )}
-                  />
-                </button>
+                  >
+                    {dayLabels[day]}
+                  </span>
+
+                  {/* Toggle */}
+                  <button
+                    onClick={() => updateHours(day, 'isOpen', !hours.isOpen)}
+                    className={cn(
+                      'relative h-6 w-11 rounded-full transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] flex-shrink-0',
+                      hours.isOpen ? 'bg-brand-500' : 'bg-zinc-300',
+                    )}
+                  >
+                    <span
+                      className={cn(
+                        'absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white shadow-sm transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)]',
+                        hours.isOpen && 'translate-x-5',
+                      )}
+                    />
+                  </button>
+
+                  {/* Closed label - inline on mobile */}
+                  {!hours.isOpen && (
+                    <span className="text-sm text-zinc-400 sm:hidden">휴무</span>
+                  )}
+                </div>
 
                 {/* Time inputs */}
                 {hours.isOpen ? (
-                  <div className="flex items-center gap-2 flex-1">
+                  <div className="flex items-center gap-2 flex-1 pl-0 sm:pl-0">
                     <div className="rounded-lg bg-zinc-50/80 p-0.5 ring-1 ring-zinc-200/60 focus-within:ring-brand-400 focus-within:ring-2 focus-within:bg-white transition-all duration-300">
                       <input
                         type="time"
@@ -321,7 +328,7 @@ export function ShopSettings() {
                     </div>
                   </div>
                 ) : (
-                  <span className="text-sm text-zinc-400 flex-1">휴무</span>
+                  <span className="hidden sm:block text-sm text-zinc-400 flex-1">휴무</span>
                 )}
               </div>
             );
@@ -383,26 +390,30 @@ export function ShopSettings() {
                       <div
                         key={item.name}
                         className={cn(
-                          'grid grid-cols-[1fr_80px_100px_32px] gap-4 items-center px-6 py-3.5',
+                          'flex flex-col sm:grid sm:grid-cols-[1fr_80px_100px_32px] gap-1 sm:gap-4 sm:items-center px-4 sm:px-6 py-3 sm:py-3.5',
                           idx < category.items.length - 1 &&
                             'border-b border-zinc-50',
                         )}
                       >
-                        <span className="text-sm text-zinc-700">
-                          {item.name}
-                        </span>
-                        <span className="text-xs font-mono text-zinc-500 tabular-nums text-right">
-                          {item.duration}분
-                        </span>
-                        <span className="text-sm font-mono font-medium text-zinc-800 tabular-nums text-right">
-                          {formatCurrency(item.price)}
-                        </span>
-                        <button className="flex h-7 w-7 items-center justify-center rounded-lg hover:bg-red-50 transition-colors duration-200 group">
-                          <Trash
-                            size={13}
-                            className="text-zinc-400 group-hover:text-red-500 transition-colors duration-200"
-                          />
-                        </button>
+                        <div className="flex items-center justify-between sm:contents">
+                          <span className="text-sm text-zinc-700">
+                            {item.name}
+                          </span>
+                          <button className="sm:order-last flex h-7 w-7 items-center justify-center rounded-lg hover:bg-red-50 transition-colors duration-200 group">
+                            <Trash
+                              size={13}
+                              className="text-zinc-400 group-hover:text-red-500 transition-colors duration-200"
+                            />
+                          </button>
+                        </div>
+                        <div className="flex items-center gap-3 sm:contents">
+                          <span className="text-xs font-mono text-zinc-500 tabular-nums sm:text-right">
+                            {item.duration}분
+                          </span>
+                          <span className="text-sm font-mono font-medium text-zinc-800 tabular-nums sm:text-right">
+                            {formatCurrency(item.price)}
+                          </span>
+                        </div>
                       </div>
                     ))}
 

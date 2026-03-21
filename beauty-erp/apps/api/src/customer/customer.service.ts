@@ -61,13 +61,13 @@ export class CustomerService {
         bookings: { orderBy: { startTime: 'desc' }, take: 10, include: { service: true, staff: true } },
       },
     });
-    if (!customer) throw new NotFoundException('Customer not found');
+    if (!customer) throw new NotFoundException('고객을 찾을 수 없습니다');
     return customer;
   }
 
   async update(id: string, shopId: string, data: any) {
     const customer = await this.prisma.customer.findFirst({ where: { id, shopId } });
-    if (!customer) throw new NotFoundException('Customer not found');
+    if (!customer) throw new NotFoundException('고객을 찾을 수 없습니다');
     if (data.birthDate) data.birthDate = new Date(data.birthDate);
     return this.prisma.customer.update({ where: { id }, data });
   }

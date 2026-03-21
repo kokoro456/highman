@@ -1,9 +1,26 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, Headers } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param, Query, Headers, BadRequestException } from '@nestjs/common';
 import { ServiceService } from './service.service';
+import { Public } from '../common/decorators/public.decorator';
 
 @Controller('services')
 export class ServiceController {
   constructor(private readonly serviceService: ServiceService) {}
+
+  @Public()
+  @Get('public/categories')
+  async publicCategories(@Query('shopId') shopId: string) {
+    if (!shopId) throw new BadRequestException('shopId is required');
+    const categories = await this.serviceService.findCategories(shopId);
+    return { data: categories, message: 'ok' };
+  }
+
+  @Public()
+  @Get('public')
+  async publicServices(@Query('shopId') shopId: string) {
+    if (!shopId) throw new BadRequestException('shopId is required');
+    const services = await this.serviceService.findServices(shopId);
+    return { data: services, message: 'ok' };
+  }
 
   @Post('categories')
   async createCategory(@Headers('x-shop-id') shopId: string, @Body() body: any) {
