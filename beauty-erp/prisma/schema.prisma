@@ -1,0 +1,557 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ==================== AUTH ====================
+
+model User {
+  id           String       @id @default(uuid())
+  email        String?      @unique
+  phone        String?      @unique
+  name         String
+  role         UserRole
+  authProvider AuthProvider
+  passwordHash String?
+  isActive     Boolean      @default(true)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  shops Shop[]
+  staff Staff[]
+
+  @@map("users")
+}
+
+enum UserRole {
+  ADMIN
+  SHOP_OWNER
+  SHOP_STAFF
+  CUSTOMER
+}
+
+enum AuthProvider {
+  EMAIL
+  KAKAO
+  NAVER
+  PHONE
+}
+
+// ==================== SHOP ====================
+
+model Shop {
+  id               String           @id @default(uuid())
+  ownerId          String
+  name             String
+  businessType     BusinessType
+  phone            String
+  address          String
+  addressDetail    String?
+  latitude         Decimal?
+  longitude        Decimal?
+  description      String?
+  profileImageUrl  String?
+  coverImageUrl    String?
+  businessHours    Json             @default("{}")
+  closedDays       String[]         @default([])
+  subscriptionTier SubscriptionTier @default(FREE)
+  naverPlaceId     String?
+  isActive         Boolean          @default(true)
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  owner             User               @relation(fields: [ownerId], references: [id])
+  serviceCategories ServiceCategory[]
+  services          Service[]
+  staff             Staff[]
+  customers         Customer[]
+  bookings          Booking[]
+  schedules         Schedule[]
+  payments          Payment[]
+  passes            Pass[]
+  passUsages        PassUsage[]
+  dailySales        DailySales[]
+  notifications     Notification[]
+  staffIncentives   StaffIncentive[]
+
+  @@map("shops")
+}
+
+enum BusinessType {
+  NAIL
+  EYELASH
+  WAXING
+  HAIR
+  SKIN
+  SEMI_PERMANENT
+  TATTOO
+  MASSAGE
+  BARBER
+  TANNING
+  SCALP
+  MAKEUP
+  PET_GROOMING
+  OTHER
+}
+
+enum SubscriptionTier {
+  FREE
+  BASIC
+  PROFESSIONAL
+  ENTERPRISE
+}
+
+// ==================== SERVICE ====================
+
+model ServiceCategory {
+  id        String   @id @default(uuid())
+  shopId    String
+  name      String
+  sortOrder Int      @default(0)
+  isActive  Boolean  @default(true)
+
+  shop     Shop      @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  services Service[]
+
+  @@map("service_categories")
+}
+
+model Service {
+  id          String   @id @default(uuid())
+  shopId      String
+  categoryId  String
+  name        String
+  description String?
+  duration    Int
+  price       Decimal
+  b2cPrice    Decimal?
+  isLinkedB2c Boolean  @default(true)
+  imageUrl    String?
+  sortOrder   Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  shop              Shop                @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  category          ServiceCategory     @relation(fields: [categoryId], references: [id])
+  bookings          Booking[]
+  treatmentHistories TreatmentHistory[]
+  staffIncentives   StaffIncentive[]
+
+  @@map("services")
+}
+
+// ==================== BOOKING ====================
+
+model Booking {
+  id             String        @id @default(uuid())
+  shopId         String
+  customerId     String
+  staffId        String
+  serviceId      String
+  startTime      DateTime
+  endTime        DateTime
+  status         BookingStatus @default(READY)
+  source         BookingSource @default(DIRECT)
+  memo           String?
+  naverBookingId String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  shop               Shop               @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  customer           Customer           @relation(fields: [customerId], references: [id])
+  staff              Staff              @relation(fields: [staffId], references: [id])
+  service            Service            @relation(fields: [serviceId], references: [id])
+  payments           Payment[]
+  treatmentHistories TreatmentHistory[]
+
+  @@map("bookings")
+}
+
+enum BookingStatus {
+  READY
+  CONFIRMED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+}
+
+enum BookingSource {
+  DIRECT
+  NAVER
+  B2C_WEB
+  B2C_APP
+}
+
+model Schedule {
+  id             String  @id @default(uuid())
+  shopId         String
+  staffId        String
+  dayOfWeek      Int
+  startTime      String
+  endTime        String
+  breakStartTime String?
+  breakEndTime   String?
+  isActive       Boolean @default(true)
+
+  shop  Shop  @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  staff Staff @relation(fields: [staffId], references: [id])
+
+  @@unique([shopId, staffId, dayOfWeek])
+  @@map("schedules")
+}
+
+// ==================== CUSTOMER ====================
+
+model Customer {
+  id               String       @id @default(uuid())
+  shopId           String
+  name             String
+  phone            String
+  email            String?
+  gender           Gender?
+  birthDate        DateTime?
+  firstVisitDate   DateTime     @default(now())
+  lastVisitDate    DateTime?
+  visitCount       Int          @default(0)
+  totalSpent       Decimal      @default(0)
+  tier             CustomerTier @default(NORMAL)
+  memo             String?
+  tags             String[]     @default([])
+  consentMarketing Boolean      @default(false)
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  shop               Shop               @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  bookings           Booking[]
+  payments           Payment[]
+  passes             Pass[]
+  treatmentHistories TreatmentHistory[]
+  photos             CustomerPhoto[]
+
+  @@unique([shopId, phone])
+  @@map("customers")
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum CustomerTier {
+  NORMAL
+  VIP
+  VVIP
+}
+
+model TreatmentHistory {
+  id            String   @id @default(uuid())
+  shopId        String
+  customerId    String
+  bookingId     String?
+  staffId       String
+  serviceId     String
+  serviceName   String
+  price         Decimal
+  notes         String?
+  treatmentDate DateTime
+  createdAt     DateTime @default(now())
+
+  customer Customer        @relation(fields: [customerId], references: [id])
+  booking  Booking?        @relation(fields: [bookingId], references: [id])
+  staff    Staff           @relation(fields: [staffId], references: [id])
+  service  Service         @relation(fields: [serviceId], references: [id])
+  photos   CustomerPhoto[]
+
+  @@map("treatment_histories")
+}
+
+model CustomerPhoto {
+  id          String    @id @default(uuid())
+  customerId  String
+  treatmentId String?
+  type        PhotoType
+  imageUrl    String
+  caption     String?
+  createdAt   DateTime  @default(now())
+
+  customer  Customer          @relation(fields: [customerId], references: [id])
+  treatment TreatmentHistory? @relation(fields: [treatmentId], references: [id])
+
+  @@map("customer_photos")
+}
+
+enum PhotoType {
+  BEFORE
+  AFTER
+  REFERENCE
+}
+
+// ==================== PAYMENT ====================
+
+model Payment {
+  id              String        @id @default(uuid())
+  shopId          String
+  customerId      String
+  bookingId       String?
+  staffId         String
+  amount          Decimal
+  discount        Decimal       @default(0)
+  finalAmount     Decimal
+  method          PaymentMethod
+  status          PaymentStatus @default(PENDING)
+  pgTransactionId String?
+  cardLastFour    String?
+  passId          String?
+  passAmount      Decimal?
+  memo            String?
+  paidAt          DateTime
+  createdAt       DateTime      @default(now())
+
+  shop       Shop       @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  customer   Customer   @relation(fields: [customerId], references: [id])
+  staff      Staff      @relation(fields: [staffId], references: [id])
+  booking    Booking?   @relation(fields: [bookingId], references: [id])
+  pass       Pass?      @relation(fields: [passId], references: [id])
+  passUsages PassUsage[]
+
+  @@map("payments")
+}
+
+enum PaymentMethod {
+  CARD
+  CASH
+  TRANSFER
+  PASS
+  MIXED
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  REFUNDED
+  PARTIAL_REFUND
+}
+
+model Pass {
+  id              String     @id @default(uuid())
+  shopId          String
+  customerId      String
+  type            PassType
+  name            String
+  totalCount      Int?
+  remainingCount  Int?
+  totalAmount     Decimal?
+  remainingAmount Decimal?
+  price           Decimal
+  startDate       DateTime
+  expiryDate      DateTime?
+  status          PassStatus @default(ACTIVE)
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  shop       Shop        @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  customer   Customer    @relation(fields: [customerId], references: [id])
+  payments   Payment[]
+  passUsages PassUsage[]
+
+  @@map("passes")
+}
+
+enum PassType {
+  TICKET
+  MEMBERSHIP
+}
+
+enum PassStatus {
+  ACTIVE
+  EXPIRED
+  EXHAUSTED
+  CANCELLED
+}
+
+model PassUsage {
+  id              String        @id @default(uuid())
+  passId          String
+  paymentId       String
+  shopId          String
+  type            PassUsageType
+  countUsed       Int?
+  amountUsed      Decimal?
+  remainingCount  Int?
+  remainingAmount Decimal?
+  memo            String?
+  usedAt          DateTime
+  createdAt       DateTime      @default(now())
+
+  pass    Pass    @relation(fields: [passId], references: [id])
+  payment Payment @relation(fields: [paymentId], references: [id])
+  shop    Shop    @relation(fields: [shopId], references: [id], onDelete: Cascade)
+
+  @@map("pass_usages")
+}
+
+enum PassUsageType {
+  USE
+  REFUND
+}
+
+// ==================== STAFF ====================
+
+model Staff {
+  id              String    @id @default(uuid())
+  shopId          String
+  userId          String?
+  name            String
+  phone           String
+  email           String?
+  role            StaffRole
+  specialties     String[]  @default([])
+  profileImageUrl String?
+  color           String
+  sortOrder       Int       @default(0)
+  isActive        Boolean   @default(true)
+  hiredAt         DateTime
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  shop               Shop               @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  user               User?              @relation(fields: [userId], references: [id])
+  bookings           Booking[]
+  schedules          Schedule[]
+  payments           Payment[]
+  treatmentHistories TreatmentHistory[]
+  incentives         StaffIncentive[]
+
+  @@map("staff")
+}
+
+enum StaffRole {
+  OWNER
+  MANAGER
+  DESIGNER
+  ASSISTANT
+  INTERN
+}
+
+model StaffIncentive {
+  id        String        @id @default(uuid())
+  staffId   String
+  shopId    String
+  type      IncentiveType
+  serviceId String?
+  rate      Decimal
+  isActive  Boolean       @default(true)
+  createdAt DateTime      @default(now())
+
+  staff   Staff    @relation(fields: [staffId], references: [id])
+  shop    Shop     @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  service Service? @relation(fields: [serviceId], references: [id])
+
+  @@map("staff_incentives")
+}
+
+enum IncentiveType {
+  PERCENTAGE
+  FIXED
+}
+
+// ==================== DASHBOARD ====================
+
+model DailySales {
+  id                     String   @id @default(uuid())
+  shopId                 String
+  date                   DateTime @db.Date
+  totalRevenue           Decimal  @default(0)
+  cardRevenue            Decimal  @default(0)
+  cashRevenue            Decimal  @default(0)
+  transferRevenue        Decimal  @default(0)
+  passRevenue            Decimal  @default(0)
+  refundAmount           Decimal  @default(0)
+  bookingCount           Int      @default(0)
+  completedCount         Int      @default(0)
+  cancelledCount         Int      @default(0)
+  noShowCount            Int      @default(0)
+  newCustomerCount       Int      @default(0)
+  returningCustomerCount Int      @default(0)
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+
+  shop Shop @relation(fields: [shopId], references: [id], onDelete: Cascade)
+
+  @@unique([shopId, date])
+  @@map("daily_sales")
+}
+
+// ==================== NOTIFICATION ====================
+
+model Notification {
+  id            String             @id @default(uuid())
+  shopId        String
+  recipientId   String
+  recipientType RecipientType
+  type          NotificationType
+  channel       NotificationChannel
+  templateId    String?
+  title         String?
+  content       String
+  status        NotificationStatus @default(PENDING)
+  externalId    String?
+  errorMessage  String?
+  scheduledAt   DateTime?
+  sentAt        DateTime?
+  createdAt     DateTime           @default(now())
+
+  shop     Shop                  @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  template NotificationTemplate? @relation(fields: [templateId], references: [id])
+
+  @@map("notifications")
+}
+
+enum RecipientType {
+  CUSTOMER
+  STAFF
+}
+
+enum NotificationType {
+  BOOKING_CONFIRMED
+  BOOKING_REMINDER
+  BOOKING_CANCELLED
+  BOOKING_CHANGED
+  MARKETING
+  SYSTEM
+}
+
+enum NotificationChannel {
+  KAKAO_ALIMTALK
+  FCM_PUSH
+  SMS
+}
+
+enum NotificationStatus {
+  PENDING
+  SENT
+  FAILED
+  DELIVERED
+}
+
+model NotificationTemplate {
+  id           String           @id @default(uuid())
+  type         NotificationType
+  channel      NotificationChannel
+  name         String
+  templateCode String?
+  content      String
+  isActive     Boolean          @default(true)
+  createdAt    DateTime         @default(now())
+
+  notifications Notification[]
+
+  @@map("notification_templates")
+}
