@@ -91,8 +91,6 @@ export function BookingFormModal({ open, onOpenChange, selectedDate }: BookingFo
     if (!validate()) return;
 
     const startTime = new Date(`${form.date}T${form.time}:00`);
-    const duration = selectedService?.duration ?? 60;
-    const endTime = new Date(startTime.getTime() + duration * 60000);
 
     try {
       await createBooking.mutateAsync({
@@ -100,7 +98,6 @@ export function BookingFormModal({ open, onOpenChange, selectedDate }: BookingFo
         staffId: form.staffId,
         serviceId: form.serviceId,
         startTime: startTime.toISOString(),
-        endTime: endTime.toISOString(),
         memo: form.memo || undefined,
       });
       onOpenChange(false);
