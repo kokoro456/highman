@@ -90,7 +90,7 @@ export function StaffFormModal({ open, onOpenChange, staff }: StaffFormModalProp
       role: form.role,
       color: form.color,
       specialties,
-      hireDate: form.hireDate || undefined,
+      hiredAt: form.hireDate || new Date().toISOString().split('T')[0],
     };
 
     try {
