@@ -10,10 +10,10 @@
 | 항목 | 상태 |
 |------|------|
 | **현재 Phase** | Phase 1a: MVP Core |
-| **현재 Task** | Task 1: Project Scaffolding |
-| **진행률** | 시작 단계 |
+| **현재 Task** | Task 5-10 완료 — 모든 도메인 모듈 구현됨 |
+| **진행률** | Phase 1a 코드 구현 완료 (DB 연결/테스트 필요) |
 | **마지막 업데이트** | 2026-03-21 |
-| **마지막 커밋** | (프로젝트 초기 설정 중) |
+| **마지막 커밋** | `4d4a4c7` feat(erp): implement all domain modules |
 
 ---
 
@@ -51,31 +51,42 @@ npm run dev                   # 전체 개발 서버 시작
 - [x] 설계 스펙 문서 작성 (`docs/superpowers/specs/`)
 - [x] Phase 1a 구현 계획 작성 (`docs/superpowers/plans/`)
 - [x] 프로젝트 문서 생성 (ARCHITECTURE.md, ERROR_LOG.md, HANDOVER.md)
-- [ ] Task 1: Project Scaffolding (진행 중)
+- [x] Task 1: Project Scaffolding (Turborepo 모노레포 + 99파일)
+- [x] Task 2: Prisma Schema (18 models, 16 enums)
+- [x] Task 3: NestJS API Foundation (Auth JWT + Passport)
+- [x] Task 4: Next.js B2B Web (High-end UI, Geist font, Emerald accent)
+- [x] Task 5: Shop/Service Module (API CRUD + Settings UI)
+- [x] Task 6: Booking Module (Conflict detection + Calendar UI)
+- [x] Task 7: Customer Module (Paginated search + Detail/Timeline UI)
+- [x] Task 8: Payment Module (Transaction + Pass deduction + Dashboard UI)
+- [x] Task 9: Staff Module (Schedule upsert + Staff cards UI)
+- [x] Task 10: Dashboard Module (Overview metrics + Revenue chart API)
+- [x] npm install 완료 (795 packages)
 
 ---
 
 ## What's In Progress (진행 중인 작업)
 
-### Task 1: Project Scaffolding
-- Turborepo 모노레포 초기화
-- 디렉토리 구조 생성
-- 공유 패키지 설정 (types, validators, ui, config)
-- Docker 환경 구성
+### Docker/DB 설정 필요
+- Docker Desktop이 아직 설치되지 않음
+- PostgreSQL + Redis 컨테이너 필요
 
 **다음 작업자가 해야 할 것:**
-1. `npm install` 실행하여 의존성 확인
-2. `docker-compose up -d`로 DB 서비스 확인
-3. 현재 Task의 남은 Step 확인 후 이어서 진행
+1. Docker Desktop 설치
+2. `cd C:/highman/beauty-erp && docker compose up -d`
+3. `cp .env.example .env`
+4. `npx prisma migrate dev --name init` (DB 스키마 적용)
+5. `npx prisma db seed` (시드 데이터 — 아직 미작성)
+6. `npm run dev` (전체 개발 서버 시작)
 
 ---
 
 ## What's Next (다음 작업)
 
-1. Task 2: Prisma Schema & DB Setup
-2. Task 3: NestJS API Foundation
-3. Task 4: Next.js B2B Web Setup
-4. ... (Phase 1a plan 참조)
+1. Docker 설치 + DB 연결 + Prisma 마이그레이션
+2. Prisma seed 데이터 작성 (테스트용 샘플 데이터)
+3. API-Frontend 연동 (mock 데이터 → 실제 API 호출로 전환)
+4. Phase 1b: PG 결제 연동, 네이버 예약, 카카오 알림톡, B2C 웹
 
 ---
 
