@@ -2,18 +2,60 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Eye, EyeSlash, Sparkle } from '@phosphor-icons/react';
+import { useRouter } from 'next/navigation';
+import { ArrowRight, Eye, EyeSlash, Sparkle, WarningCircle } from '@phosphor-icons/react';
 import { cn } from '@/lib/utils';
+import { useAuthStore } from '@/lib/auth-store';
 
 export function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const { setTokens, setShopId, setUser } = useAuthStore();
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    // TODO: Implement login logic
-    setTimeout(() => setIsLoading(false), 1500);
+    setError(null);
+
+    try {
+      const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+      const res = await fetch(`${API_BASE}/api/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error?.message || '로그인에 실패했습니다');
+      }
+
+      setTokens(data.data.accessToken, data.data.refreshToken);
+
+      // Decode JWT to get user info
+      const payload = JSON.parse(atob(data.data.accessToken.split('.')[1]));
+      setUser({ sub: payload.sub, email: payload.email, role: payload.role });
+
+      // Fetch shops and set first shop
+      const shopsRes = await fetch(`${API_BASE}/api/shops`, {
+        headers: { 'Authorization': `Bearer ${data.data.accessToken}` },
+      });
+      const shopsData = await shopsRes.json();
+      if (shopsData.data?.length > 0) {
+        setShopId(shopsData.data[0].id);
+      }
+
+      router.push('/bookings');
+    } catch (err: any) {
+      setError(err.message || '로그인에 실패했습니다');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -38,6 +80,13 @@ export function LoginForm() {
             </p>
           </div>
 
+          {error && (
+            <div className="flex items-center gap-2 rounded-xl bg-red-50 px-4 py-3 ring-1 ring-red-200/50 mb-2">
+              <WarningCircle size={16} className="text-red-500 shrink-0" />
+              <p className="text-xs text-red-600">{error}</p>
+            </div>
+          )}
+
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Email Input */}
             <div className="space-y-2">
@@ -46,8 +95,10 @@ export function LoginForm() {
               </label>
               <div className="rounded-xl bg-zinc-50/80 p-0.5 ring-1 ring-zinc-200/60 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] focus-within:ring-brand-400 focus-within:ring-2 focus-within:bg-white">
                 <input
-                  type="email"
-                  placeholder="name@example.com"
+                  type="text"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="이메일 또는 아이디"
                   className="w-full rounded-[calc(0.75rem-2px)] bg-transparent px-4 py-3 text-sm text-zinc-900 placeholder:text-zinc-400 outline-none"
                   required
                 />
@@ -63,6 +114,8 @@ export function LoginForm() {
                 <div className="flex items-center">
                   <input
                     type={showPassword ? 'text' : 'password'}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     placeholder="8자 이상 입력"
                     className="w-full rounded-[calc(0.75rem-2px)] bg-transparent px-4 py-3 text-sm text-zinc-900 placeholder:text-zinc-400 outline-none"
                     required
