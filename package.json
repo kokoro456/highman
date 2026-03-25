@@ -1,0 +1,12 @@
+{
+  "name": "highman-root",
+  "private": true,
+  "scripts": {
+    "install:api": "cd beauty-erp && npm install",
+    "build": "cd beauty-erp && npx prisma generate && cd apps/api && npx nest build",
+    "start": "cd beauty-erp/apps/api && node dist/main.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
