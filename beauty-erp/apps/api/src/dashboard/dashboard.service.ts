@@ -53,23 +53,36 @@ export class DashboardService {
   }
 
   async getRevenueChart(shopId: string, days: number = 7) {
+    const endDate = new Date();
+    endDate.setHours(23, 59, 59, 999);
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - (days - 1));
+    startDate.setHours(0, 0, 0, 0);
+
+    // Single query for entire range
+    const payments = await this.prisma.payment.findMany({
+      where: { shopId, paidAt: { gte: startDate, lte: endDate }, status: 'COMPLETED' },
+      select: { finalAmount: true, paidAt: true },
+    });
+
+    // Group by day in JS
+    const byDay: Record<string, { revenue: number; count: number }> = {};
+    for (const p of payments) {
+      const key = new Date(p.paidAt!).toISOString().split('T')[0];
+      if (!byDay[key]) byDay[key] = { revenue: 0, count: 0 };
+      byDay[key].revenue += Number(p.finalAmount);
+      byDay[key].count++;
+    }
+
     const results = [];
     for (let i = days - 1; i >= 0; i--) {
       const date = new Date();
       date.setDate(date.getDate() - i);
-      date.setHours(0, 0, 0, 0);
-      const nextDate = new Date(date);
-      nextDate.setDate(nextDate.getDate() + 1);
-
-      const payments = await this.prisma.payment.aggregate({
-        where: { shopId, paidAt: { gte: date, lt: nextDate }, status: 'COMPLETED' },
-        _sum: { finalAmount: true }, _count: true,
-      });
-
+      const key = date.toISOString().split('T')[0];
       results.push({
-        date: date.toISOString().split('T')[0],
-        revenue: Number(payments._sum.finalAmount) || 0,
-        transactions: payments._count,
+        date: key,
+        revenue: byDay[key]?.revenue || 0,
+        transactions: byDay[key]?.count || 0,
       });
     }
     return results;
@@ -123,44 +136,52 @@ export class DashboardService {
     const endDate = new Date(year, month, 0, 23, 59, 59, 999);
     const daysInMonth = endDate.getDate();
 
-    // Get all services for color assignment
-    const services = await this.prisma.service.findMany({
-      where: { shopId, isActive: true },
-      select: { id: true, name: true },
-    });
+    // Single bulk query: all payments for the month with service info
+    const [allPayments, allBookings] = await Promise.all([
+      this.prisma.payment.findMany({
+        where: {
+          shopId,
+          paidAt: { gte: startDate, lte: endDate },
+          status: 'COMPLETED',
+        },
+        select: {
+          finalAmount: true,
+          paidAt: true,
+          booking: { select: { serviceId: true, service: { select: { name: true } } } },
+        },
+      }),
+      this.prisma.booking.findMany({
+        where: {
+          shopId,
+          startTime: { gte: startDate, lte: endDate },
+          status: { in: ['COMPLETED', 'CONFIRMED', 'READY', 'IN_PROGRESS'] },
+        },
+        select: { startTime: true },
+      }),
+    ]);
 
+    // Group payments by day
+    const paymentsByDay: Record<number, typeof allPayments> = {};
+    for (const p of allPayments) {
+      const day = new Date(p.paidAt!).getDate();
+      if (!paymentsByDay[day]) paymentsByDay[day] = [];
+      paymentsByDay[day].push(p);
+    }
+
+    // Group bookings by day
+    const bookingsByDay: Record<number, number> = {};
+    for (const b of allBookings) {
+      const day = new Date(b.startTime).getDate();
+      bookingsByDay[day] = (bookingsByDay[day] || 0) + 1;
+    }
+
+    const allServiceNames = new Set<string>();
     const results = [];
+
     for (let day = 1; day <= daysInMonth; day++) {
-      const dayStart = new Date(year, month - 1, day);
-      const dayEnd = new Date(year, month - 1, day, 23, 59, 59, 999);
+      const dayPayments = paymentsByDay[day] || [];
+      const revenue = dayPayments.reduce((sum, p) => sum + Number(p.finalAmount), 0);
 
-      const [paymentAgg, bookingCount, dayPayments] = await Promise.all([
-        this.prisma.payment.aggregate({
-          where: {
-            shopId,
-            paidAt: { gte: dayStart, lte: dayEnd },
-            status: 'COMPLETED',
-          },
-          _sum: { finalAmount: true },
-        }),
-        this.prisma.booking.count({
-          where: {
-            shopId,
-            startTime: { gte: dayStart, lte: dayEnd },
-            status: { in: ['COMPLETED', 'CONFIRMED', 'READY', 'IN_PROGRESS'] },
-          },
-        }),
-        this.prisma.payment.findMany({
-          where: {
-            shopId,
-            paidAt: { gte: dayStart, lte: dayEnd },
-            status: 'COMPLETED',
-          },
-          include: { booking: { include: { service: true } } },
-        }),
-      ]);
-
-      // Group revenue by service
       const serviceBreakdown: Record<string, { name: string; amount: number }> = {};
       for (const p of dayPayments) {
         const svcName = p.booking?.service?.name || '직접 결제';
@@ -171,24 +192,20 @@ export class DashboardService {
         serviceBreakdown[svcId].amount += Number(p.finalAmount);
       }
 
+      for (const s of Object.values(serviceBreakdown)) {
+        allServiceNames.add(s.name);
+      }
+
       results.push({
-        date: dayStart.toISOString().split('T')[0],
-        revenue: Number(paymentAgg._sum.finalAmount) || 0,
-        bookingCount,
+        date: new Date(year, month - 1, day).toISOString().split('T')[0],
+        revenue,
+        bookingCount: bookingsByDay[day] || 0,
         serviceBreakdown: Object.entries(serviceBreakdown).map(([id, v]) => ({
           serviceId: id,
           serviceName: v.name,
           amount: v.amount,
         })),
       });
-    }
-
-    // Collect all unique service names across the month
-    const allServiceNames = new Set<string>();
-    for (const r of results) {
-      for (const s of r.serviceBreakdown) {
-        allServiceNames.add(s.serviceName);
-      }
     }
 
     return { days: results, serviceNames: Array.from(allServiceNames) };
