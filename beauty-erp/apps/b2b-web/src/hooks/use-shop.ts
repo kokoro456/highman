@@ -6,6 +6,7 @@ export function useMyShops() {
     queryKey: ['my-shops'],
     queryFn: () => api.get<any>('/shops'),
     select: (data) => data.data,
+    staleTime: 10 * 60 * 1000, // Shop data rarely changes - 10 min cache
   });
 }
 
@@ -15,6 +16,7 @@ export function useShop(id: string) {
     queryFn: () => api.get<any>(`/shops/${id}`),
     select: (data) => data.data,
     enabled: !!id,
+    staleTime: 10 * 60 * 1000,
   });
 }
 

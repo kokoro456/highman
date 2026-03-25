@@ -41,7 +41,8 @@ export function useUnreadNotificationCount() {
     queryKey: ['notifications-count'],
     queryFn: () => api.get<UnreadCountResponse>('/notifications/count'),
     select: (data) => data.data.count,
-    refetchInterval: 30000, // Poll every 30 seconds
+    refetchInterval: 60000, // Poll every 60 seconds
+    staleTime: 60000,
   });
 }
 
