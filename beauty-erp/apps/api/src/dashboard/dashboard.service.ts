@@ -123,12 +123,18 @@ export class DashboardService {
     const endDate = new Date(year, month, 0, 23, 59, 59, 999);
     const daysInMonth = endDate.getDate();
 
+    // Get all services for color assignment
+    const services = await this.prisma.service.findMany({
+      where: { shopId, isActive: true },
+      select: { id: true, name: true },
+    });
+
     const results = [];
     for (let day = 1; day <= daysInMonth; day++) {
       const dayStart = new Date(year, month - 1, day);
       const dayEnd = new Date(year, month - 1, day, 23, 59, 59, 999);
 
-      const [payments, bookingCount] = await Promise.all([
+      const [paymentAgg, bookingCount, dayPayments] = await Promise.all([
         this.prisma.payment.aggregate({
           where: {
             shopId,
@@ -144,16 +150,48 @@ export class DashboardService {
             status: { in: ['COMPLETED', 'CONFIRMED', 'READY', 'IN_PROGRESS'] },
           },
         }),
+        this.prisma.payment.findMany({
+          where: {
+            shopId,
+            paidAt: { gte: dayStart, lte: dayEnd },
+            status: 'COMPLETED',
+          },
+          include: { booking: { include: { service: true } } },
+        }),
       ]);
+
+      // Group revenue by service
+      const serviceBreakdown: Record<string, { name: string; amount: number }> = {};
+      for (const p of dayPayments) {
+        const svcName = p.booking?.service?.name || '직접 결제';
+        const svcId = p.booking?.serviceId || 'direct';
+        if (!serviceBreakdown[svcId]) {
+          serviceBreakdown[svcId] = { name: svcName, amount: 0 };
+        }
+        serviceBreakdown[svcId].amount += Number(p.finalAmount);
+      }
 
       results.push({
         date: dayStart.toISOString().split('T')[0],
-        revenue: Number(payments._sum.finalAmount) || 0,
+        revenue: Number(paymentAgg._sum.finalAmount) || 0,
         bookingCount,
+        serviceBreakdown: Object.entries(serviceBreakdown).map(([id, v]) => ({
+          serviceId: id,
+          serviceName: v.name,
+          amount: v.amount,
+        })),
       });
     }
 
-    return results;
+    // Collect all unique service names across the month
+    const allServiceNames = new Set<string>();
+    for (const r of results) {
+      for (const s of r.serviceBreakdown) {
+        allServiceNames.add(s.serviceName);
+      }
+    }
+
+    return { days: results, serviceNames: Array.from(allServiceNames) };
   }
 
   async getServiceReport(shopId: string, startDate: string, endDate: string) {

@@ -25,10 +25,22 @@ import {
 
 // ==================== TYPES ====================
 
+interface ServiceBreakdown {
+  serviceId: string;
+  serviceName: string;
+  amount: number;
+}
+
 interface RevenueDay {
   date: string;
   revenue: number;
   bookingCount: number;
+  serviceBreakdown: ServiceBreakdown[];
+}
+
+interface RevenueReportData {
+  days: RevenueDay[];
+  serviceNames: string[];
 }
 
 interface ServiceRank {
@@ -189,6 +201,18 @@ export function ReportsDashboard() {
   );
 }
 
+// ==================== CHART COLORS ====================
+
+const SERVICE_COLORS = [
+  '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7',
+  '#DDA0DD', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E9',
+  '#F0B27A', '#82E0AA', '#F1948A', '#AED6F1', '#D7BDE2',
+];
+
+function getServiceColor(index: number): string {
+  return SERVICE_COLORS[index % SERVICE_COLORS.length];
+}
+
 // ==================== REVENUE TAB ====================
 
 function RevenueTab({ year, month }: { year: number; month: number }) {
@@ -197,12 +221,34 @@ function RevenueTab({ year, month }: { year: number; month: number }) {
   if (isLoading) return <TabSkeleton />;
   if (error) return <TabError />;
 
-  const items: RevenueDay[] = data ?? [];
-  const totalRevenue = items.reduce((sum, d) => sum + d.revenue, 0);
-  const totalBookings = items.reduce((sum, d) => sum + d.bookingCount, 0);
-  const maxRevenue = Math.max(...items.map((d) => d.revenue), 1);
-  const avgRevenue =
-    items.length > 0 ? Math.round(totalRevenue / items.length) : 0;
+  const reportData: RevenueReportData = data ?? { days: [], serviceNames: [] };
+  const items = reportData.days ?? [];
+  const serviceNames = reportData.serviceNames ?? [];
+
+  const totalRevenue = items.reduce((sum: number, d: RevenueDay) => sum + d.revenue, 0);
+  const totalBookings = items.reduce((sum: number, d: RevenueDay) => sum + d.bookingCount, 0);
+  const maxRevenue = Math.max(...items.map((d: RevenueDay) => d.revenue), 1);
+  const workingDays = items.filter((d: RevenueDay) => d.revenue > 0).length;
+  const avgRevenue = workingDays > 0 ? Math.round(totalRevenue / workingDays) : 0;
+
+  // Build cumulative revenue for line chart
+  let cumulative = 0;
+  const cumulativeData = items.map((d: RevenueDay) => {
+    cumulative += d.revenue;
+    return cumulative;
+  });
+  const maxCumulative = Math.max(...cumulativeData, 1);
+
+  // SVG line chart points
+  const chartWidth = items.length * 32;
+  const chartHeight = 200;
+  const linePoints = cumulativeData
+    .map((val: number, i: number) => {
+      const x = (i / Math.max(items.length - 1, 1)) * (chartWidth - 20) + 10;
+      const y = chartHeight - 20 - ((val / maxCumulative) * (chartHeight - 40));
+      return `${x},${y}`;
+    })
+    .join(' ');
 
   return (
     <div className="space-y-6">
@@ -228,37 +274,113 @@ function RevenueTab({ year, month }: { year: number; month: number }) {
         />
       </div>
 
-      {/* Bar chart */}
+      {/* Stacked bar chart + line chart */}
       <div className="rounded-2xl bg-white p-6 ring-1 ring-[#FFE4E0] shadow-soft">
-        <h3 className="text-sm font-semibold text-zinc-900 mb-6">
-          일별 매출 추이
-        </h3>
-        <div className="flex items-end gap-[2px] h-48 overflow-x-auto pb-2">
-          {items.map((day) => {
-            const heightPercent =
-              maxRevenue > 0 ? (day.revenue / maxRevenue) * 100 : 0;
-            return (
-              <div
-                key={day.date}
-                className="flex-1 min-w-[12px] flex flex-col items-center gap-1 group"
-              >
-                <div className="relative w-full flex justify-center">
-                  <div className="absolute -top-8 hidden group-hover:block rounded-lg bg-zinc-800 px-2 py-1 text-[10px] text-white whitespace-nowrap z-10">
-                    {formatCurrency(day.revenue)}
-                  </div>
-                  <div
-                    className="w-full max-w-[20px] rounded-t-md bg-[#FF8080] transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:bg-[#FF6B6B]"
-                    style={{
-                      height: `${Math.max(heightPercent, 2)}%`,
-                    }}
-                  />
-                </div>
-                <span className="text-[9px] text-zinc-400 font-mono tabular-nums">
-                  {formatShortDate(day.date)}
-                </span>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-sm font-semibold text-zinc-900">
+            일별 매출 추이
+          </h3>
+          {/* Legend */}
+          <div className="flex flex-wrap gap-2">
+            {serviceNames.slice(0, 8).map((name: string, i: number) => (
+              <div key={name} className="flex items-center gap-1">
+                <div
+                  className="w-2.5 h-2.5 rounded-sm"
+                  style={{ backgroundColor: getServiceColor(i) }}
+                />
+                <span className="text-[10px] text-zinc-500">{name}</span>
               </div>
-            );
-          })}
+            ))}
+          </div>
+        </div>
+
+        {/* Chart area */}
+        <div className="relative overflow-x-auto">
+          <div style={{ minWidth: `${Math.max(chartWidth, 600)}px` }}>
+            {/* SVG overlay for line chart */}
+            <svg
+              width="100%"
+              height={chartHeight}
+              viewBox={`0 0 ${chartWidth} ${chartHeight}`}
+              className="absolute top-0 left-0 pointer-events-none z-10"
+              preserveAspectRatio="none"
+            >
+              {/* Cumulative line */}
+              <polyline
+                points={linePoints}
+                fill="none"
+                stroke="#FF6B6B"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                opacity="0.7"
+              />
+              {/* Dots on line */}
+              {cumulativeData.map((val: number, i: number) => {
+                const x = (i / Math.max(items.length - 1, 1)) * (chartWidth - 20) + 10;
+                const y = chartHeight - 20 - ((val / maxCumulative) * (chartHeight - 40));
+                return items[i].revenue > 0 ? (
+                  <circle key={i} cx={x} cy={y} r="3" fill="#FF6B6B" />
+                ) : null;
+              })}
+            </svg>
+
+            {/* Stacked bars */}
+            <div className="flex items-end gap-[3px]" style={{ height: `${chartHeight}px` }}>
+              {items.map((day: RevenueDay, dayIdx: number) => {
+                const barHeight = maxRevenue > 0 ? (day.revenue / maxRevenue) * (chartHeight - 40) : 0;
+                const breakdown = day.serviceBreakdown || [];
+                const total = breakdown.reduce((s: number, b: ServiceBreakdown) => s + b.amount, 0) || 1;
+
+                return (
+                  <div
+                    key={day.date}
+                    className="flex-1 flex flex-col items-center justify-end group relative"
+                    style={{ height: '100%' }}
+                  >
+                    {/* Hover tooltip */}
+                    <div className="absolute -top-2 left-1/2 -translate-x-1/2 hidden group-hover:block rounded-lg bg-zinc-800 px-3 py-2 text-[10px] text-white whitespace-nowrap z-20 shadow-lg">
+                      <div className="font-semibold mb-1">{formatShortDate(day.date)} — {formatCurrency(day.revenue)}</div>
+                      {breakdown.map((b: ServiceBreakdown, i: number) => (
+                        <div key={b.serviceId} className="flex items-center gap-1">
+                          <div className="w-2 h-2 rounded-sm" style={{ backgroundColor: getServiceColor(serviceNames.indexOf(b.serviceName)) }} />
+                          <span>{b.serviceName}: {formatCurrency(b.amount)}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Stacked bar segments */}
+                    <div
+                      className="w-full max-w-[24px] rounded-t-md overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:opacity-90"
+                      style={{ height: `${Math.max(barHeight, day.revenue > 0 ? 4 : 0)}px` }}
+                    >
+                      {breakdown.map((b: ServiceBreakdown) => {
+                        const segPercent = (b.amount / total) * 100;
+                        const colorIdx = serviceNames.indexOf(b.serviceName);
+                        return (
+                          <div
+                            key={b.serviceId}
+                            style={{
+                              height: `${segPercent}%`,
+                              backgroundColor: getServiceColor(colorIdx >= 0 ? colorIdx : 0),
+                            }}
+                          />
+                        );
+                      })}
+                      {breakdown.length === 0 && day.revenue > 0 && (
+                        <div className="h-full bg-zinc-200" />
+                      )}
+                    </div>
+
+                    {/* Date label */}
+                    <span className="text-[9px] text-zinc-400 font-mono tabular-nums mt-1">
+                      {formatShortDate(day.date)}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
 
