@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "b2b-web",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["next", "dev", "--port", "3000"],
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--prefix", "apps/b2b-web"],
       "port": 3000
     }
   ]
