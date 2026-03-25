@@ -144,8 +144,8 @@ export default function DashboardPage() {
         })}
       </div>
 
-      {/* Two column: Today Bookings + Recent Payments */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+      {/* 3 columns: 오늘 예약 + 최근 결제 + 다가오는 예약 */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
         {/* 오늘의 예약 미리보기 */}
         <div className="rounded-2xl bg-white ring-1 ring-[#FFE4E0]/60 shadow-sm overflow-hidden">
           <div className="flex items-center justify-between px-4 py-3 border-b border-[#FFE4E0]/40">
@@ -158,14 +158,22 @@ export default function DashboardPage() {
               전체 보기 <ArrowRight size={10} />
             </Link>
           </div>
-          <div className="divide-y divide-zinc-50 max-h-[260px] overflow-y-auto">
-            {upcoming.length === 0 ? (
+          <div className="divide-y divide-zinc-50 max-h-[280px] overflow-y-auto">
+            {upcoming.filter((b: any) => {
+              const d = new Date(b.startTime);
+              const today = new Date();
+              return d.toDateString() === today.toDateString();
+            }).length === 0 ? (
               <div className="flex flex-col items-center justify-center py-10 text-center">
                 <CalendarDots size={28} className="text-zinc-300 mb-2" />
-                <p className="text-sm text-zinc-400">예정된 예약이 없습니다</p>
+                <p className="text-sm text-zinc-400">오늘 예약이 없습니다</p>
               </div>
             ) : (
-              upcoming.map((booking: any) => {
+              upcoming.filter((b: any) => {
+                const d = new Date(b.startTime);
+                const today = new Date();
+                return d.toDateString() === today.toDateString();
+              }).map((booking: any) => {
                 const startTime = new Date(booking.startTime);
                 const timeStr = `${String(startTime.getHours()).padStart(2, '0')}:${String(startTime.getMinutes()).padStart(2, '0')}`;
                 const status = STATUS_STYLE[booking.status] ?? STATUS_STYLE.CONFIRMED;
@@ -174,21 +182,15 @@ export default function DashboardPage() {
                     <span className="text-xs font-mono font-medium text-zinc-500 tabular-nums w-10 flex-shrink-0">{timeStr}</span>
                     <div className={cn('w-1 h-8 rounded-full flex-shrink-0', status.dot)} />
                     <div className="min-w-0 flex-1">
-                      <p className="text-sm font-medium text-zinc-800 truncate">
-                        {booking.customer?.name ?? '고객'}
-                      </p>
-                      <p className="text-[11px] text-zinc-400 truncate">
-                        {booking.service?.name ?? '서비스'} · {booking.staff?.name ?? '-'}
-                      </p>
+                      <p className="text-sm font-medium text-zinc-800 truncate">{booking.customer?.name ?? '고객'}</p>
+                      <p className="text-[11px] text-zinc-400 truncate">{booking.service?.name ?? '서비스'} · {booking.staff?.name ?? '-'}</p>
                     </div>
                     <span className={cn('text-[10px] font-medium px-2 py-0.5 rounded-full flex-shrink-0',
                       booking.status === 'COMPLETED' ? 'bg-[#4ECDC415] text-[#20877F]' :
                       booking.status === 'IN_PROGRESS' ? 'bg-amber-50 text-amber-600' :
                       booking.status === 'CANCELLED' ? 'bg-zinc-100 text-zinc-400' :
                       'bg-[#FF6B6B10] text-[#FF6B6B]'
-                    )}>
-                      {status.label}
-                    </span>
+                    )}>{status.label}</span>
                   </div>
                 );
               })
@@ -208,7 +210,7 @@ export default function DashboardPage() {
               전체 보기 <ArrowRight size={10} />
             </Link>
           </div>
-          <div className="divide-y divide-zinc-50 max-h-[260px] overflow-y-auto">
+          <div className="divide-y divide-zinc-50 max-h-[280px] overflow-y-auto">
             {recentPayments.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-10 text-center">
                 <CreditCard size={28} className="text-zinc-300 mb-2" />
@@ -228,13 +230,57 @@ export default function DashboardPage() {
                     <div className={cn('w-1.5 h-1.5 rounded-full flex-shrink-0', METHOD_DOT[method] ?? 'bg-zinc-300')} />
                     <div className="min-w-0 flex-1">
                       <p className="text-sm font-medium text-zinc-800 truncate">{customerName}</p>
-                      <p className="text-[11px] text-zinc-400 truncate">
-                        {payment.booking?.service?.name ?? '직접 결제'} · {METHOD_LABEL[method] ?? method}
-                      </p>
+                      <p className="text-[11px] text-zinc-400 truncate">{payment.booking?.service?.name ?? '직접 결제'} · {METHOD_LABEL[method] ?? method}</p>
                     </div>
-                    <span className="text-sm font-mono font-semibold text-zinc-900 tabular-nums flex-shrink-0">
-                      {formatCurrency(amount)}
-                    </span>
+                    <span className="text-sm font-mono font-semibold text-zinc-900 tabular-nums flex-shrink-0">{formatCurrency(amount)}</span>
+                  </div>
+                );
+              })
+            )}
+          </div>
+        </div>
+
+        {/* 다가오는 예약 미리보기 */}
+        <div className="rounded-2xl bg-white ring-1 ring-[#FFE4E0]/60 shadow-sm overflow-hidden">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-[#FFE4E0]/40">
+            <div className="flex items-center gap-2">
+              <Clock size={16} className="text-[#4ECDC4]" />
+              <h2 className="text-sm font-semibold text-zinc-800">다가오는 예약</h2>
+            </div>
+            <Link href="/bookings" className="flex items-center gap-1 text-[11px] text-zinc-400 hover:text-[#FF6B6B] transition-colors">
+              전체 보기 <ArrowRight size={10} />
+            </Link>
+          </div>
+          <div className="divide-y divide-zinc-50 max-h-[280px] overflow-y-auto">
+            {upcoming.filter((b: any) => {
+              const d = new Date(b.startTime);
+              const today = new Date();
+              return d.toDateString() !== today.toDateString();
+            }).length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-10 text-center">
+                <Clock size={28} className="text-zinc-300 mb-2" />
+                <p className="text-sm text-zinc-400">예정된 예약이 없습니다</p>
+              </div>
+            ) : (
+              upcoming.filter((b: any) => {
+                const d = new Date(b.startTime);
+                const today = new Date();
+                return d.toDateString() !== today.toDateString();
+              }).slice(0, 8).map((booking: any) => {
+                const startTime = new Date(booking.startTime);
+                const dateStr = `${startTime.getMonth() + 1}/${startTime.getDate()}`;
+                const timeStr = `${String(startTime.getHours()).padStart(2, '0')}:${String(startTime.getMinutes()).padStart(2, '0')}`;
+                return (
+                  <div key={booking.id} className="flex items-center gap-3 px-4 py-2.5 hover:bg-[#FFF8F6] transition-colors">
+                    <div className="flex flex-col items-center flex-shrink-0 w-10">
+                      <span className="text-[10px] font-mono text-zinc-400">{dateStr}</span>
+                      <span className="text-xs font-mono font-medium text-zinc-600">{timeStr}</span>
+                    </div>
+                    <div className="w-1 h-8 rounded-full bg-[#4ECDC4] flex-shrink-0" />
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-medium text-zinc-800 truncate">{booking.customer?.name ?? '고객'}</p>
+                      <p className="text-[11px] text-zinc-400 truncate">{booking.service?.name ?? '서비스'} · {booking.staff?.name ?? '-'}</p>
+                    </div>
                   </div>
                 );
               })
