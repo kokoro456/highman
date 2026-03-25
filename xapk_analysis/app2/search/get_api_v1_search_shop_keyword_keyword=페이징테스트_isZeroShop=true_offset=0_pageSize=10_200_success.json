@@ -1,0 +1,38 @@
+{
+  "locationKeywordList": [
+    {
+      "id": 1,
+      "keyword": "페이징 테스트 샵",
+      "subLabel": ["테스트"],
+      "type": "LOCATION",
+      "latitude": 37.5665,
+      "longitude": 126.9780
+    }
+  ],
+  "shops": {
+    "data": [
+      {
+        "id": "PAGING_001",
+        "name": "페이징 테스트 샵 1",
+        "address": "서울시 강남구",
+        "addressDetail": "",
+        "thumbnailImage": "https://example.com/paging1.jpg",
+        "latitude": 37.5665,
+        "longitude": 126.9780,
+        "isZeroShop": true
+      },
+      {
+        "id": "PAGING_002",
+        "name": "페이징 테스트 샵 2",
+        "address": "서울시 서초구",
+        "addressDetail": "",
+        "thumbnailImage": "https://example.com/paging2.jpg",
+        "latitude": 37.4979,
+        "longitude": 127.0276,
+        "isZeroShop": true
+      }
+    ],
+    "hasMore": false,
+    "offset": 0
+  }
+}

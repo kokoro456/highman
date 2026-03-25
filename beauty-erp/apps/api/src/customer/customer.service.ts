@@ -62,7 +62,13 @@ export class CustomerService {
       },
     });
     if (!customer) throw new NotFoundException('고객을 찾을 수 없습니다');
-    return customer;
+
+    // Count no-show bookings
+    const noShowCount = await this.prisma.booking.count({
+      where: { customerId: id, status: 'NO_SHOW' },
+    });
+
+    return { ...customer, noShowCount };
   }
 
   async update(id: string, shopId: string, data: any) {

@@ -1,0 +1,17 @@
+{
+  "locationKeywordList": [
+    {
+      "id": 2,
+      "keyword": "두번째",
+      "subLabel": [],
+      "type": "LOCATION",
+      "latitude": 37.5665,
+      "longitude": 126.9780
+    }
+  ],
+  "shops": {
+    "data": [],
+    "hasMore": false,
+    "offset": 0
+  }
+}

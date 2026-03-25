@@ -1,0 +1,25 @@
+{
+  "contents": [
+    {
+      "id": "cok001",
+      "name": "스페셜 헤어 클리닉",
+      "thumbnailImageUrl": "https://example.com/images/hair1.jpg",
+      "price": 55000,
+      "shopThumbnailImageUrl": "https://example.com/images/shop1.jpg"
+    },
+    {
+      "id": "cok002",
+      "name": "럭셔리 페디큐어",
+      "thumbnailImageUrl": "https://example.com/images/pedi1.jpg",
+      "price": 48000,
+      "shopThumbnailImageUrl": "https://example.com/images/shop2.jpg"
+    },
+    {
+      "id": "cok003",
+      "name": "속눈썹 펌",
+      "thumbnailImageUrl": "https://example.com/images/lash1.jpg",
+      "price": 35000,
+      "shopThumbnailImageUrl": "https://example.com/images/shop3.jpg"
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "shop": {
+    "id": "S000000004",
+    "name": "헤렌네일",
+    "contract": "0312424312",
+    "thumbnailImageUrl": "https://cdn-url",
+    "notice": "1. 당일취소 노쇼 15분 이상 지각 시 환불 <br> 2.하루 전 자정 기준 취소하시면 100% 환불",
+    "refundPolicy": {
+      "refundRate": 100,
+      "refundPeriodMinute": 1440
+    }
+  },
+  "booking": {
+    "id": "201706261533150012",
+    "status": "SHOP_CANCELED",
+    "bookingDateTime": "2024-11-06 17:00:00",
+    "charger": {
+      "id": 1,
+      "name": "이지은",
+      "grade": "원장"
+    },
+    "procedures": [
+      {
+        "id": 1,
+        "kind": {
+          "code": "HAND",
+          "value": "손"
+        },
+        "name": "기본 케어",
+        "duration": "01:30"
+      },
+      {
+        "id": 4,
+        "kind": {
+          "code": "TICKET",
+          "value": "티켓"
+        },
+        "name": "젤네일 10회 시술권",
+        "duration": "01:30"
+      }
+    ],
+    "customerRequest": {
+      "requestText": "hahaha",
+      "requestImages": [
+        "https://s3-url",
+        "https://s3-url"
+      ]
+    }
+  },
+  "payment": {
+    "amount": 20000,
+    "paymentMethod": "CARD",
+    "paymentCompanyName": "삼성",
+    "paymentCardNumber": "4876"
+  },
+  "refund": {
+    "amount": 0,
+    "cancellationDateTime": "2024-10-30 13:12:46",
+    "cancellationFee": 20000,
+    "refundMethod": "CARD",
+    "refundCompanyName": "삼성",
+    "refundCardNumber": "4876",
+    "refundRate": 100
+  }
+}

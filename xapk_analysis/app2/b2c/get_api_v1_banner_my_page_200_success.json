@@ -1,0 +1,12 @@
+{
+  "banners": [
+    {
+      "id": 1,
+      "title": "마이페이지 배너",
+      "displayOrder": 1,
+      "imageUrl": "https://crm-image.gongbiz.kr/images/uploads/dev/banner/mypage-banner.jpg",
+      "actionTarget": "gongb2c://mypage/event",
+      "onClickAction": "MOVE_PAGE"
+    }
+  ]
+}

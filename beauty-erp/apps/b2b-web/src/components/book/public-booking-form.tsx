@@ -308,9 +308,9 @@ export function PublicBookingForm({ shopId }: { shopId: string }) {
 
   if (loading) {
     return (
-      <div className="min-h-[100dvh] flex items-center justify-center bg-zinc-50">
+      <div className="min-h-[100dvh] flex items-center justify-center bg-[#FFF8F6]">
         <div className="flex flex-col items-center gap-3">
-          <div className="h-8 w-8 animate-spin rounded-full border-4 border-emerald-200 border-t-emerald-500" />
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#FF6B6B30] border-t-[#FF6B6B]" />
           <p className="text-sm text-zinc-400">매장 정보 로딩 중...</p>
         </div>
       </div>
@@ -319,7 +319,7 @@ export function PublicBookingForm({ shopId }: { shopId: string }) {
 
   if (error && !shop) {
     return (
-      <div className="min-h-[100dvh] flex items-center justify-center bg-zinc-50 px-4">
+      <div className="min-h-[100dvh] flex items-center justify-center bg-[#FFF8F6] px-4">
         <div className="text-center">
           <div className="text-4xl mb-4">😔</div>
           <h1 className="text-xl font-semibold text-zinc-800 mb-2">매장을 찾을 수 없습니다</h1>
@@ -334,10 +334,10 @@ export function PublicBookingForm({ shopId }: { shopId: string }) {
     const showOnlinePayment = pgClientKey && servicePrice > 0;
 
     return (
-      <div className="min-h-[100dvh] flex items-center justify-center bg-zinc-50 px-4 py-8">
+      <div className="min-h-[100dvh] flex items-center justify-center bg-[#FFF8F6] px-4 py-8">
         <div className="w-full max-w-md bg-white rounded-2xl shadow-sm border border-zinc-200 p-8 text-center">
-          <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-6">
-            <svg className="w-8 h-8 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <div className="w-16 h-16 rounded-full bg-[#FF6B6B20] flex items-center justify-center mx-auto mb-6">
+            <svg className="w-8 h-8 text-[#4ECDC4]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
             </svg>
           </div>
@@ -408,7 +408,7 @@ export function PublicBookingForm({ shopId }: { shopId: string }) {
   }
 
   return (
-    <div className="min-h-[100dvh] bg-zinc-50">
+    <div className="min-h-[100dvh] bg-[#FFF8F6]">
       {/* Header */}
       <header className="bg-white border-b border-zinc-200 sticky top-0 z-10">
         <div className="max-w-lg mx-auto px-4 py-4 flex items-center gap-3">
@@ -419,8 +419,8 @@ export function PublicBookingForm({ shopId }: { shopId: string }) {
               className="w-10 h-10 rounded-full object-cover"
             />
           ) : (
-            <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center">
-              <span className="text-emerald-600 font-semibold text-sm">
+            <div className="w-10 h-10 rounded-full bg-[#FF6B6B20] flex items-center justify-center">
+              <span className="text-[#4ECDC4] font-semibold text-sm">
                 {shop?.name?.charAt(0)}
               </span>
             </div>
@@ -439,7 +439,7 @@ export function PublicBookingForm({ shopId }: { shopId: string }) {
             <div key={s} className="flex-1 flex items-center gap-1">
               <div
                 className={`h-1.5 flex-1 rounded-full transition-colors ${
-                  i <= stepIndex ? 'bg-emerald-500' : 'bg-zinc-200'
+                  i <= stepIndex ? 'bg-[#4ECDC415]0' : 'bg-zinc-200'
                 }`}
               />
             </div>
@@ -509,7 +509,7 @@ export function PublicBookingForm({ shopId }: { shopId: string }) {
                   onClick={() => { setSelectedCategoryId(''); setSelectedServiceId(''); }}
                   className={`shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                     !selectedCategoryId
-                      ? 'bg-emerald-500 text-white'
+                      ? 'bg-[#4ECDC415]0 text-white'
                       : 'bg-white text-zinc-600 border border-zinc-200'
                   }`}
                 >
@@ -521,7 +521,7 @@ export function PublicBookingForm({ shopId }: { shopId: string }) {
                     onClick={() => { setSelectedCategoryId(cat.id); setSelectedServiceId(''); }}
                     className={`shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                       selectedCategoryId === cat.id
-                        ? 'bg-emerald-500 text-white'
+                        ? 'bg-[#4ECDC415]0 text-white'
                         : 'bg-white text-zinc-600 border border-zinc-200'
                     }`}
                   >
@@ -543,13 +543,13 @@ export function PublicBookingForm({ shopId }: { shopId: string }) {
                     onClick={() => setSelectedServiceId(svc.id)}
                     className={`w-full text-left p-4 rounded-xl border transition-all ${
                       selectedServiceId === svc.id
-                        ? 'border-emerald-500 bg-emerald-50 ring-1 ring-emerald-500'
+                        ? 'border-[#FF6B6B] bg-[#4ECDC415] ring-1 ring-[#FF6B6B]'
                         : 'border-zinc-200 bg-white hover:border-zinc-300'
                     }`}
                   >
                     <div className="flex items-center justify-between">
                       <span className="font-medium text-zinc-800">{svc.name}</span>
-                      <span className="text-emerald-600 font-semibold text-sm">
+                      <span className="text-[#4ECDC4] font-semibold text-sm">
                         {formatPrice(Number(svc.b2cPrice ?? svc.price))}
                       </span>
                     </div>
@@ -582,7 +582,7 @@ export function PublicBookingForm({ shopId }: { shopId: string }) {
                   onClick={() => setSelectedStaffId(staff.id)}
                   className={`p-4 rounded-xl border text-center transition-all ${
                     selectedStaffId === staff.id
-                      ? 'border-emerald-500 bg-emerald-50 ring-1 ring-emerald-500'
+                      ? 'border-[#FF6B6B] bg-[#4ECDC415] ring-1 ring-[#FF6B6B]'
                       : 'border-zinc-200 bg-white hover:border-zinc-300'
                   }`}
                 >
@@ -614,7 +614,7 @@ export function PublicBookingForm({ shopId }: { shopId: string }) {
                 min={getTodayStr()}
                 max={getMaxDateStr()}
                 onChange={(e) => { setSelectedDate(e.target.value); setSelectedTime(''); }}
-                className="w-full px-4 py-3 border border-zinc-200 rounded-xl text-zinc-800 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-zinc-200 rounded-xl text-zinc-800 bg-white focus:outline-none focus:ring-2 focus:ring-[#FF6B6B] focus:border-transparent"
               />
             </div>
 
@@ -631,7 +631,7 @@ export function PublicBookingForm({ shopId }: { shopId: string }) {
                       onClick={() => setSelectedTime(time)}
                       className={`py-2.5 rounded-lg text-sm font-medium transition-all ${
                         selectedTime === time
-                          ? 'bg-emerald-500 text-white'
+                          ? 'bg-[#4ECDC415]0 text-white'
                           : 'bg-white border border-zinc-200 text-zinc-700 hover:border-zinc-300'
                       }`}
                     >
@@ -659,7 +659,7 @@ export function PublicBookingForm({ shopId }: { shopId: string }) {
                 value={customerName}
                 onChange={(e) => setCustomerName(e.target.value)}
                 placeholder="홍길동"
-                className="w-full px-4 py-3 border border-zinc-200 rounded-xl text-zinc-800 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent placeholder:text-zinc-300"
+                className="w-full px-4 py-3 border border-zinc-200 rounded-xl text-zinc-800 bg-white focus:outline-none focus:ring-2 focus:ring-[#FF6B6B] focus:border-transparent placeholder:text-zinc-300"
               />
             </div>
             <div>
@@ -669,7 +669,7 @@ export function PublicBookingForm({ shopId }: { shopId: string }) {
                 value={customerPhone}
                 onChange={(e) => setCustomerPhone(e.target.value)}
                 placeholder="010-1234-5678"
-                className="w-full px-4 py-3 border border-zinc-200 rounded-xl text-zinc-800 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent placeholder:text-zinc-300"
+                className="w-full px-4 py-3 border border-zinc-200 rounded-xl text-zinc-800 bg-white focus:outline-none focus:ring-2 focus:ring-[#FF6B6B] focus:border-transparent placeholder:text-zinc-300"
               />
             </div>
             <div>
@@ -679,7 +679,7 @@ export function PublicBookingForm({ shopId }: { shopId: string }) {
                 onChange={(e) => setMemo(e.target.value)}
                 rows={3}
                 placeholder="요청 사항이 있으시면 남겨주세요"
-                className="w-full px-4 py-3 border border-zinc-200 rounded-xl text-zinc-800 bg-white resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent placeholder:text-zinc-300"
+                className="w-full px-4 py-3 border border-zinc-200 rounded-xl text-zinc-800 bg-white resize-none focus:outline-none focus:ring-2 focus:ring-[#FF6B6B] focus:border-transparent placeholder:text-zinc-300"
               />
             </div>
           </div>
@@ -696,7 +696,7 @@ export function PublicBookingForm({ shopId }: { shopId: string }) {
               </div>
               <div className="px-4 py-3 flex justify-between">
                 <span className="text-sm text-zinc-500">금액</span>
-                <span className="text-sm font-semibold text-emerald-600">
+                <span className="text-sm font-semibold text-[#4ECDC4]">
                   {selectedService && formatPrice(Number(selectedService.b2cPrice ?? selectedService.price))}
                 </span>
               </div>
@@ -737,7 +737,7 @@ export function PublicBookingForm({ shopId }: { shopId: string }) {
           {stepIndex > 0 && (
             <button
               onClick={goBack}
-              className="px-6 py-3 rounded-xl border border-zinc-200 text-zinc-600 font-medium text-sm hover:bg-zinc-50 transition-colors"
+              className="px-6 py-3 rounded-xl border border-zinc-200 text-zinc-600 font-medium text-sm hover:bg-[#FFF5F5] transition-colors"
             >
               이전
             </button>
@@ -746,7 +746,7 @@ export function PublicBookingForm({ shopId }: { shopId: string }) {
             <button
               onClick={handleSubmit}
               disabled={submitting}
-              className="flex-1 py-3 rounded-xl bg-emerald-500 text-white font-medium text-sm hover:bg-emerald-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 py-3 rounded-xl bg-[#4ECDC415]0 text-white font-medium text-sm hover:bg-[#FF5252] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {submitting ? '예약 중...' : '예약 확정'}
             </button>
@@ -754,7 +754,7 @@ export function PublicBookingForm({ shopId }: { shopId: string }) {
             <button
               onClick={goNext}
               disabled={!canProceed()}
-              className="flex-1 py-3 rounded-xl bg-emerald-500 text-white font-medium text-sm hover:bg-emerald-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 py-3 rounded-xl bg-[#4ECDC415]0 text-white font-medium text-sm hover:bg-[#FF5252] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               다음
             </button>

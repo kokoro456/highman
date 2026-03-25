@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "type": "CUSTOM",
+    "mainIconName": "내주변",
+    "mainIconImageUrl": "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/04/09/main_icon1.svg",
+    "mainIconActionTarget": "gongb2c://zero.gongbiz.kr/around"
+  },
+  {
+    "id": 2,
+    "type": "CUSTOM",
+    "mainIconName": "샵 검색",
+    "mainIconImageUrl": "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/04/09/main_icon2.svg",
+    "mainIconActionTarget": "gongb2c://zero.gongbiz.k/search"
+  },
+  {
+    "id": 3,
+    "type": "GONGBIZ_EXCLUSIVE",
+    "mainIconName": "공비서 독점",
+    "mainIconImageUrl": "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/04/09/main_icon3.svg",
+    "mainIconActionTarget": "gongb2c://zero.gongbiz.kr/curation/3"
+  },
+  {
+    "id": 4,
+    "type": "CUSTOM",
+    "mainIconName": "오늘 시술",
+    "mainIconImageUrl": "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/04/09/main_icon4.svg",
+    "mainIconActionTarget": "gongb2c://zero.gongbiz.kr/curation/4"
+  },
+  {
+    "id": 5,
+    "type": "CUSTOM",
+    "mainIconName": "즉시 예약 확정",
+    "mainIconImageUrl": "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/04/09/main_icon5.svg",
+    "mainIconActionTarget": "gongb2c://zero.gongbiz.kr/curation/5"
+  },
+  {
+    "id": 6,
+    "type": "CUSTOM",
+    "mainIconName": "심야 영업",
+    "mainIconImageUrl": "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/04/09/main_icon6.svg",
+    "mainIconActionTarget": "gongb2c://zero.gongbiz.kr/curation/6"
+  },
+  {
+    "id": 7,
+    "type": "CUSTOM",
+    "mainIconName": "강남 네일",
+    "mainIconImageUrl": "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/04/09/main_icon7.svg",
+    "mainIconActionTarget": "gongb2c://zero.gongbiz.kr/curation/7"
+  },
+  {
+    "id": 8,
+    "type": "CUSTOM",
+    "mainIconName": "마포 네일",
+    "mainIconImageUrl": "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/04/09/main_icon8.svg",
+    "mainIconActionTarget": "gongb2c://zero.gongbiz.kr/curation/8"
+  }
+]

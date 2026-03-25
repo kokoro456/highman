@@ -86,6 +86,15 @@ export class BookingController {
     return { data: bookings, message: 'ok' };
   }
 
+  @Get('no-show-stats')
+  async getNoShowStats(
+    @Headers('x-shop-id') shopId: string,
+    @Query('customerId') customerId: string,
+  ) {
+    const stats = await this.bookingService.getNoShowStats(customerId);
+    return { data: stats, message: 'ok' };
+  }
+
   @Patch(':id/status')
   async updateStatus(
     @Param('id') id: string,

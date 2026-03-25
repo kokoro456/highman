@@ -1,0 +1,218 @@
+{
+  "data": [
+    {
+      "cokId": "cok_001",
+      "thumbnailImageUrl": [
+        "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20240614_64%2F1718344052959m9Xfi_JPEG%2F1000003733.jpg",
+        "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20240614_40%2F1718344076363jehYH_JPEG%2F1000003679.jpg",
+        "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20250318_50%2F1742272816735F6BSy_JPEG%2FKakaoTalk_20250318_131913230.jpg"
+      ],
+      "shopInfo": {
+        "id": "S000004020",
+        "name": "도쿄네일",
+        "address": "서울 강남구 대치4동 긴 주소는 어떻게 보일까요 이런식으로 길어질까요 긴 주소는 어떻게 보일까요 이런식으로 길어질까요",
+        "thumbnailImageUrl": "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWNACA60X98Q3FWWPSN59G3.jpg"
+      },
+      "procedureItem": {
+        "id": 101,
+        "name": "기본 네일 케어 긴 이름은 어떻게 보일까요 이런식으로 길어질까요",
+        "price": 20000
+      },
+      "like": {
+        "count": 120,
+        "isLiked": true
+      }
+    },
+    {
+      "cokId": "cok_002",
+      "thumbnailImageUrl": [
+        "https://example.com/images/cok2_thumb1.jpg"
+      ],
+      "shopInfo": {
+        "id": "shop_002",
+        "name": "헤어 아트샵",
+        "address": "서울특별시 마포구 홍익로 456",
+        "thumbnailImageUrl": "https://example.com/images/shop2_thumb.jpg"
+      },
+      "procedureItem": {
+        "id": 202,
+        "name": "프리미엄 헤어컷",
+        "price": 35000
+      },
+      "like": {
+        "count": 95,
+        "isLiked": false
+      }
+    },
+    {
+      "cokId": "cok_003",
+      "thumbnailImageUrl": [
+        "https://example.com/images/cok3_thumb1.jpg"
+      ],
+      "shopInfo": {
+        "id": "shop_003",
+        "name": "뷰티풀 네일",
+        "address": "서울특별시 서초구 강남대로 789",
+        "thumbnailImageUrl": "https://example.com/images/shop3_thumb.jpg"
+      },
+      "procedureItem": {
+        "id": 303,
+        "name": "젤 네일",
+        "price": 50000
+      },
+      "like": {
+        "count": 88,
+        "isLiked": true
+      }
+    },
+    {
+      "cokId": "cok_004",
+      "thumbnailImageUrl": [
+        "https://example.com/images/cok4_thumb1.jpg"
+      ],
+      "shopInfo": {
+        "id": "shop_004",
+        "name": "헤어 메이커스",
+        "address": "서울특별시 용산구 이태원로 321",
+        "thumbnailImageUrl": "https://example.com/images/shop4_thumb.jpg"
+      },
+      "procedureItem": {
+        "id": 404,
+        "name": "헤어 스타일링",
+        "price": 40000
+      },
+      "like": {
+        "count": 77,
+        "isLiked": false
+      }
+    },
+    {
+      "cokId": "cok_005",
+      "thumbnailImageUrl": [
+        "https://example.com/images/cok5_thumb1.jpg"
+      ],
+      "shopInfo": {
+        "id": "shop_005",
+        "name": "네일 아트 갤러리",
+        "address": "서울특별시 송파구 올림픽로 654",
+        "thumbnailImageUrl": "https://example.com/images/shop5_thumb.jpg"
+      },
+      "procedureItem": {
+        "id": 505,
+        "name": "아트 네일",
+        "price": 45000
+      },
+      "like": {
+        "count": 66,
+        "isLiked": true
+      }
+    },
+    {
+      "cokId": "cok_006",
+      "thumbnailImageUrl": [
+        "https://example.com/images/cok6_thumb1.jpg"
+      ],
+      "shopInfo": {
+        "id": "shop_006",
+        "name": "스타 헤어샵",
+        "address": "서울특별시 강동구 천호대로 987",
+        "thumbnailImageUrl": "https://example.com/images/shop6_thumb.jpg"
+      },
+      "procedureItem": {
+        "id": 606,
+        "name": "염색 서비스",
+        "price": 70000
+      },
+      "like": {
+        "count": 80,
+        "isLiked": false
+      }
+    },
+    {
+      "cokId": "cok_007",
+      "thumbnailImageUrl": [
+        "https://example.com/images/cok7_thumb1.jpg"
+      ],
+      "shopInfo": {
+        "id": "shop_007",
+        "name": "럭셔리 네일",
+        "address": "서울특별시 종로구 종로 1",
+        "thumbnailImageUrl": "https://example.com/images/shop7_thumb.jpg"
+      },
+      "procedureItem": {
+        "id": 707,
+        "name": "럭셔리 네일 케어",
+        "price": 60000
+      },
+      "like": {
+        "count": 90,
+        "isLiked": true
+      }
+    },
+    {
+      "cokId": "cok_008",
+      "thumbnailImageUrl": [
+        "https://example.com/images/cok8_thumb1.jpg"
+      ],
+      "shopInfo": {
+        "id": "shop_008",
+        "name": "헤어 트렌드샵",
+        "address": "서울특별시 구로구 디지털로 12",
+        "thumbnailImageUrl": "https://example.com/images/shop8_thumb.jpg"
+      },
+      "procedureItem": {
+        "id": 808,
+        "name": "트렌드 헤어컷",
+        "price": 30000
+      },
+      "like": {
+        "count": 75,
+        "isLiked": false
+      }
+    },
+    {
+      "cokId": "cok_009",
+      "thumbnailImageUrl": [
+        "https://example.com/images/cok9_thumb1.jpg"
+      ],
+      "shopInfo": {
+        "id": "shop_009",
+        "name": "네일 마스터",
+        "address": "서울특별시 노원구 상계로 85",
+        "thumbnailImageUrl": "https://example.com/images/shop9_thumb.jpg"
+      },
+      "procedureItem": {
+        "id": 909,
+        "name": "마스터 네일",
+        "price": 55000
+      },
+      "like": {
+        "count": 55,
+        "isLiked": true
+      }
+    },
+    {
+      "cokId": "cok_010",
+      "thumbnailImageUrl": [
+        "https://example.com/images/cok10_thumb1.jpg"
+      ],
+      "shopInfo": {
+        "id": "shop_010",
+        "name": "헤어 존",
+        "address": "서울특별시 중구 명동길 88",
+        "thumbnailImageUrl": "https://example.com/images/shop10_thumb.jpg"
+      },
+      "procedureItem": {
+        "id": 1010,
+        "name": "베이직 헤어컷",
+        "price": 25000
+      },
+      "like": {
+        "count": 60,
+        "isLiked": false
+      }
+    }
+  ],
+  "offset": 10,
+  "hasMore": true
+}

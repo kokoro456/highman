@@ -219,7 +219,7 @@ export function StaffFormModal({ open, onOpenChange, staff }: StaffFormModalProp
           <button
             type="submit"
             disabled={mutation.isPending}
-            className="flex items-center gap-2 rounded-full bg-zinc-900 px-6 py-2.5 text-sm font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-zinc-800 active:scale-[0.98] disabled:opacity-60"
+            className="flex items-center gap-2 rounded-full bg-gradient-to-r from-[#FF6B6B] to-[#FF8E8E] shadow-[0_4px_15px_rgba(255,107,107,0.3)] px-6 py-2.5 text-sm font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:from-[#FF5252] hover:to-[#FF7B7B] active:scale-[0.98] disabled:opacity-60"
           >
             {mutation.isPending && <SpinnerGap size={16} className="animate-spin" />}
             {isEditing ? '수정' : '등록'}

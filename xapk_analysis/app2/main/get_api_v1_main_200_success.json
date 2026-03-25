@@ -1,0 +1,224 @@
+{
+  "blocks": [
+    {
+      "id": 31,
+      "contents": [
+        {
+          "id": 333,
+          "targetData": "{\"shopId\":\"S000002338\",\"shopName\":\"우디샵\",\"address\":\"서울 성동구 성수2가3동\",\"category\":[\"네일\"],\"thumbnailImageUrl\":\"https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/02/11/88b9e568-0446-4e19-9973-e8722ba53aa1.jpg\",\"businessStartTime\":\"01:00:00\",\"businessEndTime\":\"22:00:00\",\"isHoliday\":false}",
+          "onClickAction": "MOVE_PAGE",
+          "actionKey": "shopId",
+          "displayOrder": 1,
+          "isDisplay": true
+        },
+        {
+          "id": 334,
+          "targetData": "{\"shopId\":\"S000003970\",\"shopName\":\"바버샵(예약금 있는샵> 즉시확정)ㅋ\",\"address\":null,\"category\":[\"헤어\"],\"thumbnailImageUrl\":\"https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/03/01JGMW9NNY1TBKPA2Z5JHYXKH0.jpg\",\"businessStartTime\":\"08:00:00\",\"businessEndTime\":\"22:00:00\",\"isHoliday\":false}",
+          "onClickAction": "MOVE_PAGE",
+          "actionKey": "shopId",
+          "displayOrder": 22,
+          "isDisplay": true
+        },
+        {
+          "id": 335,
+          "targetData": "{\"shopId\":\"S000003971\",\"shopName\":\"키키네일 (예약금 없음 즉시 확정)\",\"address\":\"서울 성동구 성수2가1동\",\"category\":[\"네일\"],\"thumbnailImageUrl\":\"https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/03/01JGMY47DW6WC57JBN0CRHAE31.jpg\",\"businessStartTime\":\"08:30:00\",\"businessEndTime\":\"23:30:00\",\"isHoliday\":false}",
+          "onClickAction": "MOVE_PAGE",
+          "actionKey": "shopId",
+          "displayOrder": 23,
+          "isDisplay": true
+        },
+        {
+          "id": 336,
+          "targetData": "{\"shopId\":\"S000003973\",\"shopName\":\"비엔뷰티 (예약금없는샵 & 확인 후 확정)\",\"address\":\"서울 성동구 성수1가2동\",\"category\":[\"네일\",\"속눈썹\",\"왁싱\"],\"thumbnailImageUrl\":\"https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/03/01JGN3R6E4W8QTR815N1XYJ6VV.jpg\",\"businessStartTime\":\"08:00:00\",\"businessEndTime\":\"22:00:00\",\"isHoliday\":false}",
+          "onClickAction": "MOVE_PAGE",
+          "actionKey": "shopId",
+          "displayOrder": 24,
+          "isDisplay": true
+        },
+        {
+          "id": 338,
+          "targetData": "{\"shopId\":\"S000003977\",\"shopName\":\"위에뜰헤어 (예약금없음,유의사항 없음)\",\"address\":\"서울 성동구 성수2가3동\",\"category\":[\"헤어\"],\"thumbnailImageUrl\":\"https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/03/01JGN3CNTHKA8ST5122ADFHCFC.jpg\",\"businessStartTime\":\"08:00:00\",\"businessEndTime\":\"22:00:00\",\"isHoliday\":false}",
+          "onClickAction": "MOVE_PAGE",
+          "actionKey": "shopId",
+          "displayOrder": 26,
+          "isDisplay": true
+        },
+        {
+          "id": 340,
+          "targetData": "{\"shopId\":\"S000004017\",\"shopName\":\"다빈치네일(회원 예약금 안받음)\",\"address\":\"서울 강남구 대치1동\",\"category\":[\"네일\",\"바버\",\"헤어\",\"속눈썹\",\"왁싱\",\"태닝\",\"피부관리\",\"반영구\",\"타투\",\"두피/탈모관리\",\"메이크업\",\"마사지\"],\"thumbnailImageUrl\":\"https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWNC6F1WNAW07ABC8WHPBP2.jpg\",\"businessStartTime\":\"08:00:00\",\"businessEndTime\":\"23:59:59.999999999\",\"isHoliday\":false}",
+          "onClickAction": "MOVE_PAGE",
+          "actionKey": "shopId",
+          "displayOrder": 28,
+          "isDisplay": true
+        }
+      ],
+      "title": "트렌드를 선점할 시간!  \n먼저 만나는 봄맞이 네일",
+      "displayType": "HORIZONTAL",
+      "contentsType": "SHOP",
+      "displayOrder": 1,
+      "thumbnailImage": "",
+      "isDisplay": true
+    },
+    {
+      "id": 5,
+      "contents": [
+        {
+          "id": 2883,
+          "targetData": "{\"cokId\":\"cok_001\",\"thumbnailImageUrl\":\"https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWNDMCYQBXEET2989M39GGP.jpg\",\"likeCount\":100}",
+          "onClickAction": "MOVE_PAGE",
+          "actionKey": "cokId",
+          "displayOrder": 9,
+          "isDisplay": true
+        },
+        {
+          "id": 2893,
+          "targetData": "{\"cokId\":\"cok_001\",\"thumbnailImageUrl\":\"https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWNAESGK3DHV5QEWEK2FXHC.jpg\",\"likeCount\":100}",
+          "onClickAction": "MOVE_PAGE",
+          "actionKey": "cokId",
+          "displayOrder": 10,
+          "isDisplay": true
+        },
+        {
+          "id": 2903,
+          "targetData": "{\"cokId\":\"cok_001\",\"thumbnailImageUrl\":\"https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWNATDQWS1F9TBZBP4T771W.jpg\",\"likeCount\":100}",
+          "onClickAction": "MOVE_PAGE",
+          "actionKey": "cokId",
+          "displayOrder": 11,
+          "isDisplay": true
+        },
+        {
+          "id": 2913,
+          "targetData": "{\"cokId\":\"cok_001\",\"thumbnailImageUrl\":\"https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWNE1T189CCVSMNQNX20EMD.jpg\",\"likeCount\":100}",
+          "onClickAction": "MOVE_PAGE",
+          "actionKey": "cokId",
+          "displayOrder": 12,
+          "isDisplay": true
+        },
+        {
+          "id": 2923,
+          "targetData": "{\"cokId\":\"cok_001\",\"thumbnailImageUrl\":\"https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/03/01JGN3R03CPHA7RP6M5VA3DKZY.jpg\",\"likeCount\":100}",
+          "onClickAction": "MOVE_PAGE",
+          "actionKey": "cokId",
+          "displayOrder": 13,
+          "isDisplay": true
+        },
+        {
+          "id": 2933,
+          "targetData": "{\"cokId\":\"cok_001\",\"thumbnailImageUrl\":\"https://crm-image.gongbiz.kr/images/uploads/dev\",\"likeCount\":100}",
+          "onClickAction": "MOVE_PAGE",
+          "actionKey": "cokId",
+          "displayOrder": 14,
+          "isDisplay": true
+        }
+      ],
+      "title": "요즘 인기 있는 시술",
+      "displayType": "VERTICAL",
+      "contentsType": "COK_PROCEDURE",
+      "displayOrder": 2,
+      "thumbnailImage": "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/03/19/01JPQ2JSFZ4158A7BZSZGANH1G.png",
+      "isDisplay": true
+    },
+    {
+      "id": 33,
+      "contents": [
+        {
+          "id": 296,
+          "targetData": "{\"shopId\":\"S000004024\",\"shopName\":\"레바쉬뷰티살롱\",\"address\":\"서울 강남구 세곡동\",\"category\":[\"네일\"],\"thumbnailImageUrl\":\"https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWNE0R1RSY647W5F5MP9G5C.jpg\",\"businessStartTime\":\"08:00:00\",\"businessEndTime\":\"22:00:00\",\"isHoliday\":false}",
+          "onClickAction": "MOVE_PAGE",
+          "actionKey": "shopId",
+          "displayOrder": 4,
+          "isDisplay": true
+        },
+        {
+          "id": 297,
+          "targetData": "{\"shopId\":\"S000004025\",\"shopName\":\"레푸스삼성점 강남네일인디고\",\"address\":\"서울 강남구 삼성1동\",\"category\":[\"네일\"],\"thumbnailImageUrl\":\"https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWND1964B7VBM8C7MY41JX8.jpg\",\"businessStartTime\":\"08:00:00\",\"businessEndTime\":\"22:00:00\",\"isHoliday\":false}",
+          "onClickAction": "MOVE_PAGE",
+          "actionKey": "shopId",
+          "displayOrder": 5,
+          "isDisplay": true
+        },
+        {
+          "id": 298,
+          "targetData": "{\"shopId\":\"S000004026\",\"shopName\":\"로우번네일 강남역삼점\",\"address\":\"서울 강남구 역삼1동\",\"category\":[\"네일\",\"왁싱\",\"바버\",\"태닝\",\"두피/탈모관리\",\"메이크업\",\"마사지\",\"속눈썹\",\"헤어\",\"반영구\",\"피부관리\",\"타투\"],\"thumbnailImageUrl\":\"https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWNASJ162R9B84HTSAJEFMY.jpg\",\"businessStartTime\":\"08:00:00\",\"businessEndTime\":\"22:00:00\",\"isHoliday\":false}",
+          "onClickAction": "MOVE_PAGE",
+          "actionKey": "shopId",
+          "displayOrder": 6,
+          "isDisplay": true
+        },
+        {
+          "id": 299,
+          "targetData": "{\"shopId\":\"S000004021\",\"shopName\":\"디아나네일\",\"address\":\"서울 강남구 대치4동\",\"category\":[\"네일\"],\"thumbnailImageUrl\":\"https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWN9HBT4GQC4AN1NM5TMZYR.jpg\",\"businessStartTime\":\"08:00:00\",\"businessEndTime\":\"22:00:00\",\"isHoliday\":false}",
+          "onClickAction": "MOVE_PAGE",
+          "actionKey": "shopId",
+          "displayOrder": 7,
+          "isDisplay": true
+        }
+      ],
+      "title": "네일 추구미를 \n찾아드려요.",
+      "displayType": "HORIZONTAL",
+      "contentsType": "SHOP",
+      "displayOrder": 3,
+      "thumbnailImage": "",
+      "isDisplay": true
+    },
+    {
+      "id": 34,
+      "contents": [
+        {
+          "id": 307,
+          "targetData": "{\"shopId\":\"S000004004\",\"shopName\":\"네일위드에이치\",\"address\":\"서울 강남구 역삼1동\",\"category\":[\"네일\"],\"thumbnailImageUrl\":\"https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWNHTE7T314GB9KSES442QR.jpg\",\"businessStartTime\":\"08:00:00\",\"businessEndTime\":\"22:00:00\",\"isHoliday\":false}",
+          "onClickAction": "MOVE_PAGE",
+          "actionKey": "shopId",
+          "displayOrder": 9,
+          "isDisplay": true
+        },
+        {
+          "id": 308,
+          "targetData": "{\"shopId\":\"S000004003\",\"shopName\":\"네일원\",\"address\":\"서울 강남구 대치4동\",\"category\":[\"네일\"],\"thumbnailImageUrl\":\"https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWNCDR1PDFWTG6HVRFJWM5W.jpg\",\"businessStartTime\":\"08:00:00\",\"businessEndTime\":\"22:00:00\",\"isHoliday\":false}",
+          "onClickAction": "MOVE_PAGE",
+          "actionKey": "shopId",
+          "displayOrder": 10,
+          "isDisplay": true
+        },
+        {
+          "id": 309,
+          "targetData": "{\"shopId\":\"S000004002\",\"shopName\":\"네일앙뜨\",\"address\":\"서울 강남구 역삼1동\",\"category\":[\"네일\",\"속눈썹\",\"피부관리\",\"메이크업\",\"마사지\",\"타투\"],\"thumbnailImageUrl\":\"https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWNHGR241SVS7D6A2JTR9YQ.jpg\",\"businessStartTime\":\"08:00:00\",\"businessEndTime\":\"22:00:00\",\"isHoliday\":false}",
+          "onClickAction": "MOVE_PAGE",
+          "actionKey": "shopId",
+          "displayOrder": 11,
+          "isDisplay": true
+        },
+        {
+          "id": 310,
+          "targetData": "{\"shopId\":\"S000004001\",\"shopName\":\"네일솔\",\"address\":\"서울 강남구 도곡2동\",\"category\":[\"네일\"],\"thumbnailImageUrl\":\"https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWN9Y52NJN9ZFQMXCEARX67.jpg\",\"businessStartTime\":\"08:00:00\",\"businessEndTime\":\"22:00:00\",\"isHoliday\":false}",
+          "onClickAction": "MOVE_PAGE",
+          "actionKey": "shopId",
+          "displayOrder": 12,
+          "isDisplay": true
+        },
+        {
+          "id": 311,
+          "targetData": "{\"shopId\":\"S000004000\",\"shopName\":\"네일산책\",\"address\":\"서울 강남구 삼성2동\",\"category\":[\"네일\"],\"thumbnailImageUrl\":\"https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWN9R8FQMMTJ5VMWFC9G3KA.jpg\",\"businessStartTime\":\"08:00:00\",\"businessEndTime\":\"22:00:00\",\"isHoliday\":false}",
+          "onClickAction": "MOVE_PAGE",
+          "actionKey": "shopId",
+          "displayOrder": 13,
+          "isDisplay": true
+        },
+        {
+          "id": 312,
+          "targetData": "{\"shopId\":\"S000003999\",\"shopName\":\"네일빛깔\",\"address\":\"서울 강남구 신사동\",\"category\":[\"네일\"],\"thumbnailImageUrl\":\"https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWNA3HR34TH02NQE4JNTSZK.jpg\",\"businessStartTime\":\"08:00:00\",\"businessEndTime\":\"22:00:00\",\"isHoliday\":false}",
+          "onClickAction": "MOVE_PAGE",
+          "actionKey": "shopId",
+          "displayOrder": 14,
+          "isDisplay": true
+        }
+      ],
+      "title": "당일 예약, 늦은 시간도 \n문제 없어요!",
+      "displayType": "HORIZONTAL",
+      "contentsType": "SHOP",
+      "displayOrder": 4,
+      "thumbnailImage": "",
+      "isDisplay": true
+    }
+  ]
+}

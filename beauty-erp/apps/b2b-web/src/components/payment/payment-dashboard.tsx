@@ -24,7 +24,7 @@ const methodConfig: Record<
   { label: string; bg: string; text: string; icon: typeof CreditCard }
 > = {
   CARD: { label: '카드', bg: 'bg-blue-50', text: 'text-blue-700', icon: CreditCard },
-  CASH: { label: '현금', bg: 'bg-brand-50', text: 'text-brand-700', icon: Money },
+  CASH: { label: '현금', bg: 'bg-[#FF6B6B15]', text: 'text-[#FF6B6B]', icon: Money },
   TRANSFER: { label: '이체', bg: 'bg-amber-50', text: 'text-amber-700', icon: Bank },
   PASS: { label: '정기권', bg: 'bg-violet-50', text: 'text-violet-700', icon: Ticket },
 };
@@ -97,9 +97,9 @@ export function PaymentDashboard() {
       label: '현금',
       value: Number(summaryData?.cashRevenue ?? 0),
       icon: Money,
-      accent: 'from-brand-500 to-brand-600',
-      iconBg: 'bg-brand-50',
-      iconColor: 'text-brand-600',
+      accent: 'from-[#FF6B6B] to-[#FF6B6B]',
+      iconBg: 'bg-[#FF6B6B15]',
+      iconColor: 'text-[#FF6B6B]',
     },
     {
       label: '이체',
@@ -132,11 +132,11 @@ export function PaymentDashboard() {
         <div className="animate-fade-in space-y-4">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {[...Array(4)].map((_, i) => (
-              <div key={i} className="h-24 rounded-2xl bg-zinc-100 animate-pulse" />
+              <div key={i} className="h-24 rounded-2xl bg-[#FFE4E0] animate-pulse" />
             ))}
           </div>
           {[...Array(4)].map((_, i) => (
-            <div key={i} className="h-16 rounded-2xl bg-zinc-100 animate-pulse" />
+            <div key={i} className="h-16 rounded-2xl bg-[#FFE4E0] animate-pulse" />
           ))}
         </div>
       </div>
@@ -173,13 +173,13 @@ export function PaymentDashboard() {
         <div className="flex items-center gap-3">
           {/* Date picker */}
           <div className="flex items-center gap-2">
-            <button onClick={goPrev} className="flex h-9 w-9 items-center justify-center rounded-xl bg-white ring-1 ring-zinc-200/50 shadow-soft transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98]">
+            <button onClick={goPrev} className="flex h-9 w-9 items-center justify-center rounded-xl bg-white ring-1 ring-[#FFE4E0] shadow-soft transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98]">
               <CaretLeft size={14} className="text-zinc-600" />
             </button>
-            <span className="rounded-xl bg-white px-4 py-2 text-sm font-medium text-zinc-700 ring-1 ring-zinc-200/50 shadow-soft font-mono tabular-nums">
+            <span className="rounded-xl bg-white px-4 py-2 text-sm font-medium text-zinc-700 ring-1 ring-[#FFE4E0] shadow-soft font-mono tabular-nums">
               {formatDateDisplay(selectedDate)}
             </span>
-            <button onClick={goNext} className="flex h-9 w-9 items-center justify-center rounded-xl bg-white ring-1 ring-zinc-200/50 shadow-soft transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98]">
+            <button onClick={goNext} className="flex h-9 w-9 items-center justify-center rounded-xl bg-white ring-1 ring-[#FFE4E0] shadow-soft transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98]">
               <CaretRight size={14} className="text-zinc-600" />
             </button>
           </div>
@@ -187,7 +187,7 @@ export function PaymentDashboard() {
           {/* Export button */}
           <button
             onClick={handleExport}
-            className="flex items-center gap-2 rounded-full bg-white px-4 py-2.5 text-sm font-medium text-zinc-700 ring-1 ring-zinc-200/50 shadow-soft transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98] whitespace-nowrap"
+            className="flex items-center gap-2 rounded-full bg-white px-4 py-2.5 text-sm font-medium text-zinc-700 ring-1 ring-[#FFE4E0] shadow-soft transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98] whitespace-nowrap"
           >
             <DownloadSimple size={16} weight="bold" />
             내보내기
@@ -196,7 +196,7 @@ export function PaymentDashboard() {
           {/* Add button */}
           <button
             onClick={() => setShowCreateModal(true)}
-            className="flex items-center gap-2 rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-zinc-800 active:scale-[0.98] whitespace-nowrap"
+            className="flex items-center gap-2 rounded-full bg-gradient-to-r from-[#FF6B6B] to-[#FF8E8E] shadow-[0_4px_15px_rgba(255,107,107,0.3)] px-5 py-2.5 text-sm font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:from-[#FF5252] hover:to-[#FF7B7B] active:scale-[0.98] whitespace-nowrap"
           >
             <Plus size={16} weight="bold" />
             결제 등록
@@ -211,7 +211,7 @@ export function PaymentDashboard() {
           return (
             <div
               key={card.label}
-              className="rounded-2xl bg-white p-5 ring-1 ring-zinc-200/50 shadow-soft transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5"
+              className="rounded-2xl bg-white p-5 ring-1 ring-[#FFE4E0] shadow-soft transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5"
             >
               <div className="flex items-center justify-between mb-3">
                 <span className="text-[11px] font-medium text-zinc-500 uppercase tracking-wider">
@@ -236,8 +236,8 @@ export function PaymentDashboard() {
 
       {/* Payment list */}
       {payments.length === 0 ? (
-        <div className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft p-16 flex flex-col items-center justify-center text-center">
-          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-zinc-100 mb-6">
+        <div className="rounded-2xl bg-white ring-1 ring-[#FFE4E0] shadow-soft p-16 flex flex-col items-center justify-center text-center">
+          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[#FF6B6B10] mb-6">
             <CreditCard size={32} weight="regular" className="text-zinc-400" />
           </div>
           <h3 className="text-lg font-semibold tracking-tight text-zinc-900">
@@ -248,7 +248,7 @@ export function PaymentDashboard() {
           </p>
           <button
             onClick={() => setShowCreateModal(true)}
-            className="mt-6 flex items-center gap-2 rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-zinc-800 active:scale-[0.98]"
+            className="mt-6 flex items-center gap-2 rounded-full bg-gradient-to-r from-[#FF6B6B] to-[#FF8E8E] shadow-[0_4px_15px_rgba(255,107,107,0.3)] px-5 py-2.5 text-sm font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:from-[#FF5252] hover:to-[#FF7B7B] active:scale-[0.98]"
           >
             <Plus size={16} weight="bold" />
             결제 등록
@@ -267,7 +267,7 @@ export function PaymentDashboard() {
           return (
             <div
               key={payment.id}
-              className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft p-4"
+              className="rounded-2xl bg-white ring-1 ring-[#FFE4E0] shadow-soft p-4"
             >
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-3 min-w-0">
@@ -301,9 +301,9 @@ export function PaymentDashboard() {
       </div>
 
       {/* Desktop table layout */}
-      <div className="hidden md:block rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft overflow-hidden">
+      <div className="hidden md:block rounded-2xl bg-white ring-1 ring-[#FFE4E0] shadow-soft overflow-hidden">
         {/* Table header */}
-        <div className="grid grid-cols-[1fr_1fr_100px_120px_80px_60px] gap-4 px-6 py-3.5 border-b border-zinc-100 bg-zinc-50/50">
+        <div className="grid grid-cols-[1fr_1fr_100px_120px_80px_60px] gap-4 px-6 py-3.5 border-b border-[#FFE4E0] bg-[#FFF8F6]">
           <span className="text-[11px] font-medium text-zinc-500 uppercase tracking-wider">
             고객
           </span>
@@ -335,7 +335,7 @@ export function PaymentDashboard() {
           return (
             <div
               key={payment.id}
-              className="grid grid-cols-[1fr_1fr_100px_120px_80px_60px] gap-4 px-6 py-4 items-center border-b border-zinc-50 last:border-b-0 transition-colors duration-200 hover:bg-zinc-50/60"
+              className="grid grid-cols-[1fr_1fr_100px_120px_80px_60px] gap-4 px-6 py-4 items-center border-b border-zinc-50 last:border-b-0 transition-colors duration-200 hover:bg-[#FFF5F5]"
             >
               {/* Customer */}
               <div className="flex items-center gap-3 min-w-0">

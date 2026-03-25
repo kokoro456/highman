@@ -32,9 +32,9 @@ export default function DashboardLayout({
 
   if (!isReady) {
     return (
-      <div className="flex min-h-[100dvh] items-center justify-center bg-zinc-50 dark:bg-zinc-950">
+      <div className="flex min-h-[100dvh] items-center justify-center bg-[#FFF8F6] dark:bg-[#1A1A2E]">
         <div className="flex flex-col items-center gap-3">
-          <div className="h-8 w-8 animate-spin rounded-full border-4 border-emerald-200 border-t-emerald-500" />
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#FF6B6B30] border-t-[#FF6B6B]" />
           <p className="text-sm text-zinc-400">로딩 중...</p>
         </div>
       </div>
@@ -42,7 +42,7 @@ export default function DashboardLayout({
   }
 
   return (
-    <div className="flex min-h-[100dvh] bg-zinc-50 dark:bg-zinc-950">
+    <div className="flex min-h-[100dvh] bg-[#FFF8F6] dark:bg-[#1A1A2E]">
       <Sidebar />
       <div className="flex-1 flex flex-col ml-0 md:ml-[var(--sidebar-width)]">
         <Header />

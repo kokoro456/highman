@@ -1,0 +1,40 @@
+{
+  "totalCount": 50,
+  "satisfactionScore": 95,
+  "reviews": {
+    "data": [
+      {
+        "id": 1,
+        "reviewer": {
+          "nickname": "포토리뷰어1",
+          "status": "ACTIVE",
+          "visitCount": 8,
+          "profileImageUrl": "https://picsum.photos/200/200?random=1"
+        },
+        "satisfactionLevel": "BEST",
+        "imageUrls": [
+          "https://picsum.photos/400/400?random=10",
+          "https://picsum.photos/400/400?random=11",
+          "https://picsum.photos/400/400?random=12"
+        ],
+        "contents": "사진으로 보여드릴게요. 정말 예쁘게 해주셨어요!",
+        "booking": {
+          "bookingDate": "2024-06-01",
+          "employee": {
+            "id": 101,
+            "name": "김디자이너",
+            "grade": "디자이너"
+          },
+          "procedures": [
+            "기본케어",
+            "네일아트",
+            "젤케어"
+          ],
+          "price": 120000
+        }
+      }
+    ],
+    "offset": 0,
+    "hasMore": false
+  }
+}

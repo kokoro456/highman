@@ -163,7 +163,7 @@ export function ShopSettings() {
         </div>
         <div className="animate-fade-in space-y-4">
           {[...Array(3)].map((_, i) => (
-            <div key={i} className="h-16 rounded-2xl bg-zinc-100 animate-pulse" />
+            <div key={i} className="h-16 rounded-2xl bg-[#FFE4E0] animate-pulse" />
           ))}
         </div>
       </div>
@@ -205,13 +205,13 @@ export function ShopSettings() {
           <h2 className="text-sm font-semibold text-zinc-800">매장 정보</h2>
         </div>
 
-        <div className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft p-6 space-y-5">
+        <div className="rounded-2xl bg-white ring-1 ring-[#FFE4E0] shadow-soft p-6 space-y-5">
           {/* Shop name */}
           <div className="space-y-2">
             <label className="text-xs font-medium text-zinc-600 pl-1">
               매장명
             </label>
-            <div className="rounded-xl bg-zinc-50/80 p-0.5 ring-1 ring-zinc-200/60 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] focus-within:ring-brand-400 focus-within:ring-2 focus-within:bg-white">
+            <div className="rounded-xl bg-[#FFF8F6] p-0.5 ring-1 ring-[#FFE4E0] transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] focus-within:ring-[#FF6B6B] focus-within:ring-2 focus-within:bg-white">
               <input
                 type="text"
                 value={shop.name}
@@ -228,7 +228,7 @@ export function ShopSettings() {
             <label className="text-xs font-medium text-zinc-600 pl-1">
               업종
             </label>
-            <div className="rounded-xl bg-zinc-50/80 p-0.5 ring-1 ring-zinc-200/60 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] focus-within:ring-brand-400 focus-within:ring-2 focus-within:bg-white">
+            <div className="rounded-xl bg-[#FFF8F6] p-0.5 ring-1 ring-[#FFE4E0] transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] focus-within:ring-[#FF6B6B] focus-within:ring-2 focus-within:bg-white">
               <select
                 value={shop.businessType}
                 onChange={(e) =>
@@ -254,7 +254,7 @@ export function ShopSettings() {
               <label className="text-xs font-medium text-zinc-600 pl-1">
                 전화번호
               </label>
-              <div className="rounded-xl bg-zinc-50/80 p-0.5 ring-1 ring-zinc-200/60 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] focus-within:ring-brand-400 focus-within:ring-2 focus-within:bg-white">
+              <div className="rounded-xl bg-[#FFF8F6] p-0.5 ring-1 ring-[#FFE4E0] transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] focus-within:ring-[#FF6B6B] focus-within:ring-2 focus-within:bg-white">
                 <input
                   type="tel"
                   value={shop.phone}
@@ -269,7 +269,7 @@ export function ShopSettings() {
               <label className="text-xs font-medium text-zinc-600 pl-1">
                 주소
               </label>
-              <div className="rounded-xl bg-zinc-50/80 p-0.5 ring-1 ring-zinc-200/60 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] focus-within:ring-brand-400 focus-within:ring-2 focus-within:bg-white">
+              <div className="rounded-xl bg-[#FFF8F6] p-0.5 ring-1 ring-[#FFE4E0] transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] focus-within:ring-[#FF6B6B] focus-within:ring-2 focus-within:bg-white">
                 <input
                   type="text"
                   value={shop.address}
@@ -296,7 +296,7 @@ export function ShopSettings() {
           <h2 className="text-sm font-semibold text-zinc-800">영업 시간</h2>
         </div>
 
-        <div className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft overflow-hidden">
+        <div className="rounded-2xl bg-white ring-1 ring-[#FFE4E0] shadow-soft overflow-hidden">
           {(Object.keys(dayLabels) as DayKey[]).map((day, idx) => {
             const hours = shop.businessHours[day];
             return (
@@ -323,7 +323,7 @@ export function ShopSettings() {
                     onClick={() => updateHours(day, 'isOpen', !hours.isOpen)}
                     className={cn(
                       'relative h-6 w-11 rounded-full transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] flex-shrink-0',
-                      hours.isOpen ? 'bg-brand-500' : 'bg-zinc-300',
+                      hours.isOpen ? 'bg-[#FF6B6B]' : 'bg-zinc-300',
                     )}
                   >
                     <span
@@ -343,7 +343,7 @@ export function ShopSettings() {
                 {/* Time inputs */}
                 {hours.isOpen ? (
                   <div className="flex items-center gap-2 flex-1 pl-0 sm:pl-0">
-                    <div className="rounded-lg bg-zinc-50/80 p-0.5 ring-1 ring-zinc-200/60 focus-within:ring-brand-400 focus-within:ring-2 focus-within:bg-white transition-all duration-300">
+                    <div className="rounded-lg bg-[#FFF8F6] p-0.5 ring-1 ring-[#FFE4E0] focus-within:ring-[#FF6B6B] focus-within:ring-2 focus-within:bg-white transition-all duration-300">
                       <input
                         type="time"
                         value={hours.open}
@@ -354,7 +354,7 @@ export function ShopSettings() {
                       />
                     </div>
                     <span className="text-xs text-zinc-400">~</span>
-                    <div className="rounded-lg bg-zinc-50/80 p-0.5 ring-1 ring-zinc-200/60 focus-within:ring-brand-400 focus-within:ring-2 focus-within:bg-white transition-all duration-300">
+                    <div className="rounded-lg bg-[#FFF8F6] p-0.5 ring-1 ring-[#FFE4E0] focus-within:ring-[#FF6B6B] focus-within:ring-2 focus-within:bg-white transition-all duration-300">
                       <input
                         type="time"
                         value={hours.close}
@@ -383,13 +383,13 @@ export function ShopSettings() {
           <h2 className="text-sm font-semibold text-zinc-800">외부 서비스 연동</h2>
         </div>
 
-        <div className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft p-6 space-y-5">
+        <div className="rounded-2xl bg-white ring-1 ring-[#FFE4E0] shadow-soft p-6 space-y-5">
           {/* Naver Booking URL */}
           <div className="space-y-2">
             <label className="text-xs font-medium text-zinc-600 pl-1">
               네이버 예약 URL
             </label>
-            <div className="rounded-xl bg-zinc-50/80 p-0.5 ring-1 ring-zinc-200/60 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] focus-within:ring-brand-400 focus-within:ring-2 focus-within:bg-white">
+            <div className="rounded-xl bg-[#FFF8F6] p-0.5 ring-1 ring-[#FFE4E0] transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] focus-within:ring-[#FF6B6B] focus-within:ring-2 focus-within:bg-white">
               <input
                 type="url"
                 value={shop.naverBookingUrl}
@@ -410,7 +410,7 @@ export function ShopSettings() {
             <label className="text-xs font-medium text-zinc-600 pl-1">
               네이버 플레이스 ID
             </label>
-            <div className="rounded-xl bg-zinc-50/80 p-0.5 ring-1 ring-zinc-200/60 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] focus-within:ring-brand-400 focus-within:ring-2 focus-within:bg-white">
+            <div className="rounded-xl bg-[#FFF8F6] p-0.5 ring-1 ring-[#FFE4E0] transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] focus-within:ring-[#FF6B6B] focus-within:ring-2 focus-within:bg-white">
               <input
                 type="text"
                 value={shop.naverPlaceId}
@@ -431,7 +431,7 @@ export function ShopSettings() {
             <label className="text-xs font-medium text-zinc-600 pl-1">
               카카오톡 채널 URL
             </label>
-            <div className="rounded-xl bg-zinc-50/80 p-0.5 ring-1 ring-zinc-200/60 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] focus-within:ring-brand-400 focus-within:ring-2 focus-within:bg-white">
+            <div className="rounded-xl bg-[#FFF8F6] p-0.5 ring-1 ring-[#FFE4E0] transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] focus-within:ring-[#FF6B6B] focus-within:ring-2 focus-within:bg-white">
               <input
                 type="url"
                 value={shop.kakaoChannelUrl}
@@ -449,7 +449,7 @@ export function ShopSettings() {
             <label className="text-xs font-medium text-zinc-600 pl-1">
               인스타그램
             </label>
-            <div className="rounded-xl bg-zinc-50/80 p-0.5 ring-1 ring-zinc-200/60 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] focus-within:ring-brand-400 focus-within:ring-2 focus-within:bg-white">
+            <div className="rounded-xl bg-[#FFF8F6] p-0.5 ring-1 ring-[#FFE4E0] transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] focus-within:ring-[#FF6B6B] focus-within:ring-2 focus-within:bg-white">
               <input
                 type="text"
                 value={shop.instagramUrl}
@@ -475,11 +475,11 @@ export function ShopSettings() {
                 className={cn(
                   'inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-semibold',
                   isPgConnected
-                    ? 'bg-emerald-50 text-emerald-600 ring-1 ring-emerald-200'
+                    ? 'bg-[#4ECDC415] text-[#4ECDC4] ring-1 ring-[#FF6B6B30]'
                     : 'bg-zinc-100 text-zinc-500 ring-1 ring-zinc-200',
                 )}
               >
-                <span className={cn('h-1.5 w-1.5 rounded-full', isPgConnected ? 'bg-emerald-500' : 'bg-zinc-400')} />
+                <span className={cn('h-1.5 w-1.5 rounded-full', isPgConnected ? 'bg-[#4ECDC415]0' : 'bg-zinc-400')} />
                 {isPgConnected ? '연동됨' : '미연동'}
               </span>
             </div>
@@ -501,11 +501,11 @@ export function ShopSettings() {
                 className={cn(
                   'inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-semibold',
                   alimtalkStatus.configured
-                    ? 'bg-emerald-50 text-emerald-600 ring-1 ring-emerald-200'
+                    ? 'bg-[#4ECDC415] text-[#4ECDC4] ring-1 ring-[#FF6B6B30]'
                     : 'bg-zinc-100 text-zinc-500 ring-1 ring-zinc-200',
                 )}
               >
-                <span className={cn('h-1.5 w-1.5 rounded-full', alimtalkStatus.configured ? 'bg-emerald-500' : 'bg-zinc-400')} />
+                <span className={cn('h-1.5 w-1.5 rounded-full', alimtalkStatus.configured ? 'bg-[#4ECDC415]0' : 'bg-zinc-400')} />
                 {alimtalkStatus.configured ? '연동됨' : '미연동'}
               </span>
             </div>
@@ -555,13 +555,13 @@ export function ShopSettings() {
         </div>
 
         {/* Kakao Alimtalk Setup Guide */}
-        <div className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft overflow-hidden">
+        <div className="rounded-2xl bg-white ring-1 ring-[#FFE4E0] shadow-soft overflow-hidden">
           <button
             onClick={() => setAlimtalkGuideOpen((prev) => !prev)}
-            className="flex items-center justify-between w-full px-6 py-4 transition-colors duration-200 hover:bg-zinc-50/60"
+            className="flex items-center justify-between w-full px-6 py-4 transition-colors duration-200 hover:bg-[#FFF5F5]"
           >
             <div className="flex items-center gap-2">
-              <Info size={16} className="text-brand-500" />
+              <Info size={16} className="text-[#FF6B6B]" />
               <span className="text-sm font-medium text-zinc-700">카카오 알림톡 / 소셜 로그인 설정 가이드</span>
             </div>
             <CaretRight
@@ -575,40 +575,40 @@ export function ShopSettings() {
 
           {alimtalkGuideOpen && (
             <div className="border-t border-zinc-100 px-6 py-5 space-y-4">
-              <div className="rounded-xl bg-brand-50/50 ring-1 ring-brand-100 p-5">
+              <div className="rounded-xl bg-[#FF6B6B15]/50 ring-1 ring-[#FF6B6B25] p-5">
                 <h4 className="text-xs font-semibold text-zinc-700 mb-3">카카오 알림톡 설정</h4>
                 <ol className="space-y-2 text-sm text-zinc-700">
                   <li className="flex gap-3">
-                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-brand-100 text-[10px] font-semibold text-brand-600 flex-shrink-0">1</span>
+                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#FF6B6B20] text-[10px] font-semibold text-[#FF6B6B] flex-shrink-0">1</span>
                     <span>
-                      <a href="https://business.kakao.com" target="_blank" rel="noopener noreferrer" className="text-brand-600 underline underline-offset-2">카카오 비즈니스</a>에서 채널 생성
+                      <a href="https://business.kakao.com" target="_blank" rel="noopener noreferrer" className="text-[#FF6B6B] underline underline-offset-2">카카오 비즈니스</a>에서 채널 생성
                     </span>
                   </li>
                   <li className="flex gap-3">
-                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-brand-100 text-[10px] font-semibold text-brand-600 flex-shrink-0">2</span>
+                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#FF6B6B20] text-[10px] font-semibold text-[#FF6B6B] flex-shrink-0">2</span>
                     <span>알림톡 발신 프로필 등록 및 템플릿 등록</span>
                   </li>
                   <li className="flex gap-3">
-                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-brand-100 text-[10px] font-semibold text-brand-600 flex-shrink-0">3</span>
+                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#FF6B6B20] text-[10px] font-semibold text-[#FF6B6B] flex-shrink-0">3</span>
                     <span>REST API 키와 발신키를 환경변수에 설정</span>
                   </li>
                 </ol>
               </div>
-              <div className="rounded-xl bg-brand-50/50 ring-1 ring-brand-100 p-5">
+              <div className="rounded-xl bg-[#FF6B6B15]/50 ring-1 ring-[#FF6B6B25] p-5">
                 <h4 className="text-xs font-semibold text-zinc-700 mb-3">소셜 로그인 설정</h4>
                 <ol className="space-y-2 text-sm text-zinc-700">
                   <li className="flex gap-3">
-                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-brand-100 text-[10px] font-semibold text-brand-600 flex-shrink-0">1</span>
+                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#FF6B6B20] text-[10px] font-semibold text-[#FF6B6B] flex-shrink-0">1</span>
                     <span>
-                      <a href="https://developers.kakao.com" target="_blank" rel="noopener noreferrer" className="text-brand-600 underline underline-offset-2">카카오 개발자 센터</a> / <a href="https://developers.naver.com" target="_blank" rel="noopener noreferrer" className="text-brand-600 underline underline-offset-2">네이버 개발자 센터</a>에서 앱 등록
+                      <a href="https://developers.kakao.com" target="_blank" rel="noopener noreferrer" className="text-[#FF6B6B] underline underline-offset-2">카카오 개발자 센터</a> / <a href="https://developers.naver.com" target="_blank" rel="noopener noreferrer" className="text-[#FF6B6B] underline underline-offset-2">네이버 개발자 센터</a>에서 앱 등록
                     </span>
                   </li>
                   <li className="flex gap-3">
-                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-brand-100 text-[10px] font-semibold text-brand-600 flex-shrink-0">2</span>
+                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#FF6B6B20] text-[10px] font-semibold text-[#FF6B6B] flex-shrink-0">2</span>
                     <span>Redirect URI 설정 (카카오: /auth/kakao/callback, 네이버: /auth/naver/callback)</span>
                   </li>
                   <li className="flex gap-3">
-                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-brand-100 text-[10px] font-semibold text-brand-600 flex-shrink-0">3</span>
+                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#FF6B6B20] text-[10px] font-semibold text-[#FF6B6B] flex-shrink-0">3</span>
                     <span>Client ID / Secret을 환경변수에 설정</span>
                   </li>
                 </ol>
@@ -618,13 +618,13 @@ export function ShopSettings() {
         </div>
 
         {/* Naver SmartPlace Guide */}
-        <div className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft overflow-hidden">
+        <div className="rounded-2xl bg-white ring-1 ring-[#FFE4E0] shadow-soft overflow-hidden">
           <button
             onClick={() => setGuideOpen((prev) => !prev)}
-            className="flex items-center justify-between w-full px-6 py-4 transition-colors duration-200 hover:bg-zinc-50/60"
+            className="flex items-center justify-between w-full px-6 py-4 transition-colors duration-200 hover:bg-[#FFF5F5]"
           >
             <div className="flex items-center gap-2">
-              <Info size={16} className="text-brand-500" />
+              <Info size={16} className="text-[#FF6B6B]" />
               <span className="text-sm font-medium text-zinc-700">네이버 스마트플레이스 예약 설정 가이드</span>
             </div>
             <CaretRight
@@ -638,28 +638,28 @@ export function ShopSettings() {
 
           {guideOpen && (
             <div className="border-t border-zinc-100 px-6 py-5">
-              <div className="rounded-xl bg-brand-50/50 ring-1 ring-brand-100 p-5">
+              <div className="rounded-xl bg-[#FF6B6B15]/50 ring-1 ring-[#FF6B6B25] p-5">
                 <ol className="space-y-3 text-sm text-zinc-700">
                   <li className="flex gap-3">
-                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-100 text-xs font-semibold text-brand-600 flex-shrink-0">1</span>
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#FF6B6B20] text-xs font-semibold text-[#FF6B6B] flex-shrink-0">1</span>
                     <span>
-                      <a href="https://smartplace.naver.com" target="_blank" rel="noopener noreferrer" className="text-brand-600 underline underline-offset-2">네이버 스마트플레이스</a> 접속
+                      <a href="https://smartplace.naver.com" target="_blank" rel="noopener noreferrer" className="text-[#FF6B6B] underline underline-offset-2">네이버 스마트플레이스</a> 접속
                     </span>
                   </li>
                   <li className="flex gap-3">
-                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-100 text-xs font-semibold text-brand-600 flex-shrink-0">2</span>
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#FF6B6B20] text-xs font-semibold text-[#FF6B6B] flex-shrink-0">2</span>
                     <span>사업자등록번호로 매장 등록</span>
                   </li>
                   <li className="flex gap-3">
-                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-100 text-xs font-semibold text-brand-600 flex-shrink-0">3</span>
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#FF6B6B20] text-xs font-semibold text-[#FF6B6B] flex-shrink-0">3</span>
                     <span>예약 관리 &gt; 예약 설정 활성화</span>
                   </li>
                   <li className="flex gap-3">
-                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-100 text-xs font-semibold text-brand-600 flex-shrink-0">4</span>
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#FF6B6B20] text-xs font-semibold text-[#FF6B6B] flex-shrink-0">4</span>
                     <span>예약 URL 복사 → 위 입력란에 붙여넣기</span>
                   </li>
                   <li className="flex gap-3">
-                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-100 text-xs font-semibold text-brand-600 flex-shrink-0">5</span>
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#FF6B6B20] text-xs font-semibold text-[#FF6B6B] flex-shrink-0">5</span>
                     <span>완료! B2C 예약 페이지에 네이버 예약 버튼이 자동 표시됩니다</span>
                   </li>
                 </ol>
@@ -692,12 +692,12 @@ export function ShopSettings() {
             return (
               <div
                 key={category.category}
-                className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft overflow-hidden"
+                className="rounded-2xl bg-white ring-1 ring-[#FFE4E0] shadow-soft overflow-hidden"
               >
                 {/* Category header */}
                 <button
                   onClick={() => toggleCategory(category.category)}
-                  className="flex items-center justify-between w-full px-6 py-4 transition-colors duration-200 hover:bg-zinc-50/60"
+                  className="flex items-center justify-between w-full px-6 py-4 transition-colors duration-200 hover:bg-[#FFF5F5]"
                 >
                   <div className="flex items-center gap-3">
                     <span className="text-sm font-semibold text-zinc-800">
@@ -751,7 +751,7 @@ export function ShopSettings() {
                     ))}
 
                     {/* Add service row */}
-                    <button className="flex items-center gap-2 w-full px-6 py-3 text-xs font-medium text-zinc-500 border-t border-zinc-100 transition-colors duration-200 hover:bg-zinc-50/60 hover:text-zinc-700">
+                    <button className="flex items-center gap-2 w-full px-6 py-3 text-xs font-medium text-zinc-500 border-t border-zinc-100 transition-colors duration-200 hover:bg-[#FFF5F5] hover:text-zinc-700">
                       <Plus size={12} weight="bold" />
                       서비스 추가
                     </button>
@@ -794,7 +794,7 @@ export function ShopSettings() {
             }
           }}
           disabled={updateShop.isPending}
-          className="group relative flex items-center gap-2 rounded-full bg-zinc-900 px-8 py-3.5 text-sm font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-zinc-800 active:scale-[0.98] disabled:opacity-60"
+          className="group relative flex items-center gap-2 rounded-full bg-gradient-to-r from-[#FF6B6B] to-[#FF8E8E] shadow-[0_4px_15px_rgba(255,107,107,0.3)] px-8 py-3.5 text-sm font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:from-[#FF5252] hover:to-[#FF7B7B] active:scale-[0.98] disabled:opacity-60"
         >
           {updateShop.isPending ? (
             <SpinnerGap size={16} className="animate-spin" />

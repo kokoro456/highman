@@ -1,0 +1,62 @@
+{
+  "totalCount": 150,
+  "satisfactionScore": 92,
+  "reviews": {
+    "data": [
+      {
+        "id": 1,
+        "reviewer": {
+          "nickname": "테스트유저1",
+          "status": "ACTIVE",
+          "visitCount": 5,
+          "profileImageUrl": "https://picsum.photos/200/200?random=1"
+        },
+        "satisfactionLevel": "BEST",
+        "imageUrls": [
+          "https://picsum.photos/400/400?random=2",
+          "https://picsum.photos/400/400?random=3"
+        ],
+        "contents": "정말 만족스러운 서비스였습니다. 직원분들도 친절하고 시술도 완벽했어요!",
+        "booking": {
+          "bookingDate": "2024-06-01",
+          "employee": {
+            "id": 101,
+            "name": "김디자이너",
+            "grade": "디자이너"
+          },
+          "procedures": [
+            "기본케어",
+            "네일아트"
+          ],
+          "price": 80000
+        }
+      },
+      {
+        "id": 2,
+        "reviewer": {
+          "nickname": "테스트유저2",
+          "status": "ACTIVE",
+          "visitCount": 3,
+          "profileImageUrl": null
+        },
+        "satisfactionLevel": "GOOD",
+        "imageUrls": [],
+        "contents": "좋았어요. 다음에도 이용할 예정입니다.",
+        "booking": {
+          "bookingDate": "2024-05-28",
+          "employee": {
+            "id": 102,
+            "name": "이실장",
+            "grade": "실장"
+          },
+          "procedures": [
+            "기본케어"
+          ],
+          "price": 60000
+        }
+      }
+    ],
+    "offset": 0,
+    "hasMore": true
+  }
+}

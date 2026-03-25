@@ -1,0 +1,94 @@
+{
+  "shop": {
+    "id": "S000003969",
+    "name": "테스트 샵",
+    "contact": "01012345678",
+    "address": "서울 강남구 테스트동 123-45",
+    "addressDetail": "1층",
+    "lotAddress": "서울 강남구 테스트동",
+    "postNumber": "12345",
+    "direction": "테스트 샵 오시는 길",
+    "latitude": 37.5481117477159,
+    "longitude": 127.053285506977,
+    "bookingTimeInterval": 30,
+    "introduction": "테스트 샵 소개입니다.",
+    "todayBookingOption": "BEFORE_3H",
+    "isTodayBookingAvailable": true,
+    "thumbnailImageUrl": [
+      "https://test-image.com/image1.jpg"
+    ],
+    "categories": [
+      "네일",
+      "속눈썹"
+    ],
+    "shopBusinessSchedule": {
+      "weeklyBusinessDays": [
+        {
+          "dayOfWeek": "MONDAY",
+          "businessStartTime": "09:00",
+          "businessEndTime": "21:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "TUESDAY",
+          "businessStartTime": "09:00",
+          "businessEndTime": "21:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "WEDNESDAY",
+          "businessStartTime": "09:00",
+          "businessEndTime": "21:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "THURSDAY",
+          "businessStartTime": "09:00",
+          "businessEndTime": "21:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "FRIDAY",
+          "businessStartTime": "09:00",
+          "businessEndTime": "21:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SATURDAY",
+          "businessStartTime": "10:00",
+          "businessEndTime": "20:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SUNDAY",
+          "businessStartTime": "10:00",
+          "businessEndTime": "20:00",
+          "isHoliday": false
+        }
+      ],
+      "holidays": [],
+      "shopHolidays": []
+    },
+    "shopUnavailableTimes": [],
+    "keywords": [
+      "테스트",
+      "샵"
+    ],
+    "parkingInfo": "주차 가능",
+    "reviewCount": 10,
+    "reviewRating": 4.5,
+    "satisfiedCount": 8,
+    "favoriteCount": 5,
+    "isFavorite": false,
+    "isZeroShop": true,
+    "shopPromotions": {
+      "promotions": []
+    },
+    "isDeleted": false,
+    "ownerId": "owner123",
+    "ownerName": "김사장",
+    "ownerImageUrl": "https://test-image.com/owner.jpg",
+    "ownerDescription": "안녕하세요, 테스트 샵입니다.",
+    "shopStatus": "NORMAL"
+  }
+}

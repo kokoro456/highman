@@ -149,7 +149,7 @@ export function PhotoGallery({ customerId }: PhotoGalleryProps) {
               className={cn(
                 'rounded-full px-3.5 py-1.5 text-xs font-medium transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)]',
                 activeTab === tab.value
-                  ? 'bg-brand-500 text-white shadow-soft'
+                  ? 'bg-[#FF6B6B] text-white shadow-soft'
                   : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200',
               )}
             >
@@ -158,7 +158,7 @@ export function PhotoGallery({ customerId }: PhotoGalleryProps) {
           ))}
         </div>
 
-        <label className="flex items-center gap-1.5 rounded-full bg-brand-500 px-4 py-2 text-xs font-medium text-white shadow-soft cursor-pointer transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-brand-600 hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98]">
+        <label className="flex items-center gap-1.5 rounded-full bg-[#FF6B6B] px-4 py-2 text-xs font-medium text-white shadow-soft cursor-pointer transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-[#FF5252] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98]">
           <Plus size={14} weight="bold" />
           사진 추가
           <input
@@ -175,11 +175,11 @@ export function PhotoGallery({ customerId }: PhotoGalleryProps) {
       {isLoading ? (
         <div className="grid grid-cols-3 md:grid-cols-4 gap-3">
           {[...Array(8)].map((_, i) => (
-            <div key={i} className="aspect-square rounded-2xl bg-zinc-100 animate-pulse" />
+            <div key={i} className="aspect-square rounded-2xl bg-[#FFE4E0] animate-pulse" />
           ))}
         </div>
       ) : photos.length === 0 ? (
-        <div className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft px-6 py-12 text-center">
+        <div className="rounded-2xl bg-white ring-1 ring-[#FFE4E0] shadow-soft px-6 py-12 text-center">
           <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-zinc-100">
             <Camera size={22} className="text-zinc-400" />
           </div>
@@ -192,7 +192,7 @@ export function PhotoGallery({ customerId }: PhotoGalleryProps) {
             <button
               key={photo.id}
               onClick={() => setLightboxIndex(idx)}
-              className="group relative aspect-square rounded-2xl overflow-hidden ring-1 ring-zinc-200/50 shadow-soft transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-brand-400"
+              className="group relative aspect-square rounded-2xl overflow-hidden ring-1 ring-[#FFE4E0] shadow-soft transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-[#FF6B6B]"
             >
               <img
                 src={photo.imageUrl}
@@ -296,11 +296,11 @@ export function PhotoGallery({ customerId }: PhotoGalleryProps) {
         <div className="space-y-5">
           {/* Preview */}
           {uploadPreview && (
-            <div className="relative rounded-2xl overflow-hidden ring-1 ring-zinc-200/50">
+            <div className="relative rounded-2xl overflow-hidden ring-1 ring-[#FFE4E0]">
               <img
                 src={uploadPreview}
                 alt="미리보기"
-                className="w-full max-h-[300px] object-contain bg-zinc-50"
+                className="w-full max-h-[300px] object-contain bg-[#FFF8F6]"
               />
             </div>
           )}
@@ -318,7 +318,7 @@ export function PhotoGallery({ customerId }: PhotoGalleryProps) {
                   className={cn(
                     'flex-1 rounded-xl py-2.5 text-xs font-medium transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)]',
                     uploadType === type
-                      ? 'bg-brand-500 text-white shadow-soft'
+                      ? 'bg-[#FF6B6B] text-white shadow-soft'
                       : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200',
                   )}
                 >
@@ -338,7 +338,7 @@ export function PhotoGallery({ customerId }: PhotoGalleryProps) {
               value={uploadCaption}
               onChange={(e) => setUploadCaption(e.target.value)}
               placeholder="사진에 대한 간단한 설명"
-              className="w-full rounded-xl bg-zinc-50 px-4 py-2.5 text-sm text-zinc-800 ring-1 ring-zinc-200/50 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-brand-400 transition-all duration-200"
+              className="w-full rounded-xl bg-[#FFF8F6] px-4 py-2.5 text-sm text-zinc-800 ring-1 ring-[#FFE4E0] placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#FF6B6B] transition-all duration-200"
             />
           </div>
 
@@ -355,7 +355,7 @@ export function PhotoGallery({ customerId }: PhotoGalleryProps) {
               type="button"
               onClick={handleUpload}
               disabled={uploadPhoto.isPending || !uploadPreview}
-              className="flex items-center gap-2 rounded-full bg-brand-500 px-6 py-2.5 text-sm font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-brand-600 active:scale-[0.98] disabled:opacity-60"
+              className="flex items-center gap-2 rounded-full bg-[#FF6B6B] px-6 py-2.5 text-sm font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-[#FF5252] active:scale-[0.98] disabled:opacity-60"
             >
               {uploadPhoto.isPending && <SpinnerGap size={16} className="animate-spin" />}
               업로드

@@ -1,0 +1,4 @@
+{
+  "uploadUrl": "http://localhost:__PORT__/api/v1/image/upload/test_image.jpg",
+  "fileUrl": "https://cdn.example.com/images/test_image.jpg"
+}

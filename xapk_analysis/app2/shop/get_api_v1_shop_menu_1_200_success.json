@@ -1,0 +1,294 @@
+{
+  "procedureCategoryGroups": [
+    {
+      "category": {
+        "id": 1,
+        "code": "NAIL",
+        "name": "네일",
+        "sortOrder": null
+      },
+      "procedureKindGroups": [
+        {
+          "kind": "손 관리",
+          "procedures": [
+            {
+              "id": 1,
+              "name": "기본 손톱 관리",
+              "description": "기본 손톱 케어와 광택 처리.",
+              "price": 30000,
+              "shopMembershipPrice": 25000,
+              "thumbnailImageUrl": null,
+              "duration": "00:40",
+              "isSignatureProcedure": false
+            },
+            {
+              "id": 2,
+              "name": "젤 네일",
+              "description": "젤 네일 시술로 오래가는 아름다움.",
+              "price": 50000,
+              "shopMembershipPrice": 45000,
+              "thumbnailImageUrl": null,
+              "duration": "01:00",
+              "isSignatureProcedure": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": {
+        "id": 2,
+        "code": "WAXING",
+        "name": "왁싱",
+        "sortOrder": null
+      },
+      "procedureKindGroups": [
+        {
+          "kind": "다리 왁싱",
+          "procedures": [
+            {
+              "id": 3,
+              "name": "전체 다리 왁싱",
+              "description": "전체 다리 왁싱 서비스.",
+              "price": 70000,
+              "shopMembershipPrice": 65000,
+              "thumbnailImageUrl": null,
+              "duration": "01:30",
+              "isSignatureProcedure": true
+            },
+            {
+              "id": 4,
+              "name": "하반신 왁싱",
+              "description": "허벅지와 종아리 왁싱.",
+              "price": 40000,
+              "shopMembershipPrice": 35000,
+              "thumbnailImageUrl": null,
+              "duration": "00:50",
+              "isSignatureProcedure": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": {
+        "id": 3,
+        "code": "HAIR",
+        "name": "헤어",
+        "sortOrder": null
+      },
+      "procedureKindGroups": [
+        {
+          "kind": "커트",
+          "procedures": [
+            {
+              "id": 5,
+              "name": "남성 커트",
+              "description": "남성을 위한 스타일리시한 커트.",
+              "price": 20000,
+              "shopMembershipPrice": 18000,
+              "thumbnailImageUrl": null,
+              "duration": "00:30",
+              "isSignatureProcedure": false
+            },
+            {
+              "id": 6,
+              "name": "여성 커트",
+              "description": "여성의 아름다움을 돋보이게 하는 커트.",
+              "price": 30000,
+              "shopMembershipPrice": 25000,
+              "thumbnailImageUrl": null,
+              "duration": "00:45",
+              "isSignatureProcedure": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": {
+        "id": 4,
+        "code": "SKINCARE",
+        "name": "피부 관리",
+        "sortOrder": null
+      },
+      "procedureKindGroups": [
+        {
+          "kind": "기본 피부 관리",
+          "procedures": [
+            {
+              "id": 7,
+              "name": "기본 클렌징",
+              "description": "기본 클렌징과 각질 제거.",
+              "price": 40000,
+              "shopMembershipPrice": 35000,
+              "thumbnailImageUrl": null,
+              "duration": "00:50",
+              "isSignatureProcedure": false
+            },
+            {
+              "id": 8,
+              "name": "딥 클렌징",
+              "description": "깊은 클렌징과 영양 공급.",
+              "price": 60000,
+              "shopMembershipPrice": 55000,
+              "thumbnailImageUrl": null,
+              "duration": "01:10",
+              "isSignatureProcedure": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": {
+        "id": 5,
+        "code": "MAKEUP",
+        "name": "메이크업",
+        "sortOrder": null
+      },
+      "procedureKindGroups": [
+        {
+          "kind": "웨딩 메이크업",
+          "procedures": [
+            {
+              "id": 9,
+              "name": "웨딩 메이크업",
+              "description": "웨딩을 위한 특별한 메이크업.",
+              "price": 150000,
+              "shopMembershipPrice": 140000,
+              "thumbnailImageUrl": null,
+              "duration": "02:00",
+              "isSignatureProcedure": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": {
+        "id": 6,
+        "code": "EYELASH",
+        "name": "속눈썹",
+        "sortOrder": null
+      },
+      "procedureKindGroups": [
+        {
+          "kind": "속눈썹 연장",
+          "procedures": [
+            {
+              "id": 10,
+              "name": "기본 속눈썹 연장",
+              "description": "자연스러운 속눈썹 연장.",
+              "price": 50000,
+              "shopMembershipPrice": 45000,
+              "thumbnailImageUrl": null,
+              "duration": "01:00",
+              "isSignatureProcedure": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": {
+        "id": 7,
+        "code": "MASSAGE",
+        "name": "마사지",
+        "sortOrder": null
+      },
+      "procedureKindGroups": [
+        {
+          "kind": "전신 마사지",
+          "procedures": [
+            {
+              "id": 11,
+              "name": "전신 마사지 60분",
+              "description": "몸 전체를 위한 릴렉싱 마사지.",
+              "price": 80000,
+              "shopMembershipPrice": 70000,
+              "thumbnailImageUrl": null,
+              "duration": "01:00",
+              "isSignatureProcedure": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": {
+        "id": 8,
+        "code": "FACIAL",
+        "name": "페이셜",
+        "sortOrder": null
+      },
+      "procedureKindGroups": [
+        {
+          "kind": "페이셜 관리",
+          "procedures": [
+            {
+              "id": 12,
+              "name": "딥 클렌징 페이셜",
+              "description": "깊은 클렌징과 보습 관리.",
+              "price": 70000,
+              "shopMembershipPrice": 65000,
+              "thumbnailImageUrl": null,
+              "duration": "01:10",
+              "isSignatureProcedure": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": {
+        "id": 9,
+        "code": "TATTOO",
+        "name": "타투",
+        "sortOrder": null
+      },
+      "procedureKindGroups": [
+        {
+          "kind": "작은 타투",
+          "procedures": [
+            {
+              "id": 13,
+              "name": "작은 타투",
+              "description": "작고 간단한 디자인 타투.",
+              "price": 100000,
+              "shopMembershipPrice": 90000,
+              "thumbnailImageUrl": null,
+              "duration": "01:30",
+              "isSignatureProcedure": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": {
+        "id": 10,
+        "code": "SPA",
+        "name": "스파",
+        "sortOrder": null
+      },
+      "procedureKindGroups": [
+        {
+          "kind": "아로마 스파",
+          "procedures": [
+            {
+              "id": 14,
+              "name": "아로마 스파",
+              "description": "아로마 오일을 사용한 전신 스파.",
+              "price": 120000,
+              "shopMembershipPrice": 110000,
+              "thumbnailImageUrl": null,
+              "duration": "01:40",
+              "isSignatureProcedure": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

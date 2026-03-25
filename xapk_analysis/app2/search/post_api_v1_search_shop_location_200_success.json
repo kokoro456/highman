@@ -1,0 +1,1241 @@
+{
+  "shopList": [
+    {
+      "id": "S000003766",
+      "isZeroShop": true,
+      "name": "정산정보없음",
+      "categories": [
+        {
+          "id": 15674,
+          "code": "MASSAGE",
+          "name": "마사지",
+          "sortOrder": 0
+        }
+      ],
+      "businessSchedule": [
+        {
+          "dayOfWeek": "MONDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "TUESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "WEDNESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "THURSDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "FRIDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SATURDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SUNDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        }
+      ],
+      "thumbnailImages": [
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/06/05/ff4fac71-774e-4767-829c-8113eec40832.png"
+      ],
+      "lotAddress": "서울 성동구 성수2가3동",
+      "latitude": 37.5469019779226,
+      "longitude": 127.051660680556,
+      "labels": [
+        {
+          "labelName": "즉시확정",
+          "labelImageUrl": "https://dev-zero-cdn.gongbiz.kr/static/icon/label/booking_immediately_confirmed2.png",
+          "displayOrder": 1
+        }
+      ]
+    },
+    {
+      "id": "S000004412",
+      "isZeroShop": true,
+      "name": "네이버테스트 30분",
+      "categories": [
+        {
+          "id": 18084,
+          "code": "NAIL",
+          "name": "네일",
+          "sortOrder": 0
+        }
+      ],
+      "businessSchedule": [
+        {
+          "dayOfWeek": "MONDAY",
+          "businessStartTime": "10:00",
+          "businessEndTime": "23:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "TUESDAY",
+          "businessStartTime": "10:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "WEDNESDAY",
+          "businessStartTime": "10:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "THURSDAY",
+          "businessStartTime": "10:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "FRIDAY",
+          "businessStartTime": "10:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SATURDAY",
+          "businessStartTime": "10:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SUNDAY",
+          "businessStartTime": "10:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        }
+      ],
+      "thumbnailImages": [
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/04/17/63569b50-ed11-453e-bc3e-561a1c47d032.jpg"
+      ],
+      "lotAddress": "서울 성동구 성수2가3동",
+      "latitude": 37.5470746286973,
+      "longitude": 127.051616327555,
+      "labels": [
+        {
+          "labelName": "오늘예약",
+          "labelImageUrl": "https://dev-zero-cdn.gongbiz.kr/static/icon/label/today_booking_available2.png",
+          "displayOrder": 1
+        },
+        {
+          "labelName": "콕예약",
+          "labelImageUrl": "https://dev-zero-cdn.gongbiz.kr/static/icon/label/cok_booking_available.png",
+          "displayOrder": 2
+        }
+      ]
+    },
+    {
+      "id": "S000003792",
+      "isZeroShop": true,
+      "name": "신규프로연간",
+      "categories": [
+        {
+          "id": 18432,
+          "code": "HAIR",
+          "name": "헤어",
+          "sortOrder": 0
+        }
+      ],
+      "businessSchedule": [
+        {
+          "dayOfWeek": "MONDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "TUESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "WEDNESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "THURSDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "FRIDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SATURDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SUNDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        }
+      ],
+      "thumbnailImages": [
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/03/18/1126833a-6396-4637-8837-b9062c88fb5c.jpg",
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/03/18/ee55a488-f514-4eb1-a77a-823f75d9a7d8.jpg",
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/03/18/ff5f7c16-c48e-4c70-bdc7-b73c4aa03a9b.jpg"
+      ],
+      "lotAddress": "서울 성동구 성수2가3동",
+      "latitude": 37.5469019779226,
+      "longitude": 127.051660680556,
+      "labels": []
+    },
+    {
+      "id": "S000002389",
+      "isZeroShop": true,
+      "name": "헤렌챗봇테스트샵",
+      "categories": [
+        {
+          "id": 18259,
+          "code": "BARBER",
+          "name": "바버",
+          "sortOrder": 0
+        }
+      ],
+      "businessSchedule": [
+        {
+          "dayOfWeek": "MONDAY",
+          "businessStartTime": "00:00",
+          "businessEndTime": "23:59",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "TUESDAY",
+          "businessStartTime": "00:00",
+          "businessEndTime": "23:59",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "WEDNESDAY",
+          "businessStartTime": "06:00",
+          "businessEndTime": "23:59",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "THURSDAY",
+          "businessStartTime": "06:00",
+          "businessEndTime": "23:59",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "FRIDAY",
+          "businessStartTime": "00:00",
+          "businessEndTime": "21:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SATURDAY",
+          "businessStartTime": null,
+          "businessEndTime": null,
+          "isHoliday": true
+        },
+        {
+          "dayOfWeek": "SUNDAY",
+          "businessStartTime": "00:00",
+          "businessEndTime": "23:59",
+          "isHoliday": false
+        }
+      ],
+      "thumbnailImages": [
+        "https://gongnail-art.s3.ap-northeast-2.amazonaws.com/2022/03/08/e4335f00e6f04d9f846659d0bba3ca0a.jpg"
+      ],
+      "lotAddress": "서울 성동구 성수2가3동",
+      "latitude": 37.5470746286973,
+      "longitude": 127.051616327555,
+      "labels": [
+        {
+          "labelName": "즉시확정",
+          "labelImageUrl": "https://dev-zero-cdn.gongbiz.kr/static/icon/label/booking_immediately_confirmed2.png",
+          "displayOrder": 1
+        }
+      ]
+    },
+    {
+      "id": "S000004183",
+      "isZeroShop": true,
+      "name": "부기샵2",
+      "categories": [
+        {
+          "id": 17303,
+          "code": "HAIR",
+          "name": "헤어",
+          "sortOrder": 0
+        }
+      ],
+      "businessSchedule": [
+        {
+          "dayOfWeek": "MONDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "TUESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "WEDNESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "THURSDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "FRIDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SATURDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SUNDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        }
+      ],
+      "thumbnailImages": [
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/02/27/145de859-8831-4f19-8124-811614e42936.png"
+      ],
+      "lotAddress": "서울 성동구 성수2가3동",
+      "latitude": 37.5470746286973,
+      "longitude": 127.051616327555,
+      "labels": [
+        {
+          "labelName": "즉시확정",
+          "labelImageUrl": "https://dev-zero-cdn.gongbiz.kr/static/icon/label/booking_immediately_confirmed2.png",
+          "displayOrder": 1
+        }
+      ]
+    },
+    {
+      "id": "S000002338",
+      "isZeroShop": true,
+      "name": "우디샵",
+      "categories": [
+        {
+          "id": 18301,
+          "code": "NAIL",
+          "name": "네일",
+          "sortOrder": 0
+        },
+        {
+          "id": 18302,
+          "code": "TATTOO",
+          "name": "타투",
+          "sortOrder": 0
+        }
+      ],
+      "businessSchedule": [
+        {
+          "dayOfWeek": "MONDAY",
+          "businessStartTime": "01:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "TUESDAY",
+          "businessStartTime": "01:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "WEDNESDAY",
+          "businessStartTime": "01:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "THURSDAY",
+          "businessStartTime": "01:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "FRIDAY",
+          "businessStartTime": "01:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SATURDAY",
+          "businessStartTime": null,
+          "businessEndTime": null,
+          "isHoliday": true
+        },
+        {
+          "dayOfWeek": "SUNDAY",
+          "businessStartTime": null,
+          "businessEndTime": null,
+          "isHoliday": true
+        }
+      ],
+      "thumbnailImages": [
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/02/11/88b9e568-0446-4e19-9973-e8722ba53aa1.jpg"
+      ],
+      "lotAddress": "서울 성동구 성수2가3동",
+      "latitude": 37.5470746286973,
+      "longitude": 127.051616327555,
+      "labels": [
+        {
+          "labelName": "인기 샵",
+          "labelImageUrl": "https://dev-zero-cdn.gongbiz.kr/static/icon/label/popular_shop3.png",
+          "displayOrder": 1
+        },
+        {
+          "labelName": "할인",
+          "labelImageUrl": "https://dev-zero-cdn.gongbiz.kr/static/icon/label/discount3.png",
+          "displayOrder": 1
+        },
+        {
+          "labelName": "즉시확정",
+          "labelImageUrl": "https://dev-zero-cdn.gongbiz.kr/static/icon/label/booking_immediately_confirmed2.png",
+          "displayOrder": 1
+        }
+      ]
+    },
+    {
+      "id": "S000003800",
+      "isZeroShop": true,
+      "name": "자동화_헤렌네일",
+      "categories": [
+        {
+          "id": 16787,
+          "code": "BARBER",
+          "name": "바버",
+          "sortOrder": 0
+        }
+      ],
+      "businessSchedule": [
+        {
+          "dayOfWeek": "MONDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "20:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "TUESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "20:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "WEDNESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "20:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "THURSDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "20:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "FRIDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "20:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SATURDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "20:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SUNDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "20:00",
+          "isHoliday": false
+        }
+      ],
+      "thumbnailImages": [
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/31/28fc40e3-79cf-49d8-b472-63d09f8ec2c1.jpg",
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/31/dd0e14ee-4137-4b54-b1d7-6e122a1c4109.jpg",
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/31/581d1396-9cfc-4a4b-ad90-13c0dc5f4241.jpg"
+      ],
+      "lotAddress": "서울 성동구 성수1가1동",
+      "latitude": 37.5389616567303,
+      "longitude": 127.041603887629,
+      "labels": [
+        {
+          "labelName": "오늘예약",
+          "labelImageUrl": "https://dev-zero-cdn.gongbiz.kr/static/icon/label/today_booking_available2.png",
+          "displayOrder": 1
+        },
+        {
+          "labelName": "즉시확정",
+          "labelImageUrl": "https://dev-zero-cdn.gongbiz.kr/static/icon/label/booking_immediately_confirmed2.png",
+          "displayOrder": 2
+        }
+      ]
+    },
+    {
+      "id": "S000000004",
+      "isZeroShop": false,
+      "name": "헤렌네일",
+      "categories": [
+        {
+          "id": 18427,
+          "code": "NAIL",
+          "name": "네일",
+          "sortOrder": 0
+        },
+        {
+          "id": 18428,
+          "code": "EYELASHES",
+          "name": "속눈썹",
+          "sortOrder": 0
+        },
+        {
+          "id": 18429,
+          "code": "WAXING",
+          "name": "왁싱",
+          "sortOrder": 0
+        }
+      ],
+      "businessSchedule": [
+        {
+          "dayOfWeek": "MONDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "23:59",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "TUESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "23:59",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "WEDNESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "23:59",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "THURSDAY",
+          "businessStartTime": null,
+          "businessEndTime": null,
+          "isHoliday": true
+        },
+        {
+          "dayOfWeek": "FRIDAY",
+          "businessStartTime": null,
+          "businessEndTime": null,
+          "isHoliday": true
+        },
+        {
+          "dayOfWeek": "SATURDAY",
+          "businessStartTime": "23:00",
+          "businessEndTime": "23:30",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SUNDAY",
+          "businessStartTime": "09:00",
+          "businessEndTime": "18:00",
+          "isHoliday": false
+        }
+      ],
+      "thumbnailImages": [
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/06/24/d9d1dfdd-aaa5-4313-a07c-a39b873b7cbf.jpeg",
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/06/24/c71764bd-2bd1-4ed2-a5b5-bfe2fb38bb29.png",
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/06/24/d3e810dc-28b4-478e-beef-4a30681e96e2.jpeg"
+      ],
+      "lotAddress": "서울 성동구 성수2가3동",
+      "latitude": 37.5481117477159,
+      "longitude": 127.053285506977,
+      "labels": [
+        {
+          "labelName": "인기 샵",
+          "labelImageUrl": "https://dev-zero-cdn.gongbiz.kr/static/icon/label/popular_shop3.png",
+          "displayOrder": 1
+        },
+        {
+          "labelName": "오늘예약",
+          "labelImageUrl": "https://dev-zero-cdn.gongbiz.kr/static/icon/label/today_booking_available2.png",
+          "displayOrder": 1
+        },
+        {
+          "labelName": "즉시확정",
+          "labelImageUrl": "https://dev-zero-cdn.gongbiz.kr/static/icon/label/booking_immediately_confirmed2.png",
+          "displayOrder": 2
+        }
+      ]
+    },
+    {
+      "id": "S000003091",
+      "isZeroShop": true,
+      "name": "밀리애견테스트샵",
+      "categories": [
+        {
+          "id": 14414,
+          "code": "PET",
+          "name": "애견",
+          "sortOrder": 0
+        }
+      ],
+      "businessSchedule": [
+        {
+          "dayOfWeek": "MONDAY",
+          "businessStartTime": "07:00",
+          "businessEndTime": "23:50",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "TUESDAY",
+          "businessStartTime": "23:59",
+          "businessEndTime": "12:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "WEDNESDAY",
+          "businessStartTime": "07:00",
+          "businessEndTime": "21:30",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "THURSDAY",
+          "businessStartTime": "07:00",
+          "businessEndTime": "17:30",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "FRIDAY",
+          "businessStartTime": "07:00",
+          "businessEndTime": "14:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SATURDAY",
+          "businessStartTime": "07:00",
+          "businessEndTime": "23:50",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SUNDAY",
+          "businessStartTime": null,
+          "businessEndTime": null,
+          "isHoliday": true
+        }
+      ],
+      "thumbnailImages": [
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2024/12/16/2d7bfa49-001d-4846-84e1-68fa9b9f545c.jpg",
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2024/12/16/e2ff3fc0-5df4-4f0f-9c6a-eaf86288ee2d.jpg",
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2024/12/16/33c042e7-0889-4c5e-bd01-2e6082b5d958.jpg"
+      ],
+      "lotAddress": "서울 성동구 성수2가3동",
+      "latitude": 37.5469019779226,
+      "longitude": 127.051660680556,
+      "labels": [
+        {
+          "labelName": "오늘예약",
+          "labelImageUrl": "https://dev-zero-cdn.gongbiz.kr/static/icon/label/today_booking_available2.png",
+          "displayOrder": 1
+        }
+      ]
+    },
+    {
+      "id": "S000002806",
+      "isZeroShop": true,
+      "name": "민테스트",
+      "categories": [
+        {
+          "id": 14487,
+          "code": "NAIL",
+          "name": "네일",
+          "sortOrder": 0
+        }
+      ],
+      "businessSchedule": [
+        {
+          "dayOfWeek": "MONDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "TUESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "WEDNESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "THURSDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "FRIDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SATURDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SUNDAY",
+          "businessStartTime": null,
+          "businessEndTime": null,
+          "isHoliday": true
+        }
+      ],
+      "thumbnailImages": [
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2024/12/18/fa42406a-29fe-429f-870e-aa529c071f33.jpg"
+      ],
+      "lotAddress": "서울 성동구 성수2가1동",
+      "latitude": 37.5353835940323,
+      "longitude": 127.053687950511,
+      "labels": [
+        {
+          "labelName": "즉시확정",
+          "labelImageUrl": "https://dev-zero-cdn.gongbiz.kr/static/icon/label/booking_immediately_confirmed2.png",
+          "displayOrder": 1
+        }
+      ]
+    },
+    {
+      "id": "S000002921",
+      "isZeroShop": true,
+      "name": "헨리테스트샵",
+      "categories": [
+        {
+          "id": 13315,
+          "code": "BARBER",
+          "name": "바버",
+          "sortOrder": 0
+        },
+        {
+          "id": 13314,
+          "code": "HAIR",
+          "name": "헤어",
+          "sortOrder": 0
+        },
+        {
+          "id": 13318,
+          "code": "MAKEUP",
+          "name": "메이크업",
+          "sortOrder": 0
+        },
+        {
+          "id": 13316,
+          "code": "EYELASHES",
+          "name": "속눈썹",
+          "sortOrder": 0
+        },
+        {
+          "id": 13317,
+          "code": "WAXING",
+          "name": "왁싱",
+          "sortOrder": 0
+        }
+      ],
+      "businessSchedule": [
+        {
+          "dayOfWeek": "MONDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "TUESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "WEDNESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "THURSDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "FRIDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SATURDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SUNDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        }
+      ],
+      "thumbnailImages": [
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2024/12/16/18fad999-27e8-4ee2-a869-7c500505516c.png",
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2024/12/16/badecc06-b88e-415d-9e73-29ecc9d3f1d1.png"
+      ],
+      "lotAddress": "서울 성동구 성수2가3동",
+      "latitude": 37.5470746286973,
+      "longitude": 127.051616327555,
+      "labels": [
+        {
+          "labelName": "할인",
+          "labelImageUrl": "https://dev-zero-cdn.gongbiz.kr/static/icon/label/discount3.png",
+          "displayOrder": 1
+        }
+      ]
+    },
+    {
+      "id": "S000003975",
+      "isZeroShop": true,
+      "name": "마틸다네일M 성수점",
+      "categories": [
+        {
+          "id": 16503,
+          "code": "NAIL",
+          "name": "네일",
+          "sortOrder": 0
+        }
+      ],
+      "businessSchedule": [
+        {
+          "dayOfWeek": "MONDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "TUESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "WEDNESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "THURSDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "FRIDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SATURDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SUNDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        }
+      ],
+      "thumbnailImages": [
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/03/01JGN3CTH8V1EHC4P0GT7P0KHD.jpg",
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/03/01JGN3CTXR9DWS8YT212P6EB2G.jpg"
+      ],
+      "lotAddress": "서울 성동구 성수2가3동",
+      "latitude": 37.5430121236904,
+      "longitude": 127.058366476771,
+      "labels": [
+        {
+          "labelName": "인기 샵",
+          "labelImageUrl": "https://dev-zero-cdn.gongbiz.kr/static/icon/label/popular_shop3.png",
+          "displayOrder": 1
+        },
+        {
+          "labelName": "할인",
+          "labelImageUrl": "https://dev-zero-cdn.gongbiz.kr/static/icon/label/discount3.png",
+          "displayOrder": 1
+        },
+        {
+          "labelName": "오늘예약",
+          "labelImageUrl": "https://dev-zero-cdn.gongbiz.kr/static/icon/label/today_booking_available2.png",
+          "displayOrder": 1
+        },
+        {
+          "labelName": "즉시확정",
+          "labelImageUrl": "https://dev-zero-cdn.gongbiz.kr/static/icon/label/booking_immediately_confirmed2.png",
+          "displayOrder": 2
+        }
+      ]
+    },
+    {
+      "id": "S000003976",
+      "isZeroShop": true,
+      "name": "오어즈네일스튜디오 도 이 름 을 늘려볼게요 방문 감사해요",
+      "categories": [
+        {
+          "id": 18439,
+          "code": "NAIL",
+          "name": "네일",
+          "sortOrder": 0
+        }
+      ],
+      "businessSchedule": [
+        {
+          "dayOfWeek": "MONDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "TUESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "WEDNESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "THURSDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "FRIDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SATURDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SUNDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        }
+      ],
+      "thumbnailImages": [
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/03/01JGN3DGS6HFNST9EBJE41PJY9.jpg",
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/03/01JGN3DH23XMDYTCME9CWW9NP1.jpg",
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/03/01JGN3DHC6RGDVH8X8S5HAHKXA.jpg"
+      ],
+      "lotAddress": "서울 성동구 성수1가2동",
+      "latitude": 37.5469529494686,
+      "longitude": 127.046974512911,
+      "labels": [
+        {
+          "labelName": "할인",
+          "labelImageUrl": "https://dev-zero-cdn.gongbiz.kr/static/icon/label/discount3.png",
+          "displayOrder": 1
+        },
+        {
+          "labelName": "오늘예약",
+          "labelImageUrl": "https://dev-zero-cdn.gongbiz.kr/static/icon/label/today_booking_available2.png",
+          "displayOrder": 1
+        }
+      ]
+    },
+    {
+      "id": "S000003979",
+      "isZeroShop": true,
+      "name": "코리 헤어샵 성수점 본점인데 20자까지 된다고합니다.",
+      "categories": [
+        {
+          "id": 18447,
+          "code": "HAIR",
+          "name": "헤어",
+          "sortOrder": 0
+        }
+      ],
+      "businessSchedule": [
+        {
+          "dayOfWeek": "MONDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "TUESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "WEDNESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "THURSDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "FRIDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SATURDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SUNDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        }
+      ],
+      "thumbnailImages": [
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/03/01JGN3D3JY91Q1VQA42KXV7N4R.jpg",
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/03/01JGN3D3V2TBNDYHDGW6SF3BYG.jpg",
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/03/01JGN3D49VT8PQXSP47FX3H74Y.jpg"
+      ],
+      "lotAddress": "서울 성동구 성수2가3동",
+      "latitude": 37.5446163292774,
+      "longitude": 127.054455325209,
+      "labels": [
+        {
+          "labelName": "인기 샵",
+          "labelImageUrl": "https://dev-zero-cdn.gongbiz.kr/static/icon/label/popular_shop3.png",
+          "displayOrder": 1
+        },
+        {
+          "labelName": "오늘예약",
+          "labelImageUrl": "https://dev-zero-cdn.gongbiz.kr/static/icon/label/today_booking_available2.png",
+          "displayOrder": 1
+        }
+      ]
+    },
+    {
+      "id": "S000003980",
+      "isZeroShop": true,
+      "name": "팔색조네일",
+      "categories": [
+        {
+          "id": 18087,
+          "code": "NAIL",
+          "name": "네일",
+          "sortOrder": 0
+        }
+      ],
+      "businessSchedule": [
+        {
+          "dayOfWeek": "MONDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "TUESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "WEDNESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "THURSDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "FRIDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SATURDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SUNDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        }
+      ],
+      "thumbnailImages": [
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/03/01JGN3CYHJA35BWGF2S556JBZ2.jpg",
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/03/01JGN3CYX1A8ZFKRVCZXBVGCP8.jpg"
+      ],
+      "lotAddress": "서울 성동구 성수1가2동",
+      "latitude": 37.5494959302017,
+      "longitude": 127.049826945051,
+      "labels": [
+        {
+          "labelName": "오늘예약",
+          "labelImageUrl": "https://dev-zero-cdn.gongbiz.kr/static/icon/label/today_booking_available2.png",
+          "displayOrder": 1
+        },
+        {
+          "labelName": "콕예약",
+          "labelImageUrl": "https://dev-zero-cdn.gongbiz.kr/static/icon/label/cok_booking_available.png",
+          "displayOrder": 2
+        }
+      ]
+    },
+    {
+      "id": "S000004029",
+      "isZeroShop": true,
+      "name": "미청담",
+      "categories": [
+        {
+          "id": 16572,
+          "code": "NAIL",
+          "name": "네일",
+          "sortOrder": 0
+        },
+        {
+          "id": 16573,
+          "code": "EYELASHES",
+          "name": "속눈썹",
+          "sortOrder": 0
+        }
+      ],
+      "businessSchedule": [
+        {
+          "dayOfWeek": "MONDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "TUESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "WEDNESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "THURSDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "FRIDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SATURDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SUNDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        }
+      ],
+      "thumbnailImages": [
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWNG0A6C0943TTA88TBEX80.jpg"
+      ],
+      "lotAddress": "서울 강남구 청담동",
+      "latitude": 37.5252547717564,
+      "longitude": 127.047232410937,
+      "labels": [
+        {
+          "labelName": "오늘예약",
+          "labelImageUrl": "https://dev-zero-cdn.gongbiz.kr/static/icon/label/today_booking_available2.png",
+          "displayOrder": 1
+        }
+      ]
+    }
+  ]
+}

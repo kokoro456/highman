@@ -1,0 +1,104 @@
+{
+  "shop": {
+    "id": "S000000004",
+    "name": "헤렌네일",
+    "contact": "01012341234",
+    "address": "서울 성동구 성수동2가 284-22 (성동안심상가)",
+    "addressDetail": " bb",
+    "lotAddress": "서울 성동구 성수2가3동",
+    "postNumber": "04793",
+    "direction": "300자를채워보자채워보자, 😁😘😂🔵❤️, 옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳옳m",
+    "latitude": 37.5481117477159,
+    "longitude": 127.053285506977,
+    "bookingTimeInterval": 30,
+    "introduction": "소개 입니다. 테스트에요소개 입니다. 테스트에요소개 입니다. 테스트에요소개 입니다. 테스트에요소개 입니다. 테스트에요소개 입니다. 테스트에요소개 입니다. 테스트에요소개 입니다. 테스트에요\n\n- 샵 소개 이미지 8/10 !@#$ abcd \n\n최소 1개 이상의 이미지 등록이 필요합니다.\n\n매장 외부/내부 공간 사진\n\n샵을 홍보할 수 있는 시술, 스타일링 사진\n\n등록된 사진은 공비서 SNS, 광고 등 외부 채널에서 마케팅 목적으로 사용될 수 있습니다.\n",
+    "todayBookingOption": "BEFORE_3H",
+    "isTodayBookingAvailable": true,
+    "thumbnailImageUrl": [
+      "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/06/24/d9d1dfdd-aaa5-4313-a07c-a39b873b7cbf.jpeg",
+      "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/06/24/c71764bd-2bd1-4ed2-a5b5-bfe2fb38bb29.png",
+      "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/06/24/d3e810dc-28b4-478e-beef-4a30681e96e2.jpeg",
+      "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/06/24/6a1f8bf7-9b38-48c0-aacc-d1a592b5cbeb.jpeg",
+      "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/06/24/2fcd5c4d-bcf8-4e1d-8e29-ba11e0f2dc89.jpeg",
+      "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/06/24/7f7f5b9e-cf91-4310-94a6-bd9dac12522a.png",
+      "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/06/24/9f83581f-2820-49f8-b47d-829ccdf9769d.png",
+      "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/06/24/297ef84f-0a66-4af7-af00-6d6cf920842b.png",
+      "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/06/24/29d5e577-6016-47a0-a1b2-c59b786a2836.png",
+      "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/06/24/b3f3a38b-9fae-4161-b09a-8e2955b3ff28.png"
+    ],
+    "categories": [
+      "네일",
+      "속눈썹",
+      "왁싱"
+    ],
+    "shopBusinessSchedule": {
+      "weeklyBusinessDays": [
+        {
+          "dayOfWeek": "MONDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "23:59",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "TUESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "23:59",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "WEDNESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "23:59",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "THURSDAY",
+          "businessStartTime": null,
+          "businessEndTime": null,
+          "isHoliday": true
+        },
+        {
+          "dayOfWeek": "FRIDAY",
+          "businessStartTime": null,
+          "businessEndTime": null,
+          "isHoliday": true
+        },
+        {
+          "dayOfWeek": "SATURDAY",
+          "businessStartTime": "23:00",
+          "businessEndTime": "23:30",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SUNDAY",
+          "businessStartTime": "09:00",
+          "businessEndTime": "18:00",
+          "isHoliday": false
+        }
+      ],
+      "breakStartTime": "18:00",
+      "breakEndTime": "19:00",
+      "holidays": []
+    },
+    "zeroShopTags": [
+      "무료주차",
+      "심야영업",
+      "1:1 책임시술",
+      "반려견동반가능",
+      "리클라이너소파",
+      "동시시술"
+    ],
+    "labels": [
+      {
+        "labelName": "전화 예약",
+        "labelImageUrl": null,
+        "displayOrder": 1
+      }
+    ],
+    "isZeroShop": false,
+    "zeroShopApplicationInfo": {
+      "zeroShopApplicationCount": 17,
+      "hasAppliedZeroShop": false
+    }
+  }
+}

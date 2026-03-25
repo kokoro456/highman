@@ -1,0 +1,1283 @@
+{
+  "project": {
+    "name": "Beauty ERP",
+    "tagline": "뷰티 매장을 위한 올인원 경영 관리 시스템",
+    "description": "속눈썹, 네일, 왁싱, 피부관리 등 뷰티 매장의 예약, 고객, 매출, 직원, 재고를 통합 관리하는 SaaS 플랫폼. 매장 원장님이 IT 지식 없이도 직관적으로 매장을 운영할 수 있도록 설계된 한국형 뷰티 ERP.",
+    "industry": "Beauty & Wellness",
+    "target_market": "South Korea",
+    "language": "Korean (한국어)",
+    "platform": "Responsive Web (Desktop + Mobile PWA)",
+    "live_url": "https://highman.vercel.app",
+    "tech_stack": {
+      "frontend": "Next.js 14, React, TypeScript, Tailwind CSS",
+      "ui_components": "Radix UI (headless)",
+      "icons": "Phosphor Icons",
+      "fonts": "Geist Sans / Geist Mono",
+      "state": "TanStack React Query (server), Zustand (client)",
+      "forms": "React Hook Form + Zod validation"
+    }
+  },
+
+  "brand": {
+    "philosophy": "뷰티 전문가를 위한 프리미엄 도구. 복잡한 매장 운영을 단순하고 아름답게. 기술에 익숙하지 않은 원장님도 자신감을 갖고 사용할 수 있는, 신뢰감 있고 따뜻한 디자인.",
+    "tone": ["premium", "minimalist", "trustworthy", "warm", "professional"],
+    "personality": "친절하지만 전문적인 매장 매니저. 불필요한 장식 없이 핵심 정보를 명확하게 전달하며, 뷰티 산업의 세련됨을 반영하는 고급스러운 인터페이스.",
+    "colors": {
+      "primary": {
+        "name": "Emerald (Brand)",
+        "scale": {
+          "50": "#ecfdf5",
+          "100": "#d1fae5",
+          "200": "#a7f3d0",
+          "300": "#6ee7b7",
+          "400": "#34d399",
+          "500": "#10b981",
+          "600": "#059669",
+          "700": "#047857",
+          "800": "#065f46",
+          "900": "#064e3b",
+          "950": "#022c22"
+        },
+        "usage": "Primary buttons, active nav items, brand accents, links, logo background, progress indicators. Main brand color representing nature, beauty, trust."
+      },
+      "background": {
+        "light": { "hex": "#fafafa", "css_var": "--background", "rgb": "250 250 250" },
+        "dark": { "hex": "#18181b", "css_var": "--background", "rgb": "24 24 27" },
+        "usage": "Page background color. Zinc-50 in light mode, Zinc-900 in dark mode."
+      },
+      "surface": {
+        "light": { "hex": "#ffffff", "css_var": "--card", "rgb": "255 255 255" },
+        "dark": { "hex": "#27272a", "css_var": "--card", "rgb": "39 39 42" },
+        "usage": "Cards, modals, dropdown panels, sidebar background. Pure white in light mode."
+      },
+      "text": {
+        "primary": { "light": "#18181b", "dark": "#fafafa", "usage": "Headings, important labels, values" },
+        "secondary": { "light": "#71717a", "dark": "#a1a1aa", "usage": "Descriptions, sub-labels, metadata" },
+        "tertiary": { "light": "#a1a1aa", "dark": "#71717a", "usage": "Placeholders, disabled text, timestamps" }
+      },
+      "border": {
+        "light": { "hex": "#e4e4e7", "opacity_variant": "ring-zinc-200/50" },
+        "dark": { "hex": "#3f3f46", "opacity_variant": "ring-zinc-700/50" },
+        "usage": "Card borders use ring-1 ring-zinc-200/50 (semi-transparent for subtlety)"
+      },
+      "muted": {
+        "light": { "hex": "#f4f4f5", "foreground": "#71717a" },
+        "dark": { "hex": "#27272a", "foreground": "#a1a1aa" },
+        "usage": "Muted backgrounds for badges, icon containers, empty states"
+      },
+      "accent_states": {
+        "success": {
+          "bg": "#ecfdf5",
+          "text": "#059669",
+          "icon": "#10b981",
+          "ring": "ring-emerald-200/60",
+          "usage": "Confirmed bookings, successful payments, connected integrations, success toasts"
+        },
+        "warning": {
+          "bg": "#fffbeb",
+          "text": "#d97706",
+          "icon": "#f59e0b",
+          "ring": "ring-amber-200/60",
+          "usage": "No-show alerts, low stock warnings, pending items"
+        },
+        "error": {
+          "bg": "#fef2f2",
+          "text": "#dc2626",
+          "icon": "#ef4444",
+          "ring": "ring-red-200/60",
+          "usage": "Cancelled bookings, failed payments, error toasts, validation errors"
+        },
+        "info": {
+          "bg": "#eff6ff",
+          "text": "#2563eb",
+          "icon": "#3b82f6",
+          "ring": "ring-blue-200/60",
+          "usage": "New customer badges, informational notices, tips"
+        },
+        "in_progress": {
+          "bg": "#fff7ed",
+          "text": "#ea580c",
+          "icon": "#f97316",
+          "usage": "In-progress booking status, currently serving"
+        }
+      },
+      "booking_status_colors": {
+        "READY": { "bg": "bg-blue-50", "text": "text-blue-700", "label": "대기" },
+        "CONFIRMED": { "bg": "bg-emerald-50", "text": "text-emerald-700", "label": "확정" },
+        "IN_PROGRESS": { "bg": "bg-orange-50", "text": "text-orange-700", "label": "진행중" },
+        "COMPLETED": { "bg": "bg-zinc-100", "text": "text-zinc-600", "label": "완료" },
+        "CANCELLED": { "bg": "bg-red-50", "text": "text-red-700", "label": "취소" },
+        "NO_SHOW": { "bg": "bg-amber-50", "text": "text-amber-700", "label": "노쇼" }
+      },
+      "customer_tier_colors": {
+        "NORMAL": { "bg": "bg-zinc-100", "text": "text-zinc-600", "label": "일반" },
+        "SILVER": { "bg": "bg-slate-100", "text": "text-slate-600", "label": "실버", "icon": "silver medal" },
+        "GOLD": { "bg": "bg-amber-50", "text": "text-amber-700", "label": "골드", "icon": "gold medal" },
+        "VIP": { "bg": "bg-purple-50", "text": "text-purple-700", "label": "VIP", "icon": "purple star" },
+        "VVIP": { "bg": "bg-rose-50", "text": "text-rose-700", "label": "VVIP", "icon": "diamond" }
+      },
+      "social_brand_colors": {
+        "kakao": { "bg": "#FEE500", "text": "#000000", "label": "카카오 로그인" },
+        "naver": { "bg": "#03C75A", "text": "#ffffff", "label": "네이버 로그인" }
+      }
+    },
+    "typography": {
+      "font_family": "Geist Sans (headings + body), Geist Mono (numbers, prices, timestamps, code)",
+      "fallback": "system-ui, sans-serif",
+      "mono_fallback": "ui-monospace, monospace",
+      "rendering": "antialiased (-webkit-font-smoothing, -moz-osx-font-smoothing)",
+      "scale": {
+        "heading_xl": { "size": "2xl (1.5rem/24px)", "weight": "semibold (600)", "tracking": "tight (-0.025em)", "usage": "Page titles" },
+        "heading_lg": { "size": "lg (1.125rem/18px)", "weight": "semibold (600)", "tracking": "tight", "usage": "Section titles" },
+        "heading_md": { "size": "sm (0.875rem/14px)", "weight": "medium (500)", "usage": "Card titles, section headers" },
+        "body": { "size": "sm (0.875rem/14px)", "weight": "normal (400)", "usage": "Body text, descriptions" },
+        "body_small": { "size": "xs (0.75rem/12px)", "weight": "normal (400)", "usage": "Metadata, timestamps, sub-labels" },
+        "body_tiny": { "size": "10px", "weight": "medium (500)", "usage": "Subscription tier labels, tiny badges" },
+        "label": { "size": "xs (0.75rem/12px)", "weight": "medium (500)", "tracking": "wider (0.05em)", "transform": "uppercase", "usage": "Stat labels, section identifiers" },
+        "number_display": { "size": "2xl-4xl", "weight": "semibold", "font": "Geist Mono", "class": "font-mono tabular-nums", "usage": "Revenue amounts, counts, statistics" }
+      }
+    },
+    "spacing": {
+      "system": "Tailwind 4px base (1 unit = 4px)",
+      "page_padding": "p-4 md:p-6 lg:p-8",
+      "card_padding": "p-4 md:p-6",
+      "section_gap": "space-y-8",
+      "card_gap": "gap-4",
+      "element_gap": "gap-2 to gap-3",
+      "sidebar_width": "280px (var(--sidebar-width))",
+      "header_height": "h-16 (64px)"
+    },
+    "border_radius": {
+      "small": "rounded-lg (8px) — icon containers, small badges",
+      "medium": "rounded-xl (12px) — buttons, nav items, inputs, small cards",
+      "large": "rounded-2xl (16px) — main cards, modals, stat cards",
+      "full": "rounded-full — pill badges, avatars, circular buttons",
+      "custom_4xl": "rounded-4xl (32px) — special hero cards",
+      "custom_5xl": "rounded-5xl (40px) — decorative elements"
+    },
+    "shadows": {
+      "soft": "0 2px 15px -3px rgba(0,0,0,0.04), 0 10px 20px -2px rgba(0,0,0,0.02) — default card shadow",
+      "soft_lg": "0 10px 40px -10px rgba(0,0,0,0.06) — hover state, elevated cards",
+      "soft_xl": "0 20px 60px -15px rgba(0,0,0,0.08) — modals, dropdowns",
+      "inner_highlight": "inset 0 1px 1px rgba(255,255,255,0.1) — glass effect",
+      "brand_glow": "0 2px 8px rgba(16,185,129,0.3) — brand logo, primary CTA",
+      "brand_button_glow": "0 2px 8px rgba(16,185,129,0.25) — primary buttons hover"
+    },
+    "animations": {
+      "easing": "cubic-bezier(0.32, 0.72, 0, 1) — Apple-style spring easing",
+      "duration_fast": "200ms — color changes, opacity",
+      "duration_normal": "300ms — slide transitions, dropdowns",
+      "duration_slow": "500ms — page transitions, card hover, sidebar",
+      "duration_entrance": "600ms — fade-in, slide-up on mount",
+      "fade_in": "opacity 0→1, 600ms, spring easing",
+      "slide_up": "translateY(16px)→0 + opacity, 600ms, spring easing",
+      "slide_down": "translateY(-8px)→0 + opacity, 300ms, spring easing",
+      "hover_lift": "translateY(-2px) on hover, 500ms spring — stat cards",
+      "button_press": "scale(0.98) on active — tactile feedback"
+    }
+  },
+
+  "design_system": {
+    "components": {
+      "card": {
+        "style": "rounded-2xl bg-white dark:bg-zinc-800 ring-1 ring-zinc-200/50 dark:ring-zinc-700/50 shadow-soft p-4 md:p-6",
+        "hover": "hover:shadow-soft-lg hover:-translate-y-0.5 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]",
+        "variants": {
+          "stat_card": "Same as card + icon container (h-8 w-8 rounded-lg bg-{color}-50) in top right, large mono number, label in uppercase xs tracking-wider",
+          "list_card": "Card with internal list items separated by border-b border-zinc-50",
+          "empty_state_card": "Card with centered column: icon container (h-14 w-14 rounded-2xl bg-zinc-100) + title + subtitle"
+        }
+      },
+      "button_primary": {
+        "style": "rounded-full bg-zinc-900 dark:bg-zinc-100 px-5 py-2.5 text-sm font-medium text-white dark:text-zinc-900",
+        "hover": "hover:bg-zinc-800 dark:hover:bg-zinc-200",
+        "active": "active:scale-[0.98]",
+        "transition": "transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]",
+        "with_icon": "flex items-center gap-2",
+        "note": "Primary CTA uses dark bg (not brand color) for premium feel. Brand color used for accents."
+      },
+      "button_secondary": {
+        "style": "rounded-xl px-4 py-2 text-sm font-medium text-zinc-600 dark:text-zinc-300 ring-1 ring-zinc-200/50 dark:ring-zinc-700/50 bg-white dark:bg-zinc-800",
+        "hover": "hover:bg-zinc-50 dark:hover:bg-zinc-700",
+        "transition": "transition-colors duration-200"
+      },
+      "button_ghost": {
+        "style": "rounded-lg px-3 py-2 text-sm text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-700 dark:hover:text-zinc-200",
+        "transition": "transition-colors duration-200"
+      },
+      "button_danger": {
+        "style": "rounded-xl px-4 py-2 text-sm font-medium text-red-600 ring-1 ring-red-200/50 bg-white hover:bg-red-50",
+        "usage": "Delete, cancel actions"
+      },
+      "input": {
+        "style": "w-full rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 px-4 py-2.5 text-sm placeholder:text-zinc-400",
+        "focus": "focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500",
+        "label": "text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5",
+        "error": "border-red-300 focus:ring-red-500/20 + text-xs text-red-500 mt-1"
+      },
+      "select": {
+        "style": "Same as input + caret-down icon on right side",
+        "note": "Use Radix UI Select for accessible dropdown"
+      },
+      "modal": {
+        "overlay": "fixed inset-0 bg-zinc-900/20 dark:bg-black/40 backdrop-blur-sm z-50",
+        "panel": "rounded-2xl bg-white dark:bg-zinc-900 shadow-soft-xl ring-1 ring-zinc-200/50 dark:ring-zinc-700/50 p-6 max-w-lg w-full mx-4",
+        "header": "text-lg font-semibold text-zinc-900 dark:text-zinc-100 mb-4",
+        "footer": "flex justify-end gap-3 mt-6 pt-4 border-t border-zinc-100 dark:border-zinc-800",
+        "animation": "fade-in + scale from 95% to 100%, 300ms spring",
+        "close_button": "absolute top-4 right-4 h-8 w-8 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center justify-center"
+      },
+      "badge": {
+        "style": "rounded-full px-2.5 py-1 text-xs font-medium",
+        "variants": {
+          "status": "bg-{status-color}-50 text-{status-color}-700 ring-1 ring-{status-color}-200/60",
+          "tier": "bg-{tier-color}-50 text-{tier-color}-700",
+          "tag": "bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300",
+          "connected": "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200/60 with CheckCircle icon",
+          "disconnected": "bg-zinc-50 text-zinc-400 ring-1 ring-zinc-200/60"
+        }
+      },
+      "toast": {
+        "container": "fixed top-4 right-4 z-[100] space-y-2",
+        "style": "rounded-xl px-4 py-3 shadow-soft-lg ring-1 flex items-center gap-3 min-w-[320px] animate-slide-down",
+        "success": "bg-white ring-emerald-200/50 + CheckCircle icon in emerald-500",
+        "error": "bg-white ring-red-200/50 + WarningCircle icon in red-500",
+        "info": "bg-white ring-blue-200/50 + Info icon in blue-500",
+        "auto_dismiss": "3 seconds with fade-out"
+      },
+      "table": {
+        "container": "rounded-2xl bg-white dark:bg-zinc-800 ring-1 ring-zinc-200/50 dark:ring-zinc-700/50 shadow-soft overflow-hidden",
+        "header": "bg-zinc-50/80 dark:bg-zinc-800/80 border-b border-zinc-100 dark:border-zinc-700",
+        "header_cell": "px-4 py-3 text-xs font-medium text-zinc-500 uppercase tracking-wider text-left",
+        "body_cell": "px-4 py-3.5 text-sm text-zinc-700 dark:text-zinc-300 border-b border-zinc-50 dark:border-zinc-800",
+        "row_hover": "hover:bg-zinc-50/50 dark:hover:bg-zinc-800/50 transition-colors",
+        "mobile": "On mobile (<768px), tables transform into stacked card layout"
+      },
+      "nav_item": {
+        "style": "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-300",
+        "active": "bg-brand-50 text-brand-700 ring-1 ring-brand-200/50 dark:bg-brand-950/40 dark:text-brand-400 dark:ring-brand-800/50 — icon uses weight='fill'",
+        "inactive": "text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-200",
+        "icon_size": "20px",
+        "icon_active": "text-brand-500 weight=fill",
+        "icon_inactive": "text-zinc-400 weight=regular, group-hover:text-zinc-600"
+      },
+      "sidebar": {
+        "width": "280px",
+        "background": "bg-white dark:bg-zinc-900",
+        "border": "border-r border-zinc-200/60 dark:border-zinc-800",
+        "logo_section": "h-16 px-6 flex items-center gap-2.5 border-b border-zinc-100",
+        "logo": "h-8 w-8 rounded-lg bg-brand-500 with Scissors icon, shadow glow",
+        "nav_area": "flex-1 px-3 py-4 space-y-1 overflow-y-auto",
+        "bottom_section": "border-t border-zinc-100 dark:border-zinc-800 p-4 — shop switcher + logout",
+        "shop_switcher": "rounded-xl bg-zinc-50/80 dark:bg-zinc-800/60 p-3 ring-1 ring-zinc-200/40 — shows shop avatar (gradient), name, subscription tier, CaretUpDown icon",
+        "shop_switcher_dropdown": "absolute bottom-full rounded-xl bg-white shadow-soft-lg ring-1 ring-zinc-200/50 — list of shops with check mark on active",
+        "mobile": "hidden by default, shown as overlay with hamburger button (fixed top-4 left-4), backdrop-blur overlay"
+      },
+      "header": {
+        "note": "No separate top header bar. Page title is rendered inside the main content area at the top.",
+        "page_title": "text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100",
+        "page_subtitle": "mt-1 text-sm text-zinc-500 dark:text-zinc-400"
+      },
+      "avatar": {
+        "user_avatar": "h-9 w-9 rounded-lg bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center text-white text-xs font-bold",
+        "customer_avatar": "h-8 w-8 rounded-xl bg-gradient-to-br from-zinc-100 to-zinc-200 flex items-center justify-center text-xs font-semibold text-zinc-600",
+        "staff_avatar": "h-10 w-10 rounded-xl with staff.color as background, white text initial"
+      },
+      "empty_state": {
+        "container": "flex flex-col items-center justify-center py-12 text-center",
+        "icon_container": "flex h-14 w-14 items-center justify-center rounded-2xl bg-zinc-100 dark:bg-zinc-800 mb-4",
+        "icon": "size 28, weight regular, text-zinc-400",
+        "title": "text-sm font-medium text-zinc-600 dark:text-zinc-300",
+        "subtitle": "mt-1 text-xs text-zinc-400"
+      },
+      "loading_skeleton": {
+        "style": "rounded-2xl bg-zinc-100 dark:bg-zinc-800 animate-pulse",
+        "variants": "Matches shape of the content it replaces (cards, list items, etc.)"
+      },
+      "search_bar": {
+        "desktop": "rounded-xl border border-zinc-200 bg-white px-4 py-2.5 text-sm with MagnifyingGlass icon on left",
+        "mobile": "Icon-only button that expands on tap"
+      },
+      "pagination": {
+        "style": "flex items-center gap-2 justify-center mt-6",
+        "page_button": "h-8 w-8 rounded-lg text-sm font-medium",
+        "active": "bg-brand-500 text-white",
+        "inactive": "text-zinc-500 hover:bg-zinc-100"
+      },
+      "tabs": {
+        "container": "flex gap-1 rounded-xl bg-zinc-100 dark:bg-zinc-800 p-1",
+        "tab": "rounded-lg px-4 py-2 text-sm font-medium transition-colors",
+        "active": "bg-white dark:bg-zinc-700 text-zinc-900 dark:text-zinc-100 shadow-sm",
+        "inactive": "text-zinc-500 hover:text-zinc-700"
+      },
+      "calendar": {
+        "header": "Sticky month/week nav with today button",
+        "day_cell": "min-h-[120px] border border-zinc-100, booking blocks color-coded by staff.color",
+        "booking_block": "rounded-lg px-2 py-1 text-xs truncate, bg color from staff color with opacity",
+        "time_column": "w-16 text-xs font-mono text-zinc-400 tabular-nums"
+      }
+    }
+  },
+
+  "users": {
+    "primary": {
+      "role": "매장 원장님 (Shop Owner)",
+      "korean_title": "원장님",
+      "age_range": "30-50",
+      "gender": "Predominantly female (85%+)",
+      "tech_proficiency": "Low to Medium — comfortable with KakaoTalk and Instagram but not enterprise software",
+      "device": "Desktop (office reception) + Mobile/Tablet (walking around salon floor)",
+      "work_context": "Runs 1-3 beauty salons, manages 2-8 staff members, sees 10-30 customers per day",
+      "goals": [
+        "오늘 예약 한눈에 확인하기",
+        "고객 시술 이력과 선호도 빠르게 파악하기",
+        "일일/월간 매출을 정확하게 관리하기",
+        "직원 성과와 인센티브 자동 계산하기",
+        "재고 소진 알림으로 발주 놓치지 않기",
+        "고객에게 전문적이고 세련된 예약 페이지 제공하기",
+        "카카오 알림톡으로 예약 확인 자동 발송하기",
+        "네이버 예약과 연동하여 중복 예약 방지하기"
+      ],
+      "pain_points": [
+        "종이 수기 장부로 매출 관리 — 정산 오류 빈번",
+        "엑셀로 고객 관리 — 검색 불편, 시술 이력 추적 어려움",
+        "카카오톡으로 예약 받기 — 놓치는 예약, 중복 예약",
+        "직원 인센티브 수동 계산 — 시간 소모, 분쟁 발생",
+        "재고 파악 안 됨 — 시술 중 재료 부족 발견",
+        "기존 ERP가 너무 복잡하거나 비쌈",
+        "IT에 익숙하지 않아 새 시스템 도입 부담"
+      ]
+    },
+    "secondary": {
+      "role": "직원 (Staff / Designer)",
+      "korean_title": "디자이너, 실장님",
+      "description": "매장 소속 시술자. 자신의 스케줄과 예약을 확인하고, 시술 후 결제를 처리. 주로 태블릿이나 모바일로 접속.",
+      "age_range": "22-40",
+      "tech_proficiency": "Medium",
+      "device": "Tablet / Mobile (on the salon floor)"
+    },
+    "tertiary": {
+      "role": "고객 (Customer)",
+      "korean_title": "고객님",
+      "description": "뷰티 서비스를 이용하는 최종 고객. B2C 예약 페이지를 통해 온라인 예약을 하고, 카카오 알림톡으로 확인을 받음.",
+      "age_range": "20-45",
+      "tech_proficiency": "Medium to High (digital native)",
+      "device": "Mobile (95%+ via KakaoTalk shared link)",
+      "expectations": "세련된 모바일 예약 경험, 빠른 로딩, 간단한 3-5 step 예약 플로우"
+    }
+  },
+
+  "pages": [
+    {
+      "id": 1,
+      "name": "로그인",
+      "route": "/login",
+      "type": "auth",
+      "viewport": ["desktop", "mobile"],
+      "priority": "high",
+      "description": "이메일/소셜 로그인 페이지. 매장 원장님과 직원이 시스템에 접속하는 첫 화면. 깔끔하고 신뢰감 있는 첫인상 중요.",
+      "key_elements": [
+        "Beauty ERP 로고 (Scissors 아이콘 + 텍스트)",
+        "이메일 입력 (placeholder: 'owner@beauty-erp.kr')",
+        "비밀번호 입력 (placeholder: '비밀번호')",
+        "로그인 버튼 (primary, full width)",
+        "OR 구분선 (――― 또는 ―――)",
+        "카카오 로그인 버튼 (bg: #FEE500, text: black, 카카오 아이콘)",
+        "네이버 로그인 버튼 (bg: #03C75A, text: white, 네이버 N 아이콘)",
+        "회원가입 링크 ('계정이 없으신가요? 회원가입')"
+      ],
+      "data_displayed": "none",
+      "user_actions": ["이메일/비밀번호 입력", "로그인 버튼 클릭", "카카오 로그인", "네이버 로그인", "회원가입 페이지 이동"],
+      "design_notes": "Double-bezel card centered on page. Background zinc-50. Card: white rounded-2xl shadow-soft. Logo at top with brand glow. Generous whitespace. No clutter.",
+      "reference": "Similar to Stripe login — clean, centered, white card on subtle background",
+      "states": ["default", "loading (button spinner)", "error (red text below input)", "social login loading"]
+    },
+    {
+      "id": 2,
+      "name": "회원가입",
+      "route": "/register",
+      "type": "auth",
+      "viewport": ["desktop", "mobile"],
+      "priority": "medium",
+      "description": "신규 매장 원장님 회원가입. 최소한의 정보만 요청하여 가입 허들을 낮춤.",
+      "key_elements": [
+        "Beauty ERP 로고",
+        "이름 입력 (placeholder: '홍길동')",
+        "이메일 입력 (placeholder: 'owner@beauty-erp.kr')",
+        "전화번호 입력 (placeholder: '010-1234-5678')",
+        "비밀번호 입력",
+        "비밀번호 확인 입력",
+        "가입하기 버튼 (primary, full width)",
+        "소셜 가입 버튼 (카카오, 네이버)",
+        "로그인 링크 ('이미 계정이 있으신가요? 로그인')"
+      ],
+      "data_displayed": "none",
+      "user_actions": ["폼 입력", "가입하기 클릭", "소셜 가입", "로그인 페이지 이동"],
+      "design_notes": "Same layout as login. Slightly taller card to accommodate more fields. Consistent card style.",
+      "states": ["default", "validation errors (inline red text)", "loading", "success (redirect)"]
+    },
+    {
+      "id": 3,
+      "name": "대시보드",
+      "route": "/dashboard",
+      "type": "dashboard",
+      "viewport": ["desktop", "mobile"],
+      "priority": "critical",
+      "description": "매장 원장님이 매일 아침 가장 먼저 보는 화면. 오늘의 핵심 지표를 한눈에 파악. Bento 그리드 레이아웃.",
+      "key_elements": [
+        "페이지 타이틀: 'Dashboard' + 부제: '매장 운영 현황을 한눈에 확인하세요'",
+        "통계 카드 4개 (가로 그리드): 오늘 매출 / 예약 건수 / 신규 고객 / 노쇼율",
+        "오늘의 예약 카드 (2/3 width): 예약 건수 표시 + '예약 확인하기' CTA 버튼",
+        "다가오는 예약 카드 (1/3 width): 최대 5건 리스트 (고객명, 서비스, 담당, 시간)",
+        "최근 결제 카드 (full width): 오늘 결제 리스트 (고객명, 서비스, 금액, 시간)",
+        "외부 연동 상태 (full width): 네이버 예약, 카카오톡, 인스타그램 연동 상태 pill badges"
+      ],
+      "mock_data": {
+        "stats": {
+          "today_revenue": "₩847,000",
+          "week_revenue": "₩4,235,000",
+          "today_bookings": "12건",
+          "new_customers": "3명",
+          "no_show_rate": "8.3%",
+          "no_show_detail": "1건 / 12건"
+        },
+        "upcoming_bookings": [
+          { "time": "14:00", "customer": "김서연", "service": "속눈썹 연장 (풀셋)", "staff": "이지은" },
+          { "time": "14:30", "customer": "박지민", "service": "젤네일 아트", "staff": "최유진" },
+          { "time": "15:00", "customer": "이수현", "service": "브라질리언 왁싱", "staff": "김하늘" },
+          { "time": "16:00", "customer": "정민서", "service": "속눈썹 리터치", "staff": "이지은" },
+          { "time": "17:00", "customer": "한예진", "service": "피부관리 (딥클렌징)", "staff": "박소현" }
+        ],
+        "recent_payments": [
+          { "customer": "김서연", "service": "속눈썹 연장 (풀셋)", "amount": "₩120,000", "time": "13:45" },
+          { "customer": "오하늘", "service": "젤네일 제거 + 케어", "amount": "₩45,000", "time": "13:20" },
+          { "customer": "강민지", "service": "브라질리언 왁싱", "amount": "₩60,000", "time": "12:00" }
+        ],
+        "integrations": {
+          "naver_booking": "connected",
+          "kakao": "connected",
+          "instagram": "disconnected"
+        }
+      },
+      "user_actions": ["통계 카드 클릭 → 해당 페이지 이동", "예약 확인하기 → 예약 관리", "전체 보기 → 각 섹션 상세", "외부 연동 설정 → 설정 페이지"],
+      "design_notes": "Bento grid layout. 4-column stats row on desktop (2-col on tablet, 1-col on mobile). Cards with soft shadow and subtle hover lift. Numbers in Geist Mono for tabular alignment. Stat icons in colored backgrounds (zinc, brand, blue, amber). Clean separation between sections with space-y-8.",
+      "reference": "Toss Business dashboard — clean KPI cards. Stripe dashboard — data density without clutter.",
+      "states": ["default (with data)", "loading (pulse skeleton cards)", "error (red error card with retry)", "empty (first-time user, no data yet)"]
+    },
+    {
+      "id": 4,
+      "name": "예약 관리",
+      "route": "/bookings",
+      "type": "calendar",
+      "viewport": ["desktop", "mobile"],
+      "priority": "critical",
+      "description": "가장 핵심적인 화면. 직원별 컬럼 캘린더 뷰로 하루의 예약을 한눈에 파악. 시간대별 블록으로 예약 표시.",
+      "key_elements": [
+        "캘린더 헤더: 날짜 네비게이션 (< 이전일 | 2024년 3월 22일 (금) | 다음일 >)",
+        "'오늘' 버튼 (quick jump)",
+        "뷰 전환 토글: 일별 / 주별",
+        "'+ 새 예약' 버튼 (primary CTA)",
+        "직원별 컬럼 헤더: 각 직원 이름 + 프로필 (아바타 with staff.color)",
+        "시간축 (Y축): 09:00 ~ 21:00, 30분 간격 눈금",
+        "예약 블록: 직원 컬럼 내 시간 위치에 배치, staff.color 배경, 고객명 + 서비스명 표시",
+        "빈 시간 슬롯 클릭 → 새 예약 모달 자동 오픈 (직원/시간 pre-filled)"
+      ],
+      "mock_data": {
+        "date": "2024년 3월 22일 (금)",
+        "staff_columns": [
+          { "name": "이지은", "color": "#8b5cf6", "role": "실장" },
+          { "name": "최유진", "color": "#f59e0b", "role": "디자이너" },
+          { "name": "김하늘", "color": "#3b82f6", "role": "디자이너" },
+          { "name": "박소현", "color": "#ec4899", "role": "신입" }
+        ],
+        "bookings": [
+          { "time": "10:00-11:30", "staff": "이지은", "customer": "김서연", "service": "속눈썹 연장 (풀셋)", "status": "CONFIRMED", "price": "₩120,000" },
+          { "time": "10:00-11:00", "staff": "최유진", "customer": "오하늘", "service": "젤네일 아트 (그라데이션)", "status": "CONFIRMED", "price": "₩65,000" },
+          { "time": "11:00-12:00", "staff": "김하늘", "customer": "강민지", "service": "브라질리언 왁싱", "status": "IN_PROGRESS", "price": "₩60,000" },
+          { "time": "13:00-14:00", "staff": "이지은", "customer": "정민서", "service": "속눈썹 리터치", "status": "READY", "price": "₩50,000" },
+          { "time": "14:00-15:30", "staff": "박소현", "customer": "한예진", "service": "피부관리 (딥클렌징)", "status": "READY", "price": "₩80,000" },
+          { "time": "15:00-16:00", "staff": "최유진", "customer": "이수현", "service": "패디큐어", "status": "READY", "price": "₩55,000" },
+          { "time": "16:00-17:30", "staff": "이지은", "customer": "윤소희", "service": "속눈썹 연장 (리뉴얼)", "status": "READY", "price": "₩90,000" }
+        ]
+      },
+      "user_actions": [
+        "날짜 이동 (이전/다음, 오늘 버튼)",
+        "뷰 전환 (일별/주별)",
+        "예약 블록 클릭 → 예약 상세 모달 (상태 변경, 메모, 결제 연결)",
+        "빈 슬롯 클릭 → 새 예약 모달",
+        "예약 드래그 → 시간/직원 변경 (stretch goal)",
+        "예약 상태 변경: 대기→확정→진행중→완료 또는 취소/노쇼"
+      ],
+      "modal_new_booking": {
+        "title": "새 예약 등록",
+        "fields": [
+          { "label": "고객", "type": "search-select", "placeholder": "고객 검색 또는 신규 등록" },
+          { "label": "서비스", "type": "select", "placeholder": "서비스 선택" },
+          { "label": "담당 직원", "type": "select", "placeholder": "직원 선택", "note": "pre-filled if clicked on staff column" },
+          { "label": "날짜", "type": "date-picker" },
+          { "label": "시작 시간", "type": "time-picker", "note": "pre-filled if clicked on time slot" },
+          { "label": "메모", "type": "textarea", "placeholder": "예약 메모 (선택)" }
+        ],
+        "actions": ["취소 (secondary)", "예약 등록 (primary)"]
+      },
+      "design_notes": "Desktop: Full calendar grid with staff columns. Each column ~200px wide, scrollable horizontally if many staff. Time rows 60px height per 30min. Booking blocks: rounded-lg with left border (4px) in staff color, slightly transparent background. Mobile: Switch to list view grouped by time, no column view.",
+      "reference": "Google Calendar (column layout), Calendly admin (clean time blocks), 공비서 (beauty booking patterns)",
+      "states": ["default (calendar with bookings)", "loading (skeleton grid)", "empty (no bookings — CTA to create)", "booking detail modal", "new booking modal"]
+    },
+    {
+      "id": 5,
+      "name": "고객 관리",
+      "route": "/customers",
+      "type": "list",
+      "viewport": ["desktop", "mobile"],
+      "priority": "critical",
+      "description": "전체 고객 목록. 검색, 필터, 태그로 고객을 빠르게 찾고, VIP 등급을 한눈에 파악.",
+      "key_elements": [
+        "페이지 타이틀: '고객 관리'",
+        "검색바: 이름/전화번호로 검색 (placeholder: '고객 이름 또는 전화번호 검색')",
+        "필터 버튼: VIP등급 필터, 태그 필터",
+        "'+ 고객 등록' 버튼 (primary CTA)",
+        "고객 테이블/리스트: 이름, 전화번호, VIP등급 배지, 방문횟수, 총 매출, 최근 방문일, 태그",
+        "페이지네이션"
+      ],
+      "mock_data": {
+        "total_customers": 248,
+        "customers": [
+          { "name": "김서연", "phone": "010-1234-5678", "tier": "VVIP", "visits": 47, "total_spent": "₩5,640,000", "last_visit": "2024-03-21", "tags": ["속눈썹 단골", "민감성 피부"] },
+          { "name": "박지민", "phone": "010-2345-6789", "tier": "VIP", "visits": 32, "total_spent": "₩3,200,000", "last_visit": "2024-03-20", "tags": ["네일 아트"] },
+          { "name": "이수현", "phone": "010-3456-7890", "tier": "GOLD", "visits": 18, "total_spent": "₩1,440,000", "last_visit": "2024-03-19", "tags": ["왁싱 정기"] },
+          { "name": "정민서", "phone": "010-4567-8901", "tier": "SILVER", "visits": 8, "total_spent": "₩640,000", "last_visit": "2024-03-15", "tags": [] },
+          { "name": "한예진", "phone": "010-5678-9012", "tier": "NORMAL", "visits": 2, "total_spent": "₩160,000", "last_visit": "2024-03-10", "tags": ["신규"] }
+        ]
+      },
+      "modal_new_customer": {
+        "title": "고객 등록",
+        "fields": [
+          { "label": "이름", "type": "text", "required": true },
+          { "label": "전화번호", "type": "tel", "required": true, "placeholder": "010-0000-0000" },
+          { "label": "성별", "type": "select", "options": ["여성", "남성", "기타"] },
+          { "label": "생년월일", "type": "date-picker" },
+          { "label": "메모", "type": "textarea" },
+          { "label": "마케팅 수신 동의", "type": "checkbox" }
+        ]
+      },
+      "design_notes": "Table on desktop, card list on mobile. VIP tier badges are prominent and color-coded (see customer_tier_colors). Phone numbers in font-mono. Tags as small rounded pills. Sortable columns. Clicking a row navigates to customer detail page.",
+      "states": ["default", "loading", "empty (no customers)", "search results empty", "filter active"]
+    },
+    {
+      "id": 6,
+      "name": "고객 상세",
+      "route": "/customers/[id]",
+      "type": "detail",
+      "viewport": ["desktop", "mobile"],
+      "priority": "critical",
+      "description": "개별 고객의 전체 프로필. 시술 이력 타임라인, 시술 사진 갤러리, 결제 내역, VIP 정보를 한곳에서 관리.",
+      "key_elements": [
+        "고객 프로필 카드: 이름, 전화번호, 성별, 생년월일, VIP 등급 배지, 가입일",
+        "핵심 통계: 총 방문 횟수, 총 결제 금액, 최근 방문일, 평균 결제 금액",
+        "탭 네비게이션: 시술 내역 | 시술 사진 | 결제 내역 | 회원권/쿠폰",
+        "시술 내역 탭: 타임라인 형태 (날짜, 서비스명, 담당자, 금액, 메모)",
+        "시술 사진 탭: Before/After 사진 갤러리 (그리드), 사진 업로드 버튼",
+        "결제 내역 탭: 결제 목록 (날짜, 서비스, 금액, 결제 수단, 상태)",
+        "회원권 탭: 활성 회원권/이용권 목록, 잔여 횟수/금액",
+        "메모 영역: 고객 메모 (알레르기, 선호사항 등)",
+        "태그 관리: 태그 추가/제거"
+      ],
+      "mock_data": {
+        "customer": {
+          "name": "김서연",
+          "phone": "010-1234-5678",
+          "gender": "여성",
+          "birth_date": "1990-05-15",
+          "tier": "VVIP",
+          "first_visit": "2022-03-10",
+          "visits": 47,
+          "total_spent": "₩5,640,000",
+          "last_visit": "2024-03-21",
+          "avg_spend": "₩120,000",
+          "tags": ["속눈썹 단골", "민감성 피부", "볼륨래쉬 선호"],
+          "memo": "접착제 알레르기 있음 - 저자극 접착제 사용. C컬 선호. 양쪽 눈 길이 비대칭 주의."
+        },
+        "treatment_history": [
+          { "date": "2024-03-21", "service": "속눈썹 연장 (리터치)", "staff": "이지은", "price": "₩50,000", "notes": "3주차 리터치. 좌우 10가닥씩 보충." },
+          { "date": "2024-02-28", "service": "속눈썹 연장 (풀셋)", "staff": "이지은", "price": "₩120,000", "notes": "볼륨래쉬 0.07 CC컬 12mm. 매우 만족." },
+          { "date": "2024-02-05", "service": "속눈썹 리무빙 + 풀셋", "staff": "이지은", "price": "₩130,000", "notes": "기존 타 매장 시술 제거 후 재시술." }
+        ],
+        "photos": [
+          { "type": "AFTER", "date": "2024-03-21", "caption": "볼륨래쉬 리터치 완료" },
+          { "type": "BEFORE", "date": "2024-02-28", "caption": "시술 전" },
+          { "type": "AFTER", "date": "2024-02-28", "caption": "볼륨래쉬 풀셋 완료" }
+        ]
+      },
+      "design_notes": "Profile card at top with large avatar, name, tier badge. Stats in 4-column grid below. Tabs for content switching. Timeline has vertical line with dots for each visit. Photo gallery in masonry or 3-column grid with lightbox on click. Mobile: single column, tabs become horizontally scrollable.",
+      "states": ["default", "loading", "photo lightbox modal", "edit customer modal"]
+    },
+    {
+      "id": 7,
+      "name": "매출/결제",
+      "route": "/payments",
+      "type": "list",
+      "viewport": ["desktop", "mobile"],
+      "priority": "high",
+      "description": "일별 매출 요약과 결제 내역 관리. 결제 등록, 환불 처리.",
+      "key_elements": [
+        "페이지 타이틀: '매출/결제'",
+        "날짜 선택: 일별/주별/월별 날짜 범위 선택",
+        "일일 매출 요약 카드: 총 매출, 카드 결제, 현금 결제, 이체, 회원권, 환불 금액",
+        "'+ 결제 등록' 버튼",
+        "결제 내역 테이블: 시간, 고객명, 서비스, 담당, 결제수단 아이콘, 금액, 상태",
+        "결제 수단 필터: 전체/카드/현금/이체/회원권"
+      ],
+      "mock_data": {
+        "daily_summary": {
+          "total": "₩847,000",
+          "card": "₩520,000",
+          "cash": "₩180,000",
+          "transfer": "₩87,000",
+          "pass": "₩60,000",
+          "refund": "₩0"
+        },
+        "payments": [
+          { "time": "13:45", "customer": "김서연", "service": "속눈썹 연장 (풀셋)", "staff": "이지은", "method": "CARD", "card_last_four": "1234", "amount": "₩120,000", "status": "COMPLETED" },
+          { "time": "13:20", "customer": "오하늘", "service": "젤네일 제거 + 케어", "staff": "최유진", "method": "CASH", "amount": "₩45,000", "status": "COMPLETED" },
+          { "time": "12:00", "customer": "강민지", "service": "브라질리언 왁싱", "staff": "김하늘", "method": "CARD", "card_last_four": "5678", "amount": "₩60,000", "status": "COMPLETED" },
+          { "time": "11:30", "customer": "박소연", "service": "속눈썹 리터치", "staff": "이지은", "method": "PASS", "amount": "₩50,000", "status": "COMPLETED" }
+        ]
+      },
+      "modal_new_payment": {
+        "title": "결제 등록",
+        "fields": [
+          { "label": "고객", "type": "search-select" },
+          { "label": "서비스", "type": "select" },
+          { "label": "담당 직원", "type": "select" },
+          { "label": "결제 금액", "type": "number", "prefix": "₩" },
+          { "label": "할인 금액", "type": "number", "prefix": "₩" },
+          { "label": "결제 수단", "type": "select", "options": ["카드", "현금", "계좌이체", "회원권", "복합"] },
+          { "label": "메모", "type": "textarea" }
+        ]
+      },
+      "design_notes": "Summary cards in a horizontal row at top showing revenue breakdown. Each card has a small colored icon. Table below with clear columns. Payment method shown as icon (credit card, cash, bank). Amounts right-aligned in font-mono. Mobile: summary cards stack vertically, table becomes card list.",
+      "states": ["default", "loading", "empty (no payments)", "payment detail modal", "refund confirmation modal"]
+    },
+    {
+      "id": 8,
+      "name": "보고서",
+      "route": "/reports",
+      "type": "analytics",
+      "viewport": ["desktop", "mobile"],
+      "priority": "high",
+      "description": "매출, 서비스, 고객, 시간대별 분석. 4개 탭으로 구성된 데이터 분석 화면.",
+      "key_elements": [
+        "4개 탭: 매출 분석 | 서비스 분석 | 고객 분석 | 시간대 분석",
+        "기간 선택: 이번 주 / 이번 달 / 최근 3개월 / 사용자 지정",
+        "매출 분석: 일별/주별/월별 매출 추이 차트, 결제 수단별 비율 도넛 차트",
+        "서비스 분석: 인기 서비스 순위 바 차트, 서비스별 매출 기여도",
+        "고객 분석: 신규 vs 재방문 고객 비율, VIP 등급 분포, 고객 유지율",
+        "시간대 분석: 시간대별 예약 밀도 히트맵, 요일별 패턴"
+      ],
+      "mock_data": {
+        "revenue_trend": {
+          "period": "2024년 3월",
+          "total": "₩12,450,000",
+          "vs_last_month": "+8.2%",
+          "daily_data": [
+            { "date": "3/1", "amount": 420000 },
+            { "date": "3/2", "amount": 380000 },
+            { "date": "3/3", "amount": 0 },
+            { "date": "3/4", "amount": 510000 },
+            { "date": "3/5", "amount": 470000 }
+          ]
+        },
+        "top_services": [
+          { "name": "속눈썹 연장 (풀셋)", "count": 45, "revenue": "₩5,400,000", "percentage": "43%" },
+          { "name": "젤네일 아트", "count": 38, "revenue": "₩2,470,000", "percentage": "20%" },
+          { "name": "브라질리언 왁싱", "count": 28, "revenue": "₩1,680,000", "percentage": "13%" },
+          { "name": "속눈썹 리터치", "count": 52, "revenue": "₩2,600,000", "percentage": "21%" },
+          { "name": "피부관리", "count": 12, "revenue": "₩960,000", "percentage": "8%" }
+        ],
+        "customer_mix": {
+          "new": "32%",
+          "returning": "68%",
+          "tier_distribution": { "NORMAL": "45%", "SILVER": "25%", "GOLD": "18%", "VIP": "8%", "VVIP": "4%" }
+        }
+      },
+      "design_notes": "Charts built with pure CSS (bar charts, donut charts) — no external chart library. Clean data cards alongside charts. Use brand-500 as primary chart color, zinc shades for secondary. Period selector as pill tabs. Mobile: charts stack vertically, simplified views.",
+      "reference": "Stripe analytics — clean chart styling with subtle gridlines",
+      "states": ["default", "loading", "no data for period", "export to Excel modal"]
+    },
+    {
+      "id": 9,
+      "name": "쿠폰 관리",
+      "route": "/coupons",
+      "type": "list",
+      "viewport": ["desktop", "mobile"],
+      "priority": "medium",
+      "description": "할인 쿠폰 생성 및 관리. 정액/정률 할인, 사용 기간, 사용 횟수 제한.",
+      "key_elements": [
+        "페이지 타이틀: '쿠폰 관리'",
+        "'+ 쿠폰 만들기' 버튼",
+        "쿠폰 리스트: 쿠폰 카드 형태 (쿠폰명, 코드, 할인 내용, 유효기간, 사용량/제한, 상태)",
+        "필터: 전체/활성/만료/비활성"
+      ],
+      "mock_data": {
+        "coupons": [
+          { "name": "봄맞이 10% 할인", "code": "SPRING2024", "type": "PERCENTAGE", "value": "10%", "min_amount": "₩50,000", "period": "2024-03-01 ~ 2024-03-31", "usage": "23/100", "status": "active" },
+          { "name": "신규 고객 ₩5,000 할인", "code": "WELCOME5K", "type": "FIXED", "value": "₩5,000", "min_amount": "₩30,000", "period": "2024-01-01 ~ 2024-12-31", "usage": "67/∞", "status": "active" },
+          { "name": "VIP 20% 할인", "code": "VIP20", "type": "PERCENTAGE", "value": "20%", "max_discount": "₩30,000", "period": "2024-02-01 ~ 2024-02-29", "usage": "15/50", "status": "expired" }
+        ]
+      },
+      "modal_new_coupon": {
+        "title": "쿠폰 만들기",
+        "fields": [
+          { "label": "쿠폰명", "type": "text", "placeholder": "봄맞이 10% 할인" },
+          { "label": "쿠폰 코드", "type": "text", "placeholder": "SPRING2024", "note": "자동 생성 버튼" },
+          { "label": "할인 유형", "type": "radio", "options": ["정액 할인 (₩)", "정률 할인 (%)"] },
+          { "label": "할인 값", "type": "number" },
+          { "label": "최소 결제 금액", "type": "number", "prefix": "₩" },
+          { "label": "최대 할인 금액", "type": "number", "prefix": "₩", "note": "정률 할인 시" },
+          { "label": "유효기간", "type": "date-range" },
+          { "label": "최대 사용 횟수", "type": "number", "placeholder": "무제한" }
+        ]
+      },
+      "design_notes": "Coupon cards with a subtle dashed border or ticket-style cutout design. Active coupons with brand color accent, expired ones muted/grayed. Code displayed in font-mono with copy button.",
+      "states": ["default", "loading", "empty (no coupons)", "create modal", "deactivate confirmation"]
+    },
+    {
+      "id": 10,
+      "name": "직원 관리",
+      "route": "/staff",
+      "type": "list",
+      "viewport": ["desktop", "mobile"],
+      "priority": "high",
+      "description": "직원 프로필, 전문 분야, 근무 스케줄 관리.",
+      "key_elements": [
+        "페이지 타이틀: '직원 관리'",
+        "'+ 직원 등록' 버튼",
+        "직원 카드 그리드: 프로필 사진/이니셜 아바타, 이름, 역할, 전문 분야 태그, 근무 상태",
+        "각 직원 카드 클릭 → 상세/편집 모달"
+      ],
+      "mock_data": {
+        "staff": [
+          { "name": "이지은", "role": "실장", "color": "#8b5cf6", "specialties": ["속눈썹 연장", "속눈썹 펌"], "phone": "010-1111-2222", "hired": "2021-03-01", "status": "active" },
+          { "name": "최유진", "role": "디자이너", "color": "#f59e0b", "specialties": ["젤네일", "네일 아트", "패디큐어"], "phone": "010-2222-3333", "hired": "2022-06-15", "status": "active" },
+          { "name": "김하늘", "role": "디자이너", "color": "#3b82f6", "specialties": ["브라질리언 왁싱", "페이셜 왁싱"], "phone": "010-3333-4444", "hired": "2023-01-10", "status": "active" },
+          { "name": "박소현", "role": "인턴", "color": "#ec4899", "specialties": ["피부관리", "클렌징"], "phone": "010-4444-5555", "hired": "2024-01-02", "status": "active" }
+        ]
+      },
+      "modal_new_staff": {
+        "title": "직원 등록",
+        "fields": [
+          { "label": "이름", "type": "text" },
+          { "label": "전화번호", "type": "tel" },
+          { "label": "이메일", "type": "email" },
+          { "label": "역할", "type": "select", "options": ["원장", "매니저", "디자이너", "어시스턴트", "인턴"] },
+          { "label": "전문 분야", "type": "multi-select", "options": ["속눈썹 연장", "속눈썹 펌", "젤네일", "네일 아트", "브라질리언 왁싱", "페이셜 왁싱", "피부관리"] },
+          { "label": "대표 색상", "type": "color-picker", "note": "캘린더에서 사용" },
+          { "label": "입사일", "type": "date-picker" }
+        ]
+      },
+      "design_notes": "Card grid layout (3-4 columns desktop, 2 tablet, 1 mobile). Each card has colored top border (staff.color). Large initial avatar with gradient background. Specialty tags as pills. Clicking card opens slide-over or modal with full schedule.",
+      "states": ["default", "loading", "empty (no staff)", "create/edit modal", "schedule view"]
+    },
+    {
+      "id": 11,
+      "name": "정산 관리",
+      "route": "/settlement",
+      "type": "table",
+      "viewport": ["desktop", "mobile"],
+      "priority": "medium",
+      "description": "월별 직원 급여 및 인센티브 정산. 서비스별 인센티브 자동 계산.",
+      "key_elements": [
+        "페이지 타이틀: '정산 관리'",
+        "월 선택 드롭다운: '2024년 3월'",
+        "직원별 정산 테이블: 직원명, 시술 건수, 총 매출, 인센티브율, 인센티브 금액, 기본급, 총 지급액",
+        "인센티브 설정 버튼 → 직원별 인센티브율 설정 모달",
+        "'엑셀 다운로드' 버튼"
+      ],
+      "mock_data": {
+        "month": "2024년 3월",
+        "settlements": [
+          { "staff": "이지은", "role": "실장", "treatments": 65, "revenue": "₩5,200,000", "incentive_rate": "40%", "incentive": "₩2,080,000", "base_salary": "₩2,500,000", "total": "₩4,580,000" },
+          { "staff": "최유진", "role": "디자이너", "treatments": 52, "revenue": "₩3,380,000", "incentive_rate": "35%", "incentive": "₩1,183,000", "base_salary": "₩2,200,000", "total": "₩3,383,000" },
+          { "staff": "김하늘", "role": "디자이너", "treatments": 40, "revenue": "₩2,400,000", "incentive_rate": "35%", "incentive": "₩840,000", "base_salary": "₩2,200,000", "total": "₩3,040,000" },
+          { "staff": "박소현", "role": "인턴", "treatments": 25, "revenue": "₩1,500,000", "incentive_rate": "20%", "incentive": "₩300,000", "base_salary": "₩1,800,000", "total": "₩2,100,000" }
+        ],
+        "total_payout": "₩13,103,000"
+      },
+      "design_notes": "Clean data table with zebra striping (subtle). Revenue and salary numbers in font-mono, right-aligned. Staff color dot next to name. Total row highlighted with bold + brand background. Excel export button with Download icon.",
+      "states": ["default", "loading", "empty (no data for month)", "incentive settings modal"]
+    },
+    {
+      "id": 12,
+      "name": "재고 관리",
+      "route": "/inventory",
+      "type": "list",
+      "viewport": ["desktop", "mobile"],
+      "priority": "medium",
+      "description": "시술 재료 재고 관리. 수량 추적, 최소 재고 알림, 입출고 기록.",
+      "key_elements": [
+        "페이지 타이틀: '재고 관리'",
+        "'+ 재고 등록' 버튼",
+        "재고 알림 배너: 부족 재고 X건 (빨간 경고)",
+        "재고 테이블: 품목명, 카테고리, 현재 수량, 최소 수량, 단위, 단가, 상태(정상/부족/소진)",
+        "각 행: 입고/출고 버튼",
+        "입출고 기록 히스토리 모달"
+      ],
+      "mock_data": {
+        "low_stock_count": 3,
+        "items": [
+          { "name": "속눈썹 (0.07mm CC컬 12mm)", "category": "속눈썹", "quantity": 15, "min_quantity": 10, "unit": "트레이", "price": "₩8,000", "status": "normal" },
+          { "name": "속눈썹 접착제 (저자극)", "category": "속눈썹", "quantity": 3, "min_quantity": 5, "unit": "개", "price": "₩15,000", "status": "low" },
+          { "name": "젤 폴리시 (레드 #201)", "category": "네일", "quantity": 8, "min_quantity": 5, "unit": "개", "price": "₩12,000", "status": "normal" },
+          { "name": "왁스 (하드왁스 블랙)", "category": "왁싱", "quantity": 2, "min_quantity": 5, "unit": "kg", "price": "₩35,000", "status": "low" },
+          { "name": "클렌징 폼", "category": "피부관리", "quantity": 0, "min_quantity": 3, "unit": "개", "price": "₩18,000", "status": "out_of_stock" }
+        ]
+      },
+      "design_notes": "Low stock items highlighted with amber/red background. Out of stock items with red badge. Quantity numbers in font-mono. Category filter tabs at top. Quantity adjustment buttons (+/-) inline. Mobile: card layout with quantity controls.",
+      "states": ["default", "loading", "empty", "low stock warning", "adjustment modal (입고/출고)", "history modal"]
+    },
+    {
+      "id": 13,
+      "name": "매장 설정",
+      "route": "/settings",
+      "type": "settings",
+      "viewport": ["desktop", "mobile"],
+      "priority": "medium",
+      "description": "매장 기본 정보, 영업시간, 서비스 메뉴, 외부 연동 설정.",
+      "key_elements": [
+        "페이지 타이틀: '매장 설정'",
+        "섹션 1 - 기본 정보: 매장명, 업종, 전화번호, 주소, 프로필 이미지, 커버 이미지",
+        "섹션 2 - 영업시간: 요일별 시작/종료 시간, 휴무일 설정",
+        "섹션 3 - 서비스 메뉴: 카테고리별 서비스 목록 (서비스명, 시술시간, 가격, B2C 가격, 활성/비활성)",
+        "섹션 4 - 외부 연동: 네이버 예약 URL, 카카오 채널 URL, 인스타그램 URL"
+      ],
+      "mock_data": {
+        "shop": {
+          "name": "글로우 뷰티 살롱",
+          "business_type": "EYELASH",
+          "phone": "02-1234-5678",
+          "address": "서울시 강남구 신사동 123-45 2층",
+          "subscription": "Professional"
+        },
+        "business_hours": {
+          "monday": { "open": "10:00", "close": "21:00" },
+          "tuesday": { "open": "10:00", "close": "21:00" },
+          "wednesday": { "open": "10:00", "close": "21:00" },
+          "thursday": { "open": "10:00", "close": "21:00" },
+          "friday": { "open": "10:00", "close": "22:00" },
+          "saturday": { "open": "10:00", "close": "20:00" },
+          "sunday": "closed"
+        },
+        "services": [
+          { "category": "속눈썹", "items": [
+            { "name": "속눈썹 연장 (풀셋)", "duration": 90, "price": "₩120,000", "b2c_price": "₩130,000" },
+            { "name": "속눈썹 리터치", "duration": 60, "price": "₩50,000", "b2c_price": "₩55,000" },
+            { "name": "속눈썹 리무빙", "duration": 30, "price": "₩20,000", "b2c_price": "₩20,000" }
+          ]},
+          { "category": "네일", "items": [
+            { "name": "젤네일 아트", "duration": 60, "price": "₩65,000", "b2c_price": "₩70,000" },
+            { "name": "젤네일 제거 + 케어", "duration": 45, "price": "₩45,000", "b2c_price": "₩45,000" },
+            { "name": "패디큐어", "duration": 60, "price": "₩55,000", "b2c_price": "₩60,000" }
+          ]},
+          { "category": "왁싱", "items": [
+            { "name": "브라질리언 왁싱", "duration": 45, "price": "₩60,000", "b2c_price": "₩65,000" },
+            { "name": "페이셜 왁싱", "duration": 30, "price": "₩30,000", "b2c_price": "₩35,000" }
+          ]},
+          { "category": "피부관리", "items": [
+            { "name": "딥클렌징", "duration": 60, "price": "₩80,000", "b2c_price": "₩85,000" }
+          ]}
+        ]
+      },
+      "design_notes": "Vertical sections with clear dividers. Each section is a white card. Form inputs with proper labels. Service menu as an editable list with drag-to-reorder handle. Category accordion. Integration section has connect/disconnect buttons with status pills. Save button fixed at bottom or per-section.",
+      "states": ["default", "editing", "saving", "saved success toast", "new shop setup wizard"]
+    },
+    {
+      "id": 14,
+      "name": "관리자 (슈퍼어드민)",
+      "route": "/admin",
+      "type": "admin",
+      "viewport": ["desktop"],
+      "priority": "low",
+      "description": "시스템 관리자 전용. 전체 매장 통계, 매장 목록 관리. ADMIN 역할만 접근 가능.",
+      "key_elements": [
+        "전체 매장 수, 전체 사용자 수, 전체 예약 수, 전체 매출 통계",
+        "매장 목록 테이블: 매장명, 업종, 원장님, 구독 티어, 가입일, 상태",
+        "매장 클릭 → 매장 상세 정보"
+      ],
+      "mock_data": {
+        "total_shops": 156,
+        "total_users": 423,
+        "total_bookings": 12450,
+        "total_revenue": "₩1,234,500,000",
+        "shops": [
+          { "name": "글로우 뷰티 살롱", "type": "EYELASH", "owner": "김원장", "tier": "Professional", "created": "2023-03-10", "status": "active" },
+          { "name": "네일라운지 강남", "type": "NAIL", "owner": "이원장", "tier": "Basic", "created": "2023-06-15", "status": "active" },
+          { "name": "스킨케어 청담", "type": "SKIN", "owner": "박원장", "tier": "Free", "created": "2024-01-20", "status": "active" }
+        ]
+      },
+      "design_notes": "Similar layout to dashboard but with admin-level data. ShieldCheck icon for admin badge. Table-heavy page. Not accessible from regular sidebar unless user.role === ADMIN.",
+      "states": ["default", "loading"]
+    },
+    {
+      "id": 15,
+      "name": "온라인 결제 (체크아웃)",
+      "route": "/checkout/[orderId]",
+      "type": "checkout",
+      "viewport": ["mobile", "desktop"],
+      "priority": "medium",
+      "description": "토스페이먼츠 PG 결제 화면. 고객이 온라인으로 서비스 비용을 결제.",
+      "key_elements": [
+        "주문 요약: 서비스명, 금액",
+        "고객 정보: 이름, 전화번호",
+        "토스페이먼츠 결제 위젯 (iframe)",
+        "결제하기 버튼"
+      ],
+      "mock_data": {
+        "order": {
+          "service": "속눈썹 연장 (풀셋)",
+          "amount": "₩130,000",
+          "customer": "김서연",
+          "phone": "010-1234-5678"
+        }
+      },
+      "design_notes": "Clean, trust-inspiring checkout page. White card with clear order summary at top. TossPayments widget in center. Minimal distractions. Mobile-first layout.",
+      "states": ["default", "processing", "success redirect", "failure redirect"]
+    },
+    {
+      "id": 16,
+      "name": "결제 성공",
+      "route": "/checkout/success",
+      "type": "result",
+      "viewport": ["mobile", "desktop"],
+      "priority": "low",
+      "description": "온라인 결제 성공 확인 페이지.",
+      "key_elements": [
+        "성공 아이콘 (큰 체크마크, emerald green)",
+        "결제 완료 메시지: '결제가 완료되었습니다'",
+        "결제 정보 요약: 서비스명, 금액, 결제 수단, 승인 번호",
+        "확인 버튼"
+      ],
+      "mock_data": {
+        "service": "속눈썹 연장 (풀셋)",
+        "amount": "₩130,000",
+        "method": "카드",
+        "approval_no": "12345678"
+      },
+      "design_notes": "Centered layout. Large animated checkmark icon (scale-in animation). Clean summary card below. Celebratory but minimal. Green accent color.",
+      "states": ["success"]
+    },
+    {
+      "id": 17,
+      "name": "결제 실패",
+      "route": "/checkout/fail",
+      "type": "result",
+      "viewport": ["mobile", "desktop"],
+      "priority": "low",
+      "description": "온라인 결제 실패 안내 페이지.",
+      "key_elements": [
+        "실패 아이콘 (X mark, red)",
+        "에러 메시지: '결제에 실패했습니다'",
+        "실패 사유 표시",
+        "다시 시도 버튼",
+        "홈으로 돌아가기 링크"
+      ],
+      "mock_data": {
+        "error_message": "잔액이 부족합니다.",
+        "error_code": "INSUFFICIENT_BALANCE"
+      },
+      "design_notes": "Centered layout. Red X icon. Clear error message. Retry CTA button. Helpful but not alarming tone.",
+      "states": ["failure"]
+    },
+    {
+      "id": 18,
+      "name": "온라인 예약 (B2C)",
+      "route": "/book/[shopId]",
+      "type": "booking-flow",
+      "viewport": ["mobile", "desktop"],
+      "priority": "critical",
+      "description": "고객용 온라인 예약 페이지. 5단계 스텝 플로우. 카카오톡 등에서 공유된 링크를 통해 접속. 매장의 얼굴이므로 특히 세련된 디자인 필요. 모바일 퍼스트.",
+      "key_elements": [
+        "매장 프로필 헤더: 매장명, 업종, 주소, 프로필 이미지",
+        "Step Indicator: 1 서비스 → 2 담당자 → 3 날짜/시간 → 4 정보 입력 → 5 확인",
+        "Step 1 (서비스 선택): 카테고리별 서비스 카드 리스트 (서비스명, 소요시간, 가격)",
+        "Step 2 (담당자 선택): 직원 카드 리스트 (사진, 이름, 역할, 전문분야) + '상관없음' 옵션",
+        "Step 3 (날짜/시간 선택): 달력 + 가용 시간 슬롯 그리드",
+        "Step 4 (정보 입력): 이름, 전화번호, 요청사항",
+        "Step 5 (확인): 예약 요약 + 예약하기 버튼"
+      ],
+      "mock_data": {
+        "shop": {
+          "name": "글로우 뷰티 살롱",
+          "type": "속눈썹 · 네일 · 왁싱",
+          "address": "서울시 강남구 신사동 123-45 2층",
+          "image": "salon-profile.jpg"
+        },
+        "services": [
+          { "category": "속눈썹", "items": [
+            { "name": "속눈썹 연장 (내추럴)", "duration": "60분", "price": "₩90,000" },
+            { "name": "속눈썹 연장 (풀셋)", "duration": "90분", "price": "₩130,000" },
+            { "name": "속눈썹 리터치", "duration": "60분", "price": "₩55,000" },
+            { "name": "속눈썹 펌", "duration": "45분", "price": "₩50,000" }
+          ]},
+          { "category": "네일", "items": [
+            { "name": "젤네일 원컬러", "duration": "60분", "price": "₩50,000" },
+            { "name": "젤네일 아트", "duration": "90분", "price": "₩70,000" },
+            { "name": "패디큐어", "duration": "60분", "price": "₩60,000" }
+          ]},
+          { "category": "왁싱", "items": [
+            { "name": "브라질리언 왁싱", "duration": "45분", "price": "₩65,000" },
+            { "name": "페이셜 왁싱 (인중)", "duration": "15분", "price": "₩15,000" },
+            { "name": "겨드랑이 왁싱", "duration": "20분", "price": "₩25,000" }
+          ]}
+        ],
+        "staff_options": [
+          { "name": "이지은", "role": "실장", "specialties": ["속눈썹"], "image": null },
+          { "name": "최유진", "role": "디자이너", "specialties": ["네일"], "image": null },
+          { "name": "김하늘", "role": "디자이너", "specialties": ["왁싱"], "image": null }
+        ],
+        "available_times": ["10:00", "10:30", "11:00", "13:00", "14:00", "14:30", "15:00", "16:00", "17:00"],
+        "confirmation": {
+          "service": "속눈썹 연장 (풀셋)",
+          "staff": "이지은 실장",
+          "date": "2024년 3월 25일 (월)",
+          "time": "14:00",
+          "duration": "90분",
+          "price": "₩130,000",
+          "customer_name": "김서연",
+          "customer_phone": "010-1234-5678"
+        }
+      },
+      "design_notes": "Mobile-first design. Each step is a full-screen view with bottom-fixed 'Next' button. Step indicator at top as connected dots with progress line. Service cards: white cards with service name prominent, duration and price below. Time slots: pill buttons in grid (3 columns). Date calendar: native-feeling with available dates highlighted. Confirmation page: clean summary card with green accent. Very polished — this is the public-facing customer page. Brand identity should be subtle (shop logo, not ERP branding).",
+      "reference": "Naver booking flow, KakaoTalk reservation pages, Korean beauty app booking flows",
+      "states": ["step 1 (service selection)", "step 2 (staff selection)", "step 3 (date/time picker)", "step 4 (info form)", "step 5 (confirmation + submit)", "loading", "success (booking confirmed)", "error (slot taken)", "no availability"]
+    },
+    {
+      "id": 19,
+      "name": "카카오 인증 콜백",
+      "route": "/auth/kakao/callback",
+      "type": "auth-callback",
+      "viewport": ["mobile", "desktop"],
+      "priority": "low",
+      "description": "카카오 OAuth 로그인 콜백 처리 페이지. 로딩 스피너만 표시 후 자동 리다이렉트.",
+      "key_elements": [
+        "로딩 스피너 (centered)",
+        "'카카오 계정으로 로그인 중...' 텍스트"
+      ],
+      "design_notes": "Minimal. Centered spinner with text. Auto-redirects after auth processing.",
+      "states": ["loading", "error"]
+    },
+    {
+      "id": 20,
+      "name": "네이버 인증 콜백",
+      "route": "/auth/naver/callback",
+      "type": "auth-callback",
+      "viewport": ["mobile", "desktop"],
+      "priority": "low",
+      "description": "네이버 OAuth 로그인 콜백 처리 페이지. 로딩 스피너만 표시 후 자동 리다이렉트.",
+      "key_elements": [
+        "로딩 스피너 (centered)",
+        "'네이버 계정으로 로그인 중...' 텍스트"
+      ],
+      "design_notes": "Minimal. Same as Kakao callback. Centered spinner with text.",
+      "states": ["loading", "error"]
+    },
+    {
+      "id": 21,
+      "name": "랜딩 (루트)",
+      "route": "/",
+      "type": "landing",
+      "viewport": ["desktop", "mobile"],
+      "priority": "low",
+      "description": "루트 페이지. 인증 상태에 따라 대시보드 또는 로그인으로 리다이렉트.",
+      "key_elements": [
+        "리다이렉트 로직 only",
+        "Optional: 간단한 랜딩 hero if not authenticated"
+      ],
+      "design_notes": "Can be a simple redirect or a minimal landing page with 'Get Started' CTA.",
+      "states": ["redirect"]
+    },
+    {
+      "id": 22,
+      "name": "404 / 에러 페이지",
+      "route": "/*",
+      "type": "error",
+      "viewport": ["desktop", "mobile"],
+      "priority": "low",
+      "description": "페이지를 찾을 수 없을 때 표시되는 에러 페이지.",
+      "key_elements": [
+        "404 숫자 (큰 디스플레이, font-mono)",
+        "메시지: '페이지를 찾을 수 없습니다'",
+        "홈으로 돌아가기 버튼"
+      ],
+      "design_notes": "Centered layout. Large 404 number. Clean and friendly. Button to go back to dashboard.",
+      "states": ["404", "500 server error"]
+    }
+  ],
+
+  "interactions": {
+    "modals": [
+      { "name": "새 예약 등록", "trigger": "bookings page + button or empty time slot click", "size": "max-w-lg" },
+      { "name": "예약 상세/수정", "trigger": "booking block click in calendar", "size": "max-w-lg" },
+      { "name": "고객 등록", "trigger": "customers page + button or inline from booking modal", "size": "max-w-md" },
+      { "name": "고객 수정", "trigger": "customer detail page edit button", "size": "max-w-md" },
+      { "name": "결제 등록", "trigger": "payments page + button or from booking completion", "size": "max-w-lg" },
+      { "name": "직원 등록/수정", "trigger": "staff page + button or card click", "size": "max-w-md" },
+      { "name": "쿠폰 생성", "trigger": "coupons page + button", "size": "max-w-md" },
+      { "name": "재고 입출고", "trigger": "inventory page inline buttons", "size": "max-w-sm" },
+      { "name": "사진 라이트박스", "trigger": "customer photo click", "size": "max-w-4xl" },
+      { "name": "인센티브 설정", "trigger": "settlement page settings button", "size": "max-w-md" },
+      { "name": "확인 다이얼로그", "trigger": "destructive actions (delete, cancel booking, refund)", "size": "max-w-sm" }
+    ],
+    "dropdowns": [
+      { "name": "매장 전환 (Shop Switcher)", "location": "sidebar bottom", "style": "upward dropdown with shop list + new shop link" },
+      { "name": "알림 패널", "location": "header area (future)", "style": "dropdown with notification list" },
+      { "name": "사용자 메뉴", "location": "sidebar bottom (logout button)", "style": "single action — logout" },
+      { "name": "날짜 선택", "location": "reports/payments pages", "style": "calendar dropdown or date range picker" }
+    ],
+    "toasts": {
+      "success": { "color": "emerald", "icon": "CheckCircle", "example": "예약이 등록되었습니다", "duration": "3s" },
+      "error": { "color": "red", "icon": "WarningCircle", "example": "결제 처리에 실패했습니다", "duration": "5s" },
+      "info": { "color": "blue", "icon": "Info", "example": "예약 시간이 변경되었습니다", "duration": "3s" }
+    },
+    "transitions": {
+      "easing": "cubic-bezier(0.32, 0.72, 0, 1)",
+      "page_entrance": "fade-in 600ms + slide-up 16px",
+      "modal_entrance": "fade-in + scale(0.95→1) 300ms",
+      "dropdown_entrance": "fade-in + slide-down 8px, 300ms",
+      "card_hover": "translateY(-2px) + shadow-soft-lg, 500ms",
+      "button_press": "scale(0.98), instant"
+    },
+    "keyboard_shortcuts": {
+      "note": "Future feature, not yet implemented",
+      "planned": ["N — new booking", "/ — search", "T — today in calendar", "? — shortcuts help"]
+    }
+  },
+
+  "dark_mode": {
+    "enabled": true,
+    "toggle": "class-based (.dark on <html>), user preference stored in localStorage",
+    "background": { "hex": "#18181b", "tailwind": "zinc-900" },
+    "surface": { "hex": "#27272a", "tailwind": "zinc-800" },
+    "surface_elevated": { "hex": "#3f3f46", "tailwind": "zinc-700" },
+    "text_primary": { "hex": "#fafafa", "tailwind": "zinc-50" },
+    "text_secondary": { "hex": "#a1a1aa", "tailwind": "zinc-400" },
+    "text_muted": { "hex": "#71717a", "tailwind": "zinc-500" },
+    "border": { "hex": "#3f3f46", "tailwind": "zinc-700" },
+    "scrollbar_thumb": { "hex": "#3f3f46", "hover": "#52525b" },
+    "notes": "All components must support dark mode. Brand color (emerald) stays the same. Active nav items use dark:bg-brand-950/40. Cards use dark:bg-zinc-800. Borders use dark:border-zinc-700/50. Hover states lighten instead of darken."
+  },
+
+  "responsive": {
+    "breakpoints": {
+      "mobile": "< 768px (375px design target)",
+      "tablet": "768px - 1279px",
+      "desktop": ">= 1280px (1280px design target)"
+    },
+    "layout": {
+      "desktop": "Fixed sidebar (280px) + scrollable main content area with padding p-6 lg:p-8",
+      "tablet": "Collapsible sidebar + main content",
+      "mobile": "Hidden sidebar (hamburger toggle) + full-width content p-4"
+    },
+    "mobile_adaptations": {
+      "sidebar": "Hidden by default. Hamburger button fixed top-4 left-4. Opens as overlay with backdrop-blur. Close button (X) in sidebar header.",
+      "tables": "Transform into stacked card layout. Each row becomes a card with key-value pairs.",
+      "calendar": "Switch from staff-column grid to chronological list view grouped by time.",
+      "stat_cards": "Stack from 4-column grid to 2-column (tablet) to 1-column (mobile).",
+      "search": "Full-width search bar (no icon-only collapse for now).",
+      "modals": "Full-screen on mobile (rounded-none), slide up from bottom.",
+      "b2c_booking": "Already mobile-first. Bottom-fixed navigation buttons. Full-screen steps.",
+      "charts": "Simplified chart views. Horizontal bar charts instead of grouped charts."
+    }
+  },
+
+  "navigation": {
+    "sidebar_items": [
+      { "icon": "ChartBar", "label": "대시보드", "route": "/dashboard" },
+      { "icon": "CalendarDots", "label": "예약 관리", "route": "/bookings" },
+      { "icon": "Users", "label": "고객 관리", "route": "/customers" },
+      { "icon": "CreditCard", "label": "매출/결제", "route": "/payments" },
+      { "icon": "Ticket", "label": "쿠폰 관리", "route": "/coupons" },
+      { "icon": "ChartLine", "label": "보고서", "route": "/reports" },
+      { "icon": "UserCircle", "label": "직원 관리", "route": "/staff" },
+      { "icon": "Wallet", "label": "정산 관리", "route": "/settlement" },
+      { "icon": "Package", "label": "재고 관리", "route": "/inventory" },
+      { "icon": "GearSix", "label": "매장 설정", "route": "/settings" }
+    ],
+    "admin_item": { "icon": "ShieldCheck", "label": "관리자", "route": "/admin", "condition": "user.role === ADMIN" },
+    "bottom_section": ["Shop Switcher (dropdown)", "로그아웃 (hover: red)"]
+  },
+
+  "data_model_summary": {
+    "core_entities": [
+      "User (ADMIN, SHOP_OWNER, SHOP_STAFF, CUSTOMER)",
+      "Shop (multi-tenant, each shop has own data)",
+      "Service (belongs to ServiceCategory, has price + duration)",
+      "Booking (customer + staff + service + time slot, 6 statuses)",
+      "Customer (VIP tiers: NORMAL/SILVER/GOLD/VIP/VVIP, tags, visit tracking)",
+      "Payment (CARD/CASH/TRANSFER/PASS/MIXED, linked to booking)",
+      "Staff (roles: OWNER/MANAGER/DESIGNER/ASSISTANT/INTERN, color, specialties)",
+      "Pass (TICKET count-based or MEMBERSHIP amount-based)",
+      "InventoryItem + InventoryLog (stock tracking with IN/OUT/ADJUST)",
+      "Coupon (FIXED/PERCENTAGE discount with usage limits)",
+      "DailySales (aggregated daily revenue breakdown)",
+      "TreatmentHistory + CustomerPhoto (before/after/progress)"
+    ],
+    "business_types": ["NAIL", "EYELASH", "WAXING", "HAIR", "SKIN", "SEMI_PERMANENT", "TATTOO", "MASSAGE", "BARBER", "TANNING", "SCALP", "MAKEUP", "PET_GROOMING", "OTHER"],
+    "booking_sources": ["DIRECT (원장님 직접 등록)", "NAVER (네이버 예약 연동)", "B2C_WEB (온라인 예약 페이지)", "B2C_APP (future)"]
+  },
+
+  "references": [
+    { "name": "공비서 (Gongbiseo)", "url": "https://home.ahasoft.co.kr", "what_to_reference": "Korean beauty industry UX patterns, salon management workflows, Korean beauty terminology" },
+    { "name": "Stripe Dashboard", "url": "https://dashboard.stripe.com", "what_to_reference": "Data visualization, clean layout, KPI cards, table design, minimal but information-dense" },
+    { "name": "Linear", "url": "https://linear.app", "what_to_reference": "Minimalist SaaS design, keyboard shortcuts, smooth animations, dark mode implementation" },
+    { "name": "Toss Business (토스 비즈니스)", "url": "https://toss.im", "what_to_reference": "Korean fintech design, revenue dashboards, clean number display, trust-building UI patterns" },
+    { "name": "Naver SmartPlace", "url": "https://smartplace.naver.com", "what_to_reference": "Korean business management UX, booking management patterns" },
+    { "name": "Apple Design", "url": "https://developer.apple.com/design", "what_to_reference": "Spring animation curves, subtle shadows, premium feel, attention to detail" }
+  ],
+
+  "deliverables": {
+    "format": "High-fidelity UI screens",
+    "viewports": [
+      { "name": "Desktop", "width": 1280, "height": 800 },
+      { "name": "Mobile", "width": 375, "height": 812 }
+    ],
+    "include_dark_mode": true,
+    "include_states": ["default", "loading (skeleton/pulse)", "empty (no data, first use)", "error (API failure, validation)", "hover", "active/pressed", "focused (input fields)"],
+    "include_modals": true,
+    "include_toasts": true,
+    "total_screens_estimate": "22 pages x 2 viewports x 2 themes (light/dark) + modals + states = ~120+ screens",
+    "priority_pages": ["대시보드", "예약 관리 (캘린더)", "고객 관리", "고객 상세", "온라인 예약 (B2C)"],
+    "icon_library": "Phosphor Icons (https://phosphoricons.com) — weight: regular (default), fill (active states), bold (CTAs)",
+    "font_files": "Geist Sans + Geist Mono (Vercel fonts)"
+  },
+
+  "localization": {
+    "primary_language": "Korean (한국어)",
+    "text_direction": "LTR",
+    "number_format": "Korean Won (₩) with comma separators (₩1,234,000)",
+    "date_format": "YYYY년 M월 D일 (요일) — e.g., 2024년 3월 22일 (금)",
+    "time_format": "24-hour (HH:mm) — e.g., 14:00",
+    "phone_format": "010-1234-5678",
+    "common_ui_labels": {
+      "save": "저장",
+      "cancel": "취소",
+      "delete": "삭제",
+      "edit": "수정",
+      "create": "등록",
+      "search": "검색",
+      "filter": "필터",
+      "export": "내보내기",
+      "close": "닫기",
+      "confirm": "확인",
+      "back": "뒤로",
+      "next": "다음",
+      "previous": "이전",
+      "today": "오늘",
+      "view_all": "전체 보기",
+      "logout": "로그아웃",
+      "loading": "로딩 중...",
+      "no_data": "데이터가 없습니다",
+      "retry": "다시 시도"
+    }
+  }
+}

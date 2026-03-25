@@ -28,10 +28,10 @@ export function AdminDashboard() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {[...Array(4)].map((_, i) => (
-            <div key={i} className="h-28 rounded-2xl bg-zinc-100 animate-pulse" />
+            <div key={i} className="h-28 rounded-2xl bg-[#FFE4E0] animate-pulse" />
           ))}
         </div>
-        <div className="h-96 rounded-2xl bg-zinc-100 animate-pulse" />
+        <div className="h-96 rounded-2xl bg-[#FFE4E0] animate-pulse" />
       </div>
     );
   }
@@ -42,8 +42,8 @@ export function AdminDashboard() {
       value: String(stats?.totalShops ?? 0),
       unit: '개',
       icon: Storefront,
-      iconBg: 'bg-brand-50',
-      iconColor: 'text-brand-600',
+      iconBg: 'bg-[#FF6B6B15]',
+      iconColor: 'text-[#FF6B6B]',
     },
     {
       label: '전체 사용자',
@@ -66,8 +66,8 @@ export function AdminDashboard() {
       value: formatCurrency(stats?.todayRevenue ?? 0),
       unit: '',
       icon: CurrencyCircleDollar,
-      iconBg: 'bg-emerald-50',
-      iconColor: 'text-emerald-600',
+      iconBg: 'bg-[#4ECDC415]',
+      iconColor: 'text-[#4ECDC4]',
     },
   ];
 
@@ -89,7 +89,7 @@ export function AdminDashboard() {
           return (
             <div
               key={stat.label}
-              className="rounded-2xl bg-white p-6 ring-1 ring-zinc-200/50 shadow-soft transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5"
+              className="rounded-2xl bg-white p-6 ring-1 ring-[#FFE4E0] shadow-soft transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5"
             >
               <div className="flex items-center justify-between mb-3">
                 <p className="text-xs font-medium text-zinc-500 uppercase tracking-wider">
@@ -111,8 +111,8 @@ export function AdminDashboard() {
       </div>
 
       {/* Shop List */}
-      <div className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft overflow-hidden">
-        <div className="flex items-center justify-between px-4 md:px-6 py-4 border-b border-zinc-100">
+      <div className="rounded-2xl bg-white ring-1 ring-[#FFE4E0] shadow-soft overflow-hidden">
+        <div className="flex items-center justify-between px-4 md:px-6 py-4 border-b border-[#FFE4E0]">
           <h2 className="text-sm font-medium text-zinc-700">매장 목록</h2>
           <div className="relative">
             <MagnifyingGlass
@@ -124,7 +124,7 @@ export function AdminDashboard() {
               placeholder="매장 검색..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-9 pr-4 py-2 text-sm rounded-xl bg-zinc-50 ring-1 ring-zinc-200/50 focus:ring-brand-300 focus:outline-none transition-all duration-200 w-48 md:w-64"
+              className="pl-9 pr-4 py-2 text-sm rounded-xl bg-[#FFF8F6] ring-1 ring-[#FFE4E0] focus:ring-[#FF6B6B] focus:outline-none transition-all duration-200 w-48 md:w-64"
             />
           </div>
         </div>
@@ -135,7 +135,7 @@ export function AdminDashboard() {
           </div>
         ) : !shops || shops.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12 text-center">
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-zinc-100 mb-4">
+            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#FF6B6B10] mb-4">
               <Storefront size={28} weight="regular" className="text-zinc-400" />
             </div>
             <p className="text-sm font-medium text-zinc-600">
@@ -148,7 +148,7 @@ export function AdminDashboard() {
             <div className="hidden md:block overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-zinc-100 bg-zinc-50/50">
+                  <tr className="border-b border-[#FFE4E0] bg-[#FFF8F6]">
                     <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">매장명</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">대표</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-zinc-500 uppercase tracking-wider">플랜</th>
@@ -162,11 +162,11 @@ export function AdminDashboard() {
                     <tr
                       key={shop.id}
                       onClick={() => setSelectedShopId(selectedShopId === shop.id ? null : shop.id)}
-                      className="hover:bg-zinc-50/50 cursor-pointer transition-colors duration-150"
+                      className="hover:bg-[#FFF8F6] cursor-pointer transition-colors duration-150"
                     >
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-3">
-                          <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center text-white text-xs font-bold shrink-0">
+                          <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-[#FF8080] to-[#FF6B6B] flex items-center justify-center text-white text-xs font-bold shrink-0">
                             {shop.name?.[0] ?? 'B'}
                           </div>
                           <div>
@@ -202,11 +202,11 @@ export function AdminDashboard() {
                 <button
                   key={shop.id}
                   onClick={() => setSelectedShopId(selectedShopId === shop.id ? null : shop.id)}
-                  className="w-full px-4 py-4 text-left hover:bg-zinc-50/50 transition-colors duration-150"
+                  className="w-full px-4 py-4 text-left hover:bg-[#FFF8F6] transition-colors duration-150"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3 min-w-0">
-                      <div className="h-9 w-9 rounded-lg bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center text-white text-xs font-bold shrink-0">
+                      <div className="h-9 w-9 rounded-lg bg-gradient-to-br from-[#FF8080] to-[#FF6B6B] flex items-center justify-center text-white text-xs font-bold shrink-0">
                         {shop.name?.[0] ?? 'B'}
                       </div>
                       <div className="min-w-0">
@@ -217,15 +217,15 @@ export function AdminDashboard() {
                     <ArrowRight size={14} className="text-zinc-400 shrink-0" />
                   </div>
                   <div className="mt-3 grid grid-cols-3 gap-2 text-center">
-                    <div className="rounded-lg bg-zinc-50 px-2 py-1.5">
+                    <div className="rounded-lg bg-[#FFF8F6] px-2 py-1.5">
                       <p className="text-xs text-zinc-500">오늘 예약</p>
                       <p className="text-sm font-mono font-medium text-zinc-800">{shop.todayBookings}</p>
                     </div>
-                    <div className="rounded-lg bg-zinc-50 px-2 py-1.5">
+                    <div className="rounded-lg bg-[#FFF8F6] px-2 py-1.5">
                       <p className="text-xs text-zinc-500">오늘 매출</p>
                       <p className="text-sm font-mono font-medium text-zinc-800">{formatCurrency(shop.todayRevenue)}</p>
                     </div>
-                    <div className="rounded-lg bg-zinc-50 px-2 py-1.5">
+                    <div className="rounded-lg bg-[#FFF8F6] px-2 py-1.5">
                       <p className="text-xs text-zinc-500">총 고객</p>
                       <p className="text-sm font-mono font-medium text-zinc-800">{shop.totalCustomers}</p>
                     </div>
@@ -251,17 +251,17 @@ function ShopDetailCard({ shopId, onClose }: { shopId: string; onClose: () => vo
 
   if (isLoading || !shopData) {
     return (
-      <div className="rounded-2xl bg-white p-6 ring-1 ring-zinc-200/50 shadow-soft">
-        <div className="h-32 rounded-xl bg-zinc-100 animate-pulse" />
+      <div className="rounded-2xl bg-white p-6 ring-1 ring-[#FFE4E0] shadow-soft">
+        <div className="h-32 rounded-xl bg-[#FFE4E0] animate-pulse" />
       </div>
     );
   }
 
   return (
-    <div className="rounded-2xl bg-white p-4 md:p-6 ring-1 ring-zinc-200/50 shadow-soft animate-fade-in">
+    <div className="rounded-2xl bg-white p-4 md:p-6 ring-1 ring-[#FFE4E0] shadow-soft animate-fade-in">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
-          <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center text-white text-sm font-bold">
+          <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-[#FF8080] to-[#FF6B6B] flex items-center justify-center text-white text-sm font-bold">
             {shopData.name?.[0] ?? 'B'}
           </div>
           <div>
@@ -280,19 +280,19 @@ function ShopDetailCard({ shopId, onClose }: { shopId: string; onClose: () => vo
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <div className="rounded-xl bg-zinc-50 p-3 text-center">
+        <div className="rounded-xl bg-[#FFF8F6] p-3 text-center">
           <p className="text-xs text-zinc-500">총 예약</p>
           <p className="text-lg font-semibold font-mono text-zinc-900">{shopData.totalBookings}</p>
         </div>
-        <div className="rounded-xl bg-zinc-50 p-3 text-center">
+        <div className="rounded-xl bg-[#FFF8F6] p-3 text-center">
           <p className="text-xs text-zinc-500">총 고객</p>
           <p className="text-lg font-semibold font-mono text-zinc-900">{shopData.totalCustomers}</p>
         </div>
-        <div className="rounded-xl bg-zinc-50 p-3 text-center">
+        <div className="rounded-xl bg-[#FFF8F6] p-3 text-center">
           <p className="text-xs text-zinc-500">직원 수</p>
           <p className="text-lg font-semibold font-mono text-zinc-900">{shopData.totalStaff}</p>
         </div>
-        <div className="rounded-xl bg-zinc-50 p-3 text-center">
+        <div className="rounded-xl bg-[#FFF8F6] p-3 text-center">
           <p className="text-xs text-zinc-500">오늘 매출</p>
           <p className="text-lg font-semibold font-mono text-zinc-900">{formatCurrency(shopData.todayRevenue)}</p>
         </div>

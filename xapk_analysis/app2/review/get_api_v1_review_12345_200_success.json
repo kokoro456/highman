@@ -1,0 +1,13 @@
+{
+  "id": 12345,
+  "bookingId": "B123456789",
+  "satisfactionLevel": "SATISFIED",
+  "shop": {
+    "name": "프리미엄 네일샵 강남점",
+    "thumbnailImageUrl": "https://example.com/shop_thumb.jpg"
+  },
+  "booking": {
+    "bookingDate": "2024-01-15",
+    "bookingTime": "14:30:00"
+  }
+}

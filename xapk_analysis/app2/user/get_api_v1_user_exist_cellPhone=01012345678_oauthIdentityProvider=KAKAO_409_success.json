@@ -1,0 +1,7 @@
+{
+  "statusCode": 409,
+  "message": "이미 가입된 휴대폰 번호입니다. \n고객센터로 문의해 주세요.",
+  "code": "ALREADY_USED_CELL_PHONE",
+  "occurredAt": "2025-03-19 15:45:08",
+  "bindingErrors": null
+}

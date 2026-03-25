@@ -1,0 +1,57 @@
+{
+  "reviews": [
+    {
+      "id": 3,
+      "satisfactionLevel": "BEST",
+      "imageUrl": "https://example.com/image3.png",
+      "contents": "정말 꼼꼼하게 해주시더라구요",
+      "booking": {
+        "bookingDate": "2025-06-06",
+        "employee": {
+          "id": 1,
+          "name": "엘리자베스",
+          "grade": "수석 디자이너"
+        },
+        "procedures": [
+          "젤 기본"
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "satisfactionLevel": "GOOD",
+      "imageUrl": "",
+      "contents": "",
+      "booking": {
+        "bookingDate": "2025-06-06",
+        "employee": {
+          "id": 1,
+          "name": "엘리자베스",
+          "grade": "수석 디자이너"
+        },
+        "procedures": [
+          "시술 이름이 아주 긴, 아주 긴, 아주 긴, 아주 긴, 아주 긴, 아주 긴 경우를 생각해보자",
+          "젤 기본"
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "satisfactionLevel": "BAD",
+      "imageUrl": "https://example.com/image1.png",
+      "contents": "",
+      "booking": {
+        "bookingDate": "2025-06-06",
+        "employee": {
+          "id": 1,
+          "name": "엘리자베스",
+          "grade": "수석 디자이너"
+        },
+        "procedures": [
+          "이달의 아트",
+          "젤 기본"
+        ]
+      }
+    }
+  ]
+}

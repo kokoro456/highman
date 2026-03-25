@@ -1,0 +1,18 @@
+{
+  "rating": 4.5,
+  "totalCount": 10,
+  "reviewsBySatisfactionLevel": [
+    {
+      "satisfactionLevel": "BEST",
+      "count": 8
+    },
+    {
+      "satisfactionLevel": "GOOD",
+      "count": 2
+    },
+    {
+      "satisfactionLevel": "BAD",
+      "count": 0
+    }
+  ]
+}

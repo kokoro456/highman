@@ -20,6 +20,7 @@ import { PgModule } from './pg/pg.module';
 import { AlimtalkModule } from './alimtalk/alimtalk.module';
 import { SchedulerModule } from './scheduler/scheduler.module';
 import { AdminModule } from './admin/admin.module';
+import { MembershipModule } from './membership/membership.module';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
 
 @Module({
@@ -44,6 +45,7 @@ import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
     AlimtalkModule,
     SchedulerModule,
     AdminModule,
+    MembershipModule,
   ],
   providers: [
     { provide: APP_GUARD, useClass: JwtAuthGuard },

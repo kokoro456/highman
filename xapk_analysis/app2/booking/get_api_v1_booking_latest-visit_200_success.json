@@ -1,0 +1,74 @@
+[
+  {
+    "bookingId": "202512181605055388",
+    "shopId": "S000003978",
+    "shopName": "코리 바버샵",
+    "thumbnailImageUrl": "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/03/01JGN3DKRANRKSHREKXCK3EM3R.jpg",
+    "bookingDate": "2025-12-18",
+    "employee": {
+      "id": 4394,
+      "name": "구코리",
+      "grade": "원장",
+      "status": "REGISTERED",
+      "isB2cMapping": true
+    },
+    "procedures": [
+      {
+        "categoryId": 18717,
+        "categoryCode": "BARBER",
+        "categoryName": "바버",
+        "kind": "커트",
+        "id": 2,
+        "name": "fajfjlkdjfldjflkjadlkfjldkjflkajdlfkadjfkadjfajdskfjadlfjkdsajflakdfj",
+        "duration": "01:30",
+        "price": 65000,
+        "shopMembershipPrice": null,
+        "type": "COSMETIC",
+        "cokProcedureId": null,
+        "status": "REGISTERED"
+      },
+      {
+        "categoryId": 18717,
+        "categoryCode": "BARBER",
+        "categoryName": "바버",
+        "kind": "커트",
+        "id": 2,
+        "name": "leaf",
+        "duration": "01:30",
+        "price": 65000,
+        "shopMembershipPrice": null,
+        "type": "COSMETIC",
+        "cokProcedureId": null,
+        "status": "REGISTERED"
+      },
+      {
+        "categoryId": 18717,
+        "categoryCode": "BARBER",
+        "categoryName": "바버",
+        "kind": "커트",
+        "id": 2,
+        "name": "leaf",
+        "duration": "01:30",
+        "price": 65000,
+        "shopMembershipPrice": null,
+        "type": "COSMETIC",
+        "cokProcedureId": null,
+        "status": "REGISTERED"
+      },
+      {
+        "categoryId": 18717,
+        "categoryCode": "BARBER",
+        "categoryName": "바버",
+        "kind": "커트",
+        "id": 2,
+        "name": "leaf",
+        "duration": "01:30",
+        "price": 65000,
+        "shopMembershipPrice": null,
+        "type": "COSMETIC",
+        "cokProcedureId": null,
+        "status": "DELETED"
+      }
+    ]
+  }
+]

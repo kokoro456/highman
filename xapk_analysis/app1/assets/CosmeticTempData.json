@@ -1,0 +1,587 @@
+{
+  "data": [
+    {
+      "name": "NAIL",
+      "value": "네일",
+      "sort": 1,
+      "groups": [
+        {
+          "groupId": 157323,
+          "name": "손",
+          "sort": 239500,
+          "items": [
+            {
+              "itemId": 157326,
+              "name": "케어1",
+              "procNo": "229667",
+              "price": 15000,
+              "b2cPrice": 15000,
+              "procTime": "0030",
+              "isLinkedB2c": false,
+              "isRepresentative": false,
+              "imageUrl": null,
+              "sort": 239501
+            },
+            {
+              "itemId": 157325,
+              "name": "젤 기본",
+              "procNo": "229666",
+              "price": 40000,
+              "b2cPrice": 40000,
+              "procTime": "0130",
+              "isLinkedB2c": false,
+              "isRepresentative": false,
+              "imageUrl": "https://crm-image.gongbiz.kr/2022/06/28/eb4ff965cf4c404eba7ce9220441181d.png",
+              "sort": 239502
+            },
+            {
+              "itemId": 157327,
+              "name": "젤제거",
+              "procNo": "229668",
+              "price": 20000123,
+              "b2cPrice": 20000,
+              "procTime": "0100",
+              "isLinkedB2c": false,
+              "isRepresentative": false,
+              "imageUrl": null,
+              "sort": 239503
+            },
+            {
+              "itemId": 157328,
+              "name": "매니큐어",
+              "procNo": "229669",
+              "price": 20000,
+              "b2cPrice": 20000,
+              "procTime": "0100",
+              "isLinkedB2c": false,
+              "isRepresentative": false,
+              "imageUrl": null,
+              "sort": 239504
+            },
+            {
+              "itemId": 157465,
+              "name": "무좀발톱(작은발톱),스케일링별도",
+              "procNo": "229677",
+              "price": 1000,
+              "b2cPrice": 1000,
+              "procTime": "0100",
+              "isLinkedB2c": true,
+              "isRepresentative": false,
+              "imageUrl": "",
+              "sort": 239505
+            },
+            {
+              "itemId": 157463,
+              "name": "무좀발톱(엄지),스케일링별도",
+              "procNo": "229675",
+              "price": 1000,
+              "b2cPrice": 1000,
+              "procTime": "0100",
+              "isLinkedB2c": true,
+              "isRepresentative": false,
+              "imageUrl": "",
+              "sort": 239506
+            },
+            {
+              "itemId": 157464,
+              "name": "콜드플라즈마",
+              "procNo": "229676",
+              "price": 1000,
+              "b2cPrice": 1000,
+              "procTime": "0100",
+              "isLinkedB2c": true,
+              "isRepresentative": false,
+              "imageUrl": "",
+              "sort": 239507
+            },
+            {
+              "itemId": 157466,
+              "name": "풋로직스전제품(제품풋로직스)",
+              "procNo": "229678",
+              "price": 1000,
+              "b2cPrice": 1000,
+              "procTime": "0100",
+              "isLinkedB2c": true,
+              "isRepresentative": false,
+              "imageUrl": "",
+              "sort": 239508
+            }
+          ]
+        },
+        {
+          "groupId": 157324,
+          "name": "발",
+          "sort": 239501,
+          "items": [
+            {
+              "itemId": 157331,
+              "name": "젤제거",
+              "procNo": "229672",
+              "price": 20000,
+              "b2cPrice": 20000,
+              "procTime": "0100",
+              "isLinkedB2c": false,
+              "isRepresentative": false,
+              "imageUrl": null,
+              "sort": 239605
+            },
+            {
+              "itemId": 157329,
+              "name": "젤 기본",
+              "procNo": "229670",
+              "price": 50000,
+              "b2cPrice": 50000,
+              "procTime": "0130",
+              "isLinkedB2c": false,
+              "isRepresentative": false,
+              "imageUrl": null,
+              "sort": 239606
+            },
+            {
+              "itemId": 157330,
+              "name": "케어",
+              "procNo": "229671",
+              "price": 25000,
+              "b2cPrice": 25000,
+              "procTime": "0030",
+              "isLinkedB2c": false,
+              "isRepresentative": false,
+              "imageUrl": null,
+              "sort": 239607
+            },
+            {
+              "itemId": 157332,
+              "name": "패디큐어",
+              "procNo": "229673",
+              "price": 30000,
+              "b2cPrice": 30000,
+              "procTime": "0100",
+              "isLinkedB2c": false,
+              "isRepresentative": false,
+              "imageUrl": null,
+              "sort": 239608
+            },
+            {
+              "itemId": 157333,
+              "name": "각질제거",
+              "procNo": "229674",
+              "price": 55000,
+              "b2cPrice": 55000,
+              "procTime": "0030",
+              "isLinkedB2c": false,
+              "isRepresentative": false,
+              "imageUrl": null,
+              "sort": 239609
+            }
+          ]
+        },
+        {
+          "groupId": 157342,
+          "name": "123",
+          "sort": 239502,
+          "items": [
+            {
+              "itemId": 157563,
+              "name": "시술1",
+              "procNo": "229679",
+              "price": 100000,
+              "b2cPrice": 0,
+              "procTime": "0100",
+              "isLinkedB2c": false,
+              "isRepresentative": false,
+              "imageUrl": null,
+              "sort": 239602
+            },
+            {
+              "itemId": 157564,
+              "name": "시술2",
+              "procNo": "229680",
+              "price": 200000,
+              "b2cPrice": 0,
+              "procTime": "0200",
+              "isLinkedB2c": false,
+              "isRepresentative": false,
+              "imageUrl": null,
+              "sort": 239603
+            },
+            {
+              "itemId": 157567,
+              "name": "시술2",
+              "procNo": "229683",
+              "price": 200000,
+              "b2cPrice": 0,
+              "procTime": "0200",
+              "isLinkedB2c": false,
+              "isRepresentative": false,
+              "imageUrl": null,
+              "sort": 239606
+            },
+            {
+              "itemId": 157568,
+              "name": "시술2",
+              "procNo": "229684",
+              "price": 200000,
+              "b2cPrice": 0,
+              "procTime": "0200",
+              "isLinkedB2c": false,
+              "isRepresentative": false,
+              "imageUrl": null,
+              "sort": 239607
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "HAIR",
+      "value": "헤어",
+      "sort": 2,
+      "groups": [
+        {
+          "groupId": 157293,
+          "name": "남성",
+          "sort": 239200,
+          "items": [
+            {
+              "itemId": 157303,
+              "name": "디자인커트",
+              "procNo": "229659",
+              "price": 20000,
+              "b2cPrice": 20000,
+              "procTime": "0100",
+              "isLinkedB2c": false,
+              "isRepresentative": false,
+              "imageUrl": null,
+              "sort": 239309
+            },
+            {
+              "itemId": 157304,
+              "name": "일반펌",
+              "procNo": "229660",
+              "price": 40000,
+              "b2cPrice": 40000,
+              "procTime": "0200",
+              "isLinkedB2c": false,
+              "isRepresentative": false,
+              "imageUrl": null,
+              "sort": 239310
+            },
+            {
+              "itemId": 157302,
+              "name": "일반커트",
+              "procNo": "229658",
+              "price": 15000,
+              "b2cPrice": 15000,
+              "procTime": "0030",
+              "isLinkedB2c": false,
+              "isRepresentative": false,
+              "imageUrl": null,
+              "sort": 239311
+            },
+            {
+              "itemId": 157305,
+              "name": "디자인펌",
+              "procNo": "229661",
+              "price": 50000,
+              "b2cPrice": 50000,
+              "procTime": "0200",
+              "isLinkedB2c": false,
+              "isRepresentative": false,
+              "imageUrl": null,
+              "sort": 239312
+            },
+            {
+              "itemId": 157306,
+              "name": "전체염색",
+              "procNo": "229662",
+              "price": 50000,
+              "b2cPrice": 50000,
+              "procTime": "0200",
+              "isLinkedB2c": false,
+              "isRepresentative": false,
+              "imageUrl": null,
+              "sort": 239313
+            },
+            {
+              "itemId": 157307,
+              "name": "새치염색",
+              "procNo": "229663",
+              "price": 40000,
+              "b2cPrice": 40000,
+              "procTime": "0100",
+              "isLinkedB2c": false,
+              "isRepresentative": false,
+              "imageUrl": null,
+              "sort": 239314
+            },
+            {
+              "itemId": 157308,
+              "name": "뿌리염색",
+              "procNo": "229664",
+              "price": 30000,
+              "b2cPrice": 30000,
+              "procTime": "0100",
+              "isLinkedB2c": false,
+              "isRepresentative": false,
+              "imageUrl": null,
+              "sort": 239315
+            }
+          ]
+        },
+        {
+          "groupId": 157292,
+          "name": "여성",
+          "sort": 239201,
+          "items": [
+            {
+              "itemId": 157294,
+              "name": "일반커트",
+              "procNo": "229650",
+              "price": 20000,
+              "b2cPrice": 20000,
+              "procTime": "0030",
+              "isLinkedB2c": false,
+              "isRepresentative": false,
+              "imageUrl": null,
+              "sort": 239201
+            },
+            {
+              "itemId": 157295,
+              "name": "디자인커트",
+              "procNo": "229651",
+              "price": 23000,
+              "b2cPrice": 23000,
+              "procTime": "0100",
+              "isLinkedB2c": false,
+              "isRepresentative": false,
+              "imageUrl": null,
+              "sort": 239202
+            },
+            {
+              "itemId": 157296,
+              "name": "일반펌",
+              "procNo": "229652",
+              "price": 70000,
+              "b2cPrice": 70000,
+              "procTime": "0200",
+              "isLinkedB2c": false,
+              "isRepresentative": false,
+              "imageUrl": null,
+              "sort": 239203
+            },
+            {
+              "itemId": 157297,
+              "name": "디자인펌",
+              "procNo": "229653",
+              "price": 120000,
+              "b2cPrice": 120000,
+              "procTime": "0200",
+              "isLinkedB2c": false,
+              "isRepresentative": false,
+              "imageUrl": null,
+              "sort": 239204
+            },
+            {
+              "itemId": 157298,
+              "name": "매직",
+              "procNo": "229654",
+              "price": 120000,
+              "b2cPrice": 120000,
+              "procTime": "0200",
+              "isLinkedB2c": false,
+              "isRepresentative": false,
+              "imageUrl": null,
+              "sort": 239205
+            },
+            {
+              "itemId": 157299,
+              "name": "전체염색",
+              "procNo": "229655",
+              "price": 70000,
+              "b2cPrice": 70000,
+              "procTime": "0200",
+              "isLinkedB2c": false,
+              "isRepresentative": false,
+              "imageUrl": null,
+              "sort": 239206
+            },
+            {
+              "itemId": 157300,
+              "name": "새치염색",
+              "procNo": "229656",
+              "price": 60000,
+              "b2cPrice": 60000,
+              "procTime": "0100",
+              "isLinkedB2c": false,
+              "isRepresentative": false,
+              "imageUrl": null,
+              "sort": 239207
+            },
+            {
+              "itemId": 157301,
+              "name": "뿌리염색",
+              "procNo": "229657",
+              "price": 50000,
+              "b2cPrice": 50000,
+              "procTime": "0100",
+              "isLinkedB2c": false,
+              "isRepresentative": false,
+              "imageUrl": null,
+              "sort": 239208
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "SEMI_PERMANENT",
+      "value": "반영구",
+      "sort": 3,
+      "groups": [
+        {
+          "groupId": 155250,
+          "name": "아이라인",
+          "sort": 236500,
+          "items": [
+            {
+              "itemId": 155254,
+              "name": "기본",
+              "procNo": "229593",
+              "price": 100000,
+              "b2cPrice": 100000,
+              "procTime": "0200",
+              "isLinkedB2c": false,
+              "isRepresentative": false,
+              "imageUrl": null,
+              "sort": 236602
+            }
+          ]
+        },
+        {
+          "groupId": 155249,
+          "name": "눈썹",
+          "sort": 236501,
+          "items": [
+            {
+              "itemId": 155253,
+              "name": "기본",
+              "procNo": "229592",
+              "price": 150000,
+              "b2cPrice": 150000,
+              "procTime": "0300",
+              "isLinkedB2c": true,
+              "isRepresentative": false,
+              "imageUrl": null,
+              "sort": 236501
+            }
+          ]
+        },
+        {
+          "groupId": 155251,
+          "name": "헤어라인",
+          "sort": 236502,
+          "items": [
+            {
+              "itemId": 155255,
+              "name": "기본",
+              "procNo": "229594",
+              "price": 250000,
+              "b2cPrice": 250000,
+              "procTime": "0300",
+              "isLinkedB2c": false,
+              "isRepresentative": false,
+              "imageUrl": null,
+              "sort": 236703
+            }
+          ]
+        },
+        {
+          "groupId": 155252,
+          "name": "입술",
+          "sort": 236503,
+          "items": [
+            {
+              "itemId": 155256,
+              "name": "기본",
+              "procNo": "229595",
+              "price": 200000,
+              "b2cPrice": 200000,
+              "procTime": "0300",
+              "isLinkedB2c": false,
+              "isRepresentative": false,
+              "imageUrl": null,
+              "sort": 236804
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "EYELASHES",
+      "value": "속눈썹",
+      "sort": 4,
+      "groups": [
+        {
+          "groupId": 145595,
+          "name": "123123",
+          "sort": 100,
+          "items": [
+            {
+              "itemId": 149337,
+              "name": "손눈썹 연장",
+              "procNo": "194105",
+              "price": 500000,
+              "b2cPrice": 500000,
+              "procTime": "0200",
+              "isLinkedB2c": false,
+              "isRepresentative": false,
+              "imageUrl": "",
+              "sort": 1
+            },
+            {
+              "itemId": 145596,
+              "name": "123",
+              "procNo": "180415",
+              "price": 12312,
+              "b2cPrice": 12312,
+              "procTime": "0100",
+              "isLinkedB2c": false,
+              "isRepresentative": false,
+              "imageUrl": "",
+              "sort": 1
+            },
+            {
+              "itemId": 145600,
+              "name": "12412421",
+              "procNo": "180416",
+              "price": 150000,
+              "b2cPrice": 20000,
+              "procTime": "0100",
+              "isLinkedB2c": false,
+              "isRepresentative": false,
+              "imageUrl": "",
+              "sort": 2
+            }
+          ]
+        },
+        {
+          "groupId": 159336,
+          "name": "test",
+          "sort": 200,
+          "items": []
+        },
+        {
+          "groupId": 159337,
+          "name": "test1111",
+          "sort": 300,
+          "items": []
+        }
+      ]
+    }
+  ],
+  "errorResponse": {
+    "timestamp": null,
+    "status": 200,
+    "message": null
+  }
+}

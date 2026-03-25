@@ -1,0 +1,93 @@
+{
+  "shop": {
+    "id": "not-zero-shop-123",
+    "name": "일반 샵",
+    "contact": "01087654321",
+    "address": "서울 서초구 서초동 123-45",
+    "addressDetail": "2층",
+    "lotAddress": "서울 서초구 서초동",
+    "postNumber": "54321",
+    "direction": "일반 샵 오시는 길",
+    "latitude": 37.4881117477159,
+    "longitude": 127.033285506977,
+    "bookingTimeInterval": 30,
+    "introduction": "일반 샵 소개입니다.",
+    "todayBookingOption": "BEFORE_3H",
+    "isTodayBookingAvailable": true,
+    "thumbnailImageUrl": [
+      "https://test-image.com/general-image1.jpg"
+    ],
+    "categories": [
+      "네일"
+    ],
+    "shopBusinessSchedule": {
+      "weeklyBusinessDays": [
+        {
+          "dayOfWeek": "MONDAY",
+          "businessStartTime": "10:00",
+          "businessEndTime": "20:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "TUESDAY",
+          "businessStartTime": "10:00",
+          "businessEndTime": "20:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "WEDNESDAY",
+          "businessStartTime": "10:00",
+          "businessEndTime": "20:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "THURSDAY",
+          "businessStartTime": "10:00",
+          "businessEndTime": "20:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "FRIDAY",
+          "businessStartTime": "10:00",
+          "businessEndTime": "20:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SATURDAY",
+          "businessStartTime": "10:00",
+          "businessEndTime": "18:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SUNDAY",
+          "businessStartTime": null,
+          "businessEndTime": null,
+          "isHoliday": true
+        }
+      ],
+      "holidays": [],
+      "shopHolidays": []
+    },
+    "shopUnavailableTimes": [],
+    "keywords": [
+      "일반",
+      "샵"
+    ],
+    "parkingInfo": "주차 불가",
+    "reviewCount": 5,
+    "reviewRating": 4.0,
+    "satisfiedCount": 4,
+    "favoriteCount": 2,
+    "isFavorite": false,
+    "isZeroShop": false,
+    "shopPromotions": {
+      "promotions": []
+    },
+    "isDeleted": false,
+    "ownerId": "owner456",
+    "ownerName": "박사장",
+    "ownerImageUrl": "https://test-image.com/owner2.jpg",
+    "ownerDescription": "안녕하세요, 일반 샵입니다.",
+    "shopStatus": "NORMAL"
+  }
+}

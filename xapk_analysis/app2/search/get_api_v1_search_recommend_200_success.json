@@ -1,0 +1,31 @@
+{
+  "shopList": [
+    {
+      "shopId": "S000000004",
+      "shopName": "헤렌샵",
+      "thumbnailImageUrl": "https://cdn.enewstoday.co.kr/news/photo/201601/469293_117408_535.jpg",
+      "category": ["네일", "왁싱"],
+      "address": "성동구 성수일로",
+      "businessStartTime": "09:00",
+      "businessEndTime": "18:00"
+    },
+    {
+      "shopId": "S000000005",
+      "shopName": "헤렌샵2",
+      "thumbnailImageUrl": "https://image.fnnews.com/resource/media/image/2016/09/12/201609121715548312_l.jpg",
+      "category": ["바버"],
+      "address": "성동구 성수일로",
+      "businessStartTime": "09:30",
+      "businessEndTime": "18:05"
+    },
+    {
+      "shopId": "S000000005",
+      "shopName": "Herren Nail Shop",
+      "thumbnailImageUrl": "https://cdn.enewstoday.co.kr/news/photo/first/200911/img_224875_1.jpg",
+      "category": ["헤어", "테스트"],
+      "address": "성동구 성수일로",
+      "businessStartTime": "09:30",
+      "businessEndTime": "18:05"
+    }
+  ]
+}

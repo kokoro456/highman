@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beauty ERP - Design Specification v1.1</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #0a0a14;
+    color: #d4d4dc;
+    line-height: 1.8;
+  }
+
+  /* Sidebar Navigation */
+  .sidebar {
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    width: 280px;
+    background: #0f0f1a;
+    border-right: 1px solid #1e1e32;
+    padding: 24px 0;
+    overflow-y: auto;
+    z-index: 100;
+  }
+  .sidebar-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #8b7cf6;
+    padding: 0 20px 16px;
+    border-bottom: 1px solid #1e1e32;
+    margin-bottom: 12px;
+  }
+  .nav-section {
+    padding: 4px 16px;
+  }
+  .nav-item {
+    display: block;
+    padding: 6px 12px;
+    font-size: 13px;
+    color: #888;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.15s;
+    cursor: pointer;
+  }
+  .nav-item:hover { background: #1a1a2e; color: #c9b1ff; }
+  .nav-item.l1 { font-weight: 600; color: #aaa; margin-top: 8px; }
+  .nav-item.l2 { padding-left: 24px; font-size: 12px; }
+
+  /* Main Content */
+  .main {
+    margin-left: 280px;
+    max-width: 900px;
+    padding: 48px 64px 120px;
+  }
+
+  /* Typography */
+  h1 {
+    font-size: 36px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #8b7cf6 0%, #c084fc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+  }
+  .meta {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 40px;
+    display: flex;
+    gap: 24px;
+  }
+  .meta span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .badge-draft { background: #f59e0b22; color: #f59e0b; border: 1px solid #f59e0b44; }
+
+  h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #e4e4ec;
+    margin-top: 56px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #1e1e32;
+    scroll-margin-top: 24px;
+  }
+  h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #c9b1ff;
+    margin-top: 36px;
+    margin-bottom: 12px;
+    scroll-margin-top: 24px;
+  }
+  h4 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #a0a0b0;
+    margin-top: 24px;
+    margin-bottom: 8px;
+  }
+  p { margin-bottom: 12px; font-size: 14px; }
+  strong { color: #e4e4ec; }
+
+  ul, ol {
+    margin-bottom: 16px;
+    padding-left: 24px;
+  }
+  li {
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+  li ul { margin-top: 6px; margin-bottom: 0; }
+
+  hr {
+    border: none;
+    border-top: 1px solid #1e1e32;
+    margin: 48px 0;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 13px;
+  }
+  th {
+    background: #14142a;
+    color: #c9b1ff;
+    font-weight: 600;
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 2px solid #2a2a4a;
+  }
+  td {
+    padding: 8px 14px;
+    border-bottom: 1px solid #1a1a2e;
+    vertical-align: top;
+  }
+  tr:hover td { background: #0f0f1f; }
+
+  /* Code blocks */
+  pre {
+    background: #12122a;
+    border: 1px solid #1e1e38;
+    border-radius: 10px;
+    padding: 20px;
+    overflow-x: auto;
+    margin-bottom: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    line-height: 1.7;
+    color: #b8b8d0;
+  }
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    background: #1a1a2e;
+    padding: 1px 6px;
+    border-radius: 4px;
+    color: #c9b1ff;
+  }
+  pre code { background: none; padding: 0; }
+
+  /* Syntax highlighting in data models */
+  .kw { color: #c084fc; }  /* keywords: UUID, FK, Enum, etc */
+  .ty { color: #60a5fa; }  /* types: String, Int, DateTime */
+  .cm { color: #6b7280; }  /* comments */
+  .en { color: #fbbf24; }  /* enum values */
+  .fn { color: #34d399; }  /* field names */
+  .pk { color: #f87171; }  /* PK marker */
+
+  /* Info boxes */
+  .info-box {
+    background: #12122a;
+    border-left: 3px solid #8b7cf6;
+    border-radius: 0 8px 8px 0;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    font-size: 13px;
+  }
+  .info-box.warn { border-left-color: #f59e0b; }
+  .info-box.success { border-left-color: #10b981; }
+
+  /* Phase tags */
+  .phase { display: inline-block; padding: 1px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+  .phase-1a { background: #8b7cf622; color: #8b7cf6; }
+  .phase-1b { background: #60a5fa22; color: #60a5fa; }
+  .phase-2 { background: #f59e0b22; color: #f59e0b; }
+  .phase-3 { background: #10b98122; color: #10b981; }
+  .phase-4 { background: #ec489922; color: #ec4899; }
+
+  /* Entity cards */
+  .entity-card {
+    background: #12122a;
+    border: 1px solid #1e1e38;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .entity-card h4 {
+    margin-top: 0;
+    color: #c9b1ff;
+    font-size: 14px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .entity-card h4 .icon { font-size: 16px; }
+  .field-row {
+    display: flex;
+    padding: 4px 0;
+    font-size: 12.5px;
+    font-family: 'JetBrains Mono', monospace;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .field-row:last-child { border-bottom: none; }
+  .field-name { color: #34d399; width: 200px; flex-shrink: 0; }
+  .field-type { color: #60a5fa; width: 200px; flex-shrink: 0; }
+  .field-note { color: #6b7280; font-size: 11px; }
+
+  /* Architecture diagram */
+  .arch-visual {
+    background: #0c0c1a;
+    border: 1px solid #1e1e38;
+    border-radius: 12px;
+    padding: 32px;
+    margin: 20px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    white-space: pre;
+    overflow-x: auto;
+    color: #8888aa;
+  }
+  .arch-visual .layer-label { color: #c084fc; font-weight: 600; }
+  .arch-visual .box { color: #60a5fa; }
+  .arch-visual .arrow { color: #4b5563; }
+  .arch-visual .detail { color: #6b7280; }
+
+  /* Permission matrix colors */
+  .perm-all { color: #10b981; }
+  .perm-own { color: #60a5fa; }
+  .perm-limited { color: #f59e0b; }
+  .perm-none { color: #4b5563; }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: #0a0a14; }
+  ::-webkit-scrollbar-thumb { background: #2a2a4a; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #3a3a5a; }
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<nav class="sidebar">
+  <div class="sidebar-title">Beauty ERP Spec v1.1</div>
+  <div class="nav-section">
+    <a class="nav-item l1" href="#overview">1. Overview</a>
+    <a class="nav-item l2" href="#vision">Product Vision</a>
+    <a class="nav-item l2" href="#benchmark">Benchmark Analysis</a>
+    <a class="nav-item l2" href="#diff">Differentiation</a>
+    <a class="nav-item l1" href="#arch">2. Architecture</a>
+    <a class="nav-item l2" href="#stack">Tech Stack</a>
+    <a class="nav-item l2" href="#monorepo">Monorepo Structure</a>
+    <a class="nav-item l2" href="#diagram">System Diagram</a>
+    <a class="nav-item l1" href="#modules">3. Domain Modules</a>
+    <a class="nav-item l2" href="#booking">3.1 Booking (예약)</a>
+    <a class="nav-item l2" href="#customer">3.2 Customer (CRM)</a>
+    <a class="nav-item l2" href="#payment">3.3 Payment (POS)</a>
+    <a class="nav-item l2" href="#staff">3.4 Staff (직원)</a>
+    <a class="nav-item l2" href="#shop">3.5 Shop (매장)</a>
+    <a class="nav-item l2" href="#notification">3.6 Notification (알림)</a>
+    <a class="nav-item l2" href="#dashboard">3.7 Dashboard (대시보드)</a>
+    <a class="nav-item l1" href="#auth">4. Auth & RBAC</a>
+    <a class="nav-item l1" href="#integrations">5. External Integrations</a>
+    <a class="nav-item l1" href="#tiers">6. Subscription Tiers</a>
+    <a class="nav-item l1" href="#phases">7. Development Phases</a>
+    <a class="nav-item l1" href="#nfr">8. Non-Functional Req.</a>
+    <a class="nav-item l1" href="#infra">9. Infrastructure</a>
+    <a class="nav-item l1" href="#benchref">10. Benchmark Reference</a>
+  </div>
+</nav>
+
+<!-- Main Content -->
+<div class="main">
+
+<h1>Beauty ERP System</h1>
+<h1 style="font-size: 22px; margin-bottom: 0;">Design Specification</h1>
+<div class="meta">
+  <span>2026-03-21</span>
+  <span><span class="badge badge-draft">Draft</span></span>
+  <span>Version 1.1 (reviewed)</span>
+</div>
+
+<hr>
+
+<!-- 1. Overview -->
+<h2 id="overview">1. Overview</h2>
+
+<h3 id="vision">1.1 Product Vision</h3>
+<p>뷰티 업종(속눈썹, 왁싱, 네일, 헤어, 피부관리, 반영구, 타투, 마사지 등) 전반을 위한 <strong>통합 ERP 시스템</strong>. 매장 운영자(B2B)와 고객(B2C) 양측을 연결하는 플랫폼.</p>
+
+<h3>1.2 Target Users</h3>
+<ul>
+  <li><strong>B2B (매장 운영자):</strong> 원장님, 매니저, 직원 — 매장 관리 웹 + 모바일 앱</li>
+  <li><strong>B2C (고객):</strong> 서비스를 검색하고 예약하는 일반 소비자 — 고객 웹 + 모바일 앱</li>
+</ul>
+
+<h3>1.3 Revenue Model</h3>
+<p>SaaS 월 구독료 (매장 규모별 요금제 차등)</p>
+
+<h3 id="benchmark">1.4 Benchmark Analysis</h3>
+<table>
+  <thead>
+    <tr><th>항목</th><th>공비서 (GongBiz)</th><th>아하소프트 플러스</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>플랫폼</td><td>B2B앱 + B2C앱 (양면)</td><td>웹 SaaS</td></tr>
+    <tr><td>업종</td><td>뷰티 전반 + 애견미용</td><td>뷰티 + 헬스케어</td></tr>
+    <tr><td>강점</td><td>ZeroShop 인증, Cok 시술발견, Pass 시스템</td><td>네이버 연동, 아하콜, 인센티브 자동계산</td></tr>
+    <tr><td>약점</td><td>B2C앱 미성숙, UI 노후화</td><td>앱 없음, AI 부재</td></tr>
+    <tr><td>기술</td><td>Android Native (Kotlin)</td><td>Vue.js + jQuery</td></tr>
+  </tbody>
+</table>
+
+<h3 id="diff">1.5 Differentiation</h3>
+<ul>
+  <li><strong>AI 기반 분석:</strong> 매출 예측, 고객 이탈 예측, 마케팅 자동화</li>
+  <li><strong>현대적 UI/UX:</strong> 프리미엄 디자인, 모바일 퍼스트</li>
+  <li><strong>통합 대시보드:</strong> 실시간 종합 분석</li>
+  <li><strong>카드결제 자동 매출 인식:</strong> PG 연동 기반 자동 매출 기록</li>
+  <li><strong>웹 + 앱 완전 대응:</strong> 공비서(앱 중심) + 아하소프트(웹 중심)의 장점 통합</li>
+</ul>
+
+<hr>
+
+<!-- 2. Architecture -->
+<h2 id="arch">2. Architecture</h2>
+
+<h3>2.1 Approach: Modular Monorepo (Turborepo)</h3>
+<div class="info-box">
+  <strong>선택 이유:</strong>
+  <ul style="margin-top: 8px; margin-bottom: 0;">
+    <li>4개 클라이언트(B2B 웹, B2C 웹, 원장님 앱, 고객 앱) 간 코드 재사용 극대화</li>
+    <li>독립적 배포 가능하면서도 단일 레포 관리의 이점</li>
+    <li>팀 확장 시 유연한 대응</li>
+    <li>향후 마이크로서비스로 점진적 전환 가능</li>
+  </ul>
+</div>
+
+<h3 id="stack">2.2 Tech Stack</h3>
+<table>
+  <thead><tr><th>Layer</th><th>Technology</th><th>Purpose</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Monorepo</strong></td><td>Turborepo</td><td>빌드 오케스트레이션, 캐싱</td></tr>
+    <tr><td><strong>B2B Web</strong></td><td>Next.js 14+ (App Router)</td><td>매장 관리 대시보드</td></tr>
+    <tr><td><strong>B2C Web</strong></td><td>Next.js 14+ (App Router)</td><td>고객 예약/검색</td></tr>
+    <tr><td><strong>Mobile</strong></td><td>React Native (Expo)</td><td>원장님 앱 + 고객 앱</td></tr>
+    <tr><td><strong>API</strong></td><td>NestJS</td><td>REST API Gateway</td></tr>
+    <tr><td><strong>ORM</strong></td><td>Prisma</td><td>DB 스키마 관리, 타입 안전</td></tr>
+    <tr><td><strong>Database</strong></td><td>PostgreSQL</td><td>메인 데이터</td></tr>
+    <tr><td><strong>Cache</strong></td><td>Redis</td><td>세션, 캐시, 실시간 큐</td></tr>
+    <tr><td><strong>Storage</strong></td><td>S3 or R2</td><td>이미지/파일 저장</td></tr>
+    <tr><td><strong>Auth</strong></td><td>NextAuth.js + JWT</td><td>인증/인가</td></tr>
+    <tr><td><strong>UI</strong></td><td>Tailwind CSS + Radix UI</td><td>디자인 시스템</td></tr>
+  </tbody>
+</table>
+
+<h3 id="monorepo">2.3 Monorepo Structure</h3>
+<pre><code>beauty-erp/
+├── apps/
+│   ├── b2b-web/            # Next.js - 매장 관리 웹
+│   ├── b2c-web/            # Next.js - 고객 예약 웹
+│   ├── mobile-owner/       # React Native - 원장님 앱
+│   ├── mobile-customer/    # React Native - 고객 앱
+│   └── api/                # NestJS - API 서버
+├── packages/
+│   ├── ui/                 # 공유 UI 컴포넌트 (디자인 시스템)
+│   ├── types/              # 공유 TypeScript 타입
+│   ├── utils/              # 공유 유틸리티 함수
+│   ├── validators/         # 공유 유효성 검증 (Zod)
+│   ├── api-client/         # API 클라이언트 (React Query hooks)
+│   └── config/             # 공유 설정 (ESLint, TSConfig 등)
+├── prisma/
+│   └── schema.prisma       # DB 스키마
+├── turbo.json
+└── package.json</code></pre>
+
+<h3 id="diagram">2.4 System Architecture</h3>
+<pre><code>┌─────────────────────────────────────────────────────┐
+│                    CLIENT LAYER                      │
+│  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌─────────┐│
+│  │B2B Web   │ │B2C Web   │ │Owner App │ │Cust App ││
+│  │(Next.js) │ │(Next.js) │ │(RN/Expo) │ │(RN/Expo)││
+│  └────┬─────┘ └────┬─────┘ └────┬─────┘ └────┬────┘│
+└───────┼─────────────┼────────────┼────────────┼─────┘
+        └─────────────┼────────────┼────────────┘
+                      ▼            ▼
+┌─────────────────────────────────────────────────────┐
+│              API GATEWAY (NestJS)                    │
+│  Auth │ Rate Limiting │ Validation │ Logging         │
+└───────────────────────┬─────────────────────────────┘
+                        │
+┌───────────────────────┼─────────────────────────────┐
+│              DOMAIN MODULES                          │
+│  ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐       │
+│  │Booking │ │Customer│ │Payment │ │Staff   │       │
+│  └────────┘ └────────┘ └────────┘ └────────┘       │
+│  ┌────────┐ ┌────────┐ ┌────────┐                   │
+│  │Shop    │ │Notif.  │ │Dash-   │                   │
+│  └────────┘ └────────┘ │board   │                   │
+│                         └────────┘                   │
+└───────────────────────┬─────────────────────────────┘
+                        │
+┌───────────────────────┼─────────────────────────────┐
+│              DATA LAYER                              │
+│  ┌──────────┐ ┌──────────┐ ┌──────────┐            │
+│  │PostgreSQL│ │  Redis   │ │  S3/R2   │            │
+│  │(Prisma)  │ │(Cache)   │ │(Storage) │            │
+│  └──────────┘ └──────────┘ └──────────┘            │
+└───────────────────────┬─────────────────────────────┘
+                        │
+┌───────────────────────┼─────────────────────────────┐
+│           EXTERNAL INTEGRATIONS                      │
+│  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌────────┐ │
+│  │Naver     │ │PG (Toss/ │ │Kakao     │ │AI      │ │
+│  │Booking   │ │NHN KCP)  │ │AlimTalk  │ │(Claude)│ │
+│  └──────────┘ └──────────┘ └──────────┘ └────────┘ │
+└─────────────────────────────────────────────────────┘</code></pre>
+
+<hr>
+
+<!-- 3. Domain Modules -->
+<h2 id="modules">3. Domain Modules</h2>
+
+<!-- 3.1 Booking -->
+<h3 id="booking">3.1 Booking Module (예약 관리)</h3>
+<p><strong>Purpose:</strong> 캘린더 기반 예약 생성, 수정, 취소 및 스케줄 관리</p>
+<p><strong>Core Entities:</strong> <code>Booking</code>, <code>Schedule</code>, <code>TimeSlot</code>, <code>WaitList</code> (V2)</p>
+
+<h4>Key Features (MVP)</h4>
+<ul>
+  <li>캘린더 뷰 (일/주/월)</li>
+  <li>직원별 스케줄 관리</li>
+  <li>예약 생성/수정/취소</li>
+  <li>노쇼/중복예약 방지 (시간 슬롯 잠금)</li>
+  <li>네이버 예약 양방향 동기화</li>
+  <li>B2C 온라인 예약 페이지</li>
+  <li>예약 상태: <code>READY</code> → <code>CONFIRMED</code> → <code>IN_PROGRESS</code> → <code>COMPLETED</code> / <code>CANCELLED</code> / <code>NO_SHOW</code></li>
+  <li>워크인(예약 없는 방문) 결제 지원</li>
+</ul>
+
+<div class="entity-card">
+  <h4><span class="icon">📋</span> Booking</h4>
+  <div class="field-row"><span class="field-name">id</span><span class="field-type">UUID PK</span></div>
+  <div class="field-row"><span class="field-name">shopId</span><span class="field-type">UUID FK → Shop</span></div>
+  <div class="field-row"><span class="field-name">customerId</span><span class="field-type">UUID FK → Customer</span></div>
+  <div class="field-row"><span class="field-name">staffId</span><span class="field-type">UUID FK → Staff</span></div>
+  <div class="field-row"><span class="field-name">serviceId</span><span class="field-type">UUID FK → Service</span></div>
+  <div class="field-row"><span class="field-name">startTime</span><span class="field-type">DateTime</span></div>
+  <div class="field-row"><span class="field-name">endTime</span><span class="field-type">DateTime</span></div>
+  <div class="field-row"><span class="field-name">status</span><span class="field-type">Enum</span><span class="field-note">READY, CONFIRMED, IN_PROGRESS, COMPLETED, CANCELLED, NO_SHOW</span></div>
+  <div class="field-row"><span class="field-name">source</span><span class="field-type">Enum</span><span class="field-note">DIRECT, NAVER, B2C_WEB, B2C_APP</span></div>
+  <div class="field-row"><span class="field-name">memo</span><span class="field-type">String?</span></div>
+  <div class="field-row"><span class="field-name">naverBookingId</span><span class="field-type">String?</span><span class="field-note">네이버 예약 연동 ID</span></div>
+  <div class="field-row"><span class="field-name">createdAt / updatedAt</span><span class="field-type">DateTime</span></div>
+</div>
+
+<div class="entity-card">
+  <h4><span class="icon">📅</span> Schedule</h4>
+  <div class="field-row"><span class="field-name">id</span><span class="field-type">UUID PK</span></div>
+  <div class="field-row"><span class="field-name">shopId</span><span class="field-type">UUID FK → Shop</span></div>
+  <div class="field-row"><span class="field-name">staffId</span><span class="field-type">UUID FK → Staff</span></div>
+  <div class="field-row"><span class="field-name">dayOfWeek</span><span class="field-type">Int(0-6)</span></div>
+  <div class="field-row"><span class="field-name">startTime / endTime</span><span class="field-type">Time</span></div>
+  <div class="field-row"><span class="field-name">breakStartTime / breakEndTime</span><span class="field-type">Time?</span></div>
+  <div class="field-row"><span class="field-name">isActive</span><span class="field-type">Boolean</span></div>
+  <div class="field-row"><span class="field-name" style="color:#f59e0b;">UNIQUE</span><span class="field-type" style="color:#f59e0b;">(shopId, staffId, dayOfWeek)</span></div>
+</div>
+
+<!-- 3.2 Customer -->
+<h3 id="customer">3.2 Customer Module (고객 CRM)</h3>
+<p><strong>Purpose:</strong> 고객 정보, 시술 이력, 사진, 메모 관리</p>
+
+<h4>Key Features (MVP)</h4>
+<ul>
+  <li>고객 등록/검색/조회</li>
+  <li>시술 이력 타임라인</li>
+  <li>시술 전후 사진 관리</li>
+  <li>고객 메모/특이사항 기록</li>
+  <li>고객별 매출 요약</li>
+</ul>
+
+<div class="entity-card">
+  <h4><span class="icon">👤</span> Customer</h4>
+  <div class="field-row"><span class="field-name">id</span><span class="field-type">UUID PK</span></div>
+  <div class="field-row"><span class="field-name">shopId</span><span class="field-type">UUID FK → Shop</span></div>
+  <div class="field-row"><span class="field-name">name</span><span class="field-type">String</span></div>
+  <div class="field-row"><span class="field-name">phone</span><span class="field-type">String (encrypted)</span></div>
+  <div class="field-row"><span class="field-name">email</span><span class="field-type">String?</span></div>
+  <div class="field-row"><span class="field-name">gender</span><span class="field-type">Enum?</span><span class="field-note">MALE, FEMALE, OTHER</span></div>
+  <div class="field-row"><span class="field-name">birthDate</span><span class="field-type">Date? (encrypted)</span></div>
+  <div class="field-row"><span class="field-name">firstVisitDate / lastVisitDate</span><span class="field-type">Date</span></div>
+  <div class="field-row"><span class="field-name">visitCount</span><span class="field-type">Int default(0)</span><span class="field-note">이벤트 기반 동기화</span></div>
+  <div class="field-row"><span class="field-name">totalSpent</span><span class="field-type">Decimal default(0)</span><span class="field-note">이벤트 기반 동기화</span></div>
+  <div class="field-row"><span class="field-name">tier</span><span class="field-type">Enum default(NORMAL)</span><span class="field-note">NORMAL, VIP, VVIP (V2)</span></div>
+  <div class="field-row"><span class="field-name">memo / tags</span><span class="field-type">String? / String[]</span></div>
+  <div class="field-row"><span class="field-name">consentMarketing</span><span class="field-type">Boolean default(false)</span></div>
+</div>
+
+<div class="entity-card">
+  <h4><span class="icon">📝</span> TreatmentHistory</h4>
+  <div class="field-row"><span class="field-name">id</span><span class="field-type">UUID PK</span></div>
+  <div class="field-row"><span class="field-name">shopId</span><span class="field-type">UUID FK → Shop</span></div>
+  <div class="field-row"><span class="field-name">customerId</span><span class="field-type">UUID FK → Customer</span></div>
+  <div class="field-row"><span class="field-name">bookingId</span><span class="field-type">UUID FK → Booking?</span><span class="field-note">워크인 시 nullable</span></div>
+  <div class="field-row"><span class="field-name">staffId / serviceId</span><span class="field-type">UUID FK</span></div>
+  <div class="field-row"><span class="field-name">serviceName</span><span class="field-type">String</span><span class="field-note">시점의 서비스명 보존</span></div>
+  <div class="field-row"><span class="field-name">price</span><span class="field-type">Decimal</span></div>
+  <div class="field-row"><span class="field-name">notes</span><span class="field-type">String?</span></div>
+  <div class="field-row"><span class="field-name">photos</span><span class="field-type">CustomerPhoto[]</span></div>
+  <div class="field-row"><span class="field-name">treatmentDate</span><span class="field-type">DateTime</span></div>
+</div>
+
+<!-- 3.3 Payment -->
+<h3 id="payment">3.3 Payment Module (매출/결제 POS)</h3>
+<p><strong>Purpose:</strong> 결제 처리, 매출 자동 기록, 회원권 관리, 통계</p>
+
+<h4>Key Features (MVP)</h4>
+<ul>
+  <li>카드결제 연동 (PG사 통한 자동 매출 인식)</li>
+  <li>현금/카드/이체 결제 처리</li>
+  <li>회원권: <strong>TICKET</strong> (횟수권), <strong>MEMBERSHIP</strong> (금액권)</li>
+  <li>일별/월별 매출 통계, 직원별 매출 추적</li>
+  <li>환불 처리, 워크인 결제 지원</li>
+</ul>
+
+<div class="entity-card">
+  <h4><span class="icon">💳</span> Payment</h4>
+  <div class="field-row"><span class="field-name">id / shopId / customerId</span><span class="field-type">UUID</span></div>
+  <div class="field-row"><span class="field-name">bookingId</span><span class="field-type">UUID FK → Booking?</span><span class="field-note">워크인 시 null</span></div>
+  <div class="field-row"><span class="field-name">staffId</span><span class="field-type">UUID FK → Staff</span></div>
+  <div class="field-row"><span class="field-name">amount / discount / finalAmount</span><span class="field-type">Decimal</span></div>
+  <div class="field-row"><span class="field-name">method</span><span class="field-type">Enum</span><span class="field-note">CARD, CASH, TRANSFER, PASS, MIXED</span></div>
+  <div class="field-row"><span class="field-name">status</span><span class="field-type">Enum</span><span class="field-note">PENDING, COMPLETED, REFUNDED, PARTIAL_REFUND</span></div>
+  <div class="field-row"><span class="field-name">pgTransactionId / cardLastFour</span><span class="field-type">String?</span></div>
+  <div class="field-row"><span class="field-name">passId / passAmount</span><span class="field-type">UUID? / Decimal?</span></div>
+</div>
+
+<div class="entity-card">
+  <h4><span class="icon">🎫</span> Pass (회원권)</h4>
+  <div class="field-row"><span class="field-name">type</span><span class="field-type">Enum</span><span class="field-note">TICKET (횟수권) / MEMBERSHIP (금액권)</span></div>
+  <div class="field-row"><span class="field-name">totalCount / remainingCount</span><span class="field-type">Int?</span><span class="field-note">TICKET용</span></div>
+  <div class="field-row"><span class="field-name">totalAmount / remainingAmount</span><span class="field-type">Decimal?</span><span class="field-note">MEMBERSHIP용</span></div>
+  <div class="field-row"><span class="field-name">price</span><span class="field-type">Decimal</span><span class="field-note">구매 금액</span></div>
+  <div class="field-row"><span class="field-name">status</span><span class="field-type">Enum</span><span class="field-note">ACTIVE, EXPIRED, EXHAUSTED, CANCELLED</span></div>
+</div>
+
+<div class="entity-card">
+  <h4><span class="icon">📊</span> PassUsage (사용 내역)</h4>
+  <div class="field-row"><span class="field-name">passId / paymentId</span><span class="field-type">UUID FK</span></div>
+  <div class="field-row"><span class="field-name">type</span><span class="field-type">Enum</span><span class="field-note">USE / REFUND</span></div>
+  <div class="field-row"><span class="field-name">countUsed / amountUsed</span><span class="field-type">Int? / Decimal?</span></div>
+  <div class="field-row"><span class="field-name">remainingCount / remainingAmount</span><span class="field-type">Int? / Decimal?</span><span class="field-note">사용 후 잔여</span></div>
+</div>
+
+<!-- 3.4 Staff -->
+<h3 id="staff">3.4 Staff Module (직원/인사)</h3>
+<p><strong>Purpose:</strong> 직원 관리, 스케줄, 인센티브 계산</p>
+
+<div class="info-box">
+  <strong>Role 관계 설명:</strong> <code>Staff.role</code>은 매장 내 직급 (OWNER, MANAGER, DESIGNER, ASSISTANT, INTERN). <code>User.role</code>은 플랫폼 인증 역할 (SHOP_OWNER, SHOP_STAFF). 권한 판단 시 User.role로 1차 인증, Staff.role로 매장 내 세부 권한 결정.
+</div>
+
+<div class="entity-card">
+  <h4><span class="icon">👥</span> Staff</h4>
+  <div class="field-row"><span class="field-name">id / shopId / userId?</span><span class="field-type">UUID</span></div>
+  <div class="field-row"><span class="field-name">name / phone / email?</span><span class="field-type">String</span></div>
+  <div class="field-row"><span class="field-name">role</span><span class="field-type">Enum</span><span class="field-note">OWNER, MANAGER, DESIGNER, ASSISTANT, INTERN</span></div>
+  <div class="field-row"><span class="field-name">specialties</span><span class="field-type">String[]</span><span class="field-note">전문 시술 목록</span></div>
+  <div class="field-row"><span class="field-name">color</span><span class="field-type">String</span><span class="field-note">캘린더 표시 색상</span></div>
+  <div class="field-row"><span class="field-name">isActive / sortOrder / hiredAt</span><span class="field-type">...</span></div>
+</div>
+
+<div class="entity-card">
+  <h4><span class="icon">💰</span> StaffIncentive</h4>
+  <div class="field-row"><span class="field-name">staffId / shopId</span><span class="field-type">UUID FK</span></div>
+  <div class="field-row"><span class="field-name">type</span><span class="field-type">Enum</span><span class="field-note">PERCENTAGE / FIXED</span></div>
+  <div class="field-row"><span class="field-name">serviceId</span><span class="field-type">UUID FK?</span><span class="field-note">null이면 전체 서비스</span></div>
+  <div class="field-row"><span class="field-name">rate</span><span class="field-type">Decimal</span><span class="field-note">비율 or 고정금액</span></div>
+</div>
+
+<!-- 3.5 Shop -->
+<h3 id="shop">3.5 Shop Module (매장 관리)</h3>
+
+<div class="entity-card">
+  <h4><span class="icon">🏪</span> Shop</h4>
+  <div class="field-row"><span class="field-name">id / ownerId</span><span class="field-type">UUID</span></div>
+  <div class="field-row"><span class="field-name">name / phone</span><span class="field-type">String</span></div>
+  <div class="field-row"><span class="field-name">businessType</span><span class="field-type">Enum</span><span class="field-note">NAIL, EYELASH, WAXING, HAIR, SKIN, SEMI_PERMANENT, TATTOO, MASSAGE, BARBER, TANNING, SCALP, MAKEUP, PET_GROOMING, OTHER</span></div>
+  <div class="field-row"><span class="field-name">address / latitude / longitude</span><span class="field-type">String / Decimal?</span></div>
+  <div class="field-row"><span class="field-name">businessHours</span><span class="field-type">Json</span><span class="field-note">{[day: MON..SUN]: {open, close, isOpen}}</span></div>
+  <div class="field-row"><span class="field-name">subscriptionTier</span><span class="field-type">Enum</span><span class="field-note">FREE, BASIC, PROFESSIONAL, ENTERPRISE</span></div>
+  <div class="field-row"><span class="field-name">naverPlaceId</span><span class="field-type">String?</span><span class="field-note">네이버 예약 연동</span></div>
+</div>
+
+<div class="entity-card">
+  <h4><span class="icon">✂️</span> Service</h4>
+  <div class="field-row"><span class="field-name">name / description</span><span class="field-type">String</span></div>
+  <div class="field-row"><span class="field-name">duration</span><span class="field-type">Int</span><span class="field-note">소요시간 (분)</span></div>
+  <div class="field-row"><span class="field-name">price</span><span class="field-type">Decimal</span><span class="field-note">B2B 가격</span></div>
+  <div class="field-row"><span class="field-name">b2cPrice</span><span class="field-type">Decimal?</span><span class="field-note">B2C 노출 가격 (다를 경우)</span></div>
+  <div class="field-row"><span class="field-name">isLinkedB2c</span><span class="field-type">Boolean</span><span class="field-note">B2C 노출 여부</span></div>
+</div>
+
+<!-- 3.6 Notification -->
+<h3 id="notification">3.6 Notification Module (알림)</h3>
+
+<div class="entity-card">
+  <h4><span class="icon">🔔</span> Notification</h4>
+  <div class="field-row"><span class="field-name">recipientId / recipientType</span><span class="field-type">UUID / Enum</span><span class="field-note">CUSTOMER or STAFF</span></div>
+  <div class="field-row"><span class="field-name">type</span><span class="field-type">Enum</span><span class="field-note">BOOKING_CONFIRMED, BOOKING_REMINDER, BOOKING_CANCELLED, BOOKING_CHANGED, MARKETING, SYSTEM</span></div>
+  <div class="field-row"><span class="field-name">channel</span><span class="field-type">Enum</span><span class="field-note">KAKAO_ALIMTALK, FCM_PUSH, SMS</span></div>
+  <div class="field-row"><span class="field-name">status</span><span class="field-type">Enum</span><span class="field-note">PENDING, SENT, FAILED, DELIVERED</span></div>
+  <div class="field-row"><span class="field-name">templateId / content</span><span class="field-type">UUID? / String</span></div>
+  <div class="field-row"><span class="field-name">scheduledAt / sentAt</span><span class="field-type">DateTime?</span></div>
+</div>
+
+<!-- 3.7 Dashboard -->
+<h3 id="dashboard">3.7 Dashboard Module (대시보드)</h3>
+
+<div class="entity-card">
+  <h4><span class="icon">📊</span> DailySales</h4>
+  <div class="field-row"><span class="field-name">shopId / date</span><span class="field-type">UUID / Date</span><span class="field-note">UNIQUE(shopId, date)</span></div>
+  <div class="field-row"><span class="field-name">totalRevenue</span><span class="field-type">Decimal</span></div>
+  <div class="field-row"><span class="field-name">cardRevenue / cashRevenue / transferRevenue / passRevenue</span><span class="field-type">Decimal</span></div>
+  <div class="field-row"><span class="field-name">refundAmount</span><span class="field-type">Decimal</span></div>
+  <div class="field-row"><span class="field-name">bookingCount / completedCount / cancelledCount / noShowCount</span><span class="field-type">Int</span></div>
+  <div class="field-row"><span class="field-name">newCustomerCount / returningCustomerCount</span><span class="field-type">Int</span></div>
+</div>
+
+<div class="info-box success">
+  <strong>Denormalized Field Sync:</strong>
+  <ul style="margin-top:8px;margin-bottom:0;">
+    <li><code>Customer.visitCount</code> / <code>totalSpent</code>: 결제 완료/환불 시 이벤트 기반 업데이트 (EventEmitter). 환불 시 차감.</li>
+    <li><code>DailySales</code>: 결제/예약 이벤트 시 실시간 업데이트. 일 1회 배치로 정합성 검증.</li>
+  </ul>
+</div>
+
+<hr>
+
+<!-- 4. Auth -->
+<h2 id="auth">4. Authentication & Authorization</h2>
+
+<h3>4.1 Auth Flow</h3>
+<ul>
+  <li><strong>매장 운영자:</strong> 이메일/비밀번호 + 소셜 로그인 (카카오, 네이버)</li>
+  <li><strong>고객:</strong> 전화번호 인증 (SMS OTP) + 소셜 로그인</li>
+  <li><strong>JWT 기반:</strong> Access Token (15min) + Refresh Token (7d)</li>
+</ul>
+
+<div class="entity-card">
+  <h4><span class="icon">🔐</span> User</h4>
+  <div class="field-row"><span class="field-name">id</span><span class="field-type">UUID PK</span></div>
+  <div class="field-row"><span class="field-name">email / phone</span><span class="field-type">String? unique</span></div>
+  <div class="field-row"><span class="field-name">name</span><span class="field-type">String</span></div>
+  <div class="field-row"><span class="field-name">role</span><span class="field-type">Enum</span><span class="field-note">ADMIN, SHOP_OWNER, SHOP_STAFF, CUSTOMER</span></div>
+  <div class="field-row"><span class="field-name">authProvider</span><span class="field-type">Enum</span><span class="field-note">EMAIL, KAKAO, NAVER, PHONE</span></div>
+  <div class="field-row"><span class="field-name">passwordHash</span><span class="field-type">String?</span></div>
+  <div class="field-row"><span class="field-name">isActive</span><span class="field-type">Boolean default(true)</span></div>
+</div>
+
+<h3>4.2 Permission Matrix</h3>
+<table>
+  <thead><tr><th>Action</th><th>ADMIN</th><th>SHOP_OWNER</th><th>SHOP_STAFF</th><th>CUSTOMER</th></tr></thead>
+  <tbody>
+    <tr><td>Manage Shop</td><td class="perm-all">All</td><td class="perm-own">Own shop</td><td class="perm-none">-</td><td class="perm-none">-</td></tr>
+    <tr><td>View Dashboard</td><td class="perm-all">All</td><td class="perm-own">Own shop</td><td class="perm-limited">Own stats</td><td class="perm-none">-</td></tr>
+    <tr><td>Manage Bookings</td><td class="perm-all">All</td><td class="perm-own">Own shop</td><td class="perm-limited">Assigned</td><td class="perm-limited">Own</td></tr>
+    <tr><td>Manage Customers</td><td class="perm-all">All</td><td class="perm-own">Own shop</td><td class="perm-limited">Assigned</td><td class="perm-limited">Own</td></tr>
+    <tr><td>Process Payments</td><td class="perm-all">All</td><td class="perm-own">Own shop</td><td class="perm-limited">With perm.</td><td class="perm-none">-</td></tr>
+    <tr><td>Manage Staff</td><td class="perm-all">All</td><td class="perm-own">Own shop</td><td class="perm-none">-</td><td class="perm-none">-</td></tr>
+    <tr><td>View Reports</td><td class="perm-all">All</td><td class="perm-own">Own shop</td><td class="perm-limited">Limited</td><td class="perm-none">-</td></tr>
+  </tbody>
+</table>
+
+<hr>
+
+<!-- 5. Integrations -->
+<h2 id="integrations">5. External Integrations</h2>
+<ul>
+  <li><strong>네이버 예약:</strong> 양방향 동기화, Webhook 실시간 업데이트, 충돌 시 시스템 우선 (last-write-wins)</li>
+  <li><strong>PG 카드결제:</strong> 토스페이먼츠 or NHN KCP, 결제 완료 시 자동 매출 기록</li>
+  <li><strong>카카오 알림톡:</strong> 예약 확정/변경/취소/리마인드 (D-1, H-1)</li>
+  <li><strong>FCM Push:</strong> Firebase Cloud Messaging 기반 앱 푸시</li>
+</ul>
+
+<hr>
+
+<!-- 6. Tiers -->
+<h2 id="tiers">6. Subscription Tiers</h2>
+<table>
+  <thead><tr><th>Tier</th><th>대상</th><th>주요 기능</th></tr></thead>
+  <tbody>
+    <tr><td><strong>FREE</strong></td><td>체험용</td><td>기본 예약/고객 관리 (제한적)</td></tr>
+    <tr><td><strong>BASIC</strong></td><td>1인 매장</td><td>전체 MVP 기능, 직원 1명</td></tr>
+    <tr><td><strong>PROFESSIONAL</strong></td><td>소규모 (2-10명)</td><td>전체 기능, 직원 10명, 고급 통계</td></tr>
+    <tr><td><strong>ENTERPRISE</strong></td><td>대규모/다점포</td><td>무제한 직원, 다점포 관리, API 접근</td></tr>
+  </tbody>
+</table>
+
+<hr>
+
+<!-- 7. Phases -->
+<h2 id="phases">7. Development Phases</h2>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;">
+  <div class="entity-card" style="border-color:#8b7cf644;">
+    <h4 style="color:#8b7cf6;"><span class="phase phase-1a">Phase 1a</span> MVP Core</h4>
+    <ul style="font-size:13px;margin-bottom:0;">
+      <li>프로젝트 세팅 (Turborepo)</li>
+      <li>인증/인가 (JWT, RBAC)</li>
+      <li>매장/서비스 설정</li>
+      <li>예약 캘린더 (일/주 뷰)</li>
+      <li>고객 CRM 기본</li>
+      <li>POS 기본 (수동 매출, 회원권)</li>
+      <li>직원 관리 (스케줄, 인센티브)</li>
+      <li>기본 대시보드</li>
+      <li>B2B 웹</li>
+    </ul>
+  </div>
+  <div class="entity-card" style="border-color:#60a5fa44;">
+    <h4 style="color:#60a5fa;"><span class="phase phase-1b">Phase 1b</span> MVP Extended</h4>
+    <ul style="font-size:13px;margin-bottom:0;">
+      <li>카드결제 PG 연동</li>
+      <li>네이버 예약 연동</li>
+      <li>카카오 알림톡</li>
+      <li>B2C 웹 (온라인 예약)</li>
+      <li>월 뷰 캘린더</li>
+      <li>시술 사진 관리</li>
+    </ul>
+  </div>
+  <div class="entity-card" style="border-color:#f59e0b44;">
+    <h4 style="color:#f59e0b;"><span class="phase phase-2">Phase 2</span> Growth</h4>
+    <ul style="font-size:13px;margin-bottom:0;">
+      <li>React Native 모바일 앱</li>
+      <li>회원권/쿠폰 고급</li>
+      <li>리뷰 시스템</li>
+      <li>VIP 등급, 출퇴근</li>
+      <li>시술동의서 전자서명</li>
+      <li>SMS/LMS, 고급 통계</li>
+    </ul>
+  </div>
+  <div class="entity-card" style="border-color:#10b98144;">
+    <h4 style="color:#10b981;"><span class="phase phase-3">Phase 3</span> AI & Scale</h4>
+    <ul style="font-size:13px;margin-bottom:0;">
+      <li>AI 매출/이탈 예측</li>
+      <li>AI 마케팅 자동화</li>
+      <li>AI 예약 최적화</li>
+      <li>다점포 통합 관리</li>
+      <li>인스타그램/세금계산서 연동</li>
+    </ul>
+  </div>
+</div>
+<div class="entity-card" style="border-color:#ec489944;">
+  <h4 style="color:#ec4899;"><span class="phase phase-4">Phase 4</span> Platform</h4>
+  <ul style="font-size:13px;margin-bottom:0;columns:2;">
+    <li>마켓플레이스</li>
+    <li>서드파티 플러그인</li>
+    <li>API 공개</li>
+    <li>화이트라벨</li>
+    <li>엔터프라이즈 기능</li>
+  </ul>
+</div>
+
+<hr>
+
+<!-- 8. NFR -->
+<h2 id="nfr">8. Non-Functional Requirements</h2>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+  <div class="entity-card">
+    <h4 style="margin-top:0;">Performance</h4>
+    <ul style="font-size:13px;margin-bottom:0;">
+      <li>API 응답: &lt; 200ms (P95)</li>
+      <li>페이지 로드: &lt; 2s (LCP)</li>
+      <li>동시 접속: 매장당 10명+</li>
+    </ul>
+  </div>
+  <div class="entity-card">
+    <h4 style="margin-top:0;">Security</h4>
+    <ul style="font-size:13px;margin-bottom:0;">
+      <li>PII 암호화 (AES-256): phone, birthDate</li>
+      <li>HTTPS, CSRF 토큰</li>
+      <li>Rate Limit: 비인증 100/min, 인증 1000/min</li>
+      <li>PIPA 준수</li>
+    </ul>
+  </div>
+  <div class="entity-card">
+    <h4 style="margin-top:0;">Multi-Tenancy</h4>
+    <ul style="font-size:13px;margin-bottom:0;">
+      <li>Row-level tenancy (shopId FK)</li>
+      <li>NestJS Guard/Interceptor 검증</li>
+      <li>Prisma middleware 자동 필터</li>
+      <li>1 User → N Shop 소유 가능</li>
+    </ul>
+  </div>
+  <div class="entity-card">
+    <h4 style="margin-top:0;">Monitoring</h4>
+    <ul style="font-size:13px;margin-bottom:0;">
+      <li>Sentry (에러 추적)</li>
+      <li>APM (성능 모니터링)</li>
+      <li>Structured logging</li>
+    </ul>
+  </div>
+</div>
+
+<hr>
+
+<!-- 9. Infra -->
+<h2 id="infra">9. Infrastructure (TBD)</h2>
+<div class="info-box warn">
+  인프라는 MVP 개발 진행 중 결정 예정. 후보:
+  <ul style="margin-top:8px;margin-bottom:0;">
+    <li><strong>Vercel + Supabase:</strong> Next.js 최적화, 빠른 초기 개발</li>
+    <li><strong>AWS (ECS + RDS):</strong> 프로덕션 안정성, 한국 리전</li>
+    <li><strong>Cloudflare:</strong> 엣지 컴퓨팅, 비용 효율</li>
+  </ul>
+</div>
+
+<hr>
+
+<!-- 10. Benchmark Reference -->
+<h2 id="benchref">10. Benchmark-Derived Features</h2>
+
+<h3>From 공비서 (GongBiz)</h3>
+<ul>
+  <li><strong>이중 가격 시스템:</strong> <code>price</code> + <code>b2cPrice</code> + <code>isLinkedB2c</code> → 적용</li>
+  <li><strong>Pass 시스템:</strong> TICKET + MEMBERSHIP → 적용</li>
+  <li><strong>ZeroShop 인증:</strong> 매장 뱃지 → Phase 2</li>
+  <li><strong>Cok (시술 발견):</strong> 시술 기반 검색 → Phase 2 B2C</li>
+  <li><strong>블록 기반 CMS:</strong> 메인 페이지 동적 구성 → Phase 2</li>
+</ul>
+
+<h3>From 아하소프트</h3>
+<ul>
+  <li><strong>인센티브 자동 계산:</strong> 직원별/서비스별 비율/고정 → MVP 적용</li>
+  <li><strong>네이버 예약 연동:</strong> 양방향 동기화 → MVP 적용</li>
+  <li><strong>노쇼/중복예약 방지:</strong> 시간 슬롯 잠금 → MVP 적용</li>
+  <li><strong>다양한 회원권 유형:</strong> 금액권/할인권/횟수권/포인트/가족 → 점진적 확장</li>
+</ul>
+
+<div style="text-align:center;padding:60px 0 20px;color:#444;font-size:12px;">
+  Beauty ERP Design Specification v1.1 &mdash; Generated 2026-03-21
+</div>
+
+</div>
+</body>
+</html>

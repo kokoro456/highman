@@ -1,0 +1,39 @@
+{
+  "coupon": [
+    {
+      "id": 1,
+      "name": "공비서로 첫 예약 시 2,000원 할인",
+      "targetType": "ALL_SHOP",
+      "expiryDays": null,
+      "discountAmount": 2000
+    },
+    {
+      "id": 2,
+      "name": "신규 회원 5,000원 웰컴 쿠폰",
+      "targetType": "ALL_SHOP",
+      "expiryDays": 30,
+      "discountAmount": 5000
+    },
+    {
+      "id": 3,
+      "name": "강남 뷰티샵 전용 10% 할인 쿠폰",
+      "targetType": "SPECIFIC_SHOP",
+      "expiryDays": 7,
+      "discountAmount": 10000
+    },
+    {
+      "id": 4,
+      "name": "리뷰 작성 감사 쿠폰",
+      "targetType": "ALL_SHOP",
+      "expiryDays": 14,
+      "discountAmount": 3000
+    },
+    {
+      "id": 5,
+      "name": "생일 축하 특별 할인 쿠폰",
+      "targetType": "ALL_SHOP",
+      "expiryDays": null,
+      "discountAmount": 15000
+    }
+  ]
+}

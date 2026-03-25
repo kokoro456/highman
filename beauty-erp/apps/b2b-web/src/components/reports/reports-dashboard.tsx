@@ -132,16 +132,16 @@ export function ReportsDashboard() {
         <div className="flex items-center gap-2">
           <button
             onClick={goPrevMonth}
-            className="flex h-9 w-9 items-center justify-center rounded-xl bg-white ring-1 ring-zinc-200/50 shadow-soft transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98]"
+            className="flex h-9 w-9 items-center justify-center rounded-xl bg-white ring-1 ring-[#FFE4E0] shadow-soft transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98]"
           >
             <CaretLeft size={14} className="text-zinc-600" />
           </button>
-          <span className="rounded-xl bg-white px-4 py-2 text-sm font-medium text-zinc-700 ring-1 ring-zinc-200/50 shadow-soft font-mono tabular-nums min-w-[120px] text-center">
+          <span className="rounded-xl bg-white px-4 py-2 text-sm font-medium text-zinc-700 ring-1 ring-[#FFE4E0] shadow-soft font-mono tabular-nums min-w-[120px] text-center">
             {year}년 {month}월
           </span>
           <button
             onClick={goNextMonth}
-            className="flex h-9 w-9 items-center justify-center rounded-xl bg-white ring-1 ring-zinc-200/50 shadow-soft transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98]"
+            className="flex h-9 w-9 items-center justify-center rounded-xl bg-white ring-1 ring-[#FFE4E0] shadow-soft transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98]"
           >
             <CaretRight size={14} className="text-zinc-600" />
           </button>
@@ -149,7 +149,7 @@ export function ReportsDashboard() {
       </div>
 
       {/* Tab navigation */}
-      <div className="flex gap-1 rounded-2xl bg-zinc-100/80 p-1 ring-1 ring-zinc-200/40 overflow-x-auto">
+      <div className="flex gap-1 rounded-2xl bg-zinc-100/80 p-1 ring-1 ring-[#FFE4E0] overflow-x-auto">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.key;
@@ -161,7 +161,7 @@ export function ReportsDashboard() {
                 'flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium whitespace-nowrap',
                 'transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)]',
                 isActive
-                  ? 'bg-white text-zinc-900 shadow-soft ring-1 ring-zinc-200/50'
+                  ? 'bg-white text-zinc-900 shadow-soft ring-1 ring-[#FFE4E0]'
                   : 'text-zinc-500 hover:text-zinc-700',
               )}
             >
@@ -211,8 +211,8 @@ function RevenueTab({ year, month }: { year: number; month: number }) {
         <SummaryCard
           label="총 매출"
           value={formatCurrency(totalRevenue)}
-          icon={<TrendUp size={18} className="text-brand-600" />}
-          iconBg="bg-brand-50"
+          icon={<TrendUp size={18} className="text-[#FF6B6B]" />}
+          iconBg="bg-[#FF6B6B15]"
         />
         <SummaryCard
           label="총 예약 건수"
@@ -229,7 +229,7 @@ function RevenueTab({ year, month }: { year: number; month: number }) {
       </div>
 
       {/* Bar chart */}
-      <div className="rounded-2xl bg-white p-6 ring-1 ring-zinc-200/50 shadow-soft">
+      <div className="rounded-2xl bg-white p-6 ring-1 ring-[#FFE4E0] shadow-soft">
         <h3 className="text-sm font-semibold text-zinc-900 mb-6">
           일별 매출 추이
         </h3>
@@ -247,7 +247,7 @@ function RevenueTab({ year, month }: { year: number; month: number }) {
                     {formatCurrency(day.revenue)}
                   </div>
                   <div
-                    className="w-full max-w-[20px] rounded-t-md bg-brand-400 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:bg-brand-500"
+                    className="w-full max-w-[20px] rounded-t-md bg-[#FF8080] transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:bg-[#FF6B6B]"
                     style={{
                       height: `${Math.max(heightPercent, 2)}%`,
                     }}
@@ -263,8 +263,8 @@ function RevenueTab({ year, month }: { year: number; month: number }) {
       </div>
 
       {/* Daily breakdown table */}
-      <div className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft overflow-hidden">
-        <div className="px-6 py-4 border-b border-zinc-100">
+      <div className="rounded-2xl bg-white ring-1 ring-[#FFE4E0] shadow-soft overflow-hidden">
+        <div className="px-6 py-4 border-b border-[#FFE4E0]">
           <h3 className="text-sm font-semibold text-zinc-900">
             일별 상세 내역
           </h3>
@@ -291,7 +291,7 @@ function RevenueTab({ year, month }: { year: number; month: number }) {
 
         {/* Desktop layout */}
         <div className="hidden md:block">
-          <div className="grid grid-cols-[1fr_120px_140px] gap-4 px-6 py-3 border-b border-zinc-100 bg-zinc-50/50">
+          <div className="grid grid-cols-[1fr_120px_140px] gap-4 px-6 py-3 border-b border-[#FFE4E0] bg-[#FFF8F6]">
             <span className="text-[11px] font-medium text-zinc-500 uppercase tracking-wider">
               날짜
             </span>
@@ -305,7 +305,7 @@ function RevenueTab({ year, month }: { year: number; month: number }) {
           {items.map((day) => (
             <div
               key={day.date}
-              className="grid grid-cols-[1fr_120px_140px] gap-4 px-6 py-3 items-center border-b border-zinc-50 last:border-b-0 hover:bg-zinc-50/60 transition-colors duration-200"
+              className="grid grid-cols-[1fr_120px_140px] gap-4 px-6 py-3 items-center border-b border-zinc-50 last:border-b-0 hover:bg-[#FFF5F5] transition-colors duration-200"
             >
               <span className="text-sm text-zinc-700 font-mono tabular-nums">
                 {day.date}
@@ -367,14 +367,14 @@ function ServicesTab({
   const conicGradient = `conic-gradient(${conicSegments.join(', ')})`;
 
   const pieColors = [
-    'bg-emerald-500', 'bg-blue-500', 'bg-amber-500', 'bg-red-500', 'bg-violet-500',
+    'bg-[#4ECDC415]0', 'bg-blue-500', 'bg-amber-500', 'bg-red-500', 'bg-violet-500',
     'bg-pink-500', 'bg-teal-500', 'bg-orange-500', 'bg-indigo-500', 'bg-lime-500',
   ];
 
   return (
     <div className="space-y-6">
       {/* Pie chart + legend */}
-      <div className="rounded-2xl bg-white p-6 ring-1 ring-zinc-200/50 shadow-soft">
+      <div className="rounded-2xl bg-white p-6 ring-1 ring-[#FFE4E0] shadow-soft">
         <h3 className="text-sm font-semibold text-zinc-900 mb-6">
           서비스별 예약 비율
         </h3>
@@ -409,8 +409,8 @@ function ServicesTab({
       </div>
 
       {/* Service ranking */}
-      <div className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft overflow-hidden">
-        <div className="px-6 py-4 border-b border-zinc-100">
+      <div className="rounded-2xl bg-white ring-1 ring-[#FFE4E0] shadow-soft overflow-hidden">
+        <div className="px-6 py-4 border-b border-[#FFE4E0]">
           <h3 className="text-sm font-semibold text-zinc-900">
             서비스 순위
           </h3>
@@ -491,8 +491,8 @@ function CustomersTab({
         <SummaryCard
           label="신규 고객"
           value={`${customerData.newCustomers}명`}
-          icon={<UserPlus size={18} className="text-brand-600" />}
-          iconBg="bg-brand-50"
+          icon={<UserPlus size={18} className="text-[#FF6B6B]" />}
+          iconBg="bg-[#FF6B6B15]"
         />
         <SummaryCard
           label="재방문 고객"
@@ -515,7 +515,7 @@ function CustomersTab({
       </div>
 
       {/* New vs Returning ratio bar */}
-      <div className="rounded-2xl bg-white p-6 ring-1 ring-zinc-200/50 shadow-soft">
+      <div className="rounded-2xl bg-white p-6 ring-1 ring-[#FFE4E0] shadow-soft">
         <h3 className="text-sm font-semibold text-zinc-900 mb-4">
           신규 vs 재방문 비율
         </h3>
@@ -523,7 +523,7 @@ function CustomersTab({
           <>
             <div className="h-6 rounded-full bg-zinc-100 overflow-hidden flex">
               <div
-                className="h-full bg-brand-400 transition-all duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]"
+                className="h-full bg-[#FF8080] transition-all duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]"
                 style={{ width: `${newPercent}%` }}
               />
               <div
@@ -533,7 +533,7 @@ function CustomersTab({
             </div>
             <div className="flex items-center justify-between mt-3">
               <div className="flex items-center gap-2">
-                <div className="h-3 w-3 rounded-sm bg-brand-400" />
+                <div className="h-3 w-3 rounded-sm bg-[#FF8080]" />
                 <span className="text-sm text-zinc-600">
                   신규 {newPercent}%
                 </span>
@@ -554,8 +554,8 @@ function CustomersTab({
       </div>
 
       {/* Top customers */}
-      <div className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft overflow-hidden">
-        <div className="px-6 py-4 border-b border-zinc-100">
+      <div className="rounded-2xl bg-white ring-1 ring-[#FFE4E0] shadow-soft overflow-hidden">
+        <div className="px-6 py-4 border-b border-[#FFE4E0]">
           <h3 className="text-sm font-semibold text-zinc-900">
             상위 고객 TOP 10
           </h3>
@@ -569,7 +569,7 @@ function CustomersTab({
             {customerData.topCustomers.map((customer, i) => (
               <div
                 key={customer.customerId}
-                className="px-6 py-3.5 flex items-center gap-4 hover:bg-zinc-50/60 transition-colors duration-200"
+                className="px-6 py-3.5 flex items-center gap-4 hover:bg-[#FFF5F5] transition-colors duration-200"
               >
                 <span
                   className={cn(
@@ -637,8 +637,8 @@ function HourlyTab({
         <SummaryCard
           label="총 예약 건수"
           value={`${totalBookings}건`}
-          icon={<Clock size={18} className="text-brand-600" />}
-          iconBg="bg-brand-50"
+          icon={<Clock size={18} className="text-[#FF6B6B]" />}
+          iconBg="bg-[#FF6B6B15]"
         />
         <SummaryCard
           label="피크 시간대"
@@ -653,7 +653,7 @@ function HourlyTab({
       </div>
 
       {/* Heatmap grid */}
-      <div className="rounded-2xl bg-white p-6 ring-1 ring-zinc-200/50 shadow-soft">
+      <div className="rounded-2xl bg-white p-6 ring-1 ring-[#FFE4E0] shadow-soft">
         <h3 className="text-sm font-semibold text-zinc-900 mb-6">
           시간대별 예약 분포
         </h3>
@@ -668,19 +668,19 @@ function HourlyTab({
                 <span className="text-xs text-zinc-500 font-mono tabular-nums w-12 text-right flex-shrink-0">
                   {String(d.hour).padStart(2, '0')}:00
                 </span>
-                <div className="flex-1 h-7 rounded-lg bg-zinc-50 overflow-hidden relative">
+                <div className="flex-1 h-7 rounded-lg bg-[#FFF8F6] overflow-hidden relative">
                   <div
                     className={cn(
                       'h-full rounded-lg transition-all duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]',
                       intensity === 0
                         ? 'bg-zinc-100'
                         : intensity < 0.25
-                          ? 'bg-emerald-100'
+                          ? 'bg-[#FF6B6B20]'
                           : intensity < 0.5
-                            ? 'bg-emerald-200'
+                            ? 'bg-[#FF6B6B30]'
                             : intensity < 0.75
-                              ? 'bg-emerald-400'
-                              : 'bg-emerald-600',
+                              ? 'bg-[#FF6B6B]'
+                              : 'bg-[#FF5252]',
                     )}
                     style={{
                       width: `${Math.max(intensity * 100, d.bookingCount > 0 ? 4 : 0)}%`,
@@ -700,16 +700,16 @@ function HourlyTab({
         {/* Intensity legend */}
         <div className="flex items-center justify-end gap-1 mt-6">
           <span className="text-[10px] text-zinc-400 mr-1">적음</span>
-          <div className="h-3 w-5 rounded-sm bg-emerald-100" />
-          <div className="h-3 w-5 rounded-sm bg-emerald-200" />
-          <div className="h-3 w-5 rounded-sm bg-emerald-400" />
-          <div className="h-3 w-5 rounded-sm bg-emerald-600" />
+          <div className="h-3 w-5 rounded-sm bg-[#FF6B6B20]" />
+          <div className="h-3 w-5 rounded-sm bg-[#FF6B6B30]" />
+          <div className="h-3 w-5 rounded-sm bg-[#FF6B6B]" />
+          <div className="h-3 w-5 rounded-sm bg-[#FF5252]" />
           <span className="text-[10px] text-zinc-400 ml-1">많음</span>
         </div>
       </div>
 
       {/* Heatmap grid view */}
-      <div className="rounded-2xl bg-white p-6 ring-1 ring-zinc-200/50 shadow-soft">
+      <div className="rounded-2xl bg-white p-6 ring-1 ring-[#FFE4E0] shadow-soft">
         <h3 className="text-sm font-semibold text-zinc-900 mb-4">
           전체 시간대 히트맵
         </h3>
@@ -726,12 +726,12 @@ function HourlyTab({
                   intensity === 0
                     ? 'bg-zinc-50 ring-1 ring-zinc-100'
                     : intensity < 0.25
-                      ? 'bg-emerald-50 ring-1 ring-emerald-100'
+                      ? 'bg-[#4ECDC415] ring-1 ring-[#FF6B6B20]'
                       : intensity < 0.5
-                        ? 'bg-emerald-200 ring-1 ring-emerald-300'
+                        ? 'bg-[#FF6B6B30] ring-1 ring-[#FF6B6B40]'
                         : intensity < 0.75
-                          ? 'bg-emerald-400 ring-1 ring-emerald-500'
-                          : 'bg-emerald-600 ring-1 ring-emerald-700',
+                          ? 'bg-[#FF6B6B] ring-1 ring-[#FF6B6B]'
+                          : 'bg-[#FF5252] ring-1 ring-[#E04848]',
                 )}
                 title={`${String(d.hour).padStart(2, '0')}:00 - ${d.bookingCount}건`}
               >
@@ -774,7 +774,7 @@ function SummaryCard({
   iconBg: string;
 }) {
   return (
-    <div className="rounded-2xl bg-white p-5 ring-1 ring-zinc-200/50 shadow-soft transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5">
+    <div className="rounded-2xl bg-white p-5 ring-1 ring-[#FFE4E0] shadow-soft transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5">
       <div className="flex items-center justify-between mb-3">
         <span className="text-[11px] font-medium text-zinc-500 uppercase tracking-wider">
           {label}
@@ -800,11 +800,11 @@ function TabSkeleton() {
     <div className="space-y-4 animate-fade-in">
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {[...Array(3)].map((_, i) => (
-          <div key={i} className="h-24 rounded-2xl bg-zinc-100 animate-pulse" />
+          <div key={i} className="h-24 rounded-2xl bg-[#FFE4E0] animate-pulse" />
         ))}
       </div>
-      <div className="h-56 rounded-2xl bg-zinc-100 animate-pulse" />
-      <div className="h-40 rounded-2xl bg-zinc-100 animate-pulse" />
+      <div className="h-56 rounded-2xl bg-[#FFE4E0] animate-pulse" />
+      <div className="h-40 rounded-2xl bg-[#FFE4E0] animate-pulse" />
     </div>
   );
 }
@@ -829,8 +829,8 @@ function EmptyState({
   description: string;
 }) {
   return (
-    <div className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft p-16 flex flex-col items-center justify-center text-center">
-      <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-zinc-100 mb-6">
+    <div className="rounded-2xl bg-white ring-1 ring-[#FFE4E0] shadow-soft p-16 flex flex-col items-center justify-center text-center">
+      <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[#FF6B6B10] mb-6">
         {icon}
       </div>
       <h3 className="text-lg font-semibold tracking-tight text-zinc-900">

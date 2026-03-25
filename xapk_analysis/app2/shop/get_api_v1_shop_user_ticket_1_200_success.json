@@ -1,0 +1,16 @@
+{
+  "tickets": [
+    {
+      "id": 1,
+      "name": "젤네일 10회 시술권",
+      "duration": "01:30",
+      "remains": 3
+    },
+    {
+      "id": 4,
+      "name": "기본 케어",
+      "duration": "00:45",
+      "remains": 3
+    }
+  ]
+}

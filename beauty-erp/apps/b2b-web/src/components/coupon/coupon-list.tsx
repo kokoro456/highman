@@ -53,7 +53,7 @@ function getCouponStatus(coupon: Coupon): { label: string; className: string } {
   if (coupon.maxUsage !== null && coupon.usedCount >= coupon.maxUsage) {
     return { label: '소진', className: 'bg-orange-50 text-orange-600' };
   }
-  return { label: '활성', className: 'bg-brand-50 text-brand-700' };
+  return { label: '활성', className: 'bg-[#FF6B6B15] text-[#FF6B6B]' };
 }
 
 // ---- Create Coupon Modal ----
@@ -154,13 +154,13 @@ function CreateCouponModal({
             <input
               value={form.code}
               onChange={(e) => setForm({ ...form, code: e.target.value.toUpperCase() })}
-              className="flex-1 rounded-xl border-0 bg-zinc-50 px-4 py-2.5 text-sm font-mono ring-1 ring-zinc-200/60 focus:ring-2 focus:ring-brand-400 outline-none transition-all"
+              className="flex-1 rounded-xl border-0 bg-[#FFF8F6] px-4 py-2.5 text-sm font-mono ring-1 ring-[#FFE4E0] focus:ring-2 focus:ring-[#FF6B6B] outline-none transition-all"
               placeholder="SUMMER2026"
             />
             <button
               type="button"
               onClick={handleAutoCode}
-              className="rounded-xl bg-zinc-100 px-3 py-2.5 text-xs font-medium text-zinc-600 ring-1 ring-zinc-200/60 hover:bg-zinc-200 transition-all active:scale-[0.98]"
+              className="rounded-xl bg-zinc-100 px-3 py-2.5 text-xs font-medium text-zinc-600 ring-1 ring-[#FFE4E0] hover:bg-zinc-200 transition-all active:scale-[0.98]"
               title="자동 생성"
             >
               <ArrowsClockwise size={16} weight="bold" />
@@ -175,7 +175,7 @@ function CreateCouponModal({
           <input
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
-            className="mt-1 w-full rounded-xl border-0 bg-zinc-50 px-4 py-2.5 text-sm ring-1 ring-zinc-200/60 focus:ring-2 focus:ring-brand-400 outline-none transition-all"
+            className="mt-1 w-full rounded-xl border-0 bg-[#FFF8F6] px-4 py-2.5 text-sm ring-1 ring-[#FFE4E0] focus:ring-2 focus:ring-[#FF6B6B] outline-none transition-all"
             placeholder="예: 여름 할인 쿠폰"
           />
           {errors.name && <p className="mt-1 text-xs text-red-500">{errors.name}</p>}
@@ -194,8 +194,8 @@ function CreateCouponModal({
                   className={cn(
                     'flex-1 rounded-xl py-2.5 text-xs font-medium ring-1 transition-all',
                     form.type === t
-                      ? 'bg-brand-50 text-brand-700 ring-brand-200/50'
-                      : 'bg-zinc-50 text-zinc-500 ring-zinc-200/60 hover:bg-zinc-100',
+                      ? 'bg-[#FF6B6B15] text-[#FF6B6B] ring-[#FF6B6B30]'
+                      : 'bg-zinc-50 text-zinc-500 ring-[#FFE4E0] hover:bg-zinc-100',
                   )}
                 >
                   {t === 'FIXED' ? '금액할인' : '비율할인'}
@@ -211,7 +211,7 @@ function CreateCouponModal({
               type="number"
               value={form.value}
               onChange={(e) => setForm({ ...form, value: e.target.value })}
-              className="mt-1 w-full rounded-xl border-0 bg-zinc-50 px-4 py-2.5 text-sm ring-1 ring-zinc-200/60 focus:ring-2 focus:ring-brand-400 outline-none transition-all"
+              className="mt-1 w-full rounded-xl border-0 bg-[#FFF8F6] px-4 py-2.5 text-sm ring-1 ring-[#FFE4E0] focus:ring-2 focus:ring-[#FF6B6B] outline-none transition-all"
               placeholder="0"
               min={0}
               max={form.type === 'PERCENTAGE' ? 100 : undefined}
@@ -228,7 +228,7 @@ function CreateCouponModal({
               type="number"
               value={form.minAmount}
               onChange={(e) => setForm({ ...form, minAmount: e.target.value })}
-              className="mt-1 w-full rounded-xl border-0 bg-zinc-50 px-4 py-2.5 text-sm ring-1 ring-zinc-200/60 focus:ring-2 focus:ring-brand-400 outline-none transition-all"
+              className="mt-1 w-full rounded-xl border-0 bg-[#FFF8F6] px-4 py-2.5 text-sm ring-1 ring-[#FFE4E0] focus:ring-2 focus:ring-[#FF6B6B] outline-none transition-all"
               placeholder="0"
               min={0}
             />
@@ -240,7 +240,7 @@ function CreateCouponModal({
                 type="number"
                 value={form.maxDiscount}
                 onChange={(e) => setForm({ ...form, maxDiscount: e.target.value })}
-                className="mt-1 w-full rounded-xl border-0 bg-zinc-50 px-4 py-2.5 text-sm ring-1 ring-zinc-200/60 focus:ring-2 focus:ring-brand-400 outline-none transition-all"
+                className="mt-1 w-full rounded-xl border-0 bg-[#FFF8F6] px-4 py-2.5 text-sm ring-1 ring-[#FFE4E0] focus:ring-2 focus:ring-[#FF6B6B] outline-none transition-all"
                 placeholder="0"
                 min={0}
               />
@@ -256,7 +256,7 @@ function CreateCouponModal({
               type="date"
               value={form.startDate}
               onChange={(e) => setForm({ ...form, startDate: e.target.value })}
-              className="mt-1 w-full rounded-xl border-0 bg-zinc-50 px-4 py-2.5 text-sm ring-1 ring-zinc-200/60 focus:ring-2 focus:ring-brand-400 outline-none transition-all"
+              className="mt-1 w-full rounded-xl border-0 bg-[#FFF8F6] px-4 py-2.5 text-sm ring-1 ring-[#FFE4E0] focus:ring-2 focus:ring-[#FF6B6B] outline-none transition-all"
             />
             {errors.startDate && <p className="mt-1 text-xs text-red-500">{errors.startDate}</p>}
           </div>
@@ -266,7 +266,7 @@ function CreateCouponModal({
               type="date"
               value={form.endDate}
               onChange={(e) => setForm({ ...form, endDate: e.target.value })}
-              className="mt-1 w-full rounded-xl border-0 bg-zinc-50 px-4 py-2.5 text-sm ring-1 ring-zinc-200/60 focus:ring-2 focus:ring-brand-400 outline-none transition-all"
+              className="mt-1 w-full rounded-xl border-0 bg-[#FFF8F6] px-4 py-2.5 text-sm ring-1 ring-[#FFE4E0] focus:ring-2 focus:ring-[#FF6B6B] outline-none transition-all"
             />
             {errors.endDate && <p className="mt-1 text-xs text-red-500">{errors.endDate}</p>}
           </div>
@@ -279,7 +279,7 @@ function CreateCouponModal({
             type="number"
             value={form.maxUsage}
             onChange={(e) => setForm({ ...form, maxUsage: e.target.value })}
-            className="mt-1 w-full rounded-xl border-0 bg-zinc-50 px-4 py-2.5 text-sm ring-1 ring-zinc-200/60 focus:ring-2 focus:ring-brand-400 outline-none transition-all"
+            className="mt-1 w-full rounded-xl border-0 bg-[#FFF8F6] px-4 py-2.5 text-sm ring-1 ring-[#FFE4E0] focus:ring-2 focus:ring-[#FF6B6B] outline-none transition-all"
             placeholder="무제한"
             min={1}
           />
@@ -296,7 +296,7 @@ function CreateCouponModal({
           <button
             type="submit"
             disabled={createCoupon.isPending}
-            className="flex items-center gap-2 rounded-full bg-brand-500 px-6 py-2.5 text-sm font-medium text-white transition-all hover:bg-brand-600 active:scale-[0.98] disabled:opacity-60"
+            className="flex items-center gap-2 rounded-full bg-[#FF6B6B] px-6 py-2.5 text-sm font-medium text-white transition-all hover:bg-[#FF5252] active:scale-[0.98] disabled:opacity-60"
           >
             {createCoupon.isPending && <SpinnerGap size={16} className="animate-spin" />}
             생성
@@ -325,7 +325,7 @@ function CouponCard({
   }
 
   return (
-    <div className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft overflow-hidden transition-all duration-300 hover:shadow-soft-lg">
+    <div className="rounded-2xl bg-white ring-1 ring-[#FFE4E0] shadow-soft overflow-hidden transition-all duration-300 hover:shadow-soft-lg">
       <div className="flex items-start gap-4 px-5 py-4">
         {/* Icon */}
         <div
@@ -356,12 +356,12 @@ function CouponCard({
             className="mt-1 flex items-center gap-1 group"
             title="코드 복사"
           >
-            <span className="font-mono text-xs font-semibold text-brand-600 tracking-wider">
+            <span className="font-mono text-xs font-semibold text-[#FF6B6B] tracking-wider">
               {coupon.code}
             </span>
             <Copy
               size={12}
-              className="text-zinc-400 group-hover:text-brand-500 transition-colors"
+              className="text-zinc-400 group-hover:text-[#FF6B6B] transition-colors"
             />
           </button>
 
@@ -446,7 +446,7 @@ export function CouponList() {
         </div>
         <button
           onClick={() => setCreateOpen(true)}
-          className="flex items-center gap-2 rounded-full bg-brand-500 px-5 py-2.5 text-sm font-medium text-white shadow-[0_2px_8px_rgba(16,185,129,0.3)] transition-all duration-300 hover:bg-brand-600 hover:shadow-[0_4px_16px_rgba(16,185,129,0.35)] hover:-translate-y-0.5 active:scale-[0.98]"
+          className="flex items-center gap-2 rounded-full bg-[#FF6B6B] px-5 py-2.5 text-sm font-medium text-white shadow-[0_2px_8px_rgba(255,107,107,0.3)] transition-all duration-300 hover:bg-[#FF5252] hover:shadow-[0_4px_16px_rgba(255,107,107,0.35)] hover:-translate-y-0.5 active:scale-[0.98]"
         >
           <Plus size={16} weight="bold" />
           쿠폰 생성
@@ -476,7 +476,7 @@ export function CouponList() {
 
       {/* Stats */}
       <div className="flex items-center gap-4">
-        <div className="rounded-xl bg-white px-4 py-3 ring-1 ring-zinc-200/50 shadow-soft">
+        <div className="rounded-xl bg-white px-4 py-3 ring-1 ring-[#FFE4E0] shadow-soft">
           <p className="text-[10px] font-medium text-zinc-400 uppercase tracking-wider">
             {tab === 'active' ? '활성 쿠폰' : '만료/비활성'}
           </p>
@@ -490,11 +490,11 @@ export function CouponList() {
       {isLoading ? (
         <div className="space-y-3">
           {[...Array(4)].map((_, i) => (
-            <div key={i} className="h-24 rounded-2xl bg-zinc-100 animate-pulse" />
+            <div key={i} className="h-24 rounded-2xl bg-[#FFE4E0] animate-pulse" />
           ))}
         </div>
       ) : coupons.length === 0 ? (
-        <div className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft p-12 text-center">
+        <div className="rounded-2xl bg-white ring-1 ring-[#FFE4E0] shadow-soft p-12 text-center">
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-zinc-100">
             <Ticket size={24} className="text-zinc-400" />
           </div>
@@ -523,7 +523,7 @@ export function CouponList() {
           <button
             onClick={() => setPage(Math.max(1, page - 1))}
             disabled={page <= 1}
-            className="rounded-lg px-3 py-1.5 text-xs font-medium text-zinc-600 bg-white ring-1 ring-zinc-200/50 hover:bg-zinc-50 disabled:opacity-40 transition-all"
+            className="rounded-lg px-3 py-1.5 text-xs font-medium text-zinc-600 bg-white ring-1 ring-[#FFE4E0] hover:bg-[#FFF5F5] disabled:opacity-40 transition-all"
           >
             이전
           </button>
@@ -533,7 +533,7 @@ export function CouponList() {
           <button
             onClick={() => setPage(Math.min(meta.totalPages, page + 1))}
             disabled={page >= meta.totalPages}
-            className="rounded-lg px-3 py-1.5 text-xs font-medium text-zinc-600 bg-white ring-1 ring-zinc-200/50 hover:bg-zinc-50 disabled:opacity-40 transition-all"
+            className="rounded-lg px-3 py-1.5 text-xs font-medium text-zinc-600 bg-white ring-1 ring-[#FFE4E0] hover:bg-[#FFF5F5] disabled:opacity-40 transition-all"
           >
             다음
           </button>

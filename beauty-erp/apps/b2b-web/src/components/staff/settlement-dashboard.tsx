@@ -74,11 +74,11 @@ export function SettlementDashboard() {
         <div className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {[...Array(3)].map((_, i) => (
-              <div key={i} className="h-24 rounded-2xl bg-zinc-100 animate-pulse" />
+              <div key={i} className="h-24 rounded-2xl bg-[#FFE4E0] animate-pulse" />
             ))}
           </div>
           {[...Array(4)].map((_, i) => (
-            <div key={i} className="h-16 rounded-2xl bg-zinc-100 animate-pulse" />
+            <div key={i} className="h-16 rounded-2xl bg-[#FFE4E0] animate-pulse" />
           ))}
         </div>
       </div>
@@ -104,8 +104,8 @@ export function SettlementDashboard() {
       label: '총 급여',
       value: formatCurrency(summary.totalPayroll),
       icon: Wallet,
-      iconBg: 'bg-brand-50',
-      iconColor: 'text-brand-600',
+      iconBg: 'bg-[#FF6B6B15]',
+      iconColor: 'text-[#FF6B6B]',
     },
     {
       label: '총 매출',
@@ -134,16 +134,16 @@ export function SettlementDashboard() {
         <div className="flex items-center gap-2">
           <button
             onClick={goPrev}
-            className="flex h-9 w-9 items-center justify-center rounded-xl bg-white ring-1 ring-zinc-200/50 shadow-soft transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98]"
+            className="flex h-9 w-9 items-center justify-center rounded-xl bg-white ring-1 ring-[#FFE4E0] shadow-soft transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98]"
           >
             <CaretLeft size={14} className="text-zinc-600" />
           </button>
-          <span className="rounded-xl bg-white px-4 py-2 text-sm font-medium text-zinc-700 ring-1 ring-zinc-200/50 shadow-soft min-w-[120px] text-center">
+          <span className="rounded-xl bg-white px-4 py-2 text-sm font-medium text-zinc-700 ring-1 ring-[#FFE4E0] shadow-soft min-w-[120px] text-center">
             {formatMonth(year, month)}
           </span>
           <button
             onClick={goNext}
-            className="flex h-9 w-9 items-center justify-center rounded-xl bg-white ring-1 ring-zinc-200/50 shadow-soft transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98]"
+            className="flex h-9 w-9 items-center justify-center rounded-xl bg-white ring-1 ring-[#FFE4E0] shadow-soft transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98]"
           >
             <CaretRight size={14} className="text-zinc-600" />
           </button>
@@ -157,7 +157,7 @@ export function SettlementDashboard() {
           return (
             <div
               key={card.label}
-              className="rounded-2xl bg-white p-5 ring-1 ring-zinc-200/50 shadow-soft transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5"
+              className="rounded-2xl bg-white p-5 ring-1 ring-[#FFE4E0] shadow-soft transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5"
             >
               <div className="flex items-center justify-between mb-3">
                 <span className="text-[11px] font-medium text-zinc-500 uppercase tracking-wider">
@@ -177,8 +177,8 @@ export function SettlementDashboard() {
 
       {/* Staff settlement table */}
       {!settlements || settlements.length === 0 ? (
-        <div className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft p-16 flex flex-col items-center justify-center text-center">
-          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-zinc-100 mb-6">
+        <div className="rounded-2xl bg-white ring-1 ring-[#FFE4E0] shadow-soft p-16 flex flex-col items-center justify-center text-center">
+          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[#FF6B6B10] mb-6">
             <Wallet size={32} weight="regular" className="text-zinc-400" />
           </div>
           <h3 className="text-lg font-semibold tracking-tight text-zinc-900">
@@ -196,7 +196,7 @@ export function SettlementDashboard() {
               <button
                 key={s.staffId}
                 onClick={() => setSelectedStaff(s)}
-                className="w-full text-left rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft p-4 transition-all duration-300 hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.99]"
+                className="w-full text-left rounded-2xl bg-white ring-1 ring-[#FFE4E0] shadow-soft p-4 transition-all duration-300 hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.99]"
               >
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex items-center gap-3 min-w-0">
@@ -208,7 +208,7 @@ export function SettlementDashboard() {
                       <p className="text-xs text-zinc-500">{roleLabels[s.role] || s.role}</p>
                     </div>
                   </div>
-                  <span className="rounded-full bg-brand-50 px-2.5 py-0.5 text-[10px] font-medium text-brand-700 flex-shrink-0">
+                  <span className="rounded-full bg-[#FF6B6B15] px-2.5 py-0.5 text-[10px] font-medium text-[#FF6B6B] flex-shrink-0">
                     {s.totalBookings}건
                   </span>
                 </div>
@@ -231,8 +231,8 @@ export function SettlementDashboard() {
           </div>
 
           {/* Desktop table layout */}
-          <div className="hidden md:block rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft overflow-hidden">
-            <div className="grid grid-cols-[1fr_100px_80px_120px_120px_120px] gap-4 px-6 py-3.5 border-b border-zinc-100 bg-zinc-50/50">
+          <div className="hidden md:block rounded-2xl bg-white ring-1 ring-[#FFE4E0] shadow-soft overflow-hidden">
+            <div className="grid grid-cols-[1fr_100px_80px_120px_120px_120px] gap-4 px-6 py-3.5 border-b border-[#FFE4E0] bg-[#FFF8F6]">
               <span className="text-[11px] font-medium text-zinc-500 uppercase tracking-wider">이름</span>
               <span className="text-[11px] font-medium text-zinc-500 uppercase tracking-wider text-center">직급</span>
               <span className="text-[11px] font-medium text-zinc-500 uppercase tracking-wider text-right">예약</span>
@@ -244,7 +244,7 @@ export function SettlementDashboard() {
               <button
                 key={s.staffId}
                 onClick={() => setSelectedStaff(s)}
-                className="w-full grid grid-cols-[1fr_100px_80px_120px_120px_120px] gap-4 px-6 py-4 items-center border-b border-zinc-50 last:border-b-0 transition-colors duration-200 hover:bg-zinc-50/60 text-left"
+                className="w-full grid grid-cols-[1fr_100px_80px_120px_120px_120px] gap-4 px-6 py-4 items-center border-b border-zinc-50 last:border-b-0 transition-colors duration-200 hover:bg-[#FFF5F5] text-left"
               >
                 <div className="flex items-center gap-3 min-w-0">
                   <div className="h-8 w-8 rounded-xl bg-gradient-to-br from-zinc-100 to-zinc-200 flex items-center justify-center text-xs font-semibold text-zinc-600 flex-shrink-0">
@@ -291,10 +291,10 @@ function StaffSettlementModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="fixed inset-0 bg-zinc-900/20 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative w-full max-w-lg max-h-[85vh] overflow-y-auto bg-white rounded-2xl ring-1 ring-zinc-200/50 shadow-xl animate-fade-in">
+      <div className="fixed inset-0 bg-[#2D3436]/20 backdrop-blur-sm" onClick={onClose} />
+      <div className="relative w-full max-w-lg max-h-[85vh] overflow-y-auto bg-white rounded-2xl ring-1 ring-[#FFE4E0] shadow-xl animate-fade-in">
         {/* Modal header */}
-        <div className="sticky top-0 bg-white flex items-center justify-between px-6 py-4 border-b border-zinc-100 rounded-t-2xl z-10">
+        <div className="sticky top-0 bg-white flex items-center justify-between px-6 py-4 border-b border-[#FFE4E0] rounded-t-2xl z-10">
           <div>
             <h2 className="text-lg font-semibold text-zinc-900">{staffName}</h2>
             <p className="text-xs text-zinc-500">정산 상세</p>
@@ -311,20 +311,20 @@ function StaffSettlementModal({
           {isLoading ? (
             <div className="space-y-4">
               {[...Array(3)].map((_, i) => (
-                <div key={i} className="h-20 rounded-xl bg-zinc-100 animate-pulse" />
+                <div key={i} className="h-20 rounded-xl bg-[#FFE4E0] animate-pulse" />
               ))}
             </div>
           ) : data ? (
             <>
               {/* Summary row */}
               <div className="grid grid-cols-2 gap-3">
-                <div className="rounded-xl bg-zinc-50 p-4 ring-1 ring-zinc-200/40">
+                <div className="rounded-xl bg-[#FFF8F6] p-4 ring-1 ring-[#FFE4E0]">
                   <p className="text-[10px] font-medium text-zinc-400 uppercase tracking-wider mb-1">총 매출</p>
                   <p className="text-lg font-mono font-semibold text-zinc-900 tabular-nums">{formatCurrency(data.totalRevenue)}</p>
                 </div>
-                <div className="rounded-xl bg-brand-50 p-4 ring-1 ring-brand-200/40">
-                  <p className="text-[10px] font-medium text-brand-500 uppercase tracking-wider mb-1">총 급여</p>
-                  <p className="text-lg font-mono font-semibold text-brand-700 tabular-nums">{formatCurrency(data.totalPay)}</p>
+                <div className="rounded-xl bg-[#FF6B6B15] p-4 ring-1 ring-[#FF6B6B30]/40">
+                  <p className="text-[10px] font-medium text-[#FF6B6B] uppercase tracking-wider mb-1">총 급여</p>
+                  <p className="text-lg font-mono font-semibold text-[#FF6B6B] tabular-nums">{formatCurrency(data.totalPay)}</p>
                 </div>
               </div>
 
@@ -337,7 +337,7 @@ function StaffSettlementModal({
                   </h3>
                   <div className="space-y-2">
                     {data.incentiveBreakdown.map((item, idx) => (
-                      <div key={idx} className="flex items-center justify-between rounded-xl bg-zinc-50 px-4 py-3 ring-1 ring-zinc-200/40">
+                      <div key={idx} className="flex items-center justify-between rounded-xl bg-[#FFF8F6] px-4 py-3 ring-1 ring-[#FFE4E0]">
                         <div>
                           <p className="text-sm text-zinc-700">
                             {item.type === 'FIXED' ? '고정' : '비율'}
@@ -365,7 +365,7 @@ function StaffSettlementModal({
                   </h3>
                   <div className="space-y-2">
                     {data.serviceBreakdown.map((svc) => (
-                      <div key={svc.serviceId} className="flex items-center justify-between rounded-xl bg-zinc-50 px-4 py-3 ring-1 ring-zinc-200/40">
+                      <div key={svc.serviceId} className="flex items-center justify-between rounded-xl bg-[#FFF8F6] px-4 py-3 ring-1 ring-[#FFE4E0]">
                         <div>
                           <p className="text-sm text-zinc-700">{svc.serviceName}</p>
                           <p className="text-xs text-zinc-400">{svc.bookingCount}건</p>
@@ -403,7 +403,7 @@ function DailyRevenueChart({ data }: { data: { date: string; revenue: number }[]
   const maxRevenue = Math.max(...data.map((d) => d.revenue), 1);
 
   return (
-    <div className="rounded-xl bg-zinc-50 p-4 ring-1 ring-zinc-200/40">
+    <div className="rounded-xl bg-[#FFF8F6] p-4 ring-1 ring-[#FFE4E0]">
       <div className="flex items-end gap-[2px] h-32">
         {data.map((d) => {
           const heightPct = maxRevenue > 0 ? (d.revenue / maxRevenue) * 100 : 0;
@@ -417,7 +417,7 @@ function DailyRevenueChart({ data }: { data: { date: string; revenue: number }[]
                 className={cn(
                   'w-full rounded-t-sm transition-all duration-300',
                   d.revenue > 0
-                    ? 'bg-brand-400 group-hover:bg-brand-500'
+                    ? 'bg-[#FF8080] group-hover:bg-[#FF6B6B]'
                     : 'bg-zinc-200',
                 )}
                 style={{ height: `${Math.max(heightPct, 2)}%`, minHeight: '2px' }}

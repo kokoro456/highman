@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "name": "공비서로 첫 예약 시 2,000원 할인",
+    "targetType": "ALL_SHOP",
+    "discountAmount": 2000,
+    "minOrderAmount": 10000,
+    "daysUntilExpiry": null,
+    "isAvailable": true
+  },
+  {
+    "id": 2,
+    "name": "신규 회원 5,000원 웰컴 쿠폰",
+    "targetType": "ALL_SHOP",
+    "discountAmount": 5000,
+    "minOrderAmount": 15000,
+    "daysUntilExpiry": 30,
+    "isAvailable": true
+  },
+  {
+    "id": 3,
+    "name": "강남 뷰티샵 전용 10,000원 할인 쿠폰",
+    "targetType": "SPECIFIC_SHOP",
+    "discountAmount": 10000,
+    "minOrderAmount": 50000,
+    "daysUntilExpiry": 7,
+    "isAvailable": false
+  },
+  {
+    "id": 4,
+    "name": "리뷰 작성 감사 쿠폰",
+    "targetType": "ALL_SHOP",
+    "discountAmount": 3000,
+    "minOrderAmount": 20000,
+    "daysUntilExpiry": 14,
+    "isAvailable": true
+  },
+  {
+    "id": 5,
+    "name": "생일 축하 특별 할인 쿠폰",
+    "targetType": "ALL_SHOP",
+    "discountAmount": 15000,
+    "minOrderAmount": 30000,
+    "daysUntilExpiry": null,
+    "isAvailable": false
+  },
+  {
+    "id": 6,
+    "name": "VIP 회원 20% 할인 쿠폰",
+    "targetType": "ALL_SHOP",
+    "discountAmount": 25000,
+    "minOrderAmount": 100000,
+    "daysUntilExpiry": 60,
+    "isAvailable": false
+  }
+]

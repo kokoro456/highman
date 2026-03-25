@@ -1,0 +1,28 @@
+{
+  "curationDetailTitle": "테스트 큐레이션",
+  "curationDetailImageUrl": "https://example.com/thumb.jpg",
+  "shops": {
+    "data": [
+      {
+        "shopId": "S000001",
+        "shopName": "테스트 샵 1",
+        "shopAddress": "서울특별시 강남구",
+        "thumbnailImageUrl": "https://example.com/shop1.jpg",
+        "categories": ["헤어"],
+        "bookingPassYn": true,
+        "cokShopYn": false
+      },
+      {
+        "shopId": "S000002",
+        "shopName": "테스트 샵 2",
+        "shopAddress": "서울특별시 서초구",
+        "thumbnailImageUrl": "https://example.com/shop2.jpg",
+        "categories": ["네일"],
+        "bookingPassYn": false,
+        "cokShopYn": true
+      }
+    ],
+    "offset": 0,
+    "hasMore": true
+  }
+}

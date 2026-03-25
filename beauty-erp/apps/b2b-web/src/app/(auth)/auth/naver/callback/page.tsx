@@ -7,7 +7,7 @@ import { SpinnerGap, WarningCircle } from '@phosphor-icons/react';
 
 export default function NaverCallbackPage() {
   return (
-    <Suspense fallback={<div className="flex min-h-screen items-center justify-center"><SpinnerGap size={32} className="animate-spin text-brand-500" /></div>}>
+    <Suspense fallback={<div className="flex min-h-screen items-center justify-center"><SpinnerGap size={32} className="animate-spin text-[#FF6B6B]" /></div>}>
       <NaverCallbackContent />
     </Suspense>
   );
@@ -70,7 +70,7 @@ function NaverCallbackContent() {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <div className="w-full max-w-[420px] animate-slide-up">
-          <div className="rounded-[2.5rem] bg-white/60 p-1.5 ring-1 ring-zinc-200/50 shadow-soft-xl backdrop-blur-sm">
+          <div className="rounded-[2.5rem] bg-white/60 p-1.5 ring-1 ring-[#FFE4E0] shadow-soft-xl backdrop-blur-sm">
             <div className="rounded-[calc(2.5rem-0.375rem)] bg-white p-8 md:p-10 text-center">
               <div className="flex justify-center mb-4">
                 <WarningCircle size={48} className="text-red-400" />
@@ -79,7 +79,7 @@ function NaverCallbackContent() {
               <p className="text-sm text-zinc-500 mb-6">{error}</p>
               <button
                 onClick={() => router.push('/login')}
-                className="rounded-full bg-zinc-900 px-6 py-3 text-sm font-medium text-white hover:bg-zinc-800 transition-colors"
+                className="rounded-full bg-gradient-to-r from-[#FF6B6B] to-[#FF8E8E] shadow-[0_4px_15px_rgba(255,107,107,0.3)] px-6 py-3 text-sm font-medium text-white hover:from-[#FF5252] hover:to-[#FF7B7B] transition-colors"
               >
                 로그인 페이지로 돌아가기
               </button>
@@ -93,7 +93,7 @@ function NaverCallbackContent() {
   return (
     <div className="flex min-h-screen items-center justify-center">
       <div className="text-center">
-        <SpinnerGap size={32} className="animate-spin text-brand-500 mx-auto mb-4" />
+        <SpinnerGap size={32} className="animate-spin text-[#FF6B6B] mx-auto mb-4" />
         <p className="text-sm text-zinc-500">네이버 로그인 처리 중...</p>
       </div>
     </div>

@@ -22,11 +22,12 @@ import { cn, formatCurrency } from '@/lib/utils';
 import { useCustomer, useCustomerTier, useDeleteCustomer } from '@/hooks/use-customers';
 import { CustomerFormModal } from '../customer/customer-form-modal';
 import { PhotoGallery } from '../customer/photo-gallery';
+import { MembershipPanel } from '../customer/membership-panel';
 import { Modal } from '@/components/ui/modal';
 import { toast } from '@/components/ui/toast';
 
 const tierConfig = {
-  NORMAL: { label: '일반', bg: 'bg-zinc-100', text: 'text-zinc-600', ring: 'ring-zinc-200/50', gradient: 'from-zinc-400 to-zinc-500' },
+  NORMAL: { label: '일반', bg: 'bg-zinc-100', text: 'text-zinc-600', ring: 'ring-[#FFE4E0]', gradient: 'from-zinc-400 to-zinc-500' },
   SILVER: { label: 'SILVER', bg: 'bg-slate-100', text: 'text-slate-700', ring: 'ring-slate-300/50', gradient: 'from-slate-400 to-slate-500' },
   GOLD: { label: 'GOLD', bg: 'bg-yellow-50', text: 'text-yellow-700', ring: 'ring-yellow-300/50', gradient: 'from-yellow-400 to-yellow-600' },
   VIP: { label: 'VIP', bg: 'bg-purple-50', text: 'text-purple-700', ring: 'ring-purple-200/50', gradient: 'from-purple-400 to-purple-600' },
@@ -35,7 +36,7 @@ const tierConfig = {
 
 const tagStyles: Record<string, string> = {
   VVIP: 'bg-amber-50 text-amber-700 ring-1 ring-amber-200/50',
-  VIP: 'bg-brand-50 text-brand-700 ring-1 ring-brand-200/50',
+  VIP: 'bg-[#FF6B6B15] text-[#FF6B6B] ring-1 ring-[#FF6B6B30]',
   '신규': 'bg-blue-50 text-blue-700 ring-1 ring-blue-200/50',
 };
 
@@ -51,7 +52,7 @@ export function CustomerDetail({ customerId }: { customerId: string }) {
   const router = useRouter();
   const [editOpen, setEditOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState<'history' | 'photos'>('history');
+  const [activeSection, setActiveSection] = useState<'history' | 'photos' | 'membership'>('history');
 
   async function handleDelete() {
     try {
@@ -69,15 +70,15 @@ export function CustomerDetail({ customerId }: { customerId: string }) {
         <div className="flex items-center gap-4">
           <Link
             href="/customers"
-            className="flex h-9 w-9 items-center justify-center rounded-xl bg-white ring-1 ring-zinc-200/50 shadow-soft"
+            className="flex h-9 w-9 items-center justify-center rounded-xl bg-white ring-1 ring-[#FFE4E0] shadow-soft"
           >
             <ArrowLeft size={16} className="text-zinc-600" />
           </Link>
-          <div className="h-8 w-32 rounded-xl bg-zinc-100 animate-pulse" />
+          <div className="h-8 w-32 rounded-xl bg-[#FFE4E0] animate-pulse" />
         </div>
         <div className="animate-fade-in space-y-4">
           {[...Array(4)].map((_, i) => (
-            <div key={i} className="h-16 rounded-2xl bg-zinc-100 animate-pulse" />
+            <div key={i} className="h-16 rounded-2xl bg-[#FFE4E0] animate-pulse" />
           ))}
         </div>
       </div>
@@ -90,7 +91,7 @@ export function CustomerDetail({ customerId }: { customerId: string }) {
         <div className="flex items-center gap-4">
           <Link
             href="/customers"
-            className="flex h-9 w-9 items-center justify-center rounded-xl bg-white ring-1 ring-zinc-200/50 shadow-soft"
+            className="flex h-9 w-9 items-center justify-center rounded-xl bg-white ring-1 ring-[#FFE4E0] shadow-soft"
           >
             <ArrowLeft size={16} className="text-zinc-600" />
           </Link>
@@ -113,7 +114,7 @@ export function CustomerDetail({ customerId }: { customerId: string }) {
         <div className="flex items-center gap-4">
           <Link
             href="/customers"
-            className="flex h-9 w-9 items-center justify-center rounded-xl bg-white ring-1 ring-zinc-200/50 shadow-soft transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98]"
+            className="flex h-9 w-9 items-center justify-center rounded-xl bg-white ring-1 ring-[#FFE4E0] shadow-soft transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98]"
           >
             <ArrowLeft size={16} className="text-zinc-600" />
           </Link>
@@ -147,7 +148,7 @@ export function CustomerDetail({ customerId }: { customerId: string }) {
         <div className="flex items-center gap-2">
           <button
             onClick={() => setEditOpen(true)}
-            className="flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-xs font-medium text-zinc-700 ring-1 ring-zinc-200/60 shadow-soft transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98]"
+            className="flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-xs font-medium text-zinc-700 ring-1 ring-[#FFE4E0] shadow-soft transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98]"
           >
             <PencilSimple size={14} />
             편집
@@ -195,11 +196,23 @@ export function CustomerDetail({ customerId }: { customerId: string }) {
               <Camera size={14} />
               시술 사진
             </button>
+            <button
+              onClick={() => setActiveSection('membership')}
+              className={cn(
+                'flex-1 flex items-center justify-center gap-1.5 rounded-lg py-2 text-xs font-medium transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)]',
+                activeSection === 'membership'
+                  ? 'bg-white text-zinc-900 shadow-soft'
+                  : 'text-zinc-500 hover:text-zinc-700',
+              )}
+            >
+              <CurrencyCircleDollar size={14} />
+              회원권/포인트
+            </button>
           </div>
 
           {/* Treatment History */}
           {activeSection === 'history' && (
-            <div className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft overflow-hidden">
+            <div className="rounded-2xl bg-white ring-1 ring-[#FFE4E0] shadow-soft overflow-hidden">
               {visits.length === 0 ? (
                 <div className="px-6 py-10 text-center">
                   <p className="text-sm text-zinc-400">시술 내역이 없습니다</p>
@@ -209,13 +222,13 @@ export function CustomerDetail({ customerId }: { customerId: string }) {
                   <div
                     key={visit.id}
                     className={cn(
-                      'flex items-center gap-4 px-6 py-4 transition-colors duration-200 hover:bg-zinc-50/60',
+                      'flex items-center gap-4 px-6 py-4 transition-colors duration-200 hover:bg-[#FFF5F5]',
                       idx < visits.length - 1 && 'border-b border-zinc-50',
                     )}
                   >
                     {/* Timeline dot */}
                     <div className="flex flex-col items-center self-stretch">
-                      <div className="h-2.5 w-2.5 rounded-full bg-brand-400 ring-4 ring-brand-50 flex-shrink-0" />
+                      <div className="h-2.5 w-2.5 rounded-full bg-[#FF8080] ring-4 ring-[#FF6B6B15] flex-shrink-0" />
                       {idx < visits.length - 1 && (
                         <div className="w-px flex-1 bg-zinc-200/60 mt-1" />
                       )}
@@ -252,6 +265,11 @@ export function CustomerDetail({ customerId }: { customerId: string }) {
           {activeSection === 'photos' && (
             <PhotoGallery customerId={customerId} />
           )}
+
+          {/* Membership */}
+          {activeSection === 'membership' && (
+            <MembershipPanel customerId={customerId} />
+          )}
         </div>
 
         {/* Right: Customer info card */}
@@ -260,7 +278,7 @@ export function CustomerDetail({ customerId }: { customerId: string }) {
             고객 정보
           </h2>
 
-          <div className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft p-6 space-y-5">
+          <div className="rounded-2xl bg-white ring-1 ring-[#FFE4E0] shadow-soft p-6 space-y-5">
             {/* Contact */}
             <div className="space-y-3">
               <div className="flex items-center gap-3">
@@ -285,7 +303,7 @@ export function CustomerDetail({ customerId }: { customerId: string }) {
 
             {/* Stats */}
             <div className="grid grid-cols-2 gap-4">
-              <div className="rounded-xl bg-zinc-50/80 p-3 ring-1 ring-zinc-200/40">
+              <div className="rounded-xl bg-[#FFF8F6] p-3 ring-1 ring-[#FFE4E0]">
                 <div className="flex items-center gap-1.5 mb-1">
                   <CalendarDots size={12} className="text-zinc-400" />
                   <span className="text-[10px] font-medium text-zinc-500 uppercase tracking-wider">
@@ -299,7 +317,7 @@ export function CustomerDetail({ customerId }: { customerId: string }) {
                   </span>
                 </p>
               </div>
-              <div className="rounded-xl bg-zinc-50/80 p-3 ring-1 ring-zinc-200/40">
+              <div className="rounded-xl bg-[#FFF8F6] p-3 ring-1 ring-[#FFE4E0]">
                 <div className="flex items-center gap-1.5 mb-1">
                   <CurrencyCircleDollar size={12} className="text-zinc-400" />
                   <span className="text-[10px] font-medium text-zinc-500 uppercase tracking-wider">
@@ -312,6 +330,24 @@ export function CustomerDetail({ customerId }: { customerId: string }) {
               </div>
             </div>
 
+            {/* No-show count */}
+            {(customer.noShowCount ?? 0) > 0 && (
+              <div className="rounded-xl bg-red-50 p-3 ring-1 ring-red-200/50">
+                <div className="flex items-center gap-1.5 mb-1">
+                  <WarningCircle size={12} className="text-red-400" />
+                  <span className="text-[10px] font-medium text-red-500 uppercase tracking-wider">
+                    노쇼 횟수
+                  </span>
+                </div>
+                <p className="text-lg font-semibold font-mono text-red-600 tabular-nums">
+                  {customer.noShowCount ?? 0}
+                  <span className="text-xs font-sans text-red-400 ml-0.5">
+                    회
+                  </span>
+                </p>
+              </div>
+            )}
+
             <div className="h-px bg-zinc-100" />
 
             {/* Tier & Progress */}
@@ -321,19 +357,19 @@ export function CustomerDetail({ customerId }: { customerId: string }) {
                   <span className="text-[10px] font-medium text-zinc-500 uppercase tracking-wider">
                     멤버십 등급
                   </span>
-                  <div className="mt-2 rounded-xl p-3 bg-zinc-50/80 ring-1 ring-zinc-200/40 space-y-3">
+                  <div className="mt-2 rounded-xl p-3 bg-[#FFF8F6] ring-1 ring-[#FFE4E0] space-y-3">
                     <div className="flex items-center justify-between">
                       <span
                         className={cn(
                           'rounded-full px-3 py-1 text-xs font-bold tracking-wider ring-1',
                           tierConfig[(tierData.tier as keyof typeof tierConfig)]?.bg ?? 'bg-zinc-100',
                           tierConfig[(tierData.tier as keyof typeof tierConfig)]?.text ?? 'text-zinc-600',
-                          tierConfig[(tierData.tier as keyof typeof tierConfig)]?.ring ?? 'ring-zinc-200/50',
+                          tierConfig[(tierData.tier as keyof typeof tierConfig)]?.ring ?? 'ring-[#FFE4E0]',
                         )}
                       >
                         {tierConfig[(tierData.tier as keyof typeof tierConfig)]?.label ?? tierData.tier}
                       </span>
-                      <span className="text-xs font-mono font-medium text-brand-600">
+                      <span className="text-xs font-mono font-medium text-[#FF6B6B]">
                         {tierData.discount}% 할인
                       </span>
                     </div>
@@ -349,7 +385,7 @@ export function CustomerDetail({ customerId }: { customerId: string }) {
                         </div>
                         <div className="h-2 rounded-full bg-zinc-200/60 overflow-hidden">
                           <div
-                            className="h-full rounded-full bg-gradient-to-r from-brand-400 to-brand-500 transition-all duration-700 ease-out"
+                            className="h-full rounded-full bg-gradient-to-r from-[#FF8080] to-[#FF6B6B] transition-all duration-700 ease-out"
                             style={{
                               width: `${Math.min(100, ((tierData.totalSpent / (tierData.totalSpent + tierData.amountToNext)) * 100))}%`,
                             }}

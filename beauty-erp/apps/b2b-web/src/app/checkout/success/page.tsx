@@ -16,7 +16,7 @@ interface PaymentResult {
 
 export default function CheckoutSuccessPage() {
   return (
-    <Suspense fallback={<div className="min-h-[100dvh] flex items-center justify-center bg-zinc-50"><div className="h-8 w-8 animate-spin rounded-full border-4 border-emerald-200 border-t-emerald-500" /></div>}>
+    <Suspense fallback={<div className="min-h-[100dvh] flex items-center justify-center bg-[#FFF8F6]"><div className="h-8 w-8 animate-spin rounded-full border-4 border-[#FF6B6B30] border-t-[#FF6B6B]" /></div>}>
       <CheckoutSuccessContent />
     </Suspense>
   );
@@ -92,9 +92,9 @@ function CheckoutSuccessContent() {
 
   if (loading) {
     return (
-      <div className="min-h-[100dvh] flex items-center justify-center bg-zinc-50">
+      <div className="min-h-[100dvh] flex items-center justify-center bg-[#FFF8F6]">
         <div className="flex flex-col items-center gap-3">
-          <div className="h-8 w-8 animate-spin rounded-full border-4 border-emerald-200 border-t-emerald-500" />
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#FF6B6B30] border-t-[#FF6B6B]" />
           <p className="text-sm text-zinc-400">결제 승인 처리 중...</p>
         </div>
       </div>
@@ -103,7 +103,7 @@ function CheckoutSuccessContent() {
 
   if (error) {
     return (
-      <div className="min-h-[100dvh] flex items-center justify-center bg-zinc-50 px-4">
+      <div className="min-h-[100dvh] flex items-center justify-center bg-[#FFF8F6] px-4">
         <div className="w-full max-w-md bg-white rounded-2xl shadow-sm border border-zinc-200 p-8 text-center">
           <div className="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center mx-auto mb-6">
             <svg className="w-8 h-8 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -124,10 +124,10 @@ function CheckoutSuccessContent() {
   }
 
   return (
-    <div className="min-h-[100dvh] flex items-center justify-center bg-zinc-50 px-4">
+    <div className="min-h-[100dvh] flex items-center justify-center bg-[#FFF8F6] px-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-sm border border-zinc-200 p-8 text-center">
-        <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-6">
-          <svg className="w-8 h-8 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <div className="w-16 h-16 rounded-full bg-[#FF6B6B20] flex items-center justify-center mx-auto mb-6">
+          <svg className="w-8 h-8 text-[#4ECDC4]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
           </svg>
         </div>
@@ -152,7 +152,7 @@ function CheckoutSuccessContent() {
             </div>
             <div className="flex justify-between">
               <span className="text-zinc-500">결제금액</span>
-              <span className="font-semibold text-emerald-600">
+              <span className="font-semibold text-[#4ECDC4]">
                 {formatPrice(Number(result.amount))}
               </span>
             </div>

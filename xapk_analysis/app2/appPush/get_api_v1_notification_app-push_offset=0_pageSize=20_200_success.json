@@ -1,0 +1,26 @@
+{
+  "appPushes": {
+    "data": [
+      {
+        "id": 1001,
+        "iconImageUrl": "https://cdn-icons-png.flaticon.com/512/5220/5220478.png",
+        "title": "[반짝반짝네일샵] 예약 신청 완료",
+        "message": "김힐더님, 9월 28일 (토) 오후 2:30 예약 요청이 전달되었어요. 샵에서 확인 후 확정되면 바로 알려드릴게요.",
+        "isRead": false,
+        "sendDatetime": "2025-10-03T15:00:00+09:00",
+        "link": "gongb2c://zero.gongbiz.kr/history"
+      },
+      {
+        "id": 1000,
+        "iconImageUrl": "https://cdn-icons-png.flaticon.com/512/5220/5220478.png",
+        "title": "[반짝반짝네일샵] 예약 확정",
+        "message": "김힐더님, 9월 28일 (토) 오후 2:30 예약이 확정되었어요.",
+        "isRead": true,
+        "sendDatetime": "2025-10-03T14:00:00+09:00",
+        "link": "gongb2c://zero.gongbiz.kr/shop/S000003091"
+      }
+    ],
+    "offset": 0,
+    "hasMore": false
+  }
+}

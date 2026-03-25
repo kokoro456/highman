@@ -14,6 +14,7 @@ export class BookingService {
   async create(shopId: string, data: {
     customerId: string; staffId: string; serviceId: string;
     startTime: string; memo?: string; source?: string;
+    depositAmount?: number; depositStatus?: string;
   }) {
     if (!data.customerId || !data.staffId || !data.serviceId || !data.startTime) {
       throw new BadRequestException('고객, 담당자, 서비스, 시작 시간은 필수 항목입니다');
@@ -49,6 +50,8 @@ export class BookingService {
         shopId, customerId: data.customerId, staffId: data.staffId,
         serviceId: data.serviceId, startTime, endTime,
         memo: data.memo, source: (data.source as any) || 'DIRECT',
+        depositAmount: data.depositAmount ?? 0,
+        depositStatus: (data.depositStatus as any) ?? 'NONE',
       },
       include: { customer: true, staff: true, service: true },
     });
@@ -69,7 +72,24 @@ export class BookingService {
       this.logger.warn(`Alimtalk booking confirmation failed: ${error.message}`);
     }
 
-    return booking;
+    // Check no-show history and add warning flag
+    const noShowStats = await this.getNoShowStats(data.customerId);
+    const result: any = { ...booking, noShowWarning: false, noShowCount: noShowStats.count };
+    if (noShowStats.count >= 3) {
+      result.noShowWarning = true;
+    }
+
+    return result;
+  }
+
+  async getNoShowStats(customerId: string) {
+    const count = await this.prisma.booking.count({
+      where: {
+        customerId,
+        status: 'NO_SHOW',
+      },
+    });
+    return { customerId, count };
   }
 
   async findByDate(shopId: string, date: string) {

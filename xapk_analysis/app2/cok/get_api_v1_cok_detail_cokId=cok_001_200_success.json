@@ -1,0 +1,24 @@
+{
+  "id": "cok_001",
+  "name": "기본 네일 케어 긴 이름은 어떻게 보일까요 이런식으로 길어질까요",
+  "thumbnailImageUrl": [
+    "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20240614_64%2F1718344052959m9Xfi_JPEG%2F1000003733.jpg",
+    "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20240614_40%2F1718344076363jehYH_JPEG%2F1000003679.jpg",
+    "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20250318_50%2F1742272816735F6BSy_JPEG%2FKakaoTalk_20250318_131913230.jpg"
+  ],
+  "duration": "01:00",
+  "description": "손톱을 아름답고 건강하게 가꿔주는 프리미엄 네일 케어 서비스입니다.",
+  "price": 20000,
+  "like": {
+    "count": 120,
+    "isLiked": true
+  },
+  "shopInfo": {
+    "id": "S000004020",
+    "name": "도쿄네일",
+    "address": "서울 강남구 대치4동 긴 주소는 어떻게 보일까요 이런식으로 길어질까요 긴 주소는 어떻게 보일까요 이런식으로 길어질까요",
+    "thumbnailImageUrl": "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWNACA60X98Q3FWWPSN59G3.jpg",
+    "latitude": 37.5041662879426,
+    "longitude": 127.052043567109
+  }
+}

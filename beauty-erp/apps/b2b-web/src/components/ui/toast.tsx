@@ -42,25 +42,25 @@ export function ToastContainer() {
         <div
           key={t.id}
           className={cn(
-            'flex items-center gap-3 rounded-xl px-4 py-3 shadow-soft-lg animate-slide-up min-w-[280px] max-w-[400px]',
-            t.type === 'success' && 'bg-brand-50 ring-1 ring-brand-200/50',
+            'flex items-center gap-3 rounded-2xl px-4 py-3 shadow-soft-lg animate-slide-up min-w-[280px] max-w-[400px]',
+            t.type === 'success' && 'bg-[#4ECDC415] ring-1 ring-[#4ECDC440]',
             t.type === 'error' && 'bg-red-50 ring-1 ring-red-200/50',
           )}
         >
           {t.type === 'success' ? (
-            <CheckCircle size={20} weight="fill" className="text-brand-500 shrink-0" />
+            <CheckCircle size={20} weight="fill" className="text-[#4ECDC4] shrink-0" />
           ) : (
-            <XCircle size={20} weight="fill" className="text-red-500 shrink-0" />
+            <XCircle size={20} weight="fill" className="text-[#FF4757] shrink-0" />
           )}
           <p className={cn(
             'text-sm font-medium flex-1',
-            t.type === 'success' ? 'text-brand-800' : 'text-red-800',
+            t.type === 'success' ? 'text-[#20877F]' : 'text-red-800',
           )}>
             {t.message}
           </p>
           <button
             onClick={() => removeToast(t.id)}
-            className="shrink-0 text-zinc-400 hover:text-zinc-600"
+            className="shrink-0 text-[#636E72] hover:text-[#2D3436]"
           >
             <X size={14} />
           </button>

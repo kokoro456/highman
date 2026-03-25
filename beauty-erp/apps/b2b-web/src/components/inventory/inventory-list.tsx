@@ -23,7 +23,7 @@ import { Modal } from '@/components/ui/modal';
 import { toast } from '@/components/ui/toast';
 
 const logTypeConfig = {
-  IN: { label: '입고', icon: ArrowDown, color: 'text-brand-600', bg: 'bg-brand-50' },
+  IN: { label: '입고', icon: ArrowDown, color: 'text-[#FF6B6B]', bg: 'bg-[#FF6B6B15]' },
   OUT: { label: '출고', icon: ArrowUp, color: 'text-red-600', bg: 'bg-red-50' },
   ADJUST: { label: '조정', icon: Equals, color: 'text-blue-600', bg: 'bg-blue-50' },
 };
@@ -69,7 +69,7 @@ function AddItemModal({ open, onOpenChange }: { open: boolean; onOpenChange: (v:
             <input
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
-              className="mt-1 w-full rounded-xl border-0 bg-zinc-50 px-4 py-2.5 text-sm ring-1 ring-zinc-200/60 focus:ring-2 focus:ring-brand-400 outline-none transition-all"
+              className="mt-1 w-full rounded-xl border-0 bg-[#FFF8F6] px-4 py-2.5 text-sm ring-1 ring-[#FFE4E0] focus:ring-2 focus:ring-[#FF6B6B] outline-none transition-all"
               placeholder="예: 젤 네일 베이스"
               required
             />
@@ -79,7 +79,7 @@ function AddItemModal({ open, onOpenChange }: { open: boolean; onOpenChange: (v:
             <input
               value={form.category}
               onChange={(e) => setForm({ ...form, category: e.target.value })}
-              className="mt-1 w-full rounded-xl border-0 bg-zinc-50 px-4 py-2.5 text-sm ring-1 ring-zinc-200/60 focus:ring-2 focus:ring-brand-400 outline-none transition-all"
+              className="mt-1 w-full rounded-xl border-0 bg-[#FFF8F6] px-4 py-2.5 text-sm ring-1 ring-[#FFE4E0] focus:ring-2 focus:ring-[#FF6B6B] outline-none transition-all"
               placeholder="예: 네일 재료"
             />
           </div>
@@ -88,7 +88,7 @@ function AddItemModal({ open, onOpenChange }: { open: boolean; onOpenChange: (v:
             <input
               value={form.unit}
               onChange={(e) => setForm({ ...form, unit: e.target.value })}
-              className="mt-1 w-full rounded-xl border-0 bg-zinc-50 px-4 py-2.5 text-sm ring-1 ring-zinc-200/60 focus:ring-2 focus:ring-brand-400 outline-none transition-all"
+              className="mt-1 w-full rounded-xl border-0 bg-[#FFF8F6] px-4 py-2.5 text-sm ring-1 ring-[#FFE4E0] focus:ring-2 focus:ring-[#FF6B6B] outline-none transition-all"
               placeholder="개"
             />
           </div>
@@ -98,7 +98,7 @@ function AddItemModal({ open, onOpenChange }: { open: boolean; onOpenChange: (v:
               type="number"
               value={form.quantity}
               onChange={(e) => setForm({ ...form, quantity: parseInt(e.target.value) || 0 })}
-              className="mt-1 w-full rounded-xl border-0 bg-zinc-50 px-4 py-2.5 text-sm ring-1 ring-zinc-200/60 focus:ring-2 focus:ring-brand-400 outline-none transition-all"
+              className="mt-1 w-full rounded-xl border-0 bg-[#FFF8F6] px-4 py-2.5 text-sm ring-1 ring-[#FFE4E0] focus:ring-2 focus:ring-[#FF6B6B] outline-none transition-all"
               min={0}
             />
           </div>
@@ -108,7 +108,7 @@ function AddItemModal({ open, onOpenChange }: { open: boolean; onOpenChange: (v:
               type="number"
               value={form.minQuantity}
               onChange={(e) => setForm({ ...form, minQuantity: parseInt(e.target.value) || 0 })}
-              className="mt-1 w-full rounded-xl border-0 bg-zinc-50 px-4 py-2.5 text-sm ring-1 ring-zinc-200/60 focus:ring-2 focus:ring-brand-400 outline-none transition-all"
+              className="mt-1 w-full rounded-xl border-0 bg-[#FFF8F6] px-4 py-2.5 text-sm ring-1 ring-[#FFE4E0] focus:ring-2 focus:ring-[#FF6B6B] outline-none transition-all"
               min={0}
             />
           </div>
@@ -118,7 +118,7 @@ function AddItemModal({ open, onOpenChange }: { open: boolean; onOpenChange: (v:
               type="number"
               value={form.price}
               onChange={(e) => setForm({ ...form, price: parseInt(e.target.value) || 0 })}
-              className="mt-1 w-full rounded-xl border-0 bg-zinc-50 px-4 py-2.5 text-sm ring-1 ring-zinc-200/60 focus:ring-2 focus:ring-brand-400 outline-none transition-all"
+              className="mt-1 w-full rounded-xl border-0 bg-[#FFF8F6] px-4 py-2.5 text-sm ring-1 ring-[#FFE4E0] focus:ring-2 focus:ring-[#FF6B6B] outline-none transition-all"
               min={0}
             />
           </div>
@@ -134,7 +134,7 @@ function AddItemModal({ open, onOpenChange }: { open: boolean; onOpenChange: (v:
           <button
             type="submit"
             disabled={createItem.isPending}
-            className="flex items-center gap-2 rounded-full bg-brand-500 px-6 py-2.5 text-sm font-medium text-white transition-all hover:bg-brand-600 active:scale-[0.98] disabled:opacity-60"
+            className="flex items-center gap-2 rounded-full bg-[#FF6B6B] px-6 py-2.5 text-sm font-medium text-white transition-all hover:bg-[#FF5252] active:scale-[0.98] disabled:opacity-60"
           >
             {createItem.isPending && <SpinnerGap size={16} className="animate-spin" />}
             추가
@@ -193,7 +193,7 @@ function StockAdjustModal({
                     'flex-1 rounded-xl py-2.5 text-xs font-medium ring-1 transition-all',
                     form.type === type
                       ? `${config.bg} ${config.color} ring-current`
-                      : 'bg-zinc-50 text-zinc-500 ring-zinc-200/60 hover:bg-zinc-100',
+                      : 'bg-zinc-50 text-zinc-500 ring-[#FFE4E0] hover:bg-zinc-100',
                   )}
                 >
                   {config.label}
@@ -210,7 +210,7 @@ function StockAdjustModal({
             type="number"
             value={form.quantity || ''}
             onChange={(e) => setForm({ ...form, quantity: parseInt(e.target.value) || 0 })}
-            className="mt-1 w-full rounded-xl border-0 bg-zinc-50 px-4 py-2.5 text-sm ring-1 ring-zinc-200/60 focus:ring-2 focus:ring-brand-400 outline-none transition-all"
+            className="mt-1 w-full rounded-xl border-0 bg-[#FFF8F6] px-4 py-2.5 text-sm ring-1 ring-[#FFE4E0] focus:ring-2 focus:ring-[#FF6B6B] outline-none transition-all"
             min={0}
             required
             placeholder={form.type === 'ADJUST' ? `현재: ${item.quantity}` : '0'}
@@ -221,7 +221,7 @@ function StockAdjustModal({
           <input
             value={form.memo}
             onChange={(e) => setForm({ ...form, memo: e.target.value })}
-            className="mt-1 w-full rounded-xl border-0 bg-zinc-50 px-4 py-2.5 text-sm ring-1 ring-zinc-200/60 focus:ring-2 focus:ring-brand-400 outline-none transition-all"
+            className="mt-1 w-full rounded-xl border-0 bg-[#FFF8F6] px-4 py-2.5 text-sm ring-1 ring-[#FFE4E0] focus:ring-2 focus:ring-[#FF6B6B] outline-none transition-all"
             placeholder="사유 입력 (선택)"
           />
         </div>
@@ -236,7 +236,7 @@ function StockAdjustModal({
           <button
             type="submit"
             disabled={addLog.isPending}
-            className="flex items-center gap-2 rounded-full bg-brand-500 px-6 py-2.5 text-sm font-medium text-white transition-all hover:bg-brand-600 active:scale-[0.98] disabled:opacity-60"
+            className="flex items-center gap-2 rounded-full bg-[#FF6B6B] px-6 py-2.5 text-sm font-medium text-white transition-all hover:bg-[#FF5252] active:scale-[0.98] disabled:opacity-60"
           >
             {addLog.isPending && <SpinnerGap size={16} className="animate-spin" />}
             적용
@@ -302,7 +302,7 @@ export function InventoryList() {
         </div>
         <button
           onClick={() => setAddOpen(true)}
-          className="flex items-center gap-2 rounded-full bg-brand-500 px-5 py-2.5 text-sm font-medium text-white shadow-[0_2px_8px_rgba(16,185,129,0.3)] transition-all duration-300 hover:bg-brand-600 hover:shadow-[0_4px_16px_rgba(16,185,129,0.35)] hover:-translate-y-0.5 active:scale-[0.98]"
+          className="flex items-center gap-2 rounded-full bg-[#FF6B6B] px-5 py-2.5 text-sm font-medium text-white shadow-[0_2px_8px_rgba(255,107,107,0.3)] transition-all duration-300 hover:bg-[#FF5252] hover:shadow-[0_4px_16px_rgba(255,107,107,0.35)] hover:-translate-y-0.5 active:scale-[0.98]"
         >
           <Plus size={16} weight="bold" />
           항목 추가
@@ -311,7 +311,7 @@ export function InventoryList() {
 
       {/* Stats bar */}
       <div className="flex items-center gap-4">
-        <div className="rounded-xl bg-white px-4 py-3 ring-1 ring-zinc-200/50 shadow-soft">
+        <div className="rounded-xl bg-white px-4 py-3 ring-1 ring-[#FFE4E0] shadow-soft">
           <p className="text-[10px] font-medium text-zinc-400 uppercase tracking-wider">전체 항목</p>
           <p className="text-lg font-semibold font-mono text-zinc-900 tabular-nums">{meta?.total ?? 0}</p>
         </div>
@@ -324,7 +324,7 @@ export function InventoryList() {
       </div>
 
       {/* Search */}
-      <div className="flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 ring-1 ring-zinc-200/50 shadow-soft max-w-md focus-within:ring-brand-400 focus-within:ring-2 transition-all">
+      <div className="flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 ring-1 ring-[#FFE4E0] shadow-soft max-w-md focus-within:ring-[#FF6B6B] focus-within:ring-2 transition-all">
         <MagnifyingGlass size={16} className="text-zinc-400" />
         <input
           value={search}
@@ -338,11 +338,11 @@ export function InventoryList() {
       {isLoading ? (
         <div className="space-y-3">
           {[...Array(5)].map((_, i) => (
-            <div key={i} className="h-20 rounded-2xl bg-zinc-100 animate-pulse" />
+            <div key={i} className="h-20 rounded-2xl bg-[#FFE4E0] animate-pulse" />
           ))}
         </div>
       ) : items.length === 0 ? (
-        <div className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft p-12 text-center">
+        <div className="rounded-2xl bg-white ring-1 ring-[#FFE4E0] shadow-soft p-12 text-center">
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-zinc-100">
             <Package size={24} className="text-zinc-400" />
           </div>
@@ -354,7 +354,7 @@ export function InventoryList() {
           {items.map((item: any) => (
             <div
               key={item.id}
-              className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft overflow-hidden transition-all duration-300 hover:shadow-soft-lg"
+              className="rounded-2xl bg-white ring-1 ring-[#FFE4E0] shadow-soft overflow-hidden transition-all duration-300 hover:shadow-soft-lg"
             >
               <div className="flex items-center gap-4 px-5 py-4">
                 <div className={cn(
@@ -401,13 +401,13 @@ export function InventoryList() {
                 <div className="flex items-center gap-1.5 shrink-0">
                   <button
                     onClick={() => setAdjustItem(item)}
-                    className="rounded-lg px-3 py-1.5 text-xs font-medium text-brand-600 bg-brand-50 ring-1 ring-brand-200/50 hover:bg-brand-100 transition-all active:scale-[0.98]"
+                    className="rounded-lg px-3 py-1.5 text-xs font-medium text-[#FF6B6B] bg-[#FF6B6B15] ring-1 ring-[#FF6B6B30] hover:bg-[#FF6B6B20] transition-all active:scale-[0.98]"
                   >
                     입출고
                   </button>
                   <button
                     onClick={() => setExpandedId(expandedId === item.id ? null : item.id)}
-                    className="rounded-lg px-3 py-1.5 text-xs font-medium text-zinc-500 bg-zinc-50 ring-1 ring-zinc-200/50 hover:bg-zinc-100 transition-all active:scale-[0.98]"
+                    className="rounded-lg px-3 py-1.5 text-xs font-medium text-zinc-500 bg-[#FFF8F6] ring-1 ring-[#FFE4E0] hover:bg-zinc-100 transition-all active:scale-[0.98]"
                   >
                     <Clock size={12} weight="bold" />
                   </button>
@@ -416,7 +416,7 @@ export function InventoryList() {
 
               {/* Expandable history */}
               {expandedId === item.id && (
-                <div className="border-t border-zinc-100 px-5 py-3 bg-zinc-50/50">
+                <div className="border-t border-[#FFE4E0] px-5 py-3 bg-[#FFF8F6]">
                   <p className="text-[10px] font-medium text-zinc-400 uppercase tracking-wider mb-2">최근 이력</p>
                   <ItemHistory itemId={item.id} />
                 </div>
@@ -432,7 +432,7 @@ export function InventoryList() {
           <button
             onClick={() => setPage(Math.max(1, page - 1))}
             disabled={page <= 1}
-            className="rounded-lg px-3 py-1.5 text-xs font-medium text-zinc-600 bg-white ring-1 ring-zinc-200/50 hover:bg-zinc-50 disabled:opacity-40 transition-all"
+            className="rounded-lg px-3 py-1.5 text-xs font-medium text-zinc-600 bg-white ring-1 ring-[#FFE4E0] hover:bg-[#FFF5F5] disabled:opacity-40 transition-all"
           >
             이전
           </button>
@@ -442,7 +442,7 @@ export function InventoryList() {
           <button
             onClick={() => setPage(Math.min(meta.totalPages, page + 1))}
             disabled={page >= meta.totalPages}
-            className="rounded-lg px-3 py-1.5 text-xs font-medium text-zinc-600 bg-white ring-1 ring-zinc-200/50 hover:bg-zinc-50 disabled:opacity-40 transition-all"
+            className="rounded-lg px-3 py-1.5 text-xs font-medium text-zinc-600 bg-white ring-1 ring-[#FFE4E0] hover:bg-[#FFF5F5] disabled:opacity-40 transition-all"
           >
             다음
           </button>

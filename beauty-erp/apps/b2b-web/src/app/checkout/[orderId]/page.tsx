@@ -103,9 +103,9 @@ export default function CheckoutPage() {
 
   if (loading) {
     return (
-      <div className="min-h-[100dvh] flex items-center justify-center bg-zinc-50">
+      <div className="min-h-[100dvh] flex items-center justify-center bg-[#FFF8F6]">
         <div className="flex flex-col items-center gap-3">
-          <div className="h-8 w-8 animate-spin rounded-full border-4 border-emerald-200 border-t-emerald-500" />
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#FF6B6B30] border-t-[#FF6B6B]" />
           <p className="text-sm text-zinc-400">주문 정보 로딩 중...</p>
         </div>
       </div>
@@ -114,7 +114,7 @@ export default function CheckoutPage() {
 
   if (error && !order) {
     return (
-      <div className="min-h-[100dvh] flex items-center justify-center bg-zinc-50 px-4">
+      <div className="min-h-[100dvh] flex items-center justify-center bg-[#FFF8F6] px-4">
         <div className="text-center">
           <div className="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center mx-auto mb-4">
             <svg className="w-8 h-8 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -129,7 +129,7 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="min-h-[100dvh] bg-zinc-50">
+    <div className="min-h-[100dvh] bg-[#FFF8F6]">
       {/* Header */}
       <header className="bg-white border-b border-zinc-200 sticky top-0 z-10">
         <div className="max-w-lg mx-auto px-4 py-4">
@@ -156,9 +156,9 @@ export default function CheckoutPage() {
                 <span className="font-medium text-zinc-800">{order.customerName}</span>
               </div>
             )}
-            <div className="pt-2 border-t border-zinc-100 flex justify-between">
+            <div className="pt-2 border-t border-[#FFE4E0] flex justify-between">
               <span className="text-sm font-medium text-zinc-700">결제 금액</span>
-              <span className="text-lg font-bold text-emerald-600">
+              <span className="text-lg font-bold text-[#4ECDC4]">
                 {order && formatPrice(Number(order.amount))}
               </span>
             </div>

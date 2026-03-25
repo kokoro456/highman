@@ -216,7 +216,7 @@ export function PaymentFormModal({ open, onOpenChange }: PaymentFormModalProps) 
                     setCouponError('');
                   }
                 }}
-                className="w-full rounded-xl border-0 bg-zinc-50 pl-9 pr-4 py-2.5 text-sm font-mono ring-1 ring-zinc-200/60 focus:ring-2 focus:ring-brand-400 outline-none transition-all"
+                className="w-full rounded-xl border-0 bg-[#FFF8F6] pl-9 pr-4 py-2.5 text-sm font-mono ring-1 ring-[#FFE4E0] focus:ring-2 focus:ring-[#FF6B6B] outline-none transition-all"
                 placeholder="쿠폰 코드 입력"
               />
               <Ticket size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400" />
@@ -234,7 +234,7 @@ export function PaymentFormModal({ open, onOpenChange }: PaymentFormModalProps) 
                 type="button"
                 onClick={handleValidateCoupon}
                 disabled={!form.couponCode.trim() || validateCoupon.isPending}
-                className="rounded-xl bg-brand-50 px-3 py-2.5 text-xs font-medium text-brand-700 ring-1 ring-brand-200/60 hover:bg-brand-100 transition-all active:scale-[0.98] disabled:opacity-40"
+                className="rounded-xl bg-[#FF6B6B15] px-3 py-2.5 text-xs font-medium text-[#FF6B6B] ring-1 ring-[#FF6B6B30]/60 hover:bg-[#FF6B6B20] transition-all active:scale-[0.98] disabled:opacity-40"
               >
                 {validateCoupon.isPending ? (
                   <SpinnerGap size={14} className="animate-spin" />
@@ -245,7 +245,7 @@ export function PaymentFormModal({ open, onOpenChange }: PaymentFormModalProps) 
             )}
           </div>
           {couponValid === true && (
-            <div className="mt-1.5 flex items-center gap-1.5 text-xs text-brand-600">
+            <div className="mt-1.5 flex items-center gap-1.5 text-xs text-[#FF6B6B]">
               <CheckCircle size={14} weight="fill" />
               <span>쿠폰 적용됨: {formatCurrency(couponDiscount)} 할인</span>
             </div>
@@ -259,11 +259,11 @@ export function PaymentFormModal({ open, onOpenChange }: PaymentFormModalProps) 
         </div>
 
         {/* Final amount display */}
-        <div className="flex items-center justify-between rounded-xl bg-zinc-50/80 px-4 py-3 ring-1 ring-zinc-200/40">
+        <div className="flex items-center justify-between rounded-xl bg-[#FFF8F6] px-4 py-3 ring-1 ring-[#FFE4E0]">
           <div>
             <span className="text-xs font-medium text-zinc-500">최종 결제 금액</span>
             {couponDiscount > 0 && (
-              <span className="ml-2 text-[10px] text-brand-600 font-medium">
+              <span className="ml-2 text-[10px] text-[#FF6B6B] font-medium">
                 (쿠폰 -{formatCurrency(couponDiscount)})
               </span>
             )}
@@ -313,7 +313,7 @@ export function PaymentFormModal({ open, onOpenChange }: PaymentFormModalProps) 
           <button
             type="submit"
             disabled={createPayment.isPending}
-            className="flex items-center gap-2 rounded-full bg-zinc-900 px-6 py-2.5 text-sm font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-zinc-800 active:scale-[0.98] disabled:opacity-60"
+            className="flex items-center gap-2 rounded-full bg-gradient-to-r from-[#FF6B6B] to-[#FF8E8E] shadow-[0_4px_15px_rgba(255,107,107,0.3)] px-6 py-2.5 text-sm font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:from-[#FF5252] hover:to-[#FF7B7B] active:scale-[0.98] disabled:opacity-60"
           >
             {createPayment.isPending && <SpinnerGap size={16} className="animate-spin" />}
             결제 등록

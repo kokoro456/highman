@@ -1,0 +1,186 @@
+{
+  "data": [
+    {
+      "id": 39,
+      "name": "0원 콕예약2",
+      "imageUrls": [
+        "https://crm-image.gongbiz.kr/images/uploads/dev/temp/2025/10/31/01K8WHT5JT3FTA2MG0FH0XVCXF.jpg"
+      ],
+      "price": 0,
+      "shopRepresentativeImageUrl": "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/03/01JGMY47TB4B2XFXFDQVWV49C0.jpg",
+      "shopLotAddress": "강원 속초시 노학동",
+      "isLike": true,
+      "likeCount": 22,
+      "isNewlyRegistered": false,
+      "isPopular": true,
+      "isActive": true
+    },
+    {
+      "id": 38,
+      "name": "100원2",
+      "imageUrls": [
+        "https://crm-image.gongbiz.kr/images/uploads/dev/temp/2025/10/31/01K8VXDAS1MKKX2WAT3F0V5Z5T.jpg"
+      ],
+      "price": 100,
+      "shopRepresentativeImageUrl": "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/03/01JGMY47TB4B2XFXFDQVWV49C0.jpg",
+      "shopLotAddress": "강원 속초시 노학동",
+      "isLike": true,
+      "likeCount": 46,
+      "isNewlyRegistered": false,
+      "isPopular": false,
+      "isActive": false
+    },
+    {
+      "id": 37,
+      "name": "100원 콕예약2",
+      "imageUrls": [
+        "https://crm-image.gongbiz.kr/images/uploads/dev/temp/2025/10/27/01K8HQBTJFQHBHRQ83QHDMYN8D.jpg"
+      ],
+      "price": 100,
+      "shopRepresentativeImageUrl": "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/02/11/88b9e568-0446-4e19-9973-e8722ba53aa1.jpg",
+      "shopLotAddress": "서울 성동구 성수2가3동",
+      "isLike": true,
+      "likeCount": 20,
+      "isNewlyRegistered": true,
+      "isPopular": false,
+      "isActive": true
+    },
+    {
+      "id": 36,
+      "name": "0원 콕예약3",
+      "imageUrls": [
+        "https://crm-image.gongbiz.kr/images/uploads/dev/temp/2025/10/31/01K8WHT5JT3FTA2MG0FH0XVCXF.jpg"
+      ],
+      "price": 0,
+      "shopRepresentativeImageUrl": "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/03/01JGMY47TB4B2XFXFDQVWV49C0.jpg",
+      "shopLotAddress": "강원 속초시 노학동",
+      "isLike": true,
+      "likeCount": 22,
+      "isNewlyRegistered": false,
+      "isPopular": true,
+      "isActive": true
+    },
+    {
+      "id": 35,
+      "name": "100원3",
+      "imageUrls": [
+        "https://crm-image.gongbiz.kr/images/uploads/dev/temp/2025/10/31/01K8VXDAS1MKKX2WAT3F0V5Z5T.jpg"
+      ],
+      "price": 100,
+      "shopRepresentativeImageUrl": "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/03/01JGMY47TB4B2XFXFDQVWV49C0.jpg",
+      "shopLotAddress": "강원 속초시 노학동",
+      "isLike": true,
+      "likeCount": 46,
+      "isNewlyRegistered": false,
+      "isPopular": false,
+      "isActive": false
+    },
+    {
+      "id": 34,
+      "name": "100원 콕예약3",
+      "imageUrls": [
+        "https://crm-image.gongbiz.kr/images/uploads/dev/temp/2025/10/27/01K8HQBTJFQHBHRQ83QHDMYN8D.jpg"
+      ],
+      "price": 100,
+      "shopRepresentativeImageUrl": "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/02/11/88b9e568-0446-4e19-9973-e8722ba53aa1.jpg",
+      "shopLotAddress": "서울 성동구 성수2가3동",
+      "isLike": true,
+      "likeCount": 20,
+      "isNewlyRegistered": true,
+      "isPopular": false,
+      "isActive": true
+    },
+    {
+      "id": 33,
+      "name": "0원 콕예약4",
+      "imageUrls": [
+        "https://crm-image.gongbiz.kr/images/uploads/dev/temp/2025/10/31/01K8WHT5JT3FTA2MG0FH0XVCXF.jpg"
+      ],
+      "price": 0,
+      "shopRepresentativeImageUrl": "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/03/01JGMY47TB4B2XFXFDQVWV49C0.jpg",
+      "shopLotAddress": "강원 속초시 노학동",
+      "isLike": true,
+      "likeCount": 22,
+      "isNewlyRegistered": false,
+      "isPopular": true,
+      "isActive": true
+    },
+    {
+      "id": 32,
+      "name": "100원5",
+      "imageUrls": [
+        "https://crm-image.gongbiz.kr/images/uploads/dev/temp/2025/10/31/01K8VXDAS1MKKX2WAT3F0V5Z5T.jpg"
+      ],
+      "price": 100,
+      "shopRepresentativeImageUrl": "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/03/01JGMY47TB4B2XFXFDQVWV49C0.jpg",
+      "shopLotAddress": "강원 속초시 노학동",
+      "isLike": true,
+      "likeCount": 46,
+      "isNewlyRegistered": false,
+      "isPopular": false,
+      "isActive": false
+    },
+    {
+      "id": 31,
+      "name": "100원 콕예약5",
+      "imageUrls": [
+        "https://crm-image.gongbiz.kr/images/uploads/dev/temp/2025/10/27/01K8HQBTJFQHBHRQ83QHDMYN8D.jpg"
+      ],
+      "price": 100,
+      "shopRepresentativeImageUrl": "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/02/11/88b9e568-0446-4e19-9973-e8722ba53aa1.jpg",
+      "shopLotAddress": "서울 성동구 성수2가3동",
+      "isLike": true,
+      "likeCount": 20,
+      "isNewlyRegistered": true,
+      "isPopular": false,
+      "isActive": true
+    },
+    {
+      "id": 30,
+      "name": "0원 콕예약6",
+      "imageUrls": [
+        "https://crm-image.gongbiz.kr/images/uploads/dev/temp/2025/10/31/01K8WHT5JT3FTA2MG0FH0XVCXF.jpg"
+      ],
+      "price": 0,
+      "shopRepresentativeImageUrl": "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/03/01JGMY47TB4B2XFXFDQVWV49C0.jpg",
+      "shopLotAddress": "강원 속초시 노학동",
+      "isLike": true,
+      "likeCount": 22,
+      "isNewlyRegistered": false,
+      "isPopular": true,
+      "isActive": true
+    },
+    {
+      "id": 29,
+      "name": "100원7",
+      "imageUrls": [
+        "https://crm-image.gongbiz.kr/images/uploads/dev/temp/2025/10/31/01K8VXDAS1MKKX2WAT3F0V5Z5T.jpg"
+      ],
+      "price": 100,
+      "shopRepresentativeImageUrl": "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/03/01JGMY47TB4B2XFXFDQVWV49C0.jpg",
+      "shopLotAddress": "강원 속초시 노학동",
+      "isLike": true,
+      "likeCount": 46,
+      "isNewlyRegistered": false,
+      "isPopular": false,
+      "isActive": false
+    },
+    {
+      "id": 28,
+      "name": "100원 콕예약7",
+      "imageUrls": [
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWNAGEYR0D88HCH6C55HDD3.jpg"
+      ],
+      "price": 100,
+      "shopRepresentativeImageUrl": "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/02/11/88b9e568-0446-4e19-9973-e8722ba53aa1.jpg",
+      "shopLotAddress": "서울 성동구 성수2가3동",
+      "isLike": true,
+      "likeCount": 20,
+      "isNewlyRegistered": true,
+      "isPopular": false,
+      "isActive": true
+    }
+  ],
+  "offset": 0,
+  "hasMore": false
+}

@@ -1,0 +1,25 @@
+{
+  "signUpTerms": [
+    {
+      "termsType": "SIGNUP",
+      "terms": [
+        {
+          "id": 1,
+          "termsType": "SIGNUP",
+          "termsTitle": "이용약관 동의",
+          "linkUrl": "https://0909.notion.site/18248de8e0ea802e973bf3955c0734ef",
+          "required": true,
+          "displayOrder": 1
+        },
+        {
+          "id": 2,
+          "termsType": "SIGNUP",
+          "termsTitle": "개인정보 수집 및 이용 동의",
+          "linkUrl": "https://0909.notion.site/18248de8e0ea802e973bf3955c0734ef",
+          "required": false,
+          "displayOrder": 2
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "shop": {
+    "id": "S000003091",
+    "name": "밀리애견테스트샵",
+    "isZeroShop": true,
+    "contact": "01042825139",
+    "address": "서울 성동구 성수동2가 284-55 (서울숲 SK V1 TOWER)",
+    "addressDetail": "😁3층",
+    "lotAddress": "서울 성동구 성수2가3동",
+    "postNumber": "04793",
+    "direction": "사무실 앞부분에 위치하여 화장실 갈땐 뒷문이 편하고 돌아올땐 앞문이 편한 위치에 있습니다.",
+    "latitude": 37.5469019779226,
+    "longitude": 127.051660680556,
+    "bookingTimeInterval": 10,
+    "introduction": "저희 밀리테스트 샵은 기한 2099년 12월 31일까지 인증된 샵으로 각종 다양한 테스트가 가능합니다",
+    "todayBookingOption": "BEFORE_BOOKING_TIME",
+    "isTodayBookingAvailable": true,
+    "thumbnailImageUrl": null,
+    "categories": [
+      "애견"
+    ],
+    "shopBusinessSchedule": {
+      "weeklyBusinessDays": [
+        {
+          "dayOfWeek": "MONDAY",
+          "businessStartTime": "07:00",
+          "businessEndTime": "23:50",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "TUESDAY",
+          "businessStartTime": "23:59",
+          "businessEndTime": "12:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "WEDNESDAY",
+          "businessStartTime": "07:00",
+          "businessEndTime": "21:30",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "THURSDAY",
+          "businessStartTime": "07:00",
+          "businessEndTime": "17:30",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "FRIDAY",
+          "businessStartTime": "07:00",
+          "businessEndTime": "14:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SATURDAY",
+          "businessStartTime": "07:00",
+          "businessEndTime": "23:50",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SUNDAY",
+          "businessStartTime": null,
+          "businessEndTime": null,
+          "isHoliday": true
+        }
+      ],
+      "breakStartTime": "01:00",
+      "breakEndTime": "01:10",
+      "holidays": []
+    },
+    "zeroShopTags": [
+      "무료주차",
+      "1인샵",
+      "WI-FI",
+      "1:1 책임시술"
+    ],
+    "labels": [
+      {
+        "labelName": "오늘예약",
+        "labelImageUrl": "https://dev-zero-cdn.gongbiz.kr/static/icon/label/today_booking_available2.png",
+        "displayOrder": 1
+      }
+    ],
+    "zeroShopActivationInfo": null,
+    "hasCorrectionRequest": false
+  }
+}

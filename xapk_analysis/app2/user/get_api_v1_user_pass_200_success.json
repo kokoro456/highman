@@ -1,0 +1,37 @@
+{
+  "passList": [
+    {
+      "passId": 2,
+      "shopNo": "S000003969",
+      "shopName": "네일스킨봄",
+      "ticketName": "패디 10회권",
+      "remain": 9,
+      "passType": "TICKET",
+      "isUnlimitedPeriodPass": true,
+      "expirationDate": "9999-12-31",
+      "procedureRequireTime": "01:30"
+    },
+    {
+      "passId": 1,
+      "shopNo": "S000003969",
+      "shopName": "네일스킨봄",
+      "ticketName": "젤네일 10회권",
+      "remain": 9,
+      "passType": "TICKET",
+      "isUnlimitedPeriodPass": false,
+      "expirationDate": "2025-12-31",
+      "procedureRequireTime": "02:00"
+    },
+    {
+      "passId": 63923,
+      "shopNo": "S000003969",
+      "shopName": "네일스킨봄",
+      "ticketName": null,
+      "remain": 100000,
+      "passType": "MEMBERSHIP",
+      "isUnlimitedPeriodPass": true,
+      "expirationDate": "9999-12-31",
+      "procedureRequireTime": "01:17"
+    }
+  ]
+}

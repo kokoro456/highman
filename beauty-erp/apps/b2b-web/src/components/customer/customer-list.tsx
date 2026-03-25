@@ -18,7 +18,7 @@ import { CustomerFormModal } from './customer-form-modal';
 
 const tagStyles: Record<string, string> = {
   VVIP: 'bg-amber-50 text-amber-700 ring-1 ring-amber-200/50',
-  VIP: 'bg-brand-50 text-brand-700 ring-1 ring-brand-200/50',
+  VIP: 'bg-[#FF6B6B15] text-[#FF6B6B] ring-1 ring-[#FF6B6B30]',
   '신규': 'bg-blue-50 text-blue-700 ring-1 ring-blue-200/50',
 };
 
@@ -72,7 +72,7 @@ export function CustomerList() {
         </div>
         <div className="animate-fade-in space-y-4">
           {[...Array(6)].map((_, i) => (
-            <div key={i} className="h-16 rounded-2xl bg-zinc-100 animate-pulse" />
+            <div key={i} className="h-16 rounded-2xl bg-[#FFE4E0] animate-pulse" />
           ))}
         </div>
       </div>
@@ -113,7 +113,7 @@ export function CustomerList() {
 
         <div className="flex items-center gap-3">
           {/* Search */}
-          <div className="flex items-center gap-2 rounded-xl bg-white px-3 py-2.5 ring-1 ring-zinc-200/50 shadow-soft w-full sm:w-64 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] focus-within:ring-brand-400 focus-within:ring-2">
+          <div className="flex items-center gap-2 rounded-xl bg-white px-3 py-2.5 ring-1 ring-[#FFE4E0] shadow-soft w-full sm:w-64 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] focus-within:ring-[#FF6B6B] focus-within:ring-2">
             <MagnifyingGlass size={16} className="text-zinc-400 flex-shrink-0" />
             <input
               type="text"
@@ -130,7 +130,7 @@ export function CustomerList() {
           {/* Export button */}
           <button
             onClick={handleExport}
-            className="flex items-center gap-2 rounded-full bg-white px-4 py-2.5 text-sm font-medium text-zinc-700 ring-1 ring-zinc-200/50 shadow-soft transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98] whitespace-nowrap"
+            className="flex items-center gap-2 rounded-full bg-white px-4 py-2.5 text-sm font-medium text-zinc-700 ring-1 ring-[#FFE4E0] shadow-soft transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98] whitespace-nowrap"
           >
             <DownloadSimple size={16} weight="bold" />
             내보내기
@@ -139,7 +139,7 @@ export function CustomerList() {
           {/* Add button */}
           <button
             onClick={() => setShowCreateModal(true)}
-            className="flex items-center gap-2 rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-zinc-800 active:scale-[0.98] whitespace-nowrap"
+            className="flex items-center gap-2 rounded-full bg-gradient-to-r from-[#FF6B6B] to-[#FF8E8E] shadow-[0_4px_15px_rgba(255,107,107,0.3)] px-5 py-2.5 text-sm font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:from-[#FF5252] hover:to-[#FF7B7B] active:scale-[0.98] whitespace-nowrap"
           >
             <UserPlus size={16} weight="bold" />
             고객 등록
@@ -149,8 +149,8 @@ export function CustomerList() {
 
       {/* Customer table */}
       {customers.length === 0 ? (
-        <div className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft p-16 flex flex-col items-center justify-center text-center">
-          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-zinc-100 mb-6">
+        <div className="rounded-2xl bg-white ring-1 ring-[#FFE4E0] shadow-soft p-16 flex flex-col items-center justify-center text-center">
+          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[#FF6B6B10] mb-6">
             <Users size={32} weight="regular" className="text-zinc-400" />
           </div>
           <h3 className="text-lg font-semibold tracking-tight text-zinc-900">
@@ -162,7 +162,7 @@ export function CustomerList() {
           {!search && (
             <button
               onClick={() => setShowCreateModal(true)}
-              className="mt-6 flex items-center gap-2 rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-zinc-800 active:scale-[0.98]"
+              className="mt-6 flex items-center gap-2 rounded-full bg-gradient-to-r from-[#FF6B6B] to-[#FF8E8E] shadow-[0_4px_15px_rgba(255,107,107,0.3)] px-5 py-2.5 text-sm font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:from-[#FF5252] hover:to-[#FF7B7B] active:scale-[0.98]"
             >
               <UserPlus size={16} weight="bold" />
               고객 등록
@@ -177,7 +177,7 @@ export function CustomerList() {
             <Link
               key={customer.id}
               href={`/customers/${customer.id}`}
-              className="block rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft p-4 transition-all duration-200 hover:shadow-soft-lg active:scale-[0.99]"
+              className="block rounded-2xl bg-white ring-1 ring-[#FFE4E0] shadow-soft p-4 transition-all duration-200 hover:shadow-soft-lg active:scale-[0.99]"
             >
               <div className="flex items-center gap-3">
                 <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-zinc-100 to-zinc-200 flex items-center justify-center text-sm font-semibold text-zinc-600 flex-shrink-0">
@@ -216,9 +216,9 @@ export function CustomerList() {
         </div>
 
         {/* Desktop table layout */}
-        <div className="hidden md:block rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft overflow-hidden">
+        <div className="hidden md:block rounded-2xl bg-white ring-1 ring-[#FFE4E0] shadow-soft overflow-hidden">
           {/* Table header */}
-          <div className="grid grid-cols-[1fr_140px_100px_80px_120px_160px] gap-4 px-6 py-3.5 border-b border-zinc-100 bg-zinc-50/50">
+          <div className="grid grid-cols-[1fr_140px_100px_80px_120px_160px] gap-4 px-6 py-3.5 border-b border-[#FFE4E0] bg-[#FFF8F6]">
             <span className="text-[11px] font-medium text-zinc-500 uppercase tracking-wider">
               고객명
             </span>
@@ -244,11 +244,11 @@ export function CustomerList() {
             <Link
               key={customer.id}
               href={`/customers/${customer.id}`}
-              className="grid grid-cols-[1fr_140px_100px_80px_120px_160px] gap-4 px-6 py-4 items-center border-b border-zinc-50 last:border-b-0 transition-all duration-200 hover:bg-zinc-50/80 group cursor-pointer"
+              className="grid grid-cols-[1fr_140px_100px_80px_120px_160px] gap-4 px-6 py-4 items-center border-b border-zinc-50 last:border-b-0 transition-all duration-200 hover:bg-[#FFF8F6] group cursor-pointer"
             >
               {/* Name */}
               <div className="flex items-center gap-3 min-w-0">
-                <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-zinc-100 to-zinc-200 flex items-center justify-center text-sm font-semibold text-zinc-600 flex-shrink-0 transition-all duration-300 group-hover:from-brand-50 group-hover:to-brand-100 group-hover:text-brand-700">
+                <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-zinc-100 to-zinc-200 flex items-center justify-center text-sm font-semibold text-zinc-600 flex-shrink-0 transition-all duration-300 group-hover:from-[#FF6B6B15] group-hover:to-[#FF6B6B20] group-hover:text-[#FF6B6B]">
                   {customer.name?.[0] ?? '?'}
                 </div>
                 <span className="text-sm font-medium text-zinc-800 truncate">
@@ -307,7 +307,7 @@ export function CustomerList() {
           <button
             onClick={() => setPage((p) => Math.max(1, p - 1))}
             disabled={page === 1}
-            className="flex h-9 w-9 items-center justify-center rounded-xl bg-white ring-1 ring-zinc-200/50 shadow-soft transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98] disabled:opacity-40 disabled:hover:shadow-soft disabled:hover:translate-y-0"
+            className="flex h-9 w-9 items-center justify-center rounded-xl bg-white ring-1 ring-[#FFE4E0] shadow-soft transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98] disabled:opacity-40 disabled:hover:shadow-soft disabled:hover:translate-y-0"
           >
             <CaretLeft size={14} className="text-zinc-600" />
           </button>
@@ -318,8 +318,8 @@ export function CustomerList() {
               className={cn(
                 'flex h-9 w-9 items-center justify-center rounded-xl text-sm font-mono font-medium transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)]',
                 p === page
-                  ? 'bg-zinc-900 text-white shadow-soft'
-                  : 'bg-white text-zinc-600 ring-1 ring-zinc-200/50 shadow-soft hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98]',
+                  ? 'bg-gradient-to-r from-[#FF6B6B] to-[#FF8E8E] text-white shadow-[0_4px_15px_rgba(255,107,107,0.3)] shadow-soft'
+                  : 'bg-white text-zinc-600 ring-1 ring-[#FFE4E0] shadow-soft hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98]',
               )}
             >
               {p}
@@ -328,7 +328,7 @@ export function CustomerList() {
           <button
             onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
             disabled={page === totalPages}
-            className="flex h-9 w-9 items-center justify-center rounded-xl bg-white ring-1 ring-zinc-200/50 shadow-soft transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98] disabled:opacity-40 disabled:hover:shadow-soft disabled:hover:translate-y-0"
+            className="flex h-9 w-9 items-center justify-center rounded-xl bg-white ring-1 ring-[#FFE4E0] shadow-soft transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 active:scale-[0.98] disabled:opacity-40 disabled:hover:shadow-soft disabled:hover:translate-y-0"
           >
             <CaretRight size={14} className="text-zinc-600" />
           </button>

@@ -1,0 +1,4 @@
+{
+  "error": "Unauthorized",
+  "message": "User not logged in"
+}

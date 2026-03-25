@@ -1,0 +1,64 @@
+{
+  "procedureCategoryGroups": [
+    {
+      "category": {
+        "id": 1,
+        "code": "NAIL",
+        "name": "네일",
+        "sortOrder": null
+      },
+      "procedureKindGroups": [
+        {
+          "kind": "손 관리",
+          "procedures": [
+            {
+              "id": 1,
+              "name": "기본 손톱 관리",
+              "description": "기본 손톱 케어와 광택 처리.",
+              "price": 30000,
+              "shopMembershipPrice": 25000,
+              "thumbnailImageUrl": null,
+              "duration": "00:40",
+              "isSignatureProcedure": false
+            },
+            {
+              "id": 2,
+              "name": "젤 네일",
+              "description": "젤 네일 시술로 오래가는 아름다움.",
+              "price": 50000,
+              "shopMembershipPrice": 45000,
+              "thumbnailImageUrl": null,
+              "duration": "01:00",
+              "isSignatureProcedure": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": {
+        "id": 2,
+        "code": "EYELASH",
+        "name": "속눈썹",
+        "sortOrder": null
+      },
+      "procedureKindGroups": [
+        {
+          "kind": "속눈썹 연장",
+          "procedures": [
+            {
+              "id": 3,
+              "name": "기본 속눈썹 연장",
+              "description": "자연스러운 속눈썹 연장",
+              "price": 40000,
+              "shopMembershipPrice": 35000,
+              "thumbnailImageUrl": null,
+              "duration": "01:30",
+              "isSignatureProcedure": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

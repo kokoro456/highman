@@ -89,6 +89,8 @@ model Shop {
   inAppNotifications  InAppNotification[]
   coupons             Coupon[]
   onlinePayments      OnlinePayment[]
+  membershipCards     MembershipCard[]
+  pointTransactions   PointTransaction[]
 
   @@map("shops")
 }
@@ -171,6 +173,8 @@ model Booking {
   source         BookingSource @default(DIRECT)
   memo           String?
   naverBookingId String?
+  depositAmount  Int           @default(0)
+  depositStatus  DepositStatus @default(NONE)
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
 
@@ -198,6 +202,13 @@ enum BookingSource {
   NAVER
   B2C_WEB
   B2C_APP
+}
+
+enum DepositStatus {
+  NONE
+  PENDING
+  PAID
+  REFUNDED
 }
 
 model Schedule {
@@ -239,12 +250,16 @@ model Customer {
   createdAt        DateTime     @default(now())
   updatedAt        DateTime     @updatedAt
 
+  points             Int          @default(0)
+
   shop               Shop               @relation(fields: [shopId], references: [id], onDelete: Cascade)
   bookings           Booking[]
   payments           Payment[]
   passes             Pass[]
   treatmentHistories TreatmentHistory[]
   photos             CustomerPhoto[]
+  membershipCards    MembershipCard[]
+  pointTransactions  PointTransaction[]
 
   @@unique([shopId, phone])
   @@map("customers")
@@ -703,4 +718,75 @@ enum OnlinePaymentStatus {
   FAILED
   CANCELLED
   REFUNDED
+}
+
+// ==================== MEMBERSHIP CARD ====================
+
+model MembershipCard {
+  id              String             @id @default(uuid())
+  shopId          String
+  customerId      String
+  name            String
+  type            MembershipCardType
+  totalAmount     Decimal?           @db.Decimal(12, 2)
+  remainingAmount Decimal?           @db.Decimal(12, 2)
+  discountRate    Decimal?           @db.Decimal(5, 2)
+  totalCount      Int?
+  remainingCount  Int?
+  validFrom       DateTime
+  validUntil      DateTime?
+  isActive        Boolean            @default(true)
+  createdAt       DateTime           @default(now())
+
+  shop     Shop              @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  customer Customer          @relation(fields: [customerId], references: [id])
+  usages   MembershipUsage[]
+
+  @@index([shopId])
+  @@index([customerId])
+  @@map("membership_cards")
+}
+
+enum MembershipCardType {
+  AMOUNT
+  DISCOUNT
+  COUNT
+}
+
+model MembershipUsage {
+  id               String   @id @default(uuid())
+  membershipCardId String
+  amount           Decimal  @db.Decimal(12, 2)
+  description      String
+  createdAt        DateTime @default(now())
+
+  membershipCard MembershipCard @relation(fields: [membershipCardId], references: [id], onDelete: Cascade)
+
+  @@index([membershipCardId])
+  @@map("membership_usages")
+}
+
+// ==================== POINT TRANSACTION ====================
+
+model PointTransaction {
+  id          String               @id @default(uuid())
+  shopId      String
+  customerId  String
+  points      Int
+  type        PointTransactionType
+  description String
+  createdAt   DateTime             @default(now())
+
+  shop     Shop     @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  customer Customer @relation(fields: [customerId], references: [id])
+
+  @@index([shopId])
+  @@index([customerId])
+  @@map("point_transactions")
+}
+
+enum PointTransactionType {
+  EARN
+  SPEND
+  EXPIRE
 }

@@ -1,0 +1,21 @@
+{
+  "totalCount": 102,
+  "provinces": [
+    {
+      "province": "서울",
+      "shopCount": 42
+    },
+    {
+      "province": "경기",
+      "shopCount": 12
+    },
+    {
+      "province": "인천",
+      "shopCount": 12
+    },
+    {
+      "province": "부산",
+      "shopCount": 30
+    }
+  ]
+}

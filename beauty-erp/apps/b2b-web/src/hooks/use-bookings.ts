@@ -39,3 +39,12 @@ export function useUpdateBookingStatus() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['bookings'] }),
   });
 }
+
+export function useNoShowStats(customerId: string) {
+  return useQuery({
+    queryKey: ['no-show-stats', customerId],
+    queryFn: () => api.get<any>(`/bookings/no-show-stats?customerId=${customerId}`),
+    select: (data) => data.data,
+    enabled: !!customerId,
+  });
+}

@@ -33,7 +33,7 @@ export function StaffManagement() {
         </div>
         <div className="animate-fade-in space-y-4">
           {[...Array(3)].map((_, i) => (
-            <div key={i} className="h-16 rounded-2xl bg-zinc-100 animate-pulse" />
+            <div key={i} className="h-16 rounded-2xl bg-[#FFE4E0] animate-pulse" />
           ))}
         </div>
       </div>
@@ -74,7 +74,7 @@ export function StaffManagement() {
 
         <button
           onClick={() => setShowCreateModal(true)}
-          className="flex items-center gap-2 rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-zinc-800 active:scale-[0.98] whitespace-nowrap"
+          className="flex items-center gap-2 rounded-full bg-gradient-to-r from-[#FF6B6B] to-[#FF8E8E] shadow-[0_4px_15px_rgba(255,107,107,0.3)] px-5 py-2.5 text-sm font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:from-[#FF5252] hover:to-[#FF7B7B] active:scale-[0.98] whitespace-nowrap"
         >
           <UserPlus size={16} weight="bold" />
           직원 등록
@@ -95,7 +95,7 @@ export function StaffManagement() {
           return (
             <div
               key={staff.id}
-              className="rounded-2xl bg-white ring-1 ring-zinc-200/50 shadow-soft p-6 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 cursor-pointer"
+              className="rounded-2xl bg-white ring-1 ring-[#FFE4E0] shadow-soft p-6 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 cursor-pointer"
             >
               {/* Header row */}
               <div className="flex items-center justify-between mb-5">
@@ -118,7 +118,7 @@ export function StaffManagement() {
                 {specialties.map((spec: string) => (
                   <span
                     key={spec}
-                    className="rounded-full bg-zinc-50 px-2.5 py-0.5 text-[10px] font-medium text-zinc-600 ring-1 ring-zinc-200/50"
+                    className="rounded-full bg-[#FFF8F6] px-2.5 py-0.5 text-[10px] font-medium text-zinc-600 ring-1 ring-[#FFE4E0]"
                   >
                     {spec}
                   </span>
@@ -130,7 +130,7 @@ export function StaffManagement() {
 
               {/* Stats - using placeholder values since stats endpoint needs date params */}
               <div className="grid grid-cols-3 gap-3 mb-5">
-                <div className="rounded-xl bg-zinc-50/80 p-3 ring-1 ring-zinc-200/40">
+                <div className="rounded-xl bg-[#FFF8F6] p-3 ring-1 ring-[#FFE4E0]">
                   <div className="flex items-center gap-1.5 mb-1.5">
                     <CalendarDots size={11} className="text-zinc-400" />
                     <span className="text-[9px] font-medium text-zinc-500 uppercase tracking-wider">
@@ -144,7 +144,7 @@ export function StaffManagement() {
                     </span>
                   </p>
                 </div>
-                <div className="rounded-xl bg-zinc-50/80 p-3 ring-1 ring-zinc-200/40">
+                <div className="rounded-xl bg-[#FFF8F6] p-3 ring-1 ring-[#FFE4E0]">
                   <div className="flex items-center gap-1.5 mb-1.5">
                     <CurrencyCircleDollar size={11} className="text-zinc-400" />
                     <span className="text-[9px] font-medium text-zinc-500 uppercase tracking-wider">
@@ -155,14 +155,14 @@ export function StaffManagement() {
                     -
                   </p>
                 </div>
-                <div className="rounded-xl bg-zinc-50/80 p-3 ring-1 ring-zinc-200/40">
+                <div className="rounded-xl bg-[#FFF8F6] p-3 ring-1 ring-[#FFE4E0]">
                   <div className="flex items-center gap-1.5 mb-1.5">
                     <Sparkle size={11} className="text-zinc-400" />
                     <span className="text-[9px] font-medium text-zinc-500 uppercase tracking-wider">
                       인센티브
                     </span>
                   </div>
-                  <p className="text-base font-semibold font-mono text-brand-700 tabular-nums">
+                  <p className="text-base font-semibold font-mono text-[#FF6B6B] tabular-nums">
                     -
                   </p>
                 </div>
@@ -182,7 +182,7 @@ export function StaffManagement() {
                         className={cn(
                           'flex h-7 w-7 items-center justify-center rounded-lg text-[10px] font-medium transition-colors duration-200',
                           isWorking
-                            ? 'bg-zinc-900 text-white'
+                            ? 'bg-gradient-to-r from-[#FF6B6B] to-[#FF8E8E] text-white shadow-[0_4px_15px_rgba(255,107,107,0.3)]'
                             : 'bg-zinc-100 text-zinc-400',
                         )}
                       >
@@ -199,9 +199,9 @@ export function StaffManagement() {
         {/* Empty add card */}
         <div
           onClick={() => setShowCreateModal(true)}
-          className="rounded-2xl border-2 border-dashed border-zinc-200 p-6 flex flex-col items-center justify-center text-center min-h-[280px] transition-all duration-300 hover:border-zinc-300 hover:bg-zinc-50/50 cursor-pointer group"
+          className="rounded-2xl border-2 border-dashed border-zinc-200 p-6 flex flex-col items-center justify-center text-center min-h-[280px] transition-all duration-300 hover:border-zinc-300 hover:bg-[#FFF8F6] cursor-pointer group"
         >
-          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-zinc-100 mb-4 transition-all duration-300 group-hover:bg-zinc-200">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#FF6B6B10] mb-4 transition-all duration-300 group-hover:bg-zinc-200">
             <UserCircle size={28} weight="regular" className="text-zinc-400" />
           </div>
           <p className="text-sm font-medium text-zinc-600">

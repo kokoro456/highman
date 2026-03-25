@@ -6,9 +6,9 @@ import { FormInput, FormSelect, FormTextarea } from '@/components/ui/form-input'
 import { useCustomers } from '@/hooks/use-customers';
 import { useStaff } from '@/hooks/use-staff';
 import { useServiceCategories } from '@/hooks/use-services';
-import { useCreateBooking } from '@/hooks/use-bookings';
+import { useCreateBooking, useNoShowStats } from '@/hooks/use-bookings';
 import { formatCurrency } from '@/lib/utils';
-import { SpinnerGap } from '@phosphor-icons/react';
+import { SpinnerGap, WarningCircle } from '@phosphor-icons/react';
 import { toast } from '@/components/ui/toast';
 
 interface BookingFormModalProps {
@@ -26,6 +26,7 @@ export function BookingFormModal({ open, onOpenChange, selectedDate }: BookingFo
     date: selectedDate ? formatDateInput(selectedDate) : formatDateInput(new Date()),
     time: '10:00',
     memo: '',
+    depositAmount: '',
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitError, setSubmitError] = useState('');
@@ -34,6 +35,7 @@ export function BookingFormModal({ open, onOpenChange, selectedDate }: BookingFo
   const { data: staffList } = useStaff();
   const { data: serviceCategories } = useServiceCategories();
   const createBooking = useCreateBooking();
+  const { data: noShowStats } = useNoShowStats(form.customerId);
 
   const customers = customerData?.data ?? [];
   const staff = staffList ?? [];
@@ -100,6 +102,8 @@ export function BookingFormModal({ open, onOpenChange, selectedDate }: BookingFo
         serviceId: form.serviceId,
         startTime: startTime.toISOString(),
         memo: form.memo || undefined,
+        depositAmount: form.depositAmount ? Number(form.depositAmount) : undefined,
+        depositStatus: form.depositAmount ? 'PENDING' : undefined,
       });
       onOpenChange(false);
       resetForm();
@@ -118,6 +122,7 @@ export function BookingFormModal({ open, onOpenChange, selectedDate }: BookingFo
       date: selectedDate ? formatDateInput(selectedDate) : formatDateInput(new Date()),
       time: '10:00',
       memo: '',
+      depositAmount: '',
     });
     setErrors({});
     setSubmitError('');
@@ -138,7 +143,7 @@ export function BookingFormModal({ open, onOpenChange, selectedDate }: BookingFo
         {/* Customer search + select */}
         <div className="space-y-2">
           <label className="text-xs font-medium text-zinc-600 pl-1">고객</label>
-          <div className="rounded-xl bg-zinc-50/80 p-0.5 ring-1 ring-zinc-200/60 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] focus-within:ring-brand-400 focus-within:ring-2 focus-within:bg-white">
+          <div className="rounded-xl bg-[#FFF8F6] p-0.5 ring-1 ring-[#FFE4E0] transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] focus-within:ring-[#FF6B6B] focus-within:ring-2 focus-within:bg-white">
             <input
               type="text"
               placeholder="고객명 또는 전화번호 검색"
@@ -159,6 +164,16 @@ export function BookingFormModal({ open, onOpenChange, selectedDate }: BookingFo
             />
           )}
         </div>
+
+        {/* No-show warning banner */}
+        {noShowStats && noShowStats.count >= 3 && (
+          <div className="flex items-start gap-2.5 rounded-xl bg-[#FF6B6B10] px-4 py-3 ring-1 ring-[#FF6B6B30]">
+            <WarningCircle size={16} weight="fill" className="text-[#FF6B6B] shrink-0 mt-0.5" />
+            <p className="text-xs text-[#FF6B6B] font-medium leading-relaxed">
+              이 고객은 최근 {noShowStats.count}회 노쇼 이력이 있습니다
+            </p>
+          </div>
+        )}
 
         {staff.length === 0 ? (
           <div className="space-y-2">
@@ -192,7 +207,7 @@ export function BookingFormModal({ open, onOpenChange, selectedDate }: BookingFo
 
         {/* Show duration and price when service selected */}
         {selectedService && (
-          <div className="flex items-center gap-4 rounded-xl bg-zinc-50/80 px-4 py-2.5 ring-1 ring-zinc-200/40">
+          <div className="flex items-center gap-4 rounded-xl bg-[#FFF8F6] px-4 py-2.5 ring-1 ring-[#FFE4E0]">
             <span className="text-xs text-zinc-500">
               소요시간: <span className="font-mono font-medium text-zinc-700">{selectedService.duration}분</span>
             </span>
@@ -226,6 +241,15 @@ export function BookingFormModal({ open, onOpenChange, selectedDate }: BookingFo
           onChange={(e) => setForm((p) => ({ ...p, memo: e.target.value }))}
         />
 
+        {/* Deposit amount */}
+        <FormInput
+          label="예약금 (선택사항)"
+          type="number"
+          placeholder="예약금 금액 (원)"
+          value={form.depositAmount}
+          onChange={(e) => setForm((p) => ({ ...p, depositAmount: e.target.value }))}
+        />
+
         {submitError && (
           <p className="text-xs text-red-500 pl-1">{submitError}</p>
         )}
@@ -241,7 +265,7 @@ export function BookingFormModal({ open, onOpenChange, selectedDate }: BookingFo
           <button
             type="submit"
             disabled={createBooking.isPending}
-            className="flex items-center gap-2 rounded-full bg-zinc-900 px-6 py-2.5 text-sm font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-zinc-800 active:scale-[0.98] disabled:opacity-60"
+            className="flex items-center gap-2 rounded-full bg-gradient-to-r from-[#FF6B6B] to-[#FF8E8E] shadow-[0_4px_15px_rgba(255,107,107,0.3)] px-6 py-2.5 text-sm font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:from-[#FF5252] hover:to-[#FF7B7B] active:scale-[0.98] disabled:opacity-60"
           >
             {createBooking.isPending && <SpinnerGap size={16} className="animate-spin" />}
             예약 등록

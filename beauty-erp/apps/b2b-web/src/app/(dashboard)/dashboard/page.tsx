@@ -5,7 +5,7 @@ import { useDashboardOverview, useUpcomingBookings } from '@/hooks/use-dashboard
 import { usePayments } from '@/hooks/use-payments';
 import { useShop } from '@/hooks/use-shop';
 import { useAuthStore } from '@/lib/auth-store';
-import { formatCurrency } from '@/lib/utils';
+import { cn, formatCurrency } from '@/lib/utils';
 import {
   CalendarDots,
   CreditCard,
@@ -38,12 +38,12 @@ export default function DashboardPage() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {[...Array(4)].map((_, i) => (
-            <div key={i} className="h-28 rounded-2xl bg-zinc-100 animate-pulse" />
+            <div key={i} className="h-28 rounded-2xl bg-[#FFE4E0] animate-pulse" />
           ))}
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          <div className="lg:col-span-2 h-72 rounded-2xl bg-zinc-100 animate-pulse" />
-          <div className="h-72 rounded-2xl bg-zinc-100 animate-pulse" />
+          <div className="lg:col-span-2 h-72 rounded-2xl bg-[#FFE4E0] animate-pulse" />
+          <div className="h-72 rounded-2xl bg-[#FFE4E0] animate-pulse" />
         </div>
       </div>
     );
@@ -74,8 +74,9 @@ export default function DashboardPage() {
       unit: '',
       sub: overview?.weekRevenue ? `이번 주 ${formatCurrency(Number(overview.weekRevenue))}` : '',
       icon: Receipt,
-      iconBg: 'bg-zinc-100',
-      iconColor: 'text-zinc-600',
+      iconBg: 'bg-[#FF6B6B15]',
+      iconColor: 'text-[#FF6B6B]',
+      cardGradient: 'bg-gradient-to-br from-[#FF6B6B08] to-[#FFA07A08]',
     },
     {
       label: '예약 건수',
@@ -83,8 +84,9 @@ export default function DashboardPage() {
       unit: '건',
       sub: '',
       icon: CalendarDots,
-      iconBg: 'bg-brand-50',
-      iconColor: 'text-brand-600',
+      iconBg: 'bg-[#FFA07A15]',
+      iconColor: 'text-[#FFA07A]',
+      cardGradient: 'bg-gradient-to-br from-[#FFA07A08] to-[#FFD93D08]',
       href: '/bookings',
     },
     {
@@ -93,8 +95,9 @@ export default function DashboardPage() {
       unit: '명',
       sub: '',
       icon: UserPlus,
-      iconBg: 'bg-blue-50',
-      iconColor: 'text-blue-600',
+      iconBg: 'bg-[#FFD93D15]',
+      iconColor: 'text-[#E0B520]',
+      cardGradient: 'bg-gradient-to-br from-[#FFD93D08] to-[#FFA07A08]',
     },
     {
       label: '노쇼율',
@@ -102,8 +105,9 @@ export default function DashboardPage() {
       unit: '%',
       sub: `${todayNoShows}건 / ${todayBookings}건`,
       icon: WarningCircle,
-      iconBg: 'bg-amber-50',
-      iconColor: 'text-amber-600',
+      iconBg: 'bg-[#4ECDC415]',
+      iconColor: 'text-[#4ECDC4]',
+      cardGradient: 'bg-gradient-to-br from-[#4ECDC408] to-[#4ECDC415]',
     },
   ];
 
@@ -131,7 +135,7 @@ export default function DashboardPage() {
             <Wrapper
               key={stat.label}
               {...(wrapperProps as any)}
-              className="rounded-2xl bg-white p-6 ring-1 ring-zinc-200/50 shadow-soft transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5"
+              className={cn("rounded-2xl bg-white p-6 ring-1 ring-[#FFE4E0] shadow-warm transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5", (stat as any).cardGradient)}
             >
               <div className="flex items-center justify-between mb-3">
                 <p className="text-xs font-medium text-zinc-500 uppercase tracking-wider">
@@ -160,7 +164,7 @@ export default function DashboardPage() {
       {/* Content */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* 오늘의 예약 */}
-        <div className="lg:col-span-2 rounded-2xl bg-white p-4 md:p-6 ring-1 ring-zinc-200/50 shadow-soft min-h-[200px] md:min-h-[300px]">
+        <div className="lg:col-span-2 rounded-2xl bg-white p-4 md:p-6 ring-1 ring-[#FFE4E0] shadow-warm min-h-[200px] md:min-h-[300px]">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-sm font-medium text-zinc-700">오늘의 예약</h2>
             <Link
@@ -173,7 +177,7 @@ export default function DashboardPage() {
           </div>
           {todayBookings === 0 ? (
             <div className="flex flex-col items-center justify-center py-12 text-center">
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-zinc-100 mb-4">
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#FF6B6B10] mb-4">
                 <CalendarDots size={28} weight="regular" className="text-zinc-400" />
               </div>
               <p className="text-sm font-medium text-zinc-600">오늘 예약이 없습니다</p>
@@ -185,7 +189,7 @@ export default function DashboardPage() {
               <p className="mt-2 text-sm text-zinc-500">건의 예약이 있습니다</p>
               <Link
                 href="/bookings"
-                className="mt-4 flex items-center gap-2 rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-medium text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-zinc-800 active:scale-[0.98]"
+                className="mt-4 flex items-center gap-2 rounded-full bg-gradient-to-r from-[#FF6B6B] to-[#FF8E8E] px-5 py-2.5 text-sm font-medium text-white shadow-[0_4px_15px_rgba(255,107,107,0.3)] transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:from-[#FF5252] hover:to-[#FF7B7B] active:scale-[0.98]"
               >
                 <CalendarDots size={16} weight="bold" />
                 예약 확인하기
@@ -195,11 +199,11 @@ export default function DashboardPage() {
         </div>
 
         {/* 다가오는 예약 */}
-        <div className="rounded-2xl bg-white p-4 md:p-6 ring-1 ring-zinc-200/50 shadow-soft min-h-[200px] md:min-h-[300px]">
+        <div className="rounded-2xl bg-white p-4 md:p-6 ring-1 ring-[#FFE4E0] shadow-warm min-h-[200px] md:min-h-[300px]">
           <h2 className="text-sm font-medium text-zinc-700 mb-4">다가오는 예약</h2>
           {upcoming.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-8 text-center">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-zinc-100 mb-3">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FF6B6B10] mb-3">
                 <CalendarDots size={24} weight="regular" className="text-zinc-400" />
               </div>
               <p className="text-sm text-zinc-400">예정된 예약이 없습니다</p>
@@ -231,7 +235,7 @@ export default function DashboardPage() {
       </div>
 
       {/* 최근 결제 */}
-      <div className="rounded-2xl bg-white p-4 md:p-6 ring-1 ring-zinc-200/50 shadow-soft">
+      <div className="rounded-2xl bg-white p-4 md:p-6 ring-1 ring-[#FFE4E0] shadow-warm">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-sm font-medium text-zinc-700">최근 결제</h2>
           <Link
@@ -244,7 +248,7 @@ export default function DashboardPage() {
         </div>
         {recentPayments.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-8 text-center">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-zinc-100 mb-3">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FF6B6B10] mb-3">
               <CreditCard size={24} weight="regular" className="text-zinc-400" />
             </div>
             <p className="text-sm text-zinc-400">오늘 결제 내역이 없습니다</p>
@@ -284,7 +288,7 @@ export default function DashboardPage() {
       </div>
 
       {/* External integration status */}
-      <div className="rounded-2xl bg-white p-4 md:p-6 ring-1 ring-zinc-200/50 shadow-soft">
+      <div className="rounded-2xl bg-white p-4 md:p-6 ring-1 ring-[#FFE4E0] shadow-warm">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-zinc-100">
@@ -302,32 +306,32 @@ export default function DashboardPage() {
         </div>
         <div className="flex flex-wrap gap-3">
           {shopData?.naverBookingUrl ? (
-            <div className="flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1.5 ring-1 ring-emerald-200/60">
-              <CheckCircle size={14} weight="fill" className="text-emerald-500" />
-              <span className="text-xs font-medium text-emerald-700">네이버 예약</span>
+            <div className="flex items-center gap-1.5 rounded-full bg-[#4ECDC415] px-3 py-1.5 ring-1 ring-[#4ECDC440]">
+              <CheckCircle size={14} weight="fill" className="text-[#4ECDC4]" />
+              <span className="text-xs font-medium text-[#20877F]">네이버 예약</span>
             </div>
           ) : (
-            <div className="flex items-center gap-1.5 rounded-full bg-zinc-50 px-3 py-1.5 ring-1 ring-zinc-200/60">
+            <div className="flex items-center gap-1.5 rounded-full bg-[#FFF8F6] px-3 py-1.5 ring-1 ring-[#FFE4E0]">
               <span className="text-xs text-zinc-400">네이버 예약 - 미연동</span>
             </div>
           )}
           {shopData?.kakaoChannelUrl ? (
-            <div className="flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1.5 ring-1 ring-emerald-200/60">
-              <CheckCircle size={14} weight="fill" className="text-emerald-500" />
-              <span className="text-xs font-medium text-emerald-700">카카오톡</span>
+            <div className="flex items-center gap-1.5 rounded-full bg-[#4ECDC415] px-3 py-1.5 ring-1 ring-[#4ECDC440]">
+              <CheckCircle size={14} weight="fill" className="text-[#4ECDC4]" />
+              <span className="text-xs font-medium text-[#20877F]">카카오톡</span>
             </div>
           ) : (
-            <div className="flex items-center gap-1.5 rounded-full bg-zinc-50 px-3 py-1.5 ring-1 ring-zinc-200/60">
+            <div className="flex items-center gap-1.5 rounded-full bg-[#FFF8F6] px-3 py-1.5 ring-1 ring-[#FFE4E0]">
               <span className="text-xs text-zinc-400">카카오톡 - 미연동</span>
             </div>
           )}
           {shopData?.instagramUrl ? (
-            <div className="flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1.5 ring-1 ring-emerald-200/60">
-              <CheckCircle size={14} weight="fill" className="text-emerald-500" />
-              <span className="text-xs font-medium text-emerald-700">인스타그램</span>
+            <div className="flex items-center gap-1.5 rounded-full bg-[#4ECDC415] px-3 py-1.5 ring-1 ring-[#4ECDC440]">
+              <CheckCircle size={14} weight="fill" className="text-[#4ECDC4]" />
+              <span className="text-xs font-medium text-[#20877F]">인스타그램</span>
             </div>
           ) : (
-            <div className="flex items-center gap-1.5 rounded-full bg-zinc-50 px-3 py-1.5 ring-1 ring-zinc-200/60">
+            <div className="flex items-center gap-1.5 rounded-full bg-[#FFF8F6] px-3 py-1.5 ring-1 ring-[#FFE4E0]">
               <span className="text-xs text-zinc-400">인스타그램 - 미연동</span>
             </div>
           )}

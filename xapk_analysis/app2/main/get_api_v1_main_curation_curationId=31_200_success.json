@@ -1,0 +1,845 @@
+{
+  "id": 31,
+  "title": "봄 네일 하러 가자",
+  "thumbnailImageUrl": "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWNC6F1WNAW07ABC8WHPBP2.jpg",
+  "shopList": [
+    {
+      "id": "S000004017",
+      "name": "다빈치네일(회원 예약금 안받음)",
+      "categories": [
+        {
+          "id": 17911,
+          "code": "NAIL",
+          "name": "네일",
+          "sortOrder": 0
+        },
+        {
+          "id": 17912,
+          "code": "BARBER",
+          "name": "바버",
+          "sortOrder": 0
+        },
+        {
+          "id": 17913,
+          "code": "HAIR",
+          "name": "헤어",
+          "sortOrder": 0
+        },
+        {
+          "id": 17914,
+          "code": "EYELASHES",
+          "name": "속눈썹",
+          "sortOrder": 0
+        },
+        {
+          "id": 17915,
+          "code": "WAXING",
+          "name": "왁싱",
+          "sortOrder": 0
+        },
+        {
+          "id": 17916,
+          "code": "TANNING",
+          "name": "태닝",
+          "sortOrder": 0
+        },
+        {
+          "id": 17917,
+          "code": "SKINCARE",
+          "name": "피부관리",
+          "sortOrder": 0
+        },
+        {
+          "id": 17918,
+          "code": "SEMI_PERMANENT",
+          "name": "반영구",
+          "sortOrder": 0
+        },
+        {
+          "id": 17919,
+          "code": "TATTOO",
+          "name": "타투",
+          "sortOrder": 0
+        },
+        {
+          "id": 17920,
+          "code": "SCALP_HAIR_CARE",
+          "name": "두피/탈모관리",
+          "sortOrder": 0
+        },
+        {
+          "id": 17921,
+          "code": "MAKEUP",
+          "name": "메이크업",
+          "sortOrder": 0
+        },
+        {
+          "id": 17922,
+          "code": "MASSAGE",
+          "name": "마사지",
+          "sortOrder": 0
+        }
+      ],
+      "businessSchedule": [
+        {
+          "dayOfWeek": "MONDAY",
+          "businessStartTime": "00:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "TUESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "WEDNESDAY",
+          "businessStartTime": null,
+          "businessEndTime": null,
+          "isHoliday": true
+        },
+        {
+          "dayOfWeek": "THURSDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "23:59",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "FRIDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SATURDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SUNDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        }
+      ],
+      "thumbnailImages": [
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWNC6F1WNAW07ABC8WHPBP2.jpg",
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWNC6W06HSHPYRDGBRZWXCD.jpg",
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/03/04/5a3b55eb-d768-4160-98dd-e24168335631.jpg"
+      ],
+      "latitude": 37.50163399711653,
+      "longitude": 127.0287947279118,
+      "labels": [],
+      "signatureProcedure": {
+        "id": 234864,
+        "name": "손케어+영양",
+        "description": null,
+        "price": 20000,
+        "shopMembershipPrice": null,
+        "thumbnailImageUrl": null,
+        "duration": "00:30:00",
+        "isSignatureProcedure": true
+      }
+    },
+    {
+      "id": "S000003972",
+      "name": "네일포시즌 성수점 이름 길게 해볼게요 이름 이게 이러히ㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㅇㄹㄴ",
+      "categories": [
+        {
+          "id": 17910,
+          "code": "NAIL",
+          "name": "네일",
+          "sortOrder": 0
+        }
+      ],
+      "businessSchedule": [
+        {
+          "dayOfWeek": "MONDAY",
+          "businessStartTime": null,
+          "businessEndTime": null,
+          "isHoliday": true
+        },
+        {
+          "dayOfWeek": "TUESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "WEDNESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "THURSDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "FRIDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SATURDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SUNDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        }
+      ],
+      "thumbnailImages": [
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/03/01JGN3R03CPHA7RP6M5VA3DKZY.jpg",
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/03/01JGN3R0VK0X3VV27XJHJRHCDV.jpg",
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/03/01JGN3R17AWBEX4JR8YNREDRRH.jpg"
+      ],
+      "latitude": 37.5489059718514,
+      "longitude": 127.049576121605,
+      "labels": [
+        {
+          "labelImageUrl": "https://dev-zero-cdn.gongbiz.kr/static/icon/label/booking_auto_confirm.png",
+          "displayOrder": 1
+        }
+      ],
+      "signatureProcedure": {
+        "id": 233021,
+        "name": "원컬러네일",
+        "description": null,
+        "price": 29000,
+        "shopMembershipPrice": null,
+        "thumbnailImageUrl": null,
+        "duration": "01:00:00",
+        "isSignatureProcedure": true
+      }
+    },
+    {
+      "id": "S000004013",
+      "name": "네일포시즌 풋풋한리쌤 역삼점",
+      "categories": [
+        {
+          "id": 16550,
+          "code": "NAIL",
+          "name": "네일",
+          "sortOrder": 0
+        }
+      ],
+      "businessSchedule": [
+        {
+          "dayOfWeek": "MONDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "TUESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "WEDNESDAY",
+          "businessStartTime": "09:00",
+          "businessEndTime": "21:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "THURSDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "FRIDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SATURDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SUNDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        }
+      ],
+      "thumbnailImages": [
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWNFKT9PK0GTC95QW4WEWSN.jpg",
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWNFM9643EB0CZCCCTZ1BDH.jpg"
+      ],
+      "latitude": 37.493237966009175,
+      "longitude": 127.02783355823716,
+      "labels": [
+        {
+          "labelImageUrl": "https://dev-zero-cdn.gongbiz.kr/static/icon/label/popular_shop.png",
+          "displayOrder": 1
+        },
+        {
+          "labelImageUrl": "https://dev-zero-cdn.gongbiz.kr/static/icon/label/booking_auto_confirm.png",
+          "displayOrder": 2
+        }
+      ],
+      "signatureProcedure": {
+        "id": 234692,
+        "name": "풀컬러",
+        "description": null,
+        "price": 50000,
+        "shopMembershipPrice": null,
+        "thumbnailImageUrl": null,
+        "duration": "01:00:00",
+        "isSignatureProcedure": true
+      }
+    },
+    {
+      "id": "S000004022",
+      "name": "또바기네일",
+      "categories": [
+        {
+          "id": 16563,
+          "code": "NAIL",
+          "name": "네일",
+          "sortOrder": 0
+        },
+        {
+          "id": 16564,
+          "code": "EYELASHES",
+          "name": "속눈썹",
+          "sortOrder": 0
+        }
+      ],
+      "businessSchedule": [
+        {
+          "dayOfWeek": "MONDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "TUESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "WEDNESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "THURSDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "FRIDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SATURDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SUNDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        }
+      ],
+      "thumbnailImages": [
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWNDD1EGSVS1RJE0F60G4RQ.jpg",
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWNDDFCKYAPJ1WVQY3NYPSR.jpg"
+      ],
+      "latitude": 37.49911324683586,
+      "longitude": 127.02901373429472,
+      "labels": [],
+      "signatureProcedure": {
+        "id": 235128,
+        "name": "속눈썹펌",
+        "description": null,
+        "price": 60000,
+        "shopMembershipPrice": null,
+        "thumbnailImageUrl": null,
+        "duration": "01:00:00",
+        "isSignatureProcedure": true
+      }
+    },
+    {
+      "id": "S000003971",
+      "name": "키키네일 (예약금 없음 즉시 확정)",
+      "categories": [
+        {
+          "id": 17863,
+          "code": "NAIL",
+          "name": "네일",
+          "sortOrder": 0
+        }
+      ],
+      "businessSchedule": [
+        {
+          "dayOfWeek": "MONDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "TUESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "WEDNESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "THURSDAY",
+          "businessStartTime": "08:30",
+          "businessEndTime": "23:30",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "FRIDAY",
+          "businessStartTime": "07:30",
+          "businessEndTime": "23:59",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SATURDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SUNDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        }
+      ],
+      "thumbnailImages": [
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/03/01JGMY47DW6WC57JBN0CRHAE31.jpg",
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/03/01JGMY47TB4B2XFXFDQVWV49C0.jpg"
+      ],
+      "latitude": 37.546473552340075,
+      "longitude": 127.04584097194358,
+      "labels": [
+        {
+          "labelImageUrl": "https://dev-zero-cdn.gongbiz.kr/static/icon/label/booking_auto_confirm.png",
+          "displayOrder": 1
+        }
+      ],
+      "signatureProcedure": null
+    },
+    {
+      "id": "S000004006",
+      "name": "네일유메",
+      "categories": [
+        {
+          "id": 17446,
+          "code": "NAIL",
+          "name": "네일",
+          "sortOrder": 0
+        },
+        {
+          "id": 17447,
+          "code": "WAXING",
+          "name": "왁싱",
+          "sortOrder": 0
+        }
+      ],
+      "businessSchedule": [
+        {
+          "dayOfWeek": "MONDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "TUESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "WEDNESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "THURSDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "FRIDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SATURDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SUNDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        }
+      ],
+      "thumbnailImages": [
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWNGBW7ST85GX9JHSFW7DF3.jpg",
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWNGCAEEY5TTG6P1T0QW299.jpg"
+      ],
+      "latitude": 37.49997486637671,
+      "longitude": 127.02217847433792,
+      "labels": [],
+      "signatureProcedure": {
+        "id": 234461,
+        "name": "베이직 케어(여성)",
+        "description": null,
+        "price": 45000,
+        "shopMembershipPrice": null,
+        "thumbnailImageUrl": null,
+        "duration": "01:00:00",
+        "isSignatureProcedure": true
+      }
+    },
+    {
+      "id": "S000004007",
+      "name": "네일은 청담",
+      "categories": [
+        {
+          "id": 16541,
+          "code": "NAIL",
+          "name": "네일",
+          "sortOrder": 0
+        },
+        {
+          "id": 16542,
+          "code": "EYELASHES",
+          "name": "속눈썹",
+          "sortOrder": 0
+        }
+      ],
+      "businessSchedule": [
+        {
+          "dayOfWeek": "MONDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "TUESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "WEDNESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "THURSDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "FRIDAY",
+          "businessStartTime": "08:10",
+          "businessEndTime": "21:50",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SATURDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SUNDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "21:00",
+          "isHoliday": false
+        }
+      ],
+      "thumbnailImages": [
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWNAGEYR0D88HCH6C55HDD3.jpg",
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWNAGYTH8NCE43G86HKJ8VX.jpg"
+      ],
+      "latitude": 37.49803218369432,
+      "longitude": 127.02449759080736,
+      "labels": [
+        {
+          "labelImageUrl": "https://dev-zero-cdn.gongbiz.kr/static/icon/label/booking_auto_confirm.png",
+          "displayOrder": 1
+        }
+      ],
+      "signatureProcedure": null
+    },
+    {
+      "id": "S000003995",
+      "name": "네일릿",
+      "categories": [
+        {
+          "id": 16526,
+          "code": "NAIL",
+          "name": "네일",
+          "sortOrder": 0
+        }
+      ],
+      "businessSchedule": [
+        {
+          "dayOfWeek": "MONDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "TUESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "WEDNESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "THURSDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "FRIDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SATURDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SUNDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        }
+      ],
+      "thumbnailImages": [
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWND54G1XGVQHTRK005XDVE.jpg",
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWND3SRQ417RKR2ZFAQ4N9S.jpg",
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWND4H8SWE62BEY5ZCNGRFT.jpg"
+      ],
+      "latitude": 37.500372468071525,
+      "longitude": 127.02464238552439,
+      "labels": [
+        {
+          "labelImageUrl": "https://dev-zero-cdn.gongbiz.kr/static/icon/label/booking_auto_confirm.png",
+          "displayOrder": 1
+        }
+      ],
+      "signatureProcedure": {
+        "id": 233976,
+        "name": "이달의 아트",
+        "description": null,
+        "price": 89000,
+        "shopMembershipPrice": null,
+        "thumbnailImageUrl": null,
+        "duration": "01:30:00",
+        "isSignatureProcedure": true
+      }
+    },
+    {
+      "id": "S000003990",
+      "name": "네일다옴 이름을 길게 해볼거에요 이름을 길게 해볼거에요이름을 길게 해볼거에요",
+      "categories": [
+        {
+          "id": 16881,
+          "code": "NAIL",
+          "name": "네일",
+          "sortOrder": 0
+        }
+      ],
+      "businessSchedule": [
+        {
+          "dayOfWeek": "MONDAY",
+          "businessStartTime": "01:00",
+          "businessEndTime": "23:59",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "TUESDAY",
+          "businessStartTime": "00:10",
+          "businessEndTime": "23:59",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "WEDNESDAY",
+          "businessStartTime": "23:59",
+          "businessEndTime": "23:59",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "THURSDAY",
+          "businessStartTime": null,
+          "businessEndTime": null,
+          "isHoliday": true
+        },
+        {
+          "dayOfWeek": "FRIDAY",
+          "businessStartTime": null,
+          "businessEndTime": null,
+          "isHoliday": true
+        },
+        {
+          "dayOfWeek": "SATURDAY",
+          "businessStartTime": null,
+          "businessEndTime": null,
+          "isHoliday": true
+        },
+        {
+          "dayOfWeek": "SUNDAY",
+          "businessStartTime": "10:30",
+          "businessEndTime": "23:59",
+          "isHoliday": false
+        }
+      ],
+      "thumbnailImages": [
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWNGNPVWF0DCMZS8X8X2637.jpg",
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWNGPA0V7XA8ZSEMNEP5FH1.jpg",
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWNGPXEQZ5GEYY2CTDT8KTN.jpg"
+      ],
+      "latitude": 37.50437931709138,
+      "longitude": 127.02416420722443,
+      "labels": [
+        {
+          "labelImageUrl": "https://dev-zero-cdn.gongbiz.kr/static/icon/label/booking_auto_confirm.png",
+          "displayOrder": 1
+        }
+      ],
+      "signatureProcedure": {
+        "id": 233809,
+        "name": "손케어+영양",
+        "description": null,
+        "price": 20000,
+        "shopMembershipPrice": null,
+        "thumbnailImageUrl": null,
+        "duration": "00:30:00",
+        "isSignatureProcedure": true
+      }
+    },
+    {
+      "id": "S000003999",
+      "name": "네일빛깔",
+      "categories": [
+        {
+          "id": 16531,
+          "code": "NAIL",
+          "name": "네일",
+          "sortOrder": 0
+        }
+      ],
+      "businessSchedule": [
+        {
+          "dayOfWeek": "MONDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "TUESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "WEDNESDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "THURSDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "FRIDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SATURDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        },
+        {
+          "dayOfWeek": "SUNDAY",
+          "businessStartTime": "08:00",
+          "businessEndTime": "22:00",
+          "isHoliday": false
+        }
+      ],
+      "thumbnailImages": [
+        "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWNA3HR34TH02NQE4JNTSZK.jpg"
+      ],
+      "latitude": 37.50085993342542,
+      "longitude": 127.0264210535064,
+      "labels": [
+        {
+          "labelImageUrl": "https://dev-zero-cdn.gongbiz.kr/static/icon/label/booking_auto_confirm.png",
+          "displayOrder": 1
+        }
+      ],
+      "signatureProcedure": {
+        "id": 234149,
+        "name": "풀컬러",
+        "description": null,
+        "price": 50000,
+        "shopMembershipPrice": null,
+        "thumbnailImageUrl": null,
+        "duration": "01:00:00",
+        "isSignatureProcedure": true
+      }
+    }
+  ]
+}

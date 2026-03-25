@@ -1,0 +1,28 @@
+{
+  "banners": [
+    {
+      "id": 1,
+      "title": "봄맞이 네일 컬렉션",
+      "displayOrder": 1,
+      "imageUrl": "https://crm-image.gongbiz.kr/images/uploads/dev/banner/spring-nail-collection.jpg",
+      "actionTarget": "gongb2c://curation/31",
+      "onClickAction": "MOVE_PAGE"
+    },
+    {
+      "id": 2,
+      "title": "신규 가입 혜택",
+      "displayOrder": 2,
+      "imageUrl": "https://crm-image.gongbiz.kr/images/uploads/dev/banner/new-member-benefit.jpg",
+      "actionTarget": "gongb2c://event/new-member",
+      "onClickAction": "MOVE_PAGE"
+    },
+    {
+      "id": 3,
+      "title": "인기 헤어샵 모음",
+      "displayOrder": 3,
+      "imageUrl": "https://crm-image.gongbiz.kr/images/uploads/dev/banner/popular-hair-shops.jpg",
+      "actionTarget": "gongb2c://curation/hair-best",
+      "onClickAction": "MOVE_PAGE"
+    }
+  ]
+}

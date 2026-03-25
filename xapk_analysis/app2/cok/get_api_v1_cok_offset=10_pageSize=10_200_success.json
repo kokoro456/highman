@@ -1,0 +1,199 @@
+{
+  "data": [
+    {
+      "cokId": "cok_101",
+      "thumbnailImageUrl": [
+        "https://example.com/images/cok101_thumb1.jpg",
+        "https://example.com/images/cok101_thumb2.jpg"
+      ],
+      "shopInfo": {
+        "id": "shop_101",
+        "name": "시크 네일",
+        "address": "서울특별시 관악구 관악로 12",
+        "thumbnailImageUrl": "https://example.com/images/shop101_thumb.jpg"
+      },
+      "procedureItem": {
+        "id": 1101,
+        "name": "케어+젤 네일",
+        "price": 48000
+      },
+      "like": {
+        "count": 132,
+        "isLiked": true
+      }
+    },
+    {
+      "cokId": "cok_102",
+      "thumbnailImageUrl": ["https://example.com/images/cok102_thumb1.jpg"],
+      "shopInfo": {
+        "id": "shop_102",
+        "name": "프렌치 헤어",
+        "address": "서울특별시 강서구 공항대로 456",
+        "thumbnailImageUrl": "https://example.com/images/shop102_thumb.jpg"
+      },
+      "procedureItem": {
+        "id": 1202,
+        "name": "볼륨 펌",
+        "price": 65000
+      },
+      "like": {
+        "count": 104,
+        "isLiked": false
+      }
+    },
+    {
+      "cokId": "cok_103",
+      "thumbnailImageUrl": ["https://example.com/images/cok103_thumb1.jpg"],
+      "shopInfo": {
+        "id": "shop_103",
+        "name": "핑크 네일",
+        "address": "서울특별시 은평구 불광로 89",
+        "thumbnailImageUrl": "https://example.com/images/shop103_thumb.jpg"
+      },
+      "procedureItem": {
+        "id": 1303,
+        "name": "프렌치 네일",
+        "price": 43000
+      },
+      "like": {
+        "count": 70,
+        "isLiked": true
+      }
+    },
+    {
+      "cokId": "cok_104",
+      "thumbnailImageUrl": ["https://example.com/images/cok104_thumb1.jpg"],
+      "shopInfo": {
+        "id": "shop_104",
+        "name": "헤어 인",
+        "address": "서울특별시 서대문구 연세로 13",
+        "thumbnailImageUrl": "https://example.com/images/shop104_thumb.jpg"
+      },
+      "procedureItem": {
+        "id": 1404,
+        "name": "레이어드 컷",
+        "price": 28000
+      },
+      "like": {
+        "count": 82,
+        "isLiked": false
+      }
+    },
+    {
+      "cokId": "cok_105",
+      "thumbnailImageUrl": ["https://example.com/images/cok105_thumb1.jpg"],
+      "shopInfo": {
+        "id": "shop_105",
+        "name": "아트 네일",
+        "address": "서울특별시 성동구 왕십리로 50",
+        "thumbnailImageUrl": "https://example.com/images/shop105_thumb.jpg"
+      },
+      "procedureItem": {
+        "id": 1505,
+        "name": "네일 풀케어",
+        "price": 52000
+      },
+      "like": {
+        "count": 98,
+        "isLiked": true
+      }
+    },
+    {
+      "cokId": "cok_106",
+      "thumbnailImageUrl": ["https://example.com/images/cok106_thumb1.jpg"],
+      "shopInfo": {
+        "id": "shop_106",
+        "name": "헤어스타",
+        "address": "서울특별시 동대문구 장한로 88",
+        "thumbnailImageUrl": "https://example.com/images/shop106_thumb.jpg"
+      },
+      "procedureItem": {
+        "id": 1606,
+        "name": "볼륨 매직",
+        "price": 78000
+      },
+      "like": {
+        "count": 113,
+        "isLiked": true
+      }
+    },
+    {
+      "cokId": "cok_107",
+      "thumbnailImageUrl": ["https://example.com/images/cok107_thumb1.jpg"],
+      "shopInfo": {
+        "id": "shop_107",
+        "name": "살롱 드 핑크",
+        "address": "서울특별시 강남구 논현로 123",
+        "thumbnailImageUrl": "https://example.com/images/shop107_thumb.jpg"
+      },
+      "procedureItem": {
+        "id": 1707,
+        "name": "투톤 염색",
+        "price": 99000
+      },
+      "like": {
+        "count": 146,
+        "isLiked": false
+      }
+    },
+    {
+      "cokId": "cok_108",
+      "thumbnailImageUrl": ["https://example.com/images/cok108_thumb1.jpg"],
+      "shopInfo": {
+        "id": "shop_108",
+        "name": "네일큐",
+        "address": "서울특별시 양천구 목동서로 201",
+        "thumbnailImageUrl": "https://example.com/images/shop108_thumb.jpg"
+      },
+      "procedureItem": {
+        "id": 1808,
+        "name": "젤 네일 디자인",
+        "price": 49000
+      },
+      "like": {
+        "count": 85,
+        "isLiked": true
+      }
+    },
+    {
+      "cokId": "cok_109",
+      "thumbnailImageUrl": ["https://example.com/images/cok109_thumb1.jpg"],
+      "shopInfo": {
+        "id": "shop_109",
+        "name": "헤어모드",
+        "address": "서울특별시 중랑구 망우로 245",
+        "thumbnailImageUrl": "https://example.com/images/shop109_thumb.jpg"
+      },
+      "procedureItem": {
+        "id": 1909,
+        "name": "남성 커트",
+        "price": 22000
+      },
+      "like": {
+        "count": 58,
+        "isLiked": false
+      }
+    },
+    {
+      "cokId": "cok_110",
+      "thumbnailImageUrl": ["https://example.com/images/cok109_thumb1.jpg"],
+      "shopInfo": {
+        "id": "shop_110",
+        "name": "헤어모드2",
+        "address": "서울특별시 중랑구 망우로 24522",
+        "thumbnailImageUrl": "https://example.com/images/shop109_thumb.jpg"
+      },
+      "procedureItem": {
+        "id": 1909,
+        "name": "남성 커트22",
+        "price": 12000
+      },
+      "like": {
+        "count": 0,
+        "isLiked": false
+      }
+    }
+  ],
+  "offset": 10,
+  "hasMore": true
+}

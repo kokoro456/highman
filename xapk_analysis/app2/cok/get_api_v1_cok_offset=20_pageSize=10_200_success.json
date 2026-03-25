@@ -1,0 +1,82 @@
+{
+  "data": [
+    {
+      "cokId": "cok_201",
+      "thumbnailImageUrl": ["https://example.com/images/cok201_thumb1.jpg"],
+      "shopInfo": {
+        "id": "shop_201",
+        "name": "모던 헤어살롱",
+        "address": "서울특별시 강남구 삼성로 321",
+        "thumbnailImageUrl": "https://example.com/images/shop201_thumb.jpg"
+      },
+      "procedureItem": {
+        "id": 2101,
+        "name": "디자인 커트",
+        "price": 30000
+      },
+      "like": {
+        "count": 42,
+        "isLiked": false
+      }
+    },
+    {
+      "cokId": "cok_202",
+      "thumbnailImageUrl": ["https://example.com/images/cok202_thumb1.jpg"],
+      "shopInfo": {
+        "id": "shop_202",
+        "name": "네일인사이드",
+        "address": "서울특별시 마포구 와우산로 94",
+        "thumbnailImageUrl": "https://example.com/images/shop202_thumb.jpg"
+      },
+      "procedureItem": {
+        "id": 2202,
+        "name": "젤 네일 풀세트",
+        "price": 55000
+      },
+      "like": {
+        "count": 67,
+        "isLiked": true
+      }
+    },
+    {
+      "cokId": "cok_203",
+      "thumbnailImageUrl": ["https://example.com/images/cok203_thumb1.jpg"],
+      "shopInfo": {
+        "id": "shop_203",
+        "name": "헤어디자인 by MJ",
+        "address": "서울특별시 종로구 대학로 10",
+        "thumbnailImageUrl": "https://example.com/images/shop203_thumb.jpg"
+      },
+      "procedureItem": {
+        "id": 2303,
+        "name": "볼륨매직+컷",
+        "price": 88000
+      },
+      "like": {
+        "count": 59,
+        "isLiked": false
+      }
+    },
+    {
+      "cokId": "cok_204",
+      "thumbnailImageUrl": ["https://example.com/images/cok204_thumb1.jpg"],
+      "shopInfo": {
+        "id": "shop_204",
+        "name": "네일스토리",
+        "address": "서울특별시 동작구 흑석로 27",
+        "thumbnailImageUrl": "https://example.com/images/shop204_thumb.jpg"
+      },
+      "procedureItem": {
+        "id": 2404,
+        "name": "기초 네일케어",
+        "price": 19000
+      },
+      "like": {
+        "count": 24,
+        "isLiked": true
+      }
+    }
+  ],
+  "offset": 20,
+  "hasMore": false
+}

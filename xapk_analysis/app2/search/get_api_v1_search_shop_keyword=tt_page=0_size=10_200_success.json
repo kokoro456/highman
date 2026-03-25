@@ -1,0 +1,137 @@
+{
+  "content": [
+    {
+      "id": "S000000004",
+      "name": "오브니 네일 스튜니오",
+      "categorys": [
+        {
+          "id": 1,
+          "code": "NAIL",
+          "name": "네일",
+          "sort": 1
+        },
+        {
+          "id": 2,
+          "code": "HAIR",
+          "name": "헤어",
+          "sort": 2
+        },
+        {
+          "id": 3,
+          "code": "WAXING",
+          "name": "왁싱",
+          "sort": 3
+        }
+      ],
+      "businessStartTime": "10:00",
+      "businessEndTime": "20:00",
+      "thumbnailImages": [
+        "https://img.allurekorea.com/allure/2024/03/style_65e568a80aadb-700x394.png",
+        "https://img.allurekorea.com/allure/2024/01/style_6597a2b5a7d92.jpg",
+        "https://img.marieclairekorea.com/2021/07/mck_60dd80b638c85.jpg"
+      ],
+      "latitude": 36.6433255,
+      "longitude": 127.4278548,
+      "distance": 132.121,
+      "regDate": "2024-10-10 13:24:32",
+      "signatureProcedure": {
+        "id": 1,
+        "name": "네일 시술명1",
+        "description": "파츠를 올려드려요. 여러가지 모양 선택 가능합니다.",
+        "price": 75000,
+        "shopMemberPrice": 55000,
+        "thumbnailImageUrl": "https://s3-url",
+        "duration": "01:30",
+        "isSignatureProcedure": true
+      }
+    },
+    {
+      "id": "S000000006",
+      "name": "헤렌 네일",
+      "categorys": [
+        {
+          "id": 1,
+          "code": "NAIL",
+          "name": "네일",
+          "sort": 1
+        }
+      ],
+      "businessStartTime": "09:00",
+      "businessEndTime": "18:00",
+      "thumbnailImages": [
+        "https://m.bonniebeenail.com/web/product/extra/big/202303/c66262b1576612fb6edabaf2cc55822d.jpg",
+        "https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/668/4d46cf6436ee9f1ca84d6015d8af83ff_res.jpeg"
+      ],
+      "latitude": 36.6443255,
+      "longitude": 127.4178548,
+      "distance": 134.121,
+      "regDate": "2024-10-11 13:24:32",
+      "signatureProcedure": {
+        "id": 13,
+        "name": "네일 시술명13",
+        "description": "네일시술 13",
+        "price": 53000,
+        "shopMemberPrice": 29900,
+        "thumbnailImageUrl": "https://s3-url",
+        "duration": "01:30",
+        "isSignatureProcedure": true
+      }
+    },
+    {
+      "id": "S000000009",
+      "name": "헤렌",
+      "categorys": [
+        {
+          "id": 3,
+          "code": "WAXING",
+          "name": "왁싱",
+          "sort": 1
+        }
+      ],
+      "businessStartTime": "10:00",
+      "businessEndTime": "20:00",
+      "thumbnailImages": [
+        "https://lh6.googleusercontent.com/proxy/CmZkcHIV0ObPHea4ztclbIyBE7rA00_OEEjcBiNLKbpxG4owhavCRUA4Pm8HvRKGqouxe0WbEi9MKaeO6zdUtz_GGSggT1yYTBDX4o3rFg"
+      ],
+      "latitude": 36.5433255,
+      "longitude": 127.3278548,
+      "distance": 141.821,
+      "regDate": "2024-09-01 13:24:32",
+      "signatureProcedure": {
+        "id": 241,
+        "name": "네일 시술명241",
+        "description": "헤렌헤렌.",
+        "price": 175000,
+        "shopMemberPrice": 155000,
+        "thumbnailImageUrl": "https://s3-url",
+        "duration": "03:30",
+        "isSignatureProcedure": true
+      }
+    }
+  ],
+  "pageable": {
+    "sort": {
+      "empty": true,
+      "sorted": false,
+      "unsorted": true
+    },
+    "offset": 0,
+    "pageNumber": 0,
+    "pageSize": 10,
+    "paged": true,
+    "unpaged": false
+  },
+  "totalElements": 1,
+  "totalPages": 1,
+  "last": true,
+  "size": 10,
+  "number": 0,
+  "sort": {
+    "empty": true,
+    "sorted": false,
+    "unsorted": true
+  },
+  "numberOfElements": 1,
+  "first": true,
+  "empty": false
+}

@@ -1,0 +1,22 @@
+{
+  "contents": [
+    {
+      "id": 1,
+      "displayPage": "search",
+      "displayOrder": 1,
+      "targetData": "{\"shopId\":\"SHOP_001\",\"shopName\":\"추천샵1\",\"address\":\"서울시 강남구\"}",
+      "imageUrl": "https://example.com/rec1.jpg",
+      "title": "추천 샵 1",
+      "subTitle": "최고의 서비스"
+    },
+    {
+      "id": 2,
+      "displayPage": "search",
+      "displayOrder": 2,
+      "targetData": "{\"shopId\":\"SHOP_002\",\"shopName\":\"추천샵2\",\"address\":\"서울시 서초구\"}",
+      "imageUrl": "https://example.com/rec2.jpg",
+      "title": "추천 샵 2",
+      "subTitle": "인기 많은 샵"
+    }
+  ]
+}

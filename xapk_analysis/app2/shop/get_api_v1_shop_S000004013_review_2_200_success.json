@@ -1,0 +1,12 @@
+{
+  "id": 1,
+  "satisfactionLevel": "BEST",
+  "shop": {
+    "name": "반짝반짝네일샵",
+    "thumbImageUrl": "https://example.com"
+  },
+  "booking": {
+    "bookingDate": "2025-06-06",
+    "bookingTime": "19:00"
+  }
+}

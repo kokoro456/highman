@@ -1,0 +1,124 @@
+{
+  "locationKeywords": [
+    {
+      "id": 1,
+      "keyword": "강남구",
+      "subLabels": ["서울특별시"],
+      "type": "DISTRICT",
+      "latitude": 37.5179681611717,
+      "longitude": 127.047059839521
+    },
+    {
+      "id": 2,
+      "keyword": "강남역",
+      "subLabels": ["2호선", "신분당선"],
+      "type": "STATION",
+      "latitude": 37.4981646510326,
+      "longitude": 127.028307900881
+    },
+    {
+      "id": 3,
+      "keyword": "압구정",
+      "subLabels": ["3호선"],
+      "type": "STATION",
+      "latitude": 37.5270722122378,
+      "longitude": 127.028461688152
+    }
+  ],
+  "shops": {
+    "data": [
+      {
+        "id": "S000004017",
+        "name": "다빈치네일(회원 예약금 안받음)",
+        "address": "서울 강남구 대치1동",
+        "addressDetail": "",
+        "thumbnailImage": "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWNC6F1WNAW07ABC8WHPBP2.jpg",
+        "latitude": 37.50163399711653,
+        "longitude": 127.0287947279118
+      },
+      {
+        "id": "S000003972",
+        "name": "네일포시즌 성수점 이름 길게 해볼게요 이름 이게 이러히ㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㅇㄹㄴ",
+        "address": "서울 성동구 성수1가2동",
+        "addressDetail": "",
+        "thumbnailImage": "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/03/01JGN3R03CPHA7RP6M5VA3DKZY.jpg",
+        "latitude": 37.5489059718514,
+        "longitude": 127.049576121605
+      },
+      {
+        "id": "S000004013",
+        "name": "네일포시즌 풋풋한리쌤 역삼점",
+        "address": "서울 마포구 상암동",
+        "addressDetail": "",
+        "thumbnailImage": "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWNFKT9PK0GTC95QW4WEWSN.jpg",
+        "latitude": 37.5845738880569,
+        "longitude": 126.883197099172
+      },
+      {
+        "id": "S000004022",
+        "name": "또바기네일",
+        "address": "서울 강남구 논현1동",
+        "addressDetail": "",
+        "thumbnailImage": "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWNDD1EGSVS1RJE0F60G4RQ.jpg",
+        "latitude": 37.49911324683586,
+        "longitude": 127.02901373429472
+      },
+      {
+        "id": "S000003971",
+        "name": "키키네일 (예약금 없음 즉시 확정)",
+        "address": "서울 성동구 성수2가1동",
+        "addressDetail": "",
+        "thumbnailImage": "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/03/01JGMY47DW6WC57JBN0CRHAE31.jpg",
+        "latitude": 37.546473552340075,
+        "longitude": 127.04584097194358
+      },
+      {
+        "id": "S000004006",
+        "name": "네일유메",
+        "address": "서울 강남구 신사동",
+        "addressDetail": "",
+        "thumbnailImage": "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWNGBW7ST85GX9JHSFW7DF3.jpg",
+        "latitude": 37.49997486637671,
+        "longitude": 127.02217847433792
+      },
+      {
+        "id": "S000004007",
+        "name": "네일은 청담",
+        "address": "서울 강남구 논현2동",
+        "addressDetail": "",
+        "thumbnailImage": "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWNAGEYR0D88HCH6C55HDD3.jpg",
+        "latitude": 37.49803218369432,
+        "longitude": 127.02449759080736
+      },
+      {
+        "id": "S000003995",
+        "name": "네일릿",
+        "address": "서울 강남구 역삼1동",
+        "addressDetail": "",
+        "thumbnailImage": "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWND54G1XGVQHTRK005XDVE.jpg",
+        "latitude": 37.500372468071525,
+        "longitude": 127.02464238552439
+      },
+      {
+        "id": "S000003990",
+        "name": "네일다옴 이름을 길게 해볼거에요 이름을 길게 해볼거에요이름을 길게 해볼거에요",
+        "address": "서울 강남구 개포2동",
+        "addressDetail": "",
+        "thumbnailImage": "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWNGNPVWF0DCMZS8X8X2637.jpg",
+        "latitude": 37.50437931709138,
+        "longitude": 127.02416420722443
+      },
+      {
+        "id": "S000003999",
+        "name": "네일빛깔",
+        "address": "서울 강남구 신사동",
+        "addressDetail": "",
+        "thumbnailImage": "https://crm-image.gongbiz.kr/images/uploads/dev/completed/2025/01/06/01JGWNA3HR34TH02NQE4JNTSZK.jpg",
+        "latitude": 37.50085993342542,
+        "longitude": 127.0264210535064
+      }
+    ],
+    "offset": 0,
+    "hasMore": false
+  }
+}

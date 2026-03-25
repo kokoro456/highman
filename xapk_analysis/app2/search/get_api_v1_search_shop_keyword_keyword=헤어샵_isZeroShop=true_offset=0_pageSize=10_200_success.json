@@ -1,0 +1,46 @@
+{
+  "locationKeywordList": [
+    {
+      "id": 1,
+      "keyword": "서울 헤어샵",
+      "subLabel": ["서울"],
+      "type": "LOCATION",
+      "latitude": 37.5665,
+      "longitude": 126.9780
+    },
+    {
+      "id": 2,
+      "keyword": "강남 헤어샵",
+      "subLabel": ["강남"],
+      "type": "LOCATION",
+      "latitude": 37.4979,
+      "longitude": 127.0276
+    }
+  ],
+  "shops": {
+    "data": [
+      {
+        "id": "LOC_001",
+        "name": "검색된 샵 1",
+        "address": "서울시 강남구",
+        "addressDetail": "",
+        "thumbnailImage": "https://example.com/shop1.jpg",
+        "latitude": 37.5665,
+        "longitude": 126.9780,
+        "isZeroShop": true
+      },
+      {
+        "id": "LOC_002",
+        "name": "검색된 샵 2",
+        "address": "서울시 서초구",
+        "addressDetail": "",
+        "thumbnailImage": "https://example.com/shop2.jpg",
+        "latitude": 37.4979,
+        "longitude": 127.0276,
+        "isZeroShop": true
+      }
+    ],
+    "hasMore": false,
+    "offset": 0
+  }
+}
