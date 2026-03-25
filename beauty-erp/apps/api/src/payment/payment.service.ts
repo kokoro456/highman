@@ -93,13 +93,21 @@ export class PaymentService {
 
     const where: any = { shopId };
     if (query.startDate && query.endDate) {
-      where.paidAt = { gte: new Date(query.startDate), lte: new Date(query.endDate) };
+      const start = new Date(query.startDate);
+      start.setHours(0, 0, 0, 0);
+      const end = new Date(query.endDate);
+      end.setHours(23, 59, 59, 999);
+      where.paidAt = { gte: start, lte: end };
+    } else if (query.startDate) {
+      const start = new Date(query.startDate);
+      start.setHours(0, 0, 0, 0);
+      where.paidAt = { gte: start };
     }
 
     const [payments, total] = await Promise.all([
       this.prisma.payment.findMany({
         where, skip, take: limit,
-        include: { customer: true, staff: true },
+        include: { customer: true, staff: true, booking: { include: { service: true } } },
         orderBy: { paidAt: 'desc' },
       }),
       this.prisma.payment.count({ where }),
