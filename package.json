@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "postinstall": "cd beauty-erp && npm install",
-    "build": "cd beauty-erp && ./node_modules/.bin/prisma generate && cd apps/api && ./node_modules/.bin/nest build",
+    "build": "cd beauty-erp && ./node_modules/.bin/prisma generate && cd apps/api && node ../../node_modules/@nestjs/cli/bin/nest.js build",
     "start": "cd beauty-erp/apps/api && node dist/main.js"
   },
   "engines": {
