@@ -1,0 +1,11 @@
+[phases.setup]
+nixPkgs = ["nodejs_20", "npm-9_x"]
+
+[phases.install]
+cmds = ["cd beauty-erp && npm install"]
+
+[phases.build]
+cmds = ["cd beauty-erp && npx prisma generate && cd apps/api && npx nest build"]
+
+[start]
+cmd = "cd beauty-erp/apps/api && node dist/main.js"
