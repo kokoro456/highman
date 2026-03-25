@@ -91,6 +91,8 @@ model Shop {
   onlinePayments      OnlinePayment[]
   membershipCards     MembershipCard[]
   pointTransactions   PointTransaction[]
+  messages            Message[]
+  messageTemplates    MessageTemplate[]
 
   @@map("shops")
 }
@@ -260,6 +262,7 @@ model Customer {
   photos             CustomerPhoto[]
   membershipCards    MembershipCard[]
   pointTransactions  PointTransaction[]
+  messages           Message[]
 
   @@unique([shopId, phone])
   @@map("customers")
@@ -789,4 +792,65 @@ enum PointTransactionType {
   EARN
   SPEND
   EXPIRE
+}
+
+// ==================== MESSAGE ====================
+
+model Message {
+  id             String        @id @default(uuid())
+  shopId         String
+  customerId     String?
+  type           MessageType
+  channel        MessageChannel
+  recipientPhone String
+  recipientName  String?
+  content        String        @db.Text
+  status         MessageStatus @default(PENDING)
+  sentAt         DateTime?
+  failReason     String?
+  templateId     String?
+  createdAt      DateTime      @default(now())
+
+  shop     Shop      @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  customer Customer? @relation(fields: [customerId], references: [id])
+
+  @@index([shopId])
+  @@index([shopId, createdAt])
+  @@map("messages")
+}
+
+model MessageTemplate {
+  id        String      @id @default(uuid())
+  shopId    String
+  name      String
+  content   String      @db.Text
+  type      MessageType
+  isActive  Boolean     @default(true)
+  createdAt DateTime    @default(now())
+
+  shop Shop @relation(fields: [shopId], references: [id], onDelete: Cascade)
+
+  @@index([shopId])
+  @@map("message_templates")
+}
+
+enum MessageType {
+  VISIT_REMINDER
+  POST_VISIT
+  PROMOTION
+  CUSTOM
+  BOOKING_CONFIRM
+  BOOKING_CANCEL
+}
+
+enum MessageChannel {
+  SMS
+  ALIMTALK
+}
+
+enum MessageStatus {
+  PENDING
+  SENT
+  FAILED
+  CANCELLED
 }

@@ -21,6 +21,7 @@ import { AlimtalkModule } from './alimtalk/alimtalk.module';
 import { SchedulerModule } from './scheduler/scheduler.module';
 import { AdminModule } from './admin/admin.module';
 import { MembershipModule } from './membership/membership.module';
+import { MessageModule } from './message/message.module';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
 
 @Module({
@@ -46,6 +47,7 @@ import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
     SchedulerModule,
     AdminModule,
     MembershipModule,
+    MessageModule,
   ],
   providers: [
     { provide: APP_GUARD, useClass: JwtAuthGuard },

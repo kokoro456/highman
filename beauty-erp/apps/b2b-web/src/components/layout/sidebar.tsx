@@ -24,6 +24,7 @@ import {
   Wallet,
   Ticket,
   ShieldCheck,
+  ChatCircleDots,
 } from '@phosphor-icons/react';
 import { cn } from '@/lib/utils';
 import { useAuthStore } from '@/lib/auth-store';
@@ -34,6 +35,7 @@ const navItems = [
   { href: '/dashboard', label: '대시보드', icon: ChartBar },
   { href: '/bookings', label: '예약 관리', icon: CalendarDots },
   { href: '/customers', label: '고객 관리', icon: Users },
+  { href: '/messages', label: '고객연락망', icon: ChatCircleDots },
   { href: '/payments', label: '매출/결제', icon: CreditCard },
   { href: '/coupons', label: '쿠폰 관리', icon: Ticket },
   { href: '/reports', label: '보고서', icon: ChartLine },
