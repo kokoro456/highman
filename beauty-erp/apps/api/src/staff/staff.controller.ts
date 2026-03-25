@@ -14,6 +14,18 @@ export class StaffController {
     return { data: staffList, message: 'ok' };
   }
 
+  // Settlement routes MUST be before :id to avoid route collision
+  @Get('settlement')
+  async getMonthlySettlement(
+    @Headers('x-shop-id') shopId: string,
+    @Query('month') month: string,
+  ) {
+    if (!shopId) throw new BadRequestException('shopId is required');
+    if (!month) throw new BadRequestException('month is required (format: YYYY-MM)');
+    const data = await this.staffService.getMonthlySettlement(shopId, month);
+    return { data, message: 'ok' };
+  }
+
   @Post()
   async create(@Headers('x-shop-id') shopId: string, @Body() body: any) {
     const staff = await this.staffService.create(shopId, body);
@@ -26,6 +38,19 @@ export class StaffController {
     return { data: staffList, message: 'ok' };
   }
 
+  @Post('schedules')
+  async upsertSchedule(@Headers('x-shop-id') shopId: string, @Body() body: any) {
+    const schedule = await this.staffService.upsertSchedule(shopId, body);
+    return { data: schedule, message: 'ok' };
+  }
+
+  @Post('incentives')
+  async createIncentive(@Headers('x-shop-id') shopId: string, @Body() body: any) {
+    const incentive = await this.staffService.createIncentive(shopId, body);
+    return { data: incentive, message: 'ok' };
+  }
+
+  // :id routes AFTER static routes
   @Get(':id')
   async findById(@Param('id') id: string, @Headers('x-shop-id') shopId: string) {
     const staff = await this.staffService.findById(id, shopId);
@@ -42,29 +67,6 @@ export class StaffController {
   async delete(@Param('id') id: string, @Headers('x-shop-id') shopId: string) {
     await this.staffService.delete(id, shopId);
     return { data: null, message: 'ok' };
-  }
-
-  @Post('schedules')
-  async upsertSchedule(@Headers('x-shop-id') shopId: string, @Body() body: any) {
-    const schedule = await this.staffService.upsertSchedule(shopId, body);
-    return { data: schedule, message: 'ok' };
-  }
-
-  @Post('incentives')
-  async createIncentive(@Headers('x-shop-id') shopId: string, @Body() body: any) {
-    const incentive = await this.staffService.createIncentive(shopId, body);
-    return { data: incentive, message: 'ok' };
-  }
-
-  @Get('settlement')
-  async getMonthlySettlement(
-    @Headers('x-shop-id') shopId: string,
-    @Query('month') month: string,
-  ) {
-    if (!shopId) throw new BadRequestException('shopId is required');
-    if (!month) throw new BadRequestException('month is required (format: YYYY-MM)');
-    const data = await this.staffService.getMonthlySettlement(shopId, month);
-    return { data, message: 'ok' };
   }
 
   @Get(':id/settlement')
