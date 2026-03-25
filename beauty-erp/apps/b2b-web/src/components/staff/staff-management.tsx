@@ -1,28 +1,53 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
   UserPlus,
   CalendarDots,
   CurrencyCircleDollar,
-  Percent,
   Sparkle,
   UserCircle,
 } from '@phosphor-icons/react';
 import { cn, formatCurrency } from '@/lib/utils';
 import { useStaff } from '@/hooks/use-staff';
+import { useSettlement, type StaffSettlement } from '@/hooks/use-settlement';
 import { StaffFormModal } from './staff-form-modal';
+import { StaffDetailModal } from './staff-detail-modal';
 
 const dayLabels = ['일', '월', '화', '수', '목', '금', '토'];
-const roleLabels = {
+const roleLabels: Record<string, string> = {
+  OWNER: '원장',
+  MANAGER: '매니저',
   DESIGNER: '디자이너',
   ASSISTANT: '어시스턴트',
+  INTERN: '인턴',
 };
+
+function getCurrentMonth(): string {
+  const now = new Date();
+  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+}
 
 export function StaffManagement() {
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [selectedStaff, setSelectedStaff] = useState<any>(null);
+  const currentMonth = useMemo(() => getCurrentMonth(), []);
+
   const { data: staffList, isLoading, error, refetch } = useStaff();
+  const { data: settlementList } = useSettlement(currentMonth);
+
   const staffData = staffList ?? [];
+
+  // Build a staffId -> settlement lookup map
+  const settlementMap = useMemo(() => {
+    const map = new Map<string, StaffSettlement>();
+    if (settlementList) {
+      for (const s of settlementList) {
+        map.set(s.staffId, s);
+      }
+    }
+    return map;
+  }, [settlementList]);
 
   if (isLoading) {
     return (
@@ -85,6 +110,7 @@ export function StaffManagement() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {staffData.map((staff: any) => {
           const specialties = staff.specialties ?? [];
+          const settlement = settlementMap.get(staff.id);
           // Extract working days from schedules relation if available
           const schedule: number[] = staff.schedules
             ? staff.schedules.map((s: any) => {
@@ -95,6 +121,7 @@ export function StaffManagement() {
           return (
             <div
               key={staff.id}
+              onClick={() => setSelectedStaff(staff)}
               className="rounded-2xl bg-white ring-1 ring-[#FFE4E0] shadow-soft p-6 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5 cursor-pointer"
             >
               {/* Header row */}
@@ -108,7 +135,7 @@ export function StaffManagement() {
                     {staff.name}
                   </span>
                   <span className="rounded-full bg-zinc-100 px-2.5 py-0.5 text-[10px] uppercase tracking-[0.15em] font-medium text-zinc-500">
-                    {roleLabels[staff.role as keyof typeof roleLabels] ?? staff.role}
+                    {roleLabels[staff.role] ?? staff.role}
                   </span>
                 </div>
               </div>
@@ -128,7 +155,7 @@ export function StaffManagement() {
                 )}
               </div>
 
-              {/* Stats - using placeholder values since stats endpoint needs date params */}
+              {/* Stats - real data from settlement API */}
               <div className="grid grid-cols-3 gap-3 mb-5">
                 <div className="rounded-xl bg-[#FFF8F6] p-3 ring-1 ring-[#FFE4E0]">
                   <div className="flex items-center gap-1.5 mb-1.5">
@@ -138,7 +165,7 @@ export function StaffManagement() {
                     </span>
                   </div>
                   <p className="text-lg font-semibold font-mono text-zinc-900 tabular-nums">
-                    -
+                    {settlement?.totalBookings ?? 0}
                     <span className="text-xs font-sans text-zinc-400 ml-0.5">
                       건
                     </span>
@@ -152,7 +179,7 @@ export function StaffManagement() {
                     </span>
                   </div>
                   <p className="text-base font-semibold font-mono text-zinc-900 tabular-nums">
-                    -
+                    {formatCurrency(settlement?.totalRevenue ?? 0)}
                   </p>
                 </div>
                 <div className="rounded-xl bg-[#FFF8F6] p-3 ring-1 ring-[#FFE4E0]">
@@ -163,7 +190,7 @@ export function StaffManagement() {
                     </span>
                   </div>
                   <p className="text-base font-semibold font-mono text-[#FF6B6B] tabular-nums">
-                    -
+                    {formatCurrency(settlement?.incentiveAmount ?? 0)}
                   </p>
                 </div>
               </div>
@@ -215,6 +242,15 @@ export function StaffManagement() {
 
       {/* Staff create modal */}
       <StaffFormModal open={showCreateModal} onOpenChange={setShowCreateModal} />
+
+      {/* Staff detail modal */}
+      <StaffDetailModal
+        open={!!selectedStaff}
+        onOpenChange={(open) => { if (!open) setSelectedStaff(null); }}
+        staff={selectedStaff}
+        currentMonth={currentMonth}
+        summarySettlement={selectedStaff ? settlementMap.get(selectedStaff.id) : undefined}
+      />
     </div>
   );
 }
