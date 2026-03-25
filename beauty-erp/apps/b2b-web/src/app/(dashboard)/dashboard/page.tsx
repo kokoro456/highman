@@ -158,7 +158,7 @@ export default function DashboardPage() {
               전체 보기 <ArrowRight size={10} />
             </Link>
           </div>
-          <div className="divide-y divide-zinc-50 max-h-[280px] overflow-y-auto">
+          <div className="divide-y divide-zinc-50 max-h-[calc(100vh-320px)] overflow-y-auto">
             {upcoming.filter((b: any) => {
               const d = new Date(b.startTime);
               const today = new Date();
@@ -210,7 +210,7 @@ export default function DashboardPage() {
               전체 보기 <ArrowRight size={10} />
             </Link>
           </div>
-          <div className="divide-y divide-zinc-50 max-h-[280px] overflow-y-auto">
+          <div className="divide-y divide-zinc-50 max-h-[calc(100vh-320px)] overflow-y-auto">
             {recentPayments.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-10 text-center">
                 <CreditCard size={28} className="text-zinc-300 mb-2" />
@@ -251,7 +251,7 @@ export default function DashboardPage() {
               전체 보기 <ArrowRight size={10} />
             </Link>
           </div>
-          <div className="divide-y divide-zinc-50 max-h-[280px] overflow-y-auto">
+          <div className="divide-y divide-zinc-50 max-h-[calc(100vh-320px)] overflow-y-auto">
             {upcoming.filter((b: any) => {
               const d = new Date(b.startTime);
               const today = new Date();
