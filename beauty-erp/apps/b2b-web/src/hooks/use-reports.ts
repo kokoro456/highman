@@ -37,6 +37,18 @@ export function useCustomerReport(startDate: string, endDate: string) {
   });
 }
 
+export function useComprehensiveReport(startDate: string, endDate: string) {
+  return useQuery({
+    queryKey: ['reports', 'comprehensive', startDate, endDate],
+    queryFn: () =>
+      api.get<any>(
+        `/dashboard/reports/comprehensive?startDate=${startDate}&endDate=${endDate}`,
+      ),
+    select: (data) => data.data,
+    enabled: !!startDate && !!endDate,
+  });
+}
+
 export function useHourlyReport(startDate: string, endDate: string) {
   return useQuery({
     queryKey: ['reports', 'hourly', startDate, endDate],

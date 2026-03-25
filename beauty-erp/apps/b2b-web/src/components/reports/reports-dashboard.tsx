@@ -18,6 +18,7 @@ import {
 import { cn, formatCurrency } from '@/lib/utils';
 import {
   useRevenueReport,
+  useComprehensiveReport,
   useServiceReport,
   useCustomerReport,
   useHourlyReport,
@@ -186,7 +187,7 @@ export function ReportsDashboard() {
 
       {/* Tab content */}
       {activeTab === 'revenue' && (
-        <RevenueTab year={year} month={month} />
+        <RevenueTab year={year} month={month} startDate={startDate} endDate={endDate} />
       )}
       {activeTab === 'services' && (
         <ServicesTab startDate={startDate} endDate={endDate} />
@@ -213,235 +214,372 @@ function getServiceColor(index: number): string {
   return SERVICE_COLORS[index % SERVICE_COLORS.length];
 }
 
-// ==================== REVENUE TAB ====================
+// ==================== COMPREHENSIVE REPORT TYPES ====================
 
-function RevenueTab({ year, month }: { year: number; month: number }) {
-  const { data, isLoading, error } = useRevenueReport(year, month);
+interface ComprehensiveReport {
+  revenue: { total: number; byTreatment: number; byPass: number; revenuePerCustomer: number };
+  bookings: { total: number; completed: number; noShow: number; cancelled: number; noShowRate: number; cancelRate: number };
+  timeUtilization: { totalAvailableHours: number; bookedHours: number; utilizationRate: number };
+  customers: { totalVisited: number; newCustomers: number; returningCustomers: number; returnRate: number };
+  dailyRevenue: { date: string; revenue: number }[];
+  dailyBookings: { date: string; total: number; noShow: number; cancelled: number }[];
+  dailyUtilization: { date: string; rate: number }[];
+  dailyCustomers: { date: string; new: number; returning: number }[];
+  revenueByStaff: { staffId: string; staffName: string; revenue: number }[];
+  comparison: { revenueDiff: number; bookingsDiff: number; utilizationDiff: number; returnRateDiff: number; revenuePerCustomerDiff: number };
+}
+
+// ==================== CHANGE BADGE ====================
+
+function ChangeBadge({ value }: { value: number }) {
+  if (value === 0) return null;
+  const isPositive = value > 0;
+  return (
+    <span
+      className={cn(
+        'inline-flex items-center gap-0.5 rounded-full px-2 py-0.5 text-[11px] font-medium tabular-nums',
+        isPositive ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-600',
+      )}
+    >
+      {isPositive ? (
+        <TrendUp size={12} weight="bold" />
+      ) : (
+        <TrendDown size={12} weight="bold" />
+      )}
+      {isPositive ? '+' : ''}{value}%
+    </span>
+  );
+}
+
+// ==================== REVENUE TAB (COMPREHENSIVE) ====================
+
+function RevenueTab({ year, month, startDate, endDate }: { year: number; month: number; startDate: string; endDate: string }) {
+  const { data, isLoading, error } = useComprehensiveReport(startDate, endDate);
 
   if (isLoading) return <TabSkeleton />;
   if (error) return <TabError />;
 
-  const reportData: RevenueReportData = data ?? { days: [], serviceNames: [] };
-  const items = reportData.days ?? [];
-  const serviceNames = reportData.serviceNames ?? [];
+  const report: ComprehensiveReport | null = data ?? null;
+  if (!report) return <TabError />;
 
-  const totalRevenue = items.reduce((sum: number, d: RevenueDay) => sum + d.revenue, 0);
-  const totalBookings = items.reduce((sum: number, d: RevenueDay) => sum + d.bookingCount, 0);
-  const maxRevenue = Math.max(...items.map((d: RevenueDay) => d.revenue), 1);
-  const workingDays = items.filter((d: RevenueDay) => d.revenue > 0).length;
-  const avgRevenue = workingDays > 0 ? Math.round(totalRevenue / workingDays) : 0;
+  const { revenue, bookings, timeUtilization, customers, comparison, dailyRevenue, dailyBookings, dailyUtilization, dailyCustomers, revenueByStaff } = report;
 
-  // Build cumulative revenue for line chart
-  let cumulative = 0;
-  const cumulativeData = items.map((d: RevenueDay) => {
-    cumulative += d.revenue;
-    return cumulative;
-  });
-  const maxCumulative = Math.max(...cumulativeData, 1);
-
-  // SVG line chart points
-  const chartWidth = items.length * 32;
-  const chartHeight = 200;
-  const linePoints = cumulativeData
-    .map((val: number, i: number) => {
-      const x = (i / Math.max(items.length - 1, 1)) * (chartWidth - 20) + 10;
-      const y = chartHeight - 20 - ((val / maxCumulative) * (chartHeight - 40));
-      return `${x},${y}`;
-    })
-    .join(' ');
+  const maxDailyRevenue = Math.max(...dailyRevenue.map((d) => d.revenue), 1);
+  const maxDailyBookings = Math.max(...dailyBookings.map((d) => d.total), 1);
+  const maxDailyUtil = Math.max(...dailyUtilization.map((d) => d.rate), 1);
+  const maxDailyCustomers = Math.max(...dailyCustomers.map((d) => d.new + d.returning), 1);
+  const maxStaffRevenue = Math.max(...revenueByStaff.map((s) => s.revenue), 1);
+  const emptyHours = Math.max(0, Math.round((timeUtilization.totalAvailableHours - timeUtilization.bookedHours) * 10) / 10);
 
   return (
     <div className="space-y-6">
-      {/* Summary cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <SummaryCard
-          label="총 매출"
-          value={formatCurrency(totalRevenue)}
+      {/* Row 1: Key Metrics */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <MetricCard
+          label="실 매출 합계"
+          value={formatCurrency(revenue.total)}
+          badge={<ChangeBadge value={comparison.revenueDiff} />}
           icon={<TrendUp size={18} className="text-[#FF6B6B]" />}
           iconBg="bg-[#FF6B6B15]"
         />
-        <SummaryCard
+        <MetricCard
+          label="객단가"
+          value={formatCurrency(revenue.revenuePerCustomer)}
+          badge={<ChangeBadge value={comparison.revenuePerCustomerDiff} />}
+          icon={<User size={18} className="text-violet-600" />}
+          iconBg="bg-violet-50"
+        />
+        <MetricCard
           label="총 예약 건수"
-          value={`${totalBookings}건`}
+          value={`${bookings.total}건`}
+          badge={<ChangeBadge value={comparison.bookingsDiff} />}
           icon={<ChartLine size={18} className="text-blue-600" />}
           iconBg="bg-blue-50"
         />
-        <SummaryCard
-          label="일 평균 매출"
-          value={formatCurrency(avgRevenue)}
-          icon={<TrendDown size={18} className="text-amber-600" />}
+        <MetricCard
+          label="재방문 고객 비율"
+          value={`${customers.returnRate}%`}
+          badge={<ChangeBadge value={comparison.returnRateDiff} />}
+          icon={<ArrowClockwise size={18} className="text-amber-600" />}
           iconBg="bg-amber-50"
         />
       </div>
 
-      {/* Stacked bar chart + line chart */}
+      {/* Row 2: Daily Revenue Chart (full width) */}
       <div className="rounded-2xl bg-white p-6 ring-1 ring-[#FFE4E0] shadow-soft">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-sm font-semibold text-zinc-900">
-            일별 매출 추이
-          </h3>
-          {/* Legend */}
-          <div className="flex flex-wrap gap-2">
-            {serviceNames.slice(0, 8).map((name: string, i: number) => (
-              <div key={name} className="flex items-center gap-1">
-                <div
-                  className="w-2.5 h-2.5 rounded-sm"
-                  style={{ backgroundColor: getServiceColor(i) }}
-                />
-                <span className="text-[10px] text-zinc-500">{name}</span>
+        <h3 className="text-sm font-semibold text-zinc-900 mb-4">일별 매출 추이</h3>
+        <div className="overflow-x-auto">
+          <div className="flex items-end gap-[3px]" style={{ height: '180px', minWidth: `${dailyRevenue.length * 28}px` }}>
+            {dailyRevenue.map((d) => {
+              const barH = maxDailyRevenue > 0 ? (d.revenue / maxDailyRevenue) * 160 : 0;
+              return (
+                <div key={d.date} className="flex-1 flex flex-col items-center justify-end group relative" style={{ height: '100%' }}>
+                  <div className="absolute -top-1 left-1/2 -translate-x-1/2 hidden group-hover:block rounded-lg bg-zinc-800 px-2.5 py-1.5 text-[10px] text-white whitespace-nowrap z-20 shadow-lg">
+                    {formatShortDate(d.date)}: {formatCurrency(d.revenue)}
+                  </div>
+                  <div
+                    className="w-full max-w-[20px] rounded-t-md bg-[#FF6B6B] transition-all duration-500 group-hover:bg-[#FF5252]"
+                    style={{ height: `${Math.max(barH, d.revenue > 0 ? 4 : 0)}px` }}
+                  />
+                  <span className="text-[8px] text-zinc-400 font-mono tabular-nums mt-1">
+                    {new Date(d.date).getDate()}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* Row 3: Two columns */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Left: Booking Stats */}
+        <div className="rounded-2xl bg-white p-6 ring-1 ring-[#FFE4E0] shadow-soft">
+          <h3 className="text-sm font-semibold text-zinc-900 mb-4">예약 현황</h3>
+          <div className="text-2xl font-semibold font-mono text-zinc-900 tabular-nums mb-1">
+            {bookings.total}건
+          </div>
+          <div className="flex items-center gap-2 mb-5">
+            <ChangeBadge value={comparison.bookingsDiff} />
+            <span className="text-xs text-zinc-400">전 기간 대비</span>
+          </div>
+
+          <div className="space-y-3 mb-6">
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-zinc-600">완료</span>
+              <span className="text-sm font-mono font-medium text-zinc-900 tabular-nums">{bookings.completed}건</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-zinc-600">노쇼</span>
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-mono font-medium text-zinc-900 tabular-nums">{bookings.noShow}건</span>
+                <span className="text-[11px] text-red-500 tabular-nums">({bookings.noShowRate}%)</span>
               </div>
-            ))}
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-zinc-600">취소</span>
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-mono font-medium text-zinc-900 tabular-nums">{bookings.cancelled}건</span>
+                <span className="text-[11px] text-zinc-400 tabular-nums">({bookings.cancelRate}%)</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Daily bookings stacked bar chart */}
+          <div className="overflow-x-auto">
+            <div className="flex items-end gap-[2px]" style={{ height: '100px', minWidth: `${dailyBookings.length * 20}px` }}>
+              {dailyBookings.map((d) => {
+                const totalH = maxDailyBookings > 0 ? (d.total / maxDailyBookings) * 80 : 0;
+                const noShowH = d.total > 0 ? (d.noShow / d.total) * totalH : 0;
+                const cancelH = d.total > 0 ? (d.cancelled / d.total) * totalH : 0;
+                const completedH = totalH - noShowH - cancelH;
+                return (
+                  <div key={d.date} className="flex-1 flex flex-col items-center justify-end group" style={{ height: '100%' }}>
+                    <div className="w-full max-w-[14px] rounded-t-sm overflow-hidden" style={{ height: `${Math.max(totalH, d.total > 0 ? 3 : 0)}px` }}>
+                      {completedH > 0 && <div className="bg-blue-400" style={{ height: `${completedH}px` }} />}
+                      {cancelH > 0 && <div className="bg-zinc-300" style={{ height: `${cancelH}px` }} />}
+                      {noShowH > 0 && <div className="bg-red-400" style={{ height: `${noShowH}px` }} />}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <div className="flex items-center gap-3 mt-2">
+            <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-sm bg-blue-400" /><span className="text-[10px] text-zinc-400">완료</span></div>
+            <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-sm bg-zinc-300" /><span className="text-[10px] text-zinc-400">취소</span></div>
+            <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-sm bg-red-400" /><span className="text-[10px] text-zinc-400">노쇼</span></div>
           </div>
         </div>
 
-        {/* Chart area */}
-        <div className="relative overflow-x-auto">
-          <div style={{ minWidth: `${Math.max(chartWidth, 600)}px` }}>
-            {/* SVG overlay for line chart */}
-            <svg
-              width="100%"
-              height={chartHeight}
-              viewBox={`0 0 ${chartWidth} ${chartHeight}`}
-              className="absolute top-0 left-0 pointer-events-none z-10"
-              preserveAspectRatio="none"
-            >
-              {/* Cumulative line */}
-              <polyline
-                points={linePoints}
-                fill="none"
-                stroke="#FF6B6B"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                opacity="0.7"
-              />
-              {/* Dots on line */}
-              {cumulativeData.map((val: number, i: number) => {
-                const x = (i / Math.max(items.length - 1, 1)) * (chartWidth - 20) + 10;
-                const y = chartHeight - 20 - ((val / maxCumulative) * (chartHeight - 40));
-                return items[i].revenue > 0 ? (
-                  <circle key={i} cx={x} cy={y} r="3" fill="#FF6B6B" />
-                ) : null;
-              })}
-            </svg>
+        {/* Right: Time Utilization */}
+        <div className="rounded-2xl bg-white p-6 ring-1 ring-[#FFE4E0] shadow-soft">
+          <h3 className="text-sm font-semibold text-zinc-900 mb-4">시간 활용 비율</h3>
 
-            {/* Stacked bars */}
-            <div className="flex items-end gap-[3px]" style={{ height: `${chartHeight}px` }}>
-              {items.map((day: RevenueDay, dayIdx: number) => {
-                const barHeight = maxRevenue > 0 ? (day.revenue / maxRevenue) * (chartHeight - 40) : 0;
-                const breakdown = day.serviceBreakdown || [];
-                const total = breakdown.reduce((s: number, b: ServiceBreakdown) => s + b.amount, 0) || 1;
+          {/* Utilization gauge */}
+          <div className="flex items-center justify-center mb-6">
+            <div className="relative w-32 h-32">
+              <svg viewBox="0 0 120 120" className="w-full h-full -rotate-90">
+                <circle cx="60" cy="60" r="52" fill="none" stroke="#FFE4E0" strokeWidth="10" />
+                <circle
+                  cx="60" cy="60" r="52" fill="none" stroke="#FF6B6B" strokeWidth="10"
+                  strokeDasharray={`${(timeUtilization.utilizationRate / 100) * 327} 327`}
+                  strokeLinecap="round"
+                />
+              </svg>
+              <div className="absolute inset-0 flex flex-col items-center justify-center">
+                <span className="text-2xl font-bold font-mono text-zinc-900 tabular-nums">
+                  {timeUtilization.utilizationRate}%
+                </span>
+              </div>
+            </div>
+          </div>
 
+          <div className="flex items-center gap-2 justify-center mb-5">
+            <ChangeBadge value={comparison.utilizationDiff} />
+            <span className="text-xs text-zinc-400">전 기간 대비</span>
+          </div>
+
+          <div className="space-y-3 mb-6">
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-zinc-600">총 가능시간</span>
+              <span className="text-sm font-mono font-medium text-zinc-900 tabular-nums">{timeUtilization.totalAvailableHours}시간</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-zinc-600">예약시간</span>
+              <span className="text-sm font-mono font-medium text-zinc-900 tabular-nums">{timeUtilization.bookedHours}시간</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-zinc-600">빈 시간</span>
+              <span className="text-sm font-mono font-medium text-zinc-400 tabular-nums">{emptyHours}시간</span>
+            </div>
+          </div>
+
+          {/* Daily utilization line chart */}
+          <div className="overflow-x-auto">
+            <div className="relative" style={{ height: '80px', minWidth: `${dailyUtilization.length * 20}px` }}>
+              <svg width="100%" height="80" viewBox={`0 0 ${dailyUtilization.length * 20} 80`} preserveAspectRatio="none">
+                <polyline
+                  points={dailyUtilization.map((d, i) => {
+                    const x = (i / Math.max(dailyUtilization.length - 1, 1)) * (dailyUtilization.length * 20 - 10) + 5;
+                    const y = 75 - (maxDailyUtil > 0 ? (d.rate / maxDailyUtil) * 65 : 0);
+                    return `${x},${y}`;
+                  }).join(' ')}
+                  fill="none" stroke="#FF6B6B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Row 4: Two columns */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Left: Customer return rate */}
+        <div className="rounded-2xl bg-white p-6 ring-1 ring-[#FFE4E0] shadow-soft">
+          <h3 className="text-sm font-semibold text-zinc-900 mb-4">재방문 고객 비율</h3>
+          <div className="text-2xl font-semibold font-mono text-zinc-900 tabular-nums mb-1">
+            {customers.returnRate}%
+          </div>
+          <div className="flex items-center gap-2 mb-5">
+            <ChangeBadge value={comparison.returnRateDiff} />
+            <span className="text-xs text-zinc-400">전 기간 대비</span>
+          </div>
+
+          <div className="space-y-3 mb-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="w-2.5 h-2.5 rounded-sm bg-blue-400" />
+                <span className="text-sm text-zinc-600">재방문</span>
+              </div>
+              <span className="text-sm font-mono font-medium text-zinc-900 tabular-nums">{customers.returningCustomers}명</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="w-2.5 h-2.5 rounded-sm bg-[#FF8080]" />
+                <span className="text-sm text-zinc-600">신규</span>
+              </div>
+              <span className="text-sm font-mono font-medium text-zinc-900 tabular-nums">{customers.newCustomers}명</span>
+            </div>
+          </div>
+
+          {/* Ratio bar */}
+          {customers.totalVisited > 0 && (
+            <div className="h-4 rounded-full bg-zinc-100 overflow-hidden flex mb-4">
+              <div className="h-full bg-blue-400 transition-all duration-700" style={{ width: `${customers.returnRate}%` }} />
+              <div className="h-full bg-[#FF8080] transition-all duration-700" style={{ width: `${100 - customers.returnRate}%` }} />
+            </div>
+          )}
+
+          {/* Daily customer chart */}
+          <div className="overflow-x-auto">
+            <div className="flex items-end gap-[2px]" style={{ height: '80px', minWidth: `${dailyCustomers.length * 20}px` }}>
+              {dailyCustomers.map((d) => {
+                const total = d.new + d.returning;
+                const totalH = maxDailyCustomers > 0 ? (total / maxDailyCustomers) * 65 : 0;
+                const retH = total > 0 ? (d.returning / total) * totalH : 0;
+                const newH = totalH - retH;
                 return (
-                  <div
-                    key={day.date}
-                    className="flex-1 flex flex-col items-center justify-end group relative"
-                    style={{ height: '100%' }}
-                  >
-                    {/* Hover tooltip */}
-                    <div className="absolute -top-2 left-1/2 -translate-x-1/2 hidden group-hover:block rounded-lg bg-zinc-800 px-3 py-2 text-[10px] text-white whitespace-nowrap z-20 shadow-lg">
-                      <div className="font-semibold mb-1">{formatShortDate(day.date)} — {formatCurrency(day.revenue)}</div>
-                      {breakdown.map((b: ServiceBreakdown, i: number) => (
-                        <div key={b.serviceId} className="flex items-center gap-1">
-                          <div className="w-2 h-2 rounded-sm" style={{ backgroundColor: getServiceColor(serviceNames.indexOf(b.serviceName)) }} />
-                          <span>{b.serviceName}: {formatCurrency(b.amount)}</span>
-                        </div>
-                      ))}
+                  <div key={d.date} className="flex-1 flex flex-col items-center justify-end" style={{ height: '100%' }}>
+                    <div className="w-full max-w-[14px] rounded-t-sm overflow-hidden" style={{ height: `${Math.max(totalH, total > 0 ? 3 : 0)}px` }}>
+                      {retH > 0 && <div className="bg-blue-400" style={{ height: `${retH}px` }} />}
+                      {newH > 0 && <div className="bg-[#FF8080]" style={{ height: `${newH}px` }} />}
                     </div>
-
-                    {/* Stacked bar segments */}
-                    <div
-                      className="w-full max-w-[24px] rounded-t-md overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:opacity-90"
-                      style={{ height: `${Math.max(barHeight, day.revenue > 0 ? 4 : 0)}px` }}
-                    >
-                      {breakdown.map((b: ServiceBreakdown) => {
-                        const segPercent = (b.amount / total) * 100;
-                        const colorIdx = serviceNames.indexOf(b.serviceName);
-                        return (
-                          <div
-                            key={b.serviceId}
-                            style={{
-                              height: `${segPercent}%`,
-                              backgroundColor: getServiceColor(colorIdx >= 0 ? colorIdx : 0),
-                            }}
-                          />
-                        );
-                      })}
-                      {breakdown.length === 0 && day.revenue > 0 && (
-                        <div className="h-full bg-zinc-200" />
-                      )}
-                    </div>
-
-                    {/* Date label */}
-                    <span className="text-[9px] text-zinc-400 font-mono tabular-nums mt-1">
-                      {formatShortDate(day.date)}
-                    </span>
                   </div>
                 );
               })}
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Daily breakdown table */}
-      <div className="rounded-2xl bg-white ring-1 ring-[#FFE4E0] shadow-soft overflow-hidden">
-        <div className="px-6 py-4 border-b border-[#FFE4E0]">
-          <h3 className="text-sm font-semibold text-zinc-900">
-            일별 상세 내역
-          </h3>
-        </div>
-
-        {/* Mobile layout */}
-        <div className="md:hidden divide-y divide-zinc-50">
-          {items.map((day) => (
-            <div key={day.date} className="px-4 py-3 flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-zinc-800 font-mono tabular-nums">
-                  {formatShortDate(day.date)}
-                </p>
-                <p className="text-xs text-zinc-400">
-                  {day.bookingCount}건
-                </p>
-              </div>
-              <span className="text-sm font-mono font-semibold text-zinc-900 tabular-nums">
-                {formatCurrency(day.revenue)}
-              </span>
+        {/* Right: Staff Revenue Ranking */}
+        <div className="rounded-2xl bg-white p-6 ring-1 ring-[#FFE4E0] shadow-soft">
+          <h3 className="text-sm font-semibold text-zinc-900 mb-4">직원별 매출</h3>
+          {revenueByStaff.length === 0 ? (
+            <p className="text-sm text-zinc-400 text-center py-8">데이터가 없습니다</p>
+          ) : (
+            <div className="space-y-3">
+              {revenueByStaff.map((staff, i) => {
+                const barWidth = maxStaffRevenue > 0 ? (staff.revenue / maxStaffRevenue) * 100 : 0;
+                return (
+                  <div key={staff.staffId}>
+                    <div className="flex items-center justify-between mb-1">
+                      <div className="flex items-center gap-2">
+                        <span className="flex h-6 w-6 items-center justify-center rounded-md bg-zinc-100 text-[10px] font-bold text-zinc-600">
+                          {i + 1}
+                        </span>
+                        <span className="text-sm text-zinc-700">{staff.staffName}</span>
+                      </div>
+                      <span className="text-sm font-mono font-medium text-zinc-900 tabular-nums">
+                        {formatCurrency(staff.revenue)}
+                      </span>
+                    </div>
+                    <div className="h-2.5 rounded-full bg-zinc-100 overflow-hidden">
+                      <div
+                        className="h-full rounded-full bg-[#FF6B6B] transition-all duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]"
+                        style={{ width: `${barWidth}%` }}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-          ))}
-        </div>
-
-        {/* Desktop layout */}
-        <div className="hidden md:block">
-          <div className="grid grid-cols-[1fr_120px_140px] gap-4 px-6 py-3 border-b border-[#FFE4E0] bg-[#FFF8F6]">
-            <span className="text-[11px] font-medium text-zinc-500 uppercase tracking-wider">
-              날짜
-            </span>
-            <span className="text-[11px] font-medium text-zinc-500 uppercase tracking-wider text-right">
-              예약 건수
-            </span>
-            <span className="text-[11px] font-medium text-zinc-500 uppercase tracking-wider text-right">
-              매출
-            </span>
-          </div>
-          {items.map((day) => (
-            <div
-              key={day.date}
-              className="grid grid-cols-[1fr_120px_140px] gap-4 px-6 py-3 items-center border-b border-zinc-50 last:border-b-0 hover:bg-[#FFF5F5] transition-colors duration-200"
-            >
-              <span className="text-sm text-zinc-700 font-mono tabular-nums">
-                {day.date}
-              </span>
-              <span className="text-sm text-zinc-600 text-right tabular-nums">
-                {day.bookingCount}건
-              </span>
-              <span className="text-sm font-mono font-medium text-zinc-900 text-right tabular-nums">
-                {formatCurrency(day.revenue)}
-              </span>
-            </div>
-          ))}
+          )}
         </div>
       </div>
+    </div>
+  );
+}
+
+// ==================== METRIC CARD (with badge) ====================
+
+function MetricCard({
+  label,
+  value,
+  badge,
+  icon,
+  iconBg,
+}: {
+  label: string;
+  value: string;
+  badge?: React.ReactNode;
+  icon: React.ReactNode;
+  iconBg: string;
+}) {
+  return (
+    <div className="rounded-2xl bg-white p-5 ring-1 ring-[#FFE4E0] shadow-soft transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5">
+      <div className="flex items-center justify-between mb-3">
+        <span className="text-[11px] font-medium text-zinc-500 uppercase tracking-wider">
+          {label}
+        </span>
+        <div className={cn('flex h-8 w-8 items-center justify-center rounded-lg', iconBg)}>
+          {icon}
+        </div>
+      </div>
+      <p className="text-xl font-semibold font-mono text-zinc-900 tabular-nums tracking-tight">
+        {value}
+      </p>
+      {badge && <div className="mt-2">{badge}</div>}
     </div>
   );
 }

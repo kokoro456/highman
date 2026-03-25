@@ -41,6 +41,16 @@ export class DashboardController {
 
   // ==================== REPORTS ====================
 
+  @Get('reports/comprehensive')
+  async getComprehensiveReport(
+    @Headers('x-shop-id') shopId: string,
+    @Query('startDate') startDate: string,
+    @Query('endDate') endDate: string,
+  ) {
+    const data = await this.dashboardService.getComprehensiveReport(shopId, startDate, endDate);
+    return { data, message: 'ok' };
+  }
+
   @Get('reports/revenue')
   async getRevenueReport(
     @Headers('x-shop-id') shopId: string,
