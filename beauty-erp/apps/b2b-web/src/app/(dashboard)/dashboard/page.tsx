@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { useDashboardOverview, useUpcomingBookings } from '@/hooks/use-dashboard';
 import { usePayments } from '@/hooks/use-payments';
-import { useShop } from '@/hooks/use-shop';
 import { useAuthStore } from '@/lib/auth-store';
 import { cn, formatCurrency } from '@/lib/utils';
 import {
@@ -13,15 +12,36 @@ import {
   WarningCircle,
   ArrowRight,
   Receipt,
-  Link as LinkIcon,
-  CheckCircle,
+  Clock,
+  User,
 } from '@phosphor-icons/react';
+
+const METHOD_LABEL: Record<string, string> = {
+  CARD: '카드',
+  CASH: '현금',
+  TRANSFER: '이체',
+  PASS: '정기권',
+};
+
+const METHOD_DOT: Record<string, string> = {
+  CARD: 'bg-blue-400',
+  CASH: 'bg-[#4ECDC4]',
+  TRANSFER: 'bg-amber-400',
+  PASS: 'bg-purple-400',
+};
+
+const STATUS_STYLE: Record<string, { dot: string; label: string }> = {
+  CONFIRMED: { dot: 'bg-[#FF6B6B]', label: '확정' },
+  IN_PROGRESS: { dot: 'bg-amber-400', label: '진행중' },
+  COMPLETED: { dot: 'bg-[#4ECDC4]', label: '완료' },
+  CANCELLED: { dot: 'bg-zinc-300', label: '취소' },
+  NO_SHOW: { dot: 'bg-red-400', label: '노쇼' },
+};
 
 export default function DashboardPage() {
   const { shopId } = useAuthStore();
   const { data: overview, isLoading: overviewLoading, error: overviewError, refetch: refetchOverview } = useDashboardOverview();
-  const { data: upcomingBookings, isLoading: bookingsLoading, error: bookingsError, refetch: refetchBookings } = useUpcomingBookings(5);
-  const { data: shopData } = useShop(shopId ?? '');
+  const { data: upcomingBookings, isLoading: bookingsLoading, error: bookingsError, refetch: refetchBookings } = useUpcomingBookings(8);
 
   const todayISO = new Date().toISOString().split('T')[0];
   const { data: recentPaymentsData, isLoading: paymentsLoading } = usePayments({ page: 1, startDate: todayISO, endDate: todayISO });
@@ -31,19 +51,15 @@ export default function DashboardPage() {
 
   if (isLoading) {
     return (
-      <div className="space-y-8 animate-fade-in">
-        <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">Dashboard</h1>
-          <p className="mt-1 text-sm text-zinc-500">매장 운영 현황을 한눈에 확인하세요</p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="space-y-4 animate-fade-in">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
           {[...Array(4)].map((_, i) => (
-            <div key={i} className="h-28 rounded-2xl bg-[#FFE4E0] animate-pulse" />
+            <div key={i} className="h-24 rounded-2xl bg-[#FFE4E0]/50 animate-pulse" />
           ))}
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          <div className="lg:col-span-2 h-72 rounded-2xl bg-[#FFE4E0] animate-pulse" />
-          <div className="h-72 rounded-2xl bg-[#FFE4E0] animate-pulse" />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+          <div className="h-64 rounded-2xl bg-[#FFE4E0]/50 animate-pulse" />
+          <div className="h-64 rounded-2xl bg-[#FFE4E0]/50 animate-pulse" />
         </div>
       </div>
     );
@@ -51,10 +67,7 @@ export default function DashboardPage() {
 
   if (error) {
     return (
-      <div className="space-y-8 animate-fade-in">
-        <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">Dashboard</h1>
-        </div>
+      <div className="space-y-4 animate-fade-in">
         <div className="rounded-2xl bg-red-50 p-6 ring-1 ring-red-200/50 text-center">
           <p className="text-sm text-red-600">데이터를 불러오는데 실패했습니다</p>
           <button onClick={() => { refetchOverview(); refetchBookings(); }} className="mt-2 text-xs text-red-500 underline">다시 시도</button>
@@ -71,62 +84,41 @@ export default function DashboardPage() {
     {
       label: '오늘 매출',
       value: formatCurrency(Number(overview?.todayRevenue ?? 0)),
-      unit: '',
-      sub: overview?.weekRevenue ? `이번 주 ${formatCurrency(Number(overview.weekRevenue))}` : '',
       icon: Receipt,
-      iconBg: 'bg-[#FF6B6B15]',
-      iconColor: 'text-[#FF6B6B]',
-      cardGradient: 'bg-gradient-to-br from-[#FF6B6B08] to-[#FFA07A08]',
+      color: '#FF6B6B',
+      bg: 'from-[#FF6B6B10] to-[#FFA07A10]',
     },
     {
       label: '예약 건수',
-      value: String(todayBookings),
-      unit: '건',
-      sub: '',
+      value: `${todayBookings}건`,
       icon: CalendarDots,
-      iconBg: 'bg-[#FFA07A15]',
-      iconColor: 'text-[#FFA07A]',
-      cardGradient: 'bg-gradient-to-br from-[#FFA07A08] to-[#FFD93D08]',
+      color: '#FFA07A',
+      bg: 'from-[#FFA07A10] to-[#FFD93D10]',
       href: '/bookings',
     },
     {
       label: '신규 고객',
-      value: String(overview?.todayNewCustomers ?? 0),
-      unit: '명',
-      sub: '',
+      value: `${overview?.todayNewCustomers ?? 0}명`,
       icon: UserPlus,
-      iconBg: 'bg-[#FFD93D15]',
-      iconColor: 'text-[#E0B520]',
-      cardGradient: 'bg-gradient-to-br from-[#FFD93D08] to-[#FFA07A08]',
+      color: '#E0B520',
+      bg: 'from-[#FFD93D10] to-[#FFA07A10]',
     },
     {
       label: '노쇼율',
-      value: `${noShowRate}`,
-      unit: '%',
-      sub: `${todayNoShows}건 / ${todayBookings}건`,
+      value: `${noShowRate}%`,
       icon: WarningCircle,
-      iconBg: 'bg-[#4ECDC415]',
-      iconColor: 'text-[#4ECDC4]',
-      cardGradient: 'bg-gradient-to-br from-[#4ECDC408] to-[#4ECDC415]',
+      color: '#4ECDC4',
+      bg: 'from-[#4ECDC410] to-[#4ECDC415]',
     },
   ];
 
   const upcoming = upcomingBookings ?? [];
-  const recentPayments = (recentPaymentsData?.data ?? []).slice(0, 5);
+  const recentPayments = (recentPaymentsData?.data ?? []).slice(0, 6);
 
   return (
-    <div className="space-y-8 animate-fade-in">
-      <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">
-          Dashboard
-        </h1>
-        <p className="mt-1 text-sm text-zinc-500">
-          매장 운영 현황을 한눈에 확인하세요
-        </p>
-      </div>
-
-      {/* Stats Grid - Bento Layout */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="space-y-4 animate-fade-in">
+      {/* Stats - compact */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         {stats.map((stat) => {
           const Icon = stat.icon;
           const Wrapper = stat.href ? Link : 'div';
@@ -135,206 +127,119 @@ export default function DashboardPage() {
             <Wrapper
               key={stat.label}
               {...(wrapperProps as any)}
-              className={cn("rounded-2xl bg-white p-6 ring-1 ring-[#FFE4E0] shadow-warm transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:shadow-soft-lg hover:-translate-y-0.5", (stat as any).cardGradient)}
-            >
-              <div className="flex items-center justify-between mb-3">
-                <p className="text-xs font-medium text-zinc-500 uppercase tracking-wider">
-                  {stat.label}
-                </p>
-                <div className={`flex h-8 w-8 items-center justify-center rounded-lg ${stat.iconBg}`}>
-                  <Icon size={16} className={stat.iconColor} />
-                </div>
-              </div>
-              <div className="flex items-baseline gap-1">
-                <span className="text-2xl font-semibold tracking-tight text-zinc-900 font-mono">
-                  {stat.value}
-                </span>
-                {stat.unit && <span className="text-sm text-zinc-400">{stat.unit}</span>}
-              </div>
-              {stat.sub && (
-                <p className="mt-2 text-xs text-zinc-400">
-                  {stat.sub}
-                </p>
+              className={cn(
+                'rounded-2xl bg-gradient-to-br p-4 ring-1 ring-[#FFE4E0]/60 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md',
+                stat.bg
               )}
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <Icon size={16} style={{ color: stat.color }} />
+                <span className="text-[11px] font-medium text-zinc-500">{stat.label}</span>
+              </div>
+              <span className="text-xl font-bold tracking-tight text-zinc-900 font-mono tabular-nums">
+                {stat.value}
+              </span>
             </Wrapper>
           );
         })}
       </div>
 
-      {/* Content */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        {/* 오늘의 예약 */}
-        <div className="lg:col-span-2 rounded-2xl bg-white p-4 md:p-6 ring-1 ring-[#FFE4E0] shadow-warm min-h-[200px] md:min-h-[300px]">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-sm font-medium text-zinc-700">오늘의 예약</h2>
-            <Link
-              href="/bookings"
-              className="flex items-center gap-1 text-xs font-medium text-zinc-500 hover:text-zinc-700 transition-colors duration-200"
-            >
-              전체 보기
-              <ArrowRight size={12} />
+      {/* Two column: Today Bookings + Recent Payments */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+        {/* 오늘의 예약 미리보기 */}
+        <div className="rounded-2xl bg-white ring-1 ring-[#FFE4E0]/60 shadow-sm overflow-hidden">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-[#FFE4E0]/40">
+            <div className="flex items-center gap-2">
+              <CalendarDots size={16} className="text-[#FF6B6B]" />
+              <h2 className="text-sm font-semibold text-zinc-800">오늘의 예약</h2>
+              <span className="text-[10px] font-mono font-bold text-[#FF6B6B] bg-[#FF6B6B10] rounded-full px-2 py-0.5">{todayBookings}</span>
+            </div>
+            <Link href="/bookings" className="flex items-center gap-1 text-[11px] text-zinc-400 hover:text-[#FF6B6B] transition-colors">
+              전체 보기 <ArrowRight size={10} />
             </Link>
           </div>
-          {todayBookings === 0 ? (
-            <div className="flex flex-col items-center justify-center py-12 text-center">
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#FF6B6B10] mb-4">
-                <CalendarDots size={28} weight="regular" className="text-zinc-400" />
+          <div className="divide-y divide-zinc-50 max-h-[260px] overflow-y-auto">
+            {upcoming.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-10 text-center">
+                <CalendarDots size={28} className="text-zinc-300 mb-2" />
+                <p className="text-sm text-zinc-400">예정된 예약이 없습니다</p>
               </div>
-              <p className="text-sm font-medium text-zinc-600">오늘 예약이 없습니다</p>
-              <p className="mt-1 text-xs text-zinc-400">예약을 등록해보세요</p>
-            </div>
-          ) : (
-            <div className="flex flex-col items-center justify-center py-12 text-center">
-              <span className="text-4xl font-semibold font-mono text-zinc-900 tabular-nums">{todayBookings}</span>
-              <p className="mt-2 text-sm text-zinc-500">건의 예약이 있습니다</p>
-              <Link
-                href="/bookings"
-                className="mt-4 flex items-center gap-2 rounded-full bg-gradient-to-r from-[#FF6B6B] to-[#FF8E8E] px-5 py-2.5 text-sm font-medium text-white shadow-[0_4px_15px_rgba(255,107,107,0.3)] transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:from-[#FF5252] hover:to-[#FF7B7B] active:scale-[0.98]"
-              >
-                <CalendarDots size={16} weight="bold" />
-                예약 확인하기
-              </Link>
-            </div>
-          )}
-        </div>
-
-        {/* 다가오는 예약 */}
-        <div className="rounded-2xl bg-white p-4 md:p-6 ring-1 ring-[#FFE4E0] shadow-warm min-h-[200px] md:min-h-[300px]">
-          <h2 className="text-sm font-medium text-zinc-700 mb-4">다가오는 예약</h2>
-          {upcoming.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-8 text-center">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FF6B6B10] mb-3">
-                <CalendarDots size={24} weight="regular" className="text-zinc-400" />
-              </div>
-              <p className="text-sm text-zinc-400">예정된 예약이 없습니다</p>
-            </div>
-          ) : (
-            <div className="space-y-3 max-h-[280px] overflow-y-auto">
-              {upcoming.map((booking: any) => {
+            ) : (
+              upcoming.map((booking: any) => {
                 const startTime = new Date(booking.startTime);
                 const timeStr = `${String(startTime.getHours()).padStart(2, '0')}:${String(startTime.getMinutes()).padStart(2, '0')}`;
+                const status = STATUS_STYLE[booking.status] ?? STATUS_STYLE.CONFIRMED;
                 return (
-                  <div key={booking.id} className="flex items-center justify-between py-2 border-b border-zinc-50 last:border-b-0">
-                    <div className="min-w-0">
+                  <div key={booking.id} className="flex items-center gap-3 px-4 py-2.5 hover:bg-[#FFF8F6] transition-colors">
+                    <span className="text-xs font-mono font-medium text-zinc-500 tabular-nums w-10 flex-shrink-0">{timeStr}</span>
+                    <div className={cn('w-1 h-8 rounded-full flex-shrink-0', status.dot)} />
+                    <div className="min-w-0 flex-1">
                       <p className="text-sm font-medium text-zinc-800 truncate">
                         {booking.customer?.name ?? '고객'}
                       </p>
-                      <p className="text-xs text-zinc-500 truncate">
+                      <p className="text-[11px] text-zinc-400 truncate">
                         {booking.service?.name ?? '서비스'} · {booking.staff?.name ?? '-'}
                       </p>
                     </div>
-                    <span className="text-sm font-mono text-zinc-500 tabular-nums flex-shrink-0 ml-3">
-                      {timeStr}
+                    <span className={cn('text-[10px] font-medium px-2 py-0.5 rounded-full flex-shrink-0',
+                      booking.status === 'COMPLETED' ? 'bg-[#4ECDC415] text-[#20877F]' :
+                      booking.status === 'IN_PROGRESS' ? 'bg-amber-50 text-amber-600' :
+                      booking.status === 'CANCELLED' ? 'bg-zinc-100 text-zinc-400' :
+                      'bg-[#FF6B6B10] text-[#FF6B6B]'
+                    )}>
+                      {status.label}
                     </span>
                   </div>
                 );
-              })}
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* 최근 결제 */}
-      <div className="rounded-2xl bg-white p-4 md:p-6 ring-1 ring-[#FFE4E0] shadow-warm">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-sm font-medium text-zinc-700">최근 결제</h2>
-          <Link
-            href="/payments"
-            className="flex items-center gap-1 text-xs font-medium text-zinc-500 hover:text-zinc-700 transition-colors duration-200"
-          >
-            전체 보기
-            <ArrowRight size={12} />
-          </Link>
-        </div>
-        {recentPayments.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-8 text-center">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FF6B6B10] mb-3">
-              <CreditCard size={24} weight="regular" className="text-zinc-400" />
-            </div>
-            <p className="text-sm text-zinc-400">오늘 결제 내역이 없습니다</p>
+              })
+            )}
           </div>
-        ) : (
-          <div className="space-y-2">
-            {recentPayments.map((payment: any) => {
-              const customerName = payment.customer?.name ?? '고객';
-              const amount = Number(payment.finalAmount ?? payment.amount ?? 0);
-              const time = payment.paidAt
-                ? `${String(new Date(payment.paidAt).getHours()).padStart(2, '0')}:${String(new Date(payment.paidAt).getMinutes()).padStart(2, '0')}`
-                : '-';
-              return (
-                <div key={payment.id} className="flex items-center justify-between py-2.5 border-b border-zinc-50 last:border-b-0">
-                  <div className="flex items-center gap-3 min-w-0">
-                    <div className="h-8 w-8 rounded-xl bg-gradient-to-br from-zinc-100 to-zinc-200 flex items-center justify-center text-xs font-semibold text-zinc-600 flex-shrink-0">
-                      {customerName[0]}
-                    </div>
-                    <div className="min-w-0">
+        </div>
+
+        {/* 최근 결제 미리보기 */}
+        <div className="rounded-2xl bg-white ring-1 ring-[#FFE4E0]/60 shadow-sm overflow-hidden">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-[#FFE4E0]/40">
+            <div className="flex items-center gap-2">
+              <CreditCard size={16} className="text-[#FFA07A]" />
+              <h2 className="text-sm font-semibold text-zinc-800">최근 결제</h2>
+              <span className="text-[10px] font-mono font-bold text-[#FFA07A] bg-[#FFA07A10] rounded-full px-2 py-0.5">{recentPayments.length}</span>
+            </div>
+            <Link href="/payments" className="flex items-center gap-1 text-[11px] text-zinc-400 hover:text-[#FF6B6B] transition-colors">
+              전체 보기 <ArrowRight size={10} />
+            </Link>
+          </div>
+          <div className="divide-y divide-zinc-50 max-h-[260px] overflow-y-auto">
+            {recentPayments.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-10 text-center">
+                <CreditCard size={28} className="text-zinc-300 mb-2" />
+                <p className="text-sm text-zinc-400">오늘 결제 내역이 없습니다</p>
+              </div>
+            ) : (
+              recentPayments.map((payment: any) => {
+                const customerName = payment.customer?.name ?? '고객';
+                const amount = Number(payment.finalAmount ?? payment.amount ?? 0);
+                const method = payment.paymentMethod ?? 'CARD';
+                const time = payment.paidAt
+                  ? `${String(new Date(payment.paidAt).getHours()).padStart(2, '0')}:${String(new Date(payment.paidAt).getMinutes()).padStart(2, '0')}`
+                  : '-';
+                return (
+                  <div key={payment.id} className="flex items-center gap-3 px-4 py-2.5 hover:bg-[#FFF8F6] transition-colors">
+                    <span className="text-xs font-mono font-medium text-zinc-500 tabular-nums w-10 flex-shrink-0">{time}</span>
+                    <div className={cn('w-1.5 h-1.5 rounded-full flex-shrink-0', METHOD_DOT[method] ?? 'bg-zinc-300')} />
+                    <div className="min-w-0 flex-1">
                       <p className="text-sm font-medium text-zinc-800 truncate">{customerName}</p>
-                      <p className="text-xs text-zinc-500">{payment.booking?.service?.name ?? payment.serviceName ?? '직접 결제'}</p>
+                      <p className="text-[11px] text-zinc-400 truncate">
+                        {payment.booking?.service?.name ?? '직접 결제'} · {METHOD_LABEL[method] ?? method}
+                      </p>
                     </div>
-                  </div>
-                  <div className="flex items-center gap-4 flex-shrink-0 ml-3">
-                    <span className="text-sm font-mono font-medium text-zinc-900 tabular-nums">
+                    <span className="text-sm font-mono font-semibold text-zinc-900 tabular-nums flex-shrink-0">
                       {formatCurrency(amount)}
                     </span>
-                    <span className="text-xs font-mono text-zinc-400 tabular-nums">
-                      {time}
-                    </span>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })
+            )}
           </div>
-        )}
-      </div>
-
-      {/* External integration status */}
-      <div className="rounded-2xl bg-white p-4 md:p-6 ring-1 ring-[#FFE4E0] shadow-warm">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-zinc-100">
-              <LinkIcon size={14} className="text-zinc-600" />
-            </div>
-            <h2 className="text-sm font-medium text-zinc-700">외부 연동</h2>
-          </div>
-          <Link
-            href="/settings"
-            className="flex items-center gap-1 text-xs font-medium text-zinc-500 hover:text-zinc-700 transition-colors duration-200"
-          >
-            설정에서 연동하기
-            <ArrowRight size={12} />
-          </Link>
-        </div>
-        <div className="flex flex-wrap gap-3">
-          {shopData?.naverBookingUrl ? (
-            <div className="flex items-center gap-1.5 rounded-full bg-[#4ECDC415] px-3 py-1.5 ring-1 ring-[#4ECDC440]">
-              <CheckCircle size={14} weight="fill" className="text-[#4ECDC4]" />
-              <span className="text-xs font-medium text-[#20877F]">네이버 예약</span>
-            </div>
-          ) : (
-            <div className="flex items-center gap-1.5 rounded-full bg-[#FFF8F6] px-3 py-1.5 ring-1 ring-[#FFE4E0]">
-              <span className="text-xs text-zinc-400">네이버 예약 - 미연동</span>
-            </div>
-          )}
-          {shopData?.kakaoChannelUrl ? (
-            <div className="flex items-center gap-1.5 rounded-full bg-[#4ECDC415] px-3 py-1.5 ring-1 ring-[#4ECDC440]">
-              <CheckCircle size={14} weight="fill" className="text-[#4ECDC4]" />
-              <span className="text-xs font-medium text-[#20877F]">카카오톡</span>
-            </div>
-          ) : (
-            <div className="flex items-center gap-1.5 rounded-full bg-[#FFF8F6] px-3 py-1.5 ring-1 ring-[#FFE4E0]">
-              <span className="text-xs text-zinc-400">카카오톡 - 미연동</span>
-            </div>
-          )}
-          {shopData?.instagramUrl ? (
-            <div className="flex items-center gap-1.5 rounded-full bg-[#4ECDC415] px-3 py-1.5 ring-1 ring-[#4ECDC440]">
-              <CheckCircle size={14} weight="fill" className="text-[#4ECDC4]" />
-              <span className="text-xs font-medium text-[#20877F]">인스타그램</span>
-            </div>
-          ) : (
-            <div className="flex items-center gap-1.5 rounded-full bg-[#FFF8F6] px-3 py-1.5 ring-1 ring-[#FFE4E0]">
-              <span className="text-xs text-zinc-400">인스타그램 - 미연동</span>
-            </div>
-          )}
         </div>
       </div>
     </div>
