@@ -17,6 +17,9 @@ import {
   WarningCircle,
   SpinnerGap,
   Camera,
+  UserCircle,
+  CalendarCheck,
+  Ticket,
 } from '@phosphor-icons/react';
 import { cn, formatCurrency } from '@/lib/utils';
 import { useCustomer, useCustomerTier, useDeleteCustomer } from '@/hooks/use-customers';
@@ -301,13 +304,14 @@ export function CustomerDetail({ customerId }: { customerId: string }) {
 
             <div className="h-px bg-zinc-100" />
 
-            {/* Stats */}
-            <div className="grid grid-cols-2 gap-4">
+            {/* Stats grid */}
+            <div className="grid grid-cols-2 gap-3">
+              {/* 총 방문수 */}
               <div className="rounded-xl bg-[#FFF8F6] p-3 ring-1 ring-[#FFE4E0]">
                 <div className="flex items-center gap-1.5 mb-1">
                   <CalendarDots size={12} className="text-zinc-400" />
                   <span className="text-[10px] font-medium text-zinc-500 uppercase tracking-wider">
-                    총 방문
+                    총 방문수
                   </span>
                 </div>
                 <p className="text-lg font-semibold font-mono text-zinc-900 tabular-nums">
@@ -317,15 +321,47 @@ export function CustomerDetail({ customerId }: { customerId: string }) {
                   </span>
                 </p>
               </div>
+
+              {/* 총 매출 */}
               <div className="rounded-xl bg-[#FFF8F6] p-3 ring-1 ring-[#FFE4E0]">
                 <div className="flex items-center gap-1.5 mb-1">
                   <CurrencyCircleDollar size={12} className="text-zinc-400" />
                   <span className="text-[10px] font-medium text-zinc-500 uppercase tracking-wider">
-                    총 결제
+                    총 매출
                   </span>
                 </div>
                 <p className="text-lg font-semibold font-mono text-zinc-900 tabular-nums">
                   {formatCurrency(Number(customer.totalSpent ?? 0))}
+                </p>
+              </div>
+
+              {/* 최근 방문일 */}
+              <div className="rounded-xl bg-[#FFF8F6] p-3 ring-1 ring-[#FFE4E0]">
+                <div className="flex items-center gap-1.5 mb-1">
+                  <CalendarCheck size={12} className="text-zinc-400" />
+                  <span className="text-[10px] font-medium text-zinc-500 uppercase tracking-wider">
+                    최근 방문일
+                  </span>
+                </div>
+                <p className="text-sm font-medium font-mono text-zinc-900 tabular-nums">
+                  {customer.lastVisitDate
+                    ? formatDateKr(customer.lastVisitDate)
+                    : '-'}
+                </p>
+              </div>
+
+              {/* 고객 등록일 */}
+              <div className="rounded-xl bg-[#FFF8F6] p-3 ring-1 ring-[#FFE4E0]">
+                <div className="flex items-center gap-1.5 mb-1">
+                  <Clock size={12} className="text-zinc-400" />
+                  <span className="text-[10px] font-medium text-zinc-500 uppercase tracking-wider">
+                    고객 등록일
+                  </span>
+                </div>
+                <p className="text-sm font-medium font-mono text-zinc-900 tabular-nums">
+                  {customer.createdAt
+                    ? formatDateKr(customer.createdAt)
+                    : '-'}
                 </p>
               </div>
             </div>
@@ -345,6 +381,83 @@ export function CustomerDetail({ customerId }: { customerId: string }) {
                     회
                   </span>
                 </p>
+              </div>
+            )}
+
+            {/* 담당자 (Primary Staff) */}
+            {customer.primaryStaff && (
+              <div className="rounded-xl bg-[#FFF8F6] p-3 ring-1 ring-[#FFE4E0]">
+                <div className="flex items-center gap-1.5 mb-1">
+                  <UserCircle size={12} className="text-zinc-400" />
+                  <span className="text-[10px] font-medium text-zinc-500 uppercase tracking-wider">
+                    담당자
+                  </span>
+                </div>
+                <p className="text-sm font-medium text-zinc-900">
+                  {customer.primaryStaff.name}
+                </p>
+              </div>
+            )}
+
+            {/* 정액권 정보 (Passes) */}
+            {(customer.allPasses ?? customer.passes ?? []).length > 0 && (
+              <div className="space-y-2">
+                <div className="flex items-center gap-1.5">
+                  <Ticket size={12} className="text-zinc-400" />
+                  <span className="text-[10px] font-medium text-zinc-500 uppercase tracking-wider">
+                    정액권 정보
+                  </span>
+                </div>
+                {(customer.allPasses ?? customer.passes ?? [])
+                  .filter((pass: any) => pass.status === 'ACTIVE')
+                  .map((pass: any) => (
+                    <div
+                      key={pass.id}
+                      className="rounded-xl bg-[#FFF8F6] p-3 ring-1 ring-[#FFE4E0] space-y-1.5"
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-medium text-zinc-800">
+                          {pass.name}
+                        </span>
+                        <span className="rounded-full bg-green-50 px-2 py-0.5 text-[10px] font-medium text-green-600 ring-1 ring-green-200/50">
+                          이용중
+                        </span>
+                      </div>
+                      {pass.totalAmount != null && (
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="text-zinc-500">금액</span>
+                          <span className="font-mono text-zinc-700 tabular-nums">
+                            {formatCurrency(Number(pass.remainingAmount ?? 0))} / {formatCurrency(Number(pass.totalAmount))}
+                          </span>
+                        </div>
+                      )}
+                      {pass.totalCount != null && (
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="text-zinc-500">횟수</span>
+                          <span className="font-mono text-zinc-700 tabular-nums">
+                            {pass.remainingCount ?? 0} / {pass.totalCount}회
+                          </span>
+                        </div>
+                      )}
+                      {(pass.totalAmount != null || pass.totalCount != null) && (
+                        <div className="h-1.5 rounded-full bg-zinc-200/60 overflow-hidden">
+                          <div
+                            className="h-full rounded-full bg-gradient-to-r from-[#FF8080] to-[#FF6B6B] transition-all duration-700 ease-out"
+                            style={{
+                              width: `${Math.min(
+                                100,
+                                pass.totalCount != null
+                                  ? ((pass.remainingCount ?? 0) / pass.totalCount) * 100
+                                  : pass.totalAmount != null && Number(pass.totalAmount) > 0
+                                    ? (Number(pass.remainingAmount ?? 0) / Number(pass.totalAmount)) * 100
+                                    : 0,
+                              )}%`,
+                            }}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  ))}
               </div>
             )}
 

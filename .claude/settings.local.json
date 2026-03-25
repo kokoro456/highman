@@ -21,7 +21,10 @@
       "Bash(taskkill //F //IM \"node.exe\")",
       "Bash(ls C:/highman/beauty-erp/apps/b2b-web/src/app/\\\\\\(dashboard\\\\\\)/)",
       "Bash(curl -s https://highman-production.up.railway.app/api/auth/login -X POST -H \"Content-Type: application/json\" -d '{\"\"\"\"email\"\"\"\":\"\"\"\"test\"\"\"\",\"\"\"\"password\"\"\"\":\"\"\"\"test123\"\"\"\"}')",
-      "Bash(curl -s -o /dev/null -w \"%{http_code}\" https://highman.vercel.app/login)"
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" https://highman.vercel.app/login)",
+      "Bash(npx tsc:*)",
+      "Bash(gh repo:*)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" https://github.com/kokoro456/highman)"
     ]
   }
 }

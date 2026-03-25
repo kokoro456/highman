@@ -65,10 +65,33 @@ export class CustomerService {
 
     // Count no-show bookings
     const noShowCount = await this.prisma.booking.count({
-      where: { customerId: id, status: 'NO_SHOW' },
+      where: { customerId: id, shopId, status: 'NO_SHOW' },
     });
 
-    return { ...customer, noShowCount };
+    // Find primary staff (most frequent in bookings)
+    let primaryStaff: { id: string; name: string } | null = null;
+    const staffBookings = await this.prisma.booking.groupBy({
+      by: ['staffId'],
+      where: { customerId: id, shopId },
+      _count: { staffId: true },
+      orderBy: { _count: { staffId: 'desc' } },
+      take: 1,
+    });
+    if (staffBookings.length > 0) {
+      const staff = await this.prisma.staff.findUnique({
+        where: { id: staffBookings[0].staffId },
+        select: { id: true, name: true },
+      });
+      if (staff) primaryStaff = staff;
+    }
+
+    // Get all passes (active ones with amounts)
+    const allPasses = await this.prisma.pass.findMany({
+      where: { customerId: id, shopId },
+      orderBy: { createdAt: 'desc' },
+    });
+
+    return { ...customer, noShowCount, primaryStaff, allPasses };
   }
 
   async update(id: string, shopId: string, data: any) {
